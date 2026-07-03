@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+checkpoints/
+wandb/
+*.json.stats
+.DS_Store

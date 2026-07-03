@@ -1,0 +1,38 @@
+diff --git a/scripts/train_pytorch.py b/scripts/train_pytorch.py
+index c7ddd2b..b466c97 100644
+--- a/scripts/train_pytorch.py
++++ b/scripts/train_pytorch.py
+@@ -38,6 +38,15 @@ import torch
+ import torch.distributed as dist
+ import torch.nn.parallel
+ import tqdm
++
++# --- snmvp: source-noise invariant pinning (arm C). Enable with SNMVP_PIN_ALPHA=1.0 ---
++try:
++    from snmvp import SourceConstructor as _SnmvpSC
++    from snmvp import extract_invariant as _snmvp_extract
++except ImportError:
++    _SnmvpSC = None
++_SNMVP_ALPHA = float(os.environ.get("SNMVP_PIN_ALPHA", "0"))
++
+ import wandb
+ 
+ import openpi.models.pi0_config
+@@ -526,7 +535,16 @@ def train_loop(config: _config.TrainConfig):
+                 pg["lr"] = lr_schedule(global_step)
+ 
+             # Forward pass
+-            losses = model(observation, actions)
++            if _SnmvpSC is not None and _SNMVP_ALPHA > 0:
++                # snmvp arm C: pin the chunk invariant L(a) = sum_t a_t into the
++                # source noise; the flow target u_t = noise - actions then
++                # satisfies L(u_t) = 0 at every t (carried invariant).
++                _base = model.module if hasattr(model, "module") else model
++                _noise = _base.sample_noise(actions.shape, actions.device)
++                _noise = _SnmvpSC(alpha=_SNMVP_ALPHA)(_noise, _snmvp_extract(actions))
++                losses = model(observation, actions, noise=_noise)
++            else:
++                losses = model(observation, actions)
+             # Ensure losses is a tensor and handle different return types
+             if isinstance(losses, list | tuple):
+                 losses = torch.stack(losses)
