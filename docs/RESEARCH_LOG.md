@@ -6219,3 +6219,14 @@ every cell on every seed (and its CFR ownership) is the seed-stable margin. Comp
 both scratch seeds (as with the pin arm unguided). Old-data checkpoints gmm/gmmmh/ctl deleted
 for disk (claims withdrawn, retrainable, rollout evidence kept); min5f corrected-sketch cells
 launched on both pin checkpoints.
+
+**MIN5F CLOSES THE MINIMAL-SKETCH LOOP (2026-08-26): with the gate waypoint at the TRUE
+aperture midline, the 5-point CMPR sketch flies 5/5 route-clean on BOTH training seeds
+(seed-42: 2/5 clearance-clean; seed-7: 1/5). The right-gate near-hits are gone entirely —
+remaining grazes are all the familiar center-west-post goal-descent signature (0.12-0.18 at
+(2.25-2.30,-0.1..-0.15)), the same family as CFR's atomic grazes: the one systematic
+imperfection of the gate_nav3 line, present with or without sketches. Seed-7 dwells are
+shorter (22-55 vs 243-439; threshold 16) — its hover settles less deeply; screen-tier note.
+MINIMAL-SKETCH CONCLUSION: 4 clicks (CMPL) and 5 clicks (CMPR) produce route-clean compound
+flight REPLICATED ACROSS TWO TRAINING SEEDS, provided waypoints near structure are placed on
+true geometry with margin — margin is the portability budget.**
