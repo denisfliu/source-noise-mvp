@@ -6230,3 +6230,16 @@ shorter (22-55 vs 243-439; threshold 16) — its hover settles less deeply; scre
 MINIMAL-SKETCH CONCLUSION: 4 clicks (CMPL) and 5 clicks (CMPR) produce route-clean compound
 flight REPLICATED ACROSS TWO TRAINING SEEDS, provided waypoints near structure are placed on
 true geometry with margin — margin is the portability budget.**
+
+**CROSS-DOMAIN PIN-FOLLOW PROBE (2026-08-26, 'will the human-placed pin work in real?'):
+THE COMMAND CHANNEL TRANSFERS.** Open-loop wrong-invariant probe on gmsig3, 60 frames per
+domain, sigma=0: oracle-c follow error 0.070 cstd (real) vs 0.068 (synth) — identical;
+contradictory commands (+/-1 cstd pushes) 0.085 vs 0.098 — real resists slightly LESS. The
+offline-online chasm that killed the VLM-feature arms does not appear: the pin is upstream
+of perception. Per-dim: coarse-horizon dims (10,12,13,14) followed best (0.09-0.20
+err/push) — the dims sketch route-topology lives in; mid-horizon dims resist 0.45-0.6, and
+the resistance pattern is DIM STRUCTURE shared across domains, not a domain gap. Conclusion:
+real-sketch risk is purely closed-loop (dynamics/controller/compounding/safety), not
+representational; sequencing when hardware exists: real atomics -> sketched compound in the
+mocap room; Sketchpad works as-is (the scene cloud IS the real room's reconstruction).
+`real_pin_follow_probe.py`, rows -> ctxrun/realpin_rows.npz.
