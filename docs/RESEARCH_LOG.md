@@ -6170,3 +6170,29 @@ class strikes again, this time in a SAFETY file. Full cmpr re-score under the fi
 Sketch-line tally after correction: CMPL hand-drawn 5/5+5/5, CMPR hand-drawn (round-1,
 unrepaired) 5/5 route-clean 1/5 clearance, CMPR r1 5/5+3/5, CMPL min4 5/5 (sigma-0) /
 4/5+4/5 (sigma-0.5), CMPR min5 5/5+1/5.
+
+**ROLLOUT-SEED REPLICATION OF THE SKETCH ROWS (2026-08-26, SNMVP_NOISE_SEED=1 — fresh
+residual-noise stream, the only stochasticity in the deterministic sim):** hand-drawn CMPL
+5/5 route + 5/5 clearance AGAIN (min 0.225-0.248); hand-drawn CMPR (original round-1 sketch)
+5/5 route again; CMPR min5 5/5 route again. Pooled 10-trial tallies: CMPL 10/10+10/10, CMPR
+10/10 route (1/10 clearance), min5 10/10 route (1/10). Clearance GRAZES REPLICATE IN PLACE
+(same locations/magnitudes both seeds) — systematic sketch geometry, fixable by waypoints,
+not rollout lottery. One new outlier: min5 ns1 flight 3 dips to 0.006 m near the right gate
+at z 0.82 POST-HANDBACK (dwell 34) — first post-handback wander; video candidate. Training-
+seed rep (gmsig3s7, --seed=7) now training; six-cell table to follow.
+
+**TRAINING-SEED REPLICATION LANDS: gmsig3s7 (--seed=7, identical recipe/data) REPRODUCES THE
+FLAGSHIP — 40/40 ROUTE-CLEAN JUDGE ON ALL FOUR ATOMIC CELLS (2026-08-26).** Left 10/10
+(clearance 10/10, min 0.24-0.39), right 10/10 (10/10 clean, 0.20-0.24), CFL 10/10 (10/10
+clean, 0.34-0.39), CFR 10/10 judge (7/10 clean; three grazes 0.11-0.16 at the center west
+post z~1.3 during the goal descent — same signature family as seed-42's one strict miss,
+within protocol noise). Compounds 0/5+0/5 unguided — also replicating seed-42 (the
+composition gap is structural, not lottery). Offline replication chain: per-task readout R2
+profile matches (min 0.40 vs 0.32), sigma-probe pooled corr 0.848/tail 0.941 (vs
+0.844/0.924), sigma map knots within a few percent. **POOLED TWO-SEED CLAIM: 80/80
+route-clean judge on gate_nav3 atomics, 77/80 clearance-clean — the sigma-conditioned GMM x
+mh16 arm is seed-robust; two-tier statistics rule satisfied for the atomic claims (>=10
+trials x 2 training seeds). Remaining for record-board strict tier: human video review
+(left/right reels exist: overlay_armgmsig3s7_*).** Ops note: the chain broke once at
+make_sigma_map's stale data_gate_synth default (crashed post-probe; --data-dir now
+hardwired in both post scripts) and was resumed cells-only (resume_gmsig3s7_cells.sh).

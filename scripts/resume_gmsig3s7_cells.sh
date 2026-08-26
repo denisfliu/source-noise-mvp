@@ -4,7 +4,7 @@
 # build SNMVP_SIGMA_MAP -> six-cell eval served with the per-replan trained trust dial.
 # Calibration must use this checkpoint's own head: sigma* distributions are checkpoint-specific.
 set -u
-NAME=gmsig3
+NAME=gmsig3s7
 RUN=/home/dfliu/ctxrun
 RD=/home/dfliu/code/source-noise-mvp/experiments/rung3
 VENVPY=/home/dfliu/code/openpi/.venv/bin/python
@@ -15,41 +15,11 @@ U=$RD/pin_U_mh16.npy
 BASE="SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U"
 TRAINEXTRA="SNMVP_DATA_DIR=data_gate_synth3 SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1"
 CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_$NAME/4999
-PORT=9010
+PORT=9012
 SRV=serve_gate_pin_joint.py
-rm -f $RUN/arm_$NAME.done $RUN/arm_${NAME}_scores.txt $RUN/ctr_${NAME}_scores.txt
-for k in $(seq 1 1200); do [ -d "$CK/params" ] && break; sleep 60; done
-[ -d "$CK/params" ] || { echo TRAIN_TIMEOUT > $RUN/arm_$NAME.done; exit 1; }
-sleep 60   # let the trainer finish shutting down
-for k in $(seq 1 60); do
-  u=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i 0)
-  [ "$u" -lt 2000 ] && break; sleep 30
-done
-rm -rf /home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_$NAME/*/train_state
-{ echo "== arm $NAME  steps=5000 decay=1000000 U=$(basename $U) sigma-conditioned PIN_NOISE=1.5 RAND+COND seed=42"
-  grep -a "loss=" $RUN/arm_${NAME}_train.log | tail -2; } > $RUN/arm_${NAME}_scores.txt
-
-# readout gate
-cd $RD
-$EV $BASE $TRAINEXTRA CUDA_VISIBLE_DEVICES=0 $VENVPY $RD/joint_head.py --ckpt $CK --pin-u $U \
-  --norm $HFB/assets/gate_nav --n 8 --check > $RUN/arm_${NAME}_check.log 2>&1
-python3 - "$RUN/arm_${NAME}_check.log" >> $RUN/arm_${NAME}_scores.txt << 'PYEOF'
-import sys
-rows = [l.split() for l in open(sys.argv[1]) if l.startswith(("left", "right", "center"))]
-r2 = [float(r[2]) for r in rows if len(r) >= 3]
-print(f"== readout gate: {len(r2)} tasks, min per-task c-R2 {min(r2) if r2 else float('nan'):+.4f}")
-print("== GATE PASS" if r2 and min(r2) > 0.5 else "== GATE FAIL")
-PYEOF
-grep -qa "GATE PASS" $RUN/arm_${NAME}_scores.txt || { echo GATE_FAILED > $RUN/arm_$NAME.done; exit 1; }
-
-# sigma calibration on THIS head, then the map
-$EV $BASE $TRAINEXTRA CUDA_VISIBLE_DEVICES=0 $VENVPY $RD/sigma_phase_probe.py --ckpt $CK \
-  --pin-u $U --save $RD/sigrows_$NAME.npz > $RUN/${NAME}_sigprobe.log 2>&1
-[ -f "$RD/sigrows_$NAME.npz" ] || { echo SIGPROBE_FAILED > $RUN/arm_$NAME.done; exit 1; }
-python3 $RD/make_sigma_map.py --data-dir data_gate_synth3 --rows $RD/sigrows_$NAME.npz --pin-u $U --cap 1.5 \
-  --out $RD/sigma_map_$NAME.json >> $RUN/${NAME}_sigprobe.log 2>&1
-[ -f "$RD/sigma_map_$NAME.json" ] || { echo SIGMAP_FAILED > $RUN/arm_$NAME.done; exit 1; }
-grep -a "sig\*=" $RUN/${NAME}_sigprobe.log >> $RUN/arm_${NAME}_scores.txt
+rm -f $RUN/arm_$NAME.done
+# RESUME (2026-08-26): gate+probe already done; map built manually after the
+# stale data_gate_synth default crashed make_sigma_map (now fixed with --data-dir)
 EXTRA="$TRAINEXTRA SNMVP_SIGMA_MAP=$RD/sigma_map_$NAME.json"
 
 serve_up () {

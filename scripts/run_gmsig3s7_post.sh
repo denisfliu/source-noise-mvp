@@ -48,7 +48,7 @@ grep -qa "GATE PASS" $RUN/arm_${NAME}_scores.txt || echo "== gate failed (non-fa
 $EV $BASE $TRAINEXTRA CUDA_VISIBLE_DEVICES=0 $VENVPY $RD/sigma_phase_probe.py --ckpt $CK \
   --pin-u $U --save $RD/sigrows_$NAME.npz > $RUN/${NAME}_sigprobe.log 2>&1
 [ -f "$RD/sigrows_$NAME.npz" ] || { echo SIGPROBE_FAILED > $RUN/arm_$NAME.done; exit 1; }
-python3 $RD/make_sigma_map.py --rows $RD/sigrows_$NAME.npz --pin-u $U --cap 1.5 \
+python3 $RD/make_sigma_map.py --data-dir data_gate_synth3 --rows $RD/sigrows_$NAME.npz --pin-u $U --cap 1.5 \
   --out $RD/sigma_map_$NAME.json >> $RUN/${NAME}_sigprobe.log 2>&1
 [ -f "$RD/sigma_map_$NAME.json" ] || { echo SIGMAP_FAILED > $RUN/arm_$NAME.done; exit 1; }
 grep -a "sig\*=" $RUN/${NAME}_sigprobe.log >> $RUN/arm_${NAME}_scores.txt
