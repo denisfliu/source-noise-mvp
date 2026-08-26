@@ -216,6 +216,30 @@ index 0eba0dc..c7ba2a5 100644
    seed: 0
  
  phases:
+diff --git a/configs/safety/right_and_center.yaml b/configs/safety/right_and_center.yaml
+index 6a6e2b7..8e67ca5 100644
+--- a/configs/safety/right_and_center.yaml
++++ b/configs/safety/right_and_center.yaml
+@@ -19,12 +19,14 @@ collision:
+ ordered_miss_gate:
+   corners_frame: mocap
+   gates:
+-    - name: gate_1   # original right gate
++    - name: gate_1   # original right gate — post centres from the gate Gaussians
++      # (matches right_gate.yaml; the previous corners were a half-width box shifted
++      # onto the west post — 2026-08-26 fix, Denis caught it in the cloud overlay)
+       corners:
+-        - [0.47, -1.24, 0.20]
+-        - [0.11, -1.39, 0.20]
+-        - [0.11, -1.39, 1.95]
+-        - [0.47, -1.24, 1.95]
++        - [0.195, -1.348, 0.20]
++        - [0.924, -0.952, 0.20]
++        - [0.924, -0.952, 1.95]
++        - [0.195, -1.348, 1.95]
+     - name: gate_2   # center copy
+       corners:
+         - [3.156, -0.328, 0.125]
 diff --git a/scripts/dataset/plan_course_variants.py b/scripts/dataset/plan_course_variants.py
 index c68ee93..bd4c5e8 100644
 --- a/scripts/dataset/plan_course_variants.py

@@ -6147,3 +6147,26 @@ Denis's r1 exit angle cleared it). ECONOMY: 4-5 clicks per compound suffice for 
 clearance needs either the human's exit-angle instincts (r1: 3/5-5/5 clean) or per-waypoint
 sigma (proposed: sigma=0 at prior-conflicting gates, loose in corridors — JSON+UI extension,
 not yet built). All screen tier, 5 trials, VIDEO=0.
+
+**CORRECTION — RIGHT_AND_CENTER GATE_1 APERTURE WAS A HALF-WIDTH BOX ON THE WEST POST
+(2026-08-26, Denis caught it in the results-page overlay).** The compound safety YAML's
+gate_1 corners ([0.47,-1.24]/[0.11,-1.39]) covered only s in [-0.10,0.29] of the physical
+opening (posts measured from the scene cloud at s=-0.09/+0.82 — matching the atomic
+right_gate.yaml post-centre corners exactly). Fixed to the atomic corners; region-box bug
+class strikes again, this time in a SAFETY file. Full cmpr re-score under the fixed box:
+- **Denis's round-1 hand-drawn sketch (skd): 0/5 -> 5/5 ROUTE-CLEAN.** The flights crossed
+  the real gate mid-opening exactly as drawn; the "25 cm click-parallax miss" story is
+  RETRACTED (the parallax mechanism is real and top view stays, but it did not cause this).
+  The r1 "repair" was chasing the buggy box — it steered flights toward the west post,
+  which is where r1/min5's right-gate grazes came from.
+- **min4 sigma=0.5 (skm4s): right gate was never abandoned** — flights crossed its east
+  half, outside the buggy box. SIGMA LAW REVISED: slack buys clearance finesse and costs
+  some route capture (CMPL sigma=0.5 dropout); the "slack surrenders prior-conflicting
+  overrides" clause had only the buggy-box evidence and is withdrawn to hypothesis status.
+  Both min4 variants fail CMPR at the CENTER crossing for line-geometry reasons (pierce
+  point 4 cm from the post) — sigma-independent, fixed by min5's staging point.
+- Unchanged: cfg4g4 3/5; unguided/ctl/scr3 etc. 0/5 (gate1-only); old-data seed-7 compounds
+  latch both gates under the fixed box but all carry wrong-direction passes -> still 0.
+Sketch-line tally after correction: CMPL hand-drawn 5/5+5/5, CMPR hand-drawn (round-1,
+unrepaired) 5/5 route-clean 1/5 clearance, CMPR r1 5/5+3/5, CMPL min4 5/5 (sigma-0) /
+4/5+4/5 (sigma-0.5), CMPR min5 5/5+1/5.

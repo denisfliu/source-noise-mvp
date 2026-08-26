@@ -60,12 +60,13 @@ for scene, tag, sk, note, extra in [
      "compound-prompt crossing. Unguided (grey) parks at the goal after the atomic task.",
      [("corrective sketch flights (5/5 judge)", [150, 190, 150], f"{RUN}/traj_skcmpl_*.npy")]),
     ("right_and_center", "cmpr", f"{RD}/sketch_cmpr_denis_r1.json",
-     "Round 1 (red) tracked the drawn line to ~7 cm — but the line itself passed 25 cm east "
-     "of this scene's right-gate aperture (click parallax in the sketch UI): faithful "
-     "execution of a mis-drawn route. r1 (green) moves ONE waypoint onto the aperture "
-     "midline: 5/5 route-clean, 3/5 clearance-clean — on the cell that never exceeded 1/10 "
-     "under any autonomous arm.",
-     [("round-1 flights (0/5 — missed gate east)", [240, 110, 110], f"{RUN}/traj_skd_cmpr_*.npy")]),
+     "CORRECTED 2026-08-26: round 1 (red) was judged 0/5 by a half-width aperture box in the "
+     "safety YAML (it covered only the west third of the real opening, shown fixed here) — "
+     "under the corrected box round 1 is 5/5 ROUTE-CLEAN: the drawn crossing was mid-opening "
+     "all along. r1 (green, the phantom 'repair') also flies 5/5 and its steer toward the "
+     "west post explains its right-gate grazes. The cell never exceeded 1/10 under any "
+     "autonomous arm.",
+     [("round-1 flights (5/5 after aperture-bug fix)", [150, 190, 150], f"{RUN}/traj_skd_cmpr_*.npy")]),
 ]:
     groups = [{"label": "unguided gmsig3 (0/5)", "color": [140, 120, 130],
                "trajs": rollouts(f"{RUN}/traj_gmsig3_{tag}_*.npy")}]
@@ -77,8 +78,43 @@ for scene, tag, sk, note, extra in [
     groups.append({"label": "the sketch (drawn command)", "color": [255, 171, 66],
                    "trajs": sketch_line(sk)})
     groups += scene_marks(scene)
-    SECS.append((tag.upper(), cloudviewer.viewer_html(scene, groups, note=note,
-                                                      elem_id=f"v_{tag}", max_pts=40000)))
+    SECS.append((tag.upper() + " — hand-drawn", cloudviewer.viewer_html(
+        scene, groups, note=note, elem_id=f"v_{tag}", max_pts=40000)))
+
+# minimal-sketch study sections
+g = [{"label": "min4 sketch (4 clicks)", "color": [255, 171, 66],
+      "trajs": sketch_line(f"{RD}/sketch_cmpl_min4.json")},
+     {"label": "min4 sigma=0 (5/5 route, 0/5 clearance)", "color": [240, 110, 110],
+      "trajs": rollouts(f"{RUN}/traj_skm4_cmpl_*.npy")},
+     {"label": "min4 sigma=0.5 (4/5 route, 4/5 clearance)", "color": [96, 235, 160],
+      "trajs": rollouts(f"{RUN}/traj_skm4s_cmpl_*.npy")}] + scene_marks("left_and_center")
+SECS.append(("CMPL — minimal (4 points)", cloudviewer.viewer_html(
+    "left_and_center", g, elem_id="v_cmpl_min", max_pts=40000, note=
+    "The straight diagonal between gate points (orange) pierces the center aperture ~15 cm "
+    "from the west post. At sigma=0 (red) the flow tracks the line faithfully — completes the "
+    "route but shaves the post (0.03-0.15 m). At sigma=0.5 (green) the trained trust dial "
+    "lets the flow take a wider, slower crossing: clearances 0.18-0.26, at the cost of one "
+    "flight losing the route entirely. Toggle groups to compare crossing geometry.")))
+g = [{"label": "min4 sketch", "color": [255, 171, 66],
+      "trajs": sketch_line(f"{RD}/sketch_cmpr_min4.json")},
+     {"label": "min4 sigma=0 (0/5: post clip, passes outside)", "color": [240, 110, 110],
+      "trajs": rollouts(f"{RUN}/traj_skm4_cmpr_*.npy")},
+     {"label": "min4 sigma=0.5 (0/5: fails at center crossing)", "color": [200, 90, 170],
+      "trajs": rollouts(f"{RUN}/traj_skm4s_cmpr_*.npy")},
+     {"label": "min5 sketch (+1 staging point)", "color": [248, 210, 90],
+      "trajs": sketch_line(f"{RD}/sketch_cmpr_min5.json")},
+     {"label": "min5 sigma=0 (5/5 route-clean)", "color": [96, 235, 160],
+      "trajs": rollouts(f"{RUN}/traj_skm5_cmpr_*.npy")}] + scene_marks("right_and_center")
+SECS.append(("CMPR — minimal (4 vs 5 points)", cloudviewer.viewer_html(
+    "right_and_center", g, elem_id="v_cmpr_min", max_pts=40000, note=
+    "min4's gate1-to-gate2 diagonal (orange) pierces the center aperture 4 cm inside the "
+    "west edge: at sigma=0 (red) the flights clip the post and pass outside — a LINE error "
+    "no trust level fixes. sigma=0.5 (magenta) fails at the same center crossing (CORRECTED "
+    "2026-08-26: these flights DID cross the right gate through its east half — the earlier "
+    "'prior abandons the gate' reading was an artifact of the half-width aperture bug). "
+    "min5 (yellow line) adds ONE staging point at (2.75,-0.9) so the approach pierces "
+    "mid-aperture: 5/5 route-clean (green); its right-gate grazes come from the r1-style "
+    "steer toward the west post.")))
 
 body = "".join(f"<h2>{t}</h2>\n<div class='vc'>{h}</div>\n" for t, h in SECS)
 page = f"""<title>Sketch Prompting Results</title>
