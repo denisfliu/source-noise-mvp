@@ -6086,3 +6086,45 @@ trajectory:
   that legacy scoring counted as success.
 Scoring rule now: transit judge + route-clean (wrong=0) + clearance + human video. Videos for
 the vetoed rows were never reviewed (VIDEO=0 screens) — the cloud page did the veto job here.
+
+**CORRECTIVE SKETCH PROMPTING: CMPL 5/5 ROUTE-CLEAN — FIRST LEFT-COMPOUND COMPLETIONS EVER
+(2026-08-25, human-element line, Denis's rung-2 direction).** Mechanism: a coarse polyline
+covering ONLY the switch segment (6 waypoints off the CFL demo corridor, 2.2 m) is resampled
+at demo speed, its per-step deltas projected through U — the sketch speaks the head's own
+c-language — and served at sigma=0 while a per-trial state machine is ACTIVE (nearest-point
+activation on the whole polyline, forward-monotonic progress, handback requires ARRIVING at
+the sketch end); language swaps to the second atomic at activation; the head + trust dial own
+everything outside the segment. `SketchPrompt` in serve_gate_pin_joint.py
+(SNMVP_PIN_PROMPT=json), sketchpad UI in viz/build_sketchpad.py. Result on gmsig3 (which is
+0/5 unguided and 0/5 route-clean even with CFG w=4): gates latched t~60/t~190, correct -y
+center crossing, zero wrong-direction passes, dwell 415-455 — 5/5. Clearance 1/5 clean, but
+every graze (0.10-0.14 m) is at the LEFT-GATE crossing t~54-62, BEFORE activation — inherited
+from the compound-prompt crossing, not caused by the sketch; the sketch-driven portion is
+clearance-clean. First screen was 0/5 from three serve bugs (premature radius-to-first-point
+activation across the gate frame; progress cap below the ~50-step replan stride -> window lag
+-> overshoot -> OOD handback; trigger flaky vs the ~1.25 m replan sampling), all fixed and
+replay-verified — the state machine details are load-bearing. Claim tier: 5-trial screen,
+VIDEO=0, single sketch; the sketch is demo-corridor-derived (rule-clean but machine-made) —
+Denis's hand-drawn full-route sketches (Sketchpad artifact) are in the air next. The
+factorization thesis passed its literal test: a kinematically naive polyline, projected into
+the source-noise command subspace, is executed as a feasible flight by the denoising
+residual — "coarse from the prompt, residual from the flow".
+
+**HAND-DRAWN FULL-ROUTE SKETCHES COMPLETE BOTH COMPOUNDS (2026-08-25): CMPL 5/5 route-clean +
+5/5 CLEARANCE-CLEAN; CMPR (after one waypoint repair) 5/5 route-clean, 3/5 clearance-clean.**
+Denis drew both routes in the Sketchpad UI (full route from the start box — the sketch owns
+the flight from replan 0 at sigma=0, head takes over only for the goal hover). CMPL: gates
+t~48/t~143, min clearance 0.23-0.26 everywhere — the human's mid-aperture left-gate crossing
+also cured the graze the corrective sketch inherited from the compound-prompt crossing; first
+strict-tier-worthy left compound (video pending). CMPR first attempt 0/5 with a decisive
+forensic: flights tracked the polyline to ~7 cm but the polyline itself passed 25 cm east of
+the compound-scene right-gate aperture (x-span [0.11,0.47]; waypoint at 0.578) — CLICK
+PARALLAX in the sketch UI (oblique-camera ray onto the z-plane), fixed with a top-view
+drawing mode + warning. r1 (single waypoint moved to the aperture midline, all else Denis's):
+5/5, gates t~57/t~178, dwell 138-416; grazes: one center-west 0.109 (his line passes
+x 2.62-2.67, flights drift ~0.15 west), one right-gate 0.171. THE READING: pin execution
+fidelity (~7 cm) exceeds human drawing accuracy — sketch success is limited by the UI, not
+the flow; and the CMPR cell, never above 1/10 autonomous and 3/5 under CFG, is 5/5 under a
+ten-second human sketch. Screen tier: 5 trials, VIDEO=0, single sketch per cell; claim tier
+needs >=10 + video + (flywheel next) sketch-reuse stats across start positions. Artifacts:
+Sketchpad (dd2624b2), results page. Assisted rows — never mixed with autonomous.

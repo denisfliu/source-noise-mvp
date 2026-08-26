@@ -31,10 +31,95 @@ from openpi.transforms import NormStats                               # noqa: E4
 H, AD = 50, 32
 
 
+class SketchPrompt:
+    """Corrective-sketch prompting (2026-08-25): SNMVP_PIN_PROMPT names a json
+    {"points": [[x,y,z(,yaw)],...], "prompt_after": str, "enter_radius", "step_m",
+    "sigma_serve", "end_margin_m"} — a coarse polyline covering ONLY the segment where the
+    head goes wrong. The polyline is resampled at demo speed (step_m/control-step) and its
+    per-step deltas are projected through U exactly like training actions, so the sketch
+    speaks the head's own command language. Per-trial state machine: ARMED (normal serve)
+    -> ACTIVE when the drone enters enter_radius of the first point (language prompt swaps
+    to prompt_after, c comes from the sketch window at sigma_serve trust, progress tracked
+    by forward-monotonic nearest-point — observational, no clock) -> DONE at the end margin
+    (head resumes under prompt_after with the calibrated sigma map). The sketch carries no
+    dynamics — the flow's denoising residual owns feasibility, which is the factorization
+    claim under test."""
+
+    def __init__(self, path, amean, astd, U):
+        import json
+        d = json.load(open(path))
+        pts = np.asarray(d["points"], np.float32)
+        if pts.shape[1] == 3:
+            pts = np.concatenate([pts, np.zeros((len(pts), 1), np.float32)], 1)
+        step = float(d.get("step_m", 0.025))
+        s = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(pts[:, :3], axis=0), axis=1))])
+        n = max(int(s[-1] / step), H + 2)
+        u = np.linspace(0, s[-1], n)
+        yaw = np.unwrap(pts[:, 3].astype(np.float64))
+        self.P = np.stack([np.interp(u, s, pts[:, k]) for k in range(3)]
+                          + [np.interp(u, s, yaw)], 1).astype(np.float32)
+        self.A = np.zeros((n - 1, 7), np.float32)
+        self.A[:, :3] = np.diff(self.P[:, :3], axis=0)
+        self.A[:, 3] = np.diff(self.P[:, 3])
+        self.enter = float(d.get("enter_radius", 0.45))
+        self.end_i = n - 1 - max(int(float(d.get("end_margin_m", 0.1)) / step), 1)
+        self.sigma = float(d.get("sigma_serve", 0.0))
+        self.prompt_after = d["prompt_after"]
+        self.amean, self.astd, self.U = amean, astd, U
+        self._st = {}
+        print(f"[sketch] {path}: {len(pts)} points -> {n} steps ({s[-1]:.2f} m), "
+              f"enter_r={self.enter} sigma_serve={self.sigma}", flush=True)
+
+    def step(self, trial, pos):
+        """-> (c | None, sigma_serve | None, prompt_override | None, phase 0/1/2).
+
+        Activation is nearest-point-on-the-whole-polyline (entry at that index), not
+        radius-to-first-point: replans sample the flight only every ~1.25 m, so a
+        first-point trigger both fires early across scene geometry the sketch is meant
+        to avoid AND misses flights that join the corridor mid-way (both observed,
+        2026-08-25 first screen). Handback requires ARRIVING at the sketch end, not
+        just exhausting the index — an off-track flight keeps being pulled by the
+        final window instead of being abandoned OOD."""
+        st = self._st.setdefault(trial, {"phase": 0, "i": 0})
+        if st["phase"] == 0:
+            d = np.linalg.norm(self.P[:, :3] - pos, axis=1)
+            if d.min() < self.enter:
+                st["phase"] = 1
+                st["i"] = min(int(d.argmin()), self.end_i - 1)
+        if st["phase"] == 1:
+            # forward-monotonic, capped just above the ~50-step replan stride so an
+            # off-sketch excursion can't free-run the index to the end in one hop
+            w = self.P[st["i"]:st["i"] + 90, :3]
+            st["i"] += min(int(np.linalg.norm(w - pos, axis=1).argmin()), 65)
+            if st["i"] >= self.end_i:
+                if np.linalg.norm(pos - self.P[-1, :3]) < 0.6:
+                    st["phase"] = 2
+                else:
+                    st["i"] = self.end_i - 1
+        if st["phase"] == 1:
+            seg = np.zeros((H, 7), np.float32)
+            m = min(H, len(self.A) - st["i"])
+            seg[:m] = self.A[st["i"]:st["i"] + m]
+            ch = np.zeros((H, AD), np.float32)
+            ch[:, :7] = (seg - self.amean) / (self.astd + 1e-6)
+            return ch.reshape(-1) @ self.U, self.sigma, self.prompt_after, 1
+        if st["phase"] == 2:
+            return None, None, self.prompt_after, 2
+        return None, None, None, 0
+
+
 class JointPinPolicy:
-    def __init__(self, policy, pin_u_path):
+    def __init__(self, policy, pin_u_path, act_norm=None):
         self.policy = policy
         self.U = np.load(pin_u_path).astype(np.float32)
+        self.sketch = None
+        sp = os.environ.get("SNMVP_PIN_PROMPT", "")
+        if sp:
+            if act_norm is None:
+                raise ValueError("SNMVP_PIN_PROMPT needs action norm stats (act_norm)")
+            amean = np.asarray(act_norm.mean[:7], np.float32)
+            astd = np.asarray(act_norm.std[:7], np.float32)
+            self.sketch = SketchPrompt(sp, amean, astd, self.U)
         self._rng = np.random.default_rng(0)
         self.CLOG = os.environ.get("CLOG", "")
         self._log = []
@@ -71,6 +156,14 @@ class JointPinPolicy:
     def infer(self, obs):
         obs = dict(obs)
         trial = obs.pop("snmvp_trial", "default")
+        sk_c, sk_sig, sk_phase = None, None, 0
+        if self.sketch is not None:
+            pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
+            sk_c, sk_sig, sk_prompt, sk_phase = self.sketch.step(trial, pos)
+            if sk_prompt is not None:
+                obs["prompt"] = sk_prompt      # before head_c: the head sees the swapped task
+            if sk_phase == 1:
+                self._latch.pop(trial, None)   # re-latch fresh on handback under the new prompt
         if hasattr(self.policy._model, "snmvp_gmm_out"):
             # argmax-mode serve with hysteresis: switch components only when the incumbent's
             # weight has fallen more than SNMVP_GMM_HYST below the argmax — commits like the toy's
@@ -97,10 +190,13 @@ class JointPinPolicy:
                 xs, ys, cap = self._sigmap
                 sig_serve = float(np.clip(np.interp(sstar, xs, ys), 0.0, cap))
             extra = np.concatenate([w, [sstar, alpha,
-                                        sig_serve if sig_serve is not None else -1.0]]).astype(np.float32)
+                                        sig_serve if sig_serve is not None else -1.0,
+                                        sk_phase]]).astype(np.float32)
         else:
             c, alpha, sig_serve = joint_head.head_c(self.policy, [obs])[0], 1.0, None
-            extra = np.zeros(0, np.float32)
+            extra = np.asarray([sk_phase], np.float32)
+        if sk_c is not None:
+            c, sig_serve, alpha = sk_c.astype(np.float32), sk_sig, 1.0
         if self.CLOG:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
             self._log.append(np.concatenate([pos, c, extra]).astype(np.float32))
@@ -135,9 +231,10 @@ def main():
     ap.add_argument("--port", type=int, default=8900)
     a = ap.parse_args()
     cfg = _cfg.get_config(a.config)
-    ns = _pad(_nz.load(a.norm), cfg.model.action_dim)
+    raw_ns = _nz.load(a.norm)
+    ns = _pad(raw_ns, cfg.model.action_dim)
     policy = _pc.create_trained_policy(cfg, a.ckpt, norm_stats=ns)
-    pin = JointPinPolicy(policy, a.pin_u)
+    pin = JointPinPolicy(policy, a.pin_u, act_norm=raw_ns["actions"])
     print(f"[serve_gate_pin_joint] ready on ws://{a.host}:{a.port}", flush=True)
     WebsocketPolicyServer(policy=pin, host=a.host, port=a.port).serve_forever()
 
