@@ -6196,3 +6196,26 @@ trials x 2 training seeds). Remaining for record-board strict tier: human video 
 (left/right reels exist: overlay_armgmsig3s7_*).** Ops note: the chain broke once at
 make_sigma_map's stale data_gate_synth default (crashed post-probe; --data-dir now
 hardwired in both post scripts) and was resumed cells-only (resume_gmsig3s7_cells.sh).
+
+**SKETCH SEED-PORTABILITY (phase A of seed-rep round 2, 2026-08-26): min4 CMPL sigma=0
+replicates EXACTLY on the seed-7 checkpoint (5/5 route, 0/5 clearance, same west-post shave
+coordinates); min4 sigma=0.5 replicates the trade direction (3/5 route + 5/5 clearance vs
+4/5+4/5). min5 CMPR degrades (5/5 -> 3/5, near-hits 0.004-0.04) — root cause NOT seed
+lottery: min5's gate-1 waypoint (0.29,-1.315) was placed at the BUGGY half-box midpoint,
+steering flights through the west third of the real opening; seed-42 habits cleared the post
+by centimeters, seed-7 drifts ~10 cm west and hits it. The aperture-bug contamination reached
+the sketch geometry itself. sketch_cmpr_min5f.json fixes the waypoint to the true aperture
+midline +0.2 m through ((0.655,-1.326), computed from post centres); to fly on both
+checkpoints when the scratch-s7 chain frees the GPU. Sketches with real margins (hand-drawn,
+min4 CMPL) are checkpoint-portable; sketches whose lines run near structure inherit
+per-seed flow drift — margin IS the portability budget.
+
+**SCRATCH SEED REP (gate_scratch3s7, --seed=7, plain pi0, same data, 2026-08-26): 37/40
+route-clean judge (left 10/10, right 10/10, CFL 10/10, CFR 7/10; clearance 32/40).** Pooled
+scratch two-seed: 72/80 judge vs the pin arm's 80/80. Scratch replicates its own profile —
+including the consistent CFR weakness (7/10 BOTH seeds) — so the comparison is seed-robust in
+both directions: data quality gives scratch the 7-10/10 band per cell; the pin arm's sweep of
+every cell on every seed (and its CFR ownership) is the seed-stable margin. Compounds 0/5
+both scratch seeds (as with the pin arm unguided). Old-data checkpoints gmm/gmmmh/ctl deleted
+for disk (claims withdrawn, retrainable, rollout evidence kept); min5f corrected-sketch cells
+launched on both pin checkpoints.
