@@ -112,6 +112,9 @@ class JointPinPolicy:
     def __init__(self, policy, pin_u_path, act_norm=None):
         self.policy = policy
         self.U = np.load(pin_u_path).astype(np.float32)
+        self._rng = np.random.default_rng(int(os.environ.get("SNMVP_NOISE_SEED", "0")))
+        # SNMVP_NOISE_SEED varies the residual-noise stream (the pin's orthogonal
+        # complement) for rollout-seed replications; default 0 = historical behavior
         self.sketch = None
         sp = os.environ.get("SNMVP_PIN_PROMPT", "")
         if sp:
@@ -120,7 +123,6 @@ class JointPinPolicy:
             amean = np.asarray(act_norm.mean[:7], np.float32)
             astd = np.asarray(act_norm.std[:7], np.float32)
             self.sketch = SketchPrompt(sp, amean, astd, self.U)
-        self._rng = np.random.default_rng(0)
         self.CLOG = os.environ.get("CLOG", "")
         self._log = []
         # MDN serve state: per-trial latched component for pi-hysteresis. Keyed by the client's
