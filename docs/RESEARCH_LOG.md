@@ -6128,3 +6128,22 @@ the flow; and the CMPR cell, never above 1/10 autonomous and 3/5 under CFG, is 5
 ten-second human sketch. Screen tier: 5 trials, VIDEO=0, single sketch per cell; claim tier
 needs >=10 + video + (flywheel next) sketch-reuse stats across start positions. Artifacts:
 Sketchpad (dd2624b2), results page. Assisted rows — never mixed with autonomous.
+
+**MINIMAL-SKETCH STUDY (2026-08-25, Denis's question: "start, gate apertures, ending — does
+it do everything else on its own?"):** 4-6 point sketches (start + gate midpoints pushed
+0.2 m through the plane + end), straight lines between. ANSWER SPLIT: the flow supplies ALL
+dynamics (corner rounding, speed, settle) but NO free-space reasoning at sigma=0 — it tracks
+the drawn line ~7 cm even into a post. Results: CMPL min4 sigma=0: 5/5 route-clean, 0/5
+clearance (straight diagonal shaves the center west post 0.03-0.15). CMPL min4 sigma=0.5:
+4/5 route + 4/5 clearance — the trained trust dial buys back the finesse (wider slower
+crossing, t~160 vs ~125) at the cost of one route capture. CMPR min4: 0/5 both sigmas — the
+gate1->gate2 diagonal pierces the aperture 4 cm from the west post (a LINE error no trust
+level fixes); at sigma=0.5 even the right gate is lost: the CFR-prompted prior wants to skip
+it and slack surrenders the override. **SIGMA LAW: slack helps where sketch and prior agree
+(free-space finesse), destroys the sketch exactly where it must override the prior.**
+CMPR min5 (one staging point (2.75,-0.9) so the line pierces mid-aperture) sigma=0: 5/5
+route-clean, 1/5 clearance (grazes moved to the narrow right gate — the sharp NE exit turn;
+Denis's r1 exit angle cleared it). ECONOMY: 4-5 clicks per compound suffice for route-clean;
+clearance needs either the human's exit-angle instincts (r1: 3/5-5/5 clean) or per-waypoint
+sigma (proposed: sigma=0 at prior-conflicting gates, loose in corridors — JSON+UI extension,
+not yet built). All screen tier, 5 trials, VIDEO=0.
