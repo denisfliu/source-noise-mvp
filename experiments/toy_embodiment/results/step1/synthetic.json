@@ -1,0 +1,8 @@
+{
+  "planted_theta_deg": 35.0,
+  "recovered_theta_deg": 34.4,
+  "planted_omega": 2,
+  "gamma_at_planted": 1.0,
+  "gamma_with_divergent_body": 0.694,
+  "theta_err_deg": 0.6
+}

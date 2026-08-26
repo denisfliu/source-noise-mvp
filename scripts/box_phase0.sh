@@ -3,6 +3,11 @@
 # Confined to ~/code. Idempotent — safe to rerun. Launches NO long jobs.
 set -euo pipefail
 
+# The venv carries a cu128 torch override for Blackwell (sm_120); openpi's
+# lockfile pins cu126, and a bare `uv run` re-syncs to the lock, silently
+# reverting the override. Never sync here.
+export UV_NO_SYNC=1
+
 REPO="${HOME}/code/source-noise-mvp"
 OPENPI="${HOME}/code/openpi"
 PATCH="${REPO}/patches/openpi_arm_c_training.patch"
@@ -23,7 +28,7 @@ else
   echo "patch per docs/openpi_integration.md (the hook is ~10 lines)."
   exit 1
 fi
-python -m py_compile scripts/train_pytorch.py && echo "train_pytorch.py compiles"
+uv run python -m py_compile scripts/train_pytorch.py && echo "train_pytorch.py compiles"
 
 echo "== 3/5 snmvp into openpi venv =="
 uv pip install -e "${REPO}"
@@ -63,16 +68,19 @@ cat <<'NEXT'
 
 All cheap checks passed. Next (GPU, launch when ready):
 
+  # NOTE: always UV_NO_SYNC=1 (or uv run --no-sync) — a plain `uv run` reverts
+  # the venv's cu128 torch override to the locked cu126 build (no sm_120).
+
   # A) alpha=0 parity: two short identical runs, one env var apart —
   #    loss curves must match exactly (proves the patch is inert when off)
   cd ~/code/openpi
-  uv run scripts/compute_norm_stats.py --config-name pi0_libero
-  SNMVP_PIN_ALPHA=0 XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train_pytorch.py pi0_libero --exp_name parity_off  # stop after ~50 steps (ctrl-c)
-  SNMVP_PIN_ALPHA=0 ...                                  # rerun, same seed, diff the logged losses
+  UV_NO_SYNC=1 uv run scripts/compute_norm_stats.py --config-name pi0_libero
+  UV_NO_SYNC=1 SNMVP_PIN_ALPHA=0 XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train_pytorch.py pi0_libero --exp_name parity_off  # stop after ~50 steps (ctrl-c)
+  UV_NO_SYNC=1 SNMVP_PIN_ALPHA=0 ...                     # rerun, same seed, diff the logged losses
 
   # B) arm C overfit probe: ~100 steps on a small subset, then wrong-invariant
   #    probe via snmvp.openpi_adapter.make_calibrated_noise + policy.infer
-  SNMVP_PIN_ALPHA=1.0 XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train_pytorch.py pi0_libero --exp_name armC_overfit
+  UV_NO_SYNC=1 SNMVP_PIN_ALPHA=1.0 XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train_pytorch.py pi0_libero --exp_name armC_overfit
 
   # C) full Phase 1 arms per docs/mvp_plan.md gates
 NEXT

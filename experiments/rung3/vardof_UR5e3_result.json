@@ -1,0 +1,48 @@
+{
+  "config": {
+    "SET_A": [
+      [
+        "Panda",
+        "6"
+      ],
+      [
+        "IIWA",
+        "6"
+      ],
+      [
+        "Jaco",
+        "6"
+      ]
+    ],
+    "HELD": [
+      [
+        "UR5e",
+        "3"
+      ]
+    ],
+    "K": 10,
+    "ITERS": 10000
+  },
+  "pooled": {
+    "UR5e_S": 0.808,
+    "UR5e_GLAP": 0.625,
+    "UR5e_GLAP_or": 0.7
+  },
+  "per_seed": {
+    "s0": {
+      "UR5e_S": 0.825,
+      "UR5e_GLAP": 0.425,
+      "UR5e_GLAP_or": 0.725
+    },
+    "s1": {
+      "UR5e_S": 0.85,
+      "UR5e_GLAP": 0.725,
+      "UR5e_GLAP_or": 0.7
+    },
+    "s2": {
+      "UR5e_S": 0.75,
+      "UR5e_GLAP": 0.725,
+      "UR5e_GLAP_or": 0.675
+    }
+  }
+}

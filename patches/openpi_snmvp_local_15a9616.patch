@@ -1,0 +1,767 @@
+diff --git a/scripts/train_pytorch.py b/scripts/train_pytorch.py
+index c7ddd2b..dcc3c60 100644
+--- a/scripts/train_pytorch.py
++++ b/scripts/train_pytorch.py
+@@ -38,6 +38,34 @@ import torch
+ import torch.distributed as dist
+ import torch.nn.parallel
+ import tqdm
++
++# --- snmvp: source-noise invariant pinning (arm C). Enable with SNMVP_PIN_ALPHA=1.0 ---
++try:
++    from snmvp import SourceConstructor as _SnmvpSC
++    from snmvp import extract_invariant as _snmvp_extract
++except ImportError:
++    _SnmvpSC = None
++_SNMVP_ALPHA = float(os.environ.get("SNMVP_PIN_ALPHA", "0"))
++# SNMVP_PINNED_DIMS=N pins only the leading N (actuated) action dims,
++# matching the inference adapter; unset = all padded dims (legacy behavior).
++_SNMVP_NDIMS = int(os.environ.get("SNMVP_PINNED_DIMS", "0"))
++_SNMVP_PINNED = list(range(_SNMVP_NDIMS)) if _SNMVP_NDIMS > 0 else None
++
++# --- snmvp: branch-carried invariant conditioning (arm B/D). Enable by setting
++# SNMVP_COND_STATS to the dataset's invariant_stats.json (see
++# source-noise-mvp/scripts/compute_invariant_stats.py). Inert when unset. ---
++try:
++    from snmvp.conditioning import inject_invariant_state as _snmvp_inject
++    from snmvp.conditioning import load_invariant_stats as _snmvp_load_stats
++except ImportError:
++    _snmvp_inject = None
++_SNMVP_COND_DIMS = int(os.environ.get("SNMVP_COND_DIMS", "7"))
++_SNMVP_COND_STATS = (
++    _snmvp_load_stats(os.environ["SNMVP_COND_STATS"])
++    if _snmvp_inject is not None and os.environ.get("SNMVP_COND_STATS")
++    else None
++)
++
+ import wandb
+ 
+ import openpi.models.pi0_config
+@@ -526,7 +554,27 @@ def train_loop(config: _config.TrainConfig):
+                 pg["lr"] = lr_schedule(global_step)
+ 
+             # Forward pass
+-            losses = model(observation, actions)
++            if _SNMVP_COND_STATS is not None:
++                # snmvp arm B/D: the same chunk invariant, branch-carried —
++                # z-normalized and written into trailing (padding) proprio
++                # state dims, so the action expert receives it as a
++                # conditioning input with zero parameter-count change.
++                _snmvp_inject(
++                    observation.state,
++                    _snmvp_extract(actions)[:, :_SNMVP_COND_DIMS],
++                    *_SNMVP_COND_STATS,
++                )
++            if _SnmvpSC is not None and _SNMVP_ALPHA > 0:
++                # snmvp arm C: pin the chunk invariant L(a) = sum_t a_t into the
++                # source noise; the flow target u_t = noise - actions then
++                # satisfies L(u_t) = 0 at every t (carried invariant).
++                _base = model.module if hasattr(model, "module") else model
++                _noise = _base.sample_noise(actions.shape, actions.device)
++                _noise = _SnmvpSC(alpha=_SNMVP_ALPHA, pinned_dims=_SNMVP_PINNED)(
++                    _noise, _snmvp_extract(actions))
++                losses = model(observation, actions, noise=_noise)
++            else:
++                losses = model(observation, actions)
+             # Ensure losses is a tensor and handle different return types
+             if isinstance(losses, list | tuple):
+                 losses = torch.stack(losses)
+diff --git a/src/openpi/models/pi0.py b/src/openpi/models/pi0.py
+index ae7c459..46dc433 100644
+--- a/src/openpi/models/pi0.py
++++ b/src/openpi/models/pi0.py
+@@ -15,6 +15,136 @@ from openpi.shared import array_typing as at
+ 
+ logger = logging.getLogger("openpi")
+ 
++# --- SNMVP source-noise pin (env-gated; no-op unless SNMVP_PIN_U is set) ---
++import os as _os
++import numpy as _np
++_PIN_U = None
++_pin_path = _os.environ.get("SNMVP_PIN_U")
++if _pin_path:
++    _PIN_U = _np.load(_pin_path).astype("float32")  # numpy constant (baked into jit), (D=ah*ad, K)
++    logger.info(f"SNMVP pin enabled: U from {_pin_path} shape {_PIN_U.shape}")
++# ZERO-PIN control (Denis, 2026-08-08): noise orthogonalized but c forced to 0 — the
++# source is exactly as consistent as the real pin yet carries no answer; separates
++# "familiar noise style" from "coarse action supplied" in the low-data ladder.
++_PIN_ZERO = _os.environ.get("SNMVP_PIN_ZERO", "") == "1"
++_PIN_NOISE = float(_os.environ.get("SNMVP_PIN_NOISE", "0"))
++_PIN_NOISE_RAND = _os.environ.get("SNMVP_PIN_NOISE_RAND", "") == "1"
++# sigma-CONDITIONING (Denis, 2026-08-06): tell the model each sample's pin-noise level
++# so trust becomes an INFERENCE dial (SNMVP_SIGMA_INFER at serving); requires RAND.
++_PIN_NOISE_COND = _os.environ.get("SNMVP_PIN_NOISE_COND", "") == "1"
++# VLM-error-matched soft pin v1 (Denis, 2026-08-06): sample the pin perturbation from
++# the MEASURED error distribution of the VLM command head, N(mean, Sigma), instead of
++# isotropic sigma*std*eps — the flow learns to correct the errors it will see.
++_PIN_COV = None
++_cov_path = _os.environ.get("SNMVP_PIN_NOISE_COV")
++if _cov_path:
++    _cv = _np.load(_cov_path)
++    _PIN_COV = (_np.linalg.cholesky(_cv["Sigma"] + 1e-6 * _np.eye(len(_cv["Sigma"]))).astype("float32"),
++                _cv["mean"].astype("float32"))
++    logger.info(f"SNMVP cov-matched pin noise from {_cov_path}")
++_SIGMA_INFER = float(_os.environ.get("SNMVP_SIGMA_INFER", "-1"))
++# Learned factorization (no assumed RRR U): SNMVP_LEARN_U=K adds a learnable
++# orthonormal D x K pin basis (QR of a free matrix) trained jointly with the flow,
++# plus an observation head P(prefix-pool) -> c whose variance-normalized error is
++# added to the loss WITHOUT stop-grad — the RRR predictability objective learned
++# end-to-end. SNMVP_LEARN_U_DIMS masks the basis to the leading real action dims
++# (padded dims are constant-zero => trivially predictable => collapse magnet).
++# JOINT COMMAND HEAD with U HELD FIXED (Denis, 2026-08-11). Distinct from SNMVP_LEARN_U above:
++# freeing U was what broke the earlier learned-U run -- the flow co-opted the pinned channel for
++# fine/high-frequency detail (learned U 19/65/90/90/90 deg from RRR, yaw-dominant) because pinning
++# pays most where the flow predicts worst. With U FIXED that failure mode is impossible: coupling can
++# only reshape the representation, not change what is pinned. The head is an nnx submodule, so it is
++# saved INSIDE the flow checkpoint -- the feature-source mismatch that cost us 0/10 closed-loop
++# becomes impossible by construction rather than merely detected by a stamp.
++#   SNMVP_HEAD=1            enable, K taken from SNMVP_PIN_U
++#   SNMVP_HEAD_DETACH=1     stop-gradient on the features (B1): solves staleness, cannot alter the VLA
++#   SNMVP_HEAD_LAM=f        loss weight (B2 uses DETACH=0 and sweeps this)
++_HEAD_K = _PIN_U.shape[1] if (_PIN_U is not None and _os.environ.get("SNMVP_HEAD") == "1") else 0
++_HEAD_DETACH = _os.environ.get("SNMVP_HEAD_DETACH", "1") == "1"
++_HEAD_LAM = float(_os.environ.get("SNMVP_HEAD_LAM", "1.0"))
++# State reaches the model through the SUFFIX (embed_suffix -> state_proj), so prefix_out carries
++# image+language but NO proprioception. Our command depends on where in the manoeuvre the drone is,
++# and the priors that work (one-hot, langprior) all take the state explicitly. SNMVP_HEAD_STATE=1
++# concatenates the normalized state onto the head's readout.
++_HEAD_STATE = _os.environ.get("SNMVP_HEAD_STATE", "0") == "1"
++# SNMVP_FLOW_DETACH=1 (C2, the factored arm): the flow loss trains ONLY the action expert; the VLM is
++# trained ONLY through the command head's c loss. Training runs the same two-pass computation as
++# inference — a live prefix pass (head loss reaches the VLM via prefix_out) and a suffix pass whose
++# kv cache is stop-gradded (the cache is the flow loss's only path into the VLM: suffix embeddings
++# are state/noise/time). Forward values are unchanged, so the action expert still READS the full VLM
++# features — only the gradient is routed. Requires SNMVP_HEAD=1; use SNMVP_HEAD_DETACH=0, otherwise
++# no loss trains the VLM at all (that cell is C1, done via freeze_filter instead).
++_FLOW_DETACH = _os.environ.get("SNMVP_FLOW_DETACH", "0") == "1"
++# SNMVP_HEAD_LOGMAG=1: scale-invariant head loss — direction (cosine, weighted by the true
++# magnitude so near-zero commands don't inject noise-direction gradients) + log-magnitude
++# (relative error: 2x wrong at 5 cm costs the same as 2x wrong at 1 m). Motivation (Denis,
++# 2026-08-12): the variance-normalized MSE under-weights tail commands exactly where the pin's
++# 1:1 passthrough makes their errors most expensive; per-segment reweighting would be manual and
++# regime-specific, a relative metric is not. The PIN is untouched: training still pins oracle
++# c = U^T a, serving still consumes the head's recomposed K-vector.
++_HEAD_LOGMAG = _os.environ.get("SNMVP_HEAD_LOGMAG", "0") == "1"
++_HEAD_LOGMAG_EPS = float(_os.environ.get("SNMVP_HEAD_LOGMAG_EPS", "0.1"))
++# SNMVP_HEAD_GEN=1: GENERATIVE command head (Denis, 2026-08-13). The regression head outputs
++# E[c|o], and the mean of a multimodal future is not a valid future — measured: mh16's goal-region
++# command magnitude (2.48) sits BELOW every demo phase mode (cruise 3.28 / late 6.84 / stop 3.02),
++# the shrinkage signature of averaging vectors with different directions; C2's c2 output the exact
++# between-task midpoint at the ambiguous start. This replaces the MLP-readout REGRESSION with a
++# small conditional flow over R^K trained by CFM on the same pooled features: at serve we SAMPLE
++# c ~ p(c|o) — a draw is always one full-magnitude mode. Sampling is independent per replan, NO
++# commitment mechanism: the state is the memory (Denis) — once flown toward a mode, the posterior
++# collapses by itself, and genuine mind-changes stay possible.
++_HEAD_GEN = _os.environ.get("SNMVP_HEAD_GEN", "0") == "1"
++if _HEAD_GEN and not _HEAD_K:
++    raise ValueError("SNMVP_HEAD_GEN=1 requires SNMVP_HEAD=1 (+SNMVP_PIN_U)")
++# SNMVP_HEAD_FILM=1 (Denis-approved, 2026-08-13): the generative head's conditioning enters
++# EXCLUSIVELY through FiLM modulation (h -> (1+gamma(cond))*h + beta(cond)) of the CFM trunk,
++# from three explicit channels: STATE (the record system's geometry input, dropped by the joint
++# heads), a LANGUAGE-TOKEN mean pool (the in-checkpoint descendant of the readout that grounded
++# language pre-joint; the full-prefix pool can fit scene-confounded training while ignoring
++# language), and the IMAGE attention pool. Concat conditioning can be ignored by zeroing input
++# weights — the measured conditioning neglect; a multiplicative gate cannot, unless gamma
++# collapses to a constant. Same mechanism family as pi0's own adaRMS time conditioning.
++_HEAD_FILM = _os.environ.get("SNMVP_HEAD_FILM", "0") == "1"
++if _HEAD_FILM and not _HEAD_GEN:
++    raise ValueError("SNMVP_HEAD_FILM=1 requires SNMVP_HEAD_GEN=1")
++# SNMVP_HEAD_GMM=1 (Denis, 2026-08-19, from toy_cmdhead): mixture-density command head. Same
++# information diet as the FiLM head (state + language-token mean pool + prefix attention pool),
++# but the output is an EXPLICIT mixture (pi, mu, sigma) over R^K trained by NLL. Toy result: GMM
++# == CFM on validity/calibration, and its differentiators are serve-side — pi(o) makes posterior
++# calibration a direct offline readout (start-draw histogram becomes one forward pass), and
++# argmax-mode serve commits to a mode with zero sampling jitter (the deployed k-mean+EMA smoothing
++# of CFM draws re-averages modes exactly at ambiguous states). M components via SNMVP_HEAD_GMM_M.
++_HEAD_GMM = _os.environ.get("SNMVP_HEAD_GMM", "0") == "1"
++_GMM_M = int(_os.environ.get("SNMVP_HEAD_GMM_M", "4"))
++# SNMVP_HEAD_COND_DROP="ps,pi,pl" (Denis, 2026-08-24, literature-grounded rev): INDEPENDENT
++# per-channel Bernoulli dropout of the head's conditioning branches — state, image-pool,
++# language. Rationale: state-sufficiency on clean-corridor data is causal confusion
++# (de Haan'19) / the copycat shortcut (Wen'20); the standard treatments are aggressive dropout
++# of the shortcut channel + independent modality dropout so every pathway stays live
++# (ModDrop lineage). Image gets a mild drop too or the position shortcut migrates into the
++# pooled pixels (localization ~0.15-0.2 m). Language dropped ~10% CFG-style to learn the
++# null-language branch — the handle for a language-adherence sharpener at serve (only ever a
++# final sharpener, per standing rule). Recommended: "0.4,0.15,0.1".
++_cd = _os.environ.get("SNMVP_HEAD_COND_DROP", "0")
++_HEAD_COND_DROP = tuple(float(x) for x in _cd.split(",")) if "," in _cd else (
++    (float(_cd), float(_cd), 0.0))  # legacy single float = joint state+image drop, lang kept
++if _HEAD_GMM and not _HEAD_K:
++    raise ValueError("SNMVP_HEAD_GMM=1 requires SNMVP_HEAD=1 (+SNMVP_PIN_U)")
++if _HEAD_GMM and (_HEAD_GEN or _HEAD_FILM):
++    raise ValueError("SNMVP_HEAD_GMM=1 replaces the CFM head - unset SNMVP_HEAD_GEN/SNMVP_HEAD_FILM")
++if _HEAD_K:
++    logger.info(f"SNMVP joint command head: K={_HEAD_K} detach={_HEAD_DETACH} lam={_HEAD_LAM} "
++                f"flow_detach={_FLOW_DETACH} gen={_HEAD_GEN} film={_HEAD_FILM} "
++                f"gmm={_HEAD_GMM}{f' M={_GMM_M}' if _HEAD_GMM else ''} (U fixed from {_pin_path})")
++if _FLOW_DETACH and (not _HEAD_K or _HEAD_DETACH):
++    raise ValueError("SNMVP_FLOW_DETACH=1 needs SNMVP_HEAD=1 and SNMVP_HEAD_DETACH=0 - "
++                     "otherwise no loss reaches the VLM (freeze it via freeze_filter instead)")
++_LEARN_U_K = int(_os.environ.get("SNMVP_LEARN_U", "0"))
++_LEARN_U_LAM = float(_os.environ.get("SNMVP_LEARN_U_LAM", "1.0"))
++_LEARN_U_DIMS = int(_os.environ.get("SNMVP_LEARN_U_DIMS", "0"))
++if _LEARN_U_K:
++    logger.info(f"SNMVP learned-U enabled: K={_LEARN_U_K} lam={_LEARN_U_LAM} dims={_LEARN_U_DIMS}")
++
+ 
+ def make_attn_mask(input_mask, mask_ar):
+     """Adapted from big_vision.
+@@ -98,6 +228,46 @@ class Pi0(_model.BaseModel):
+             self.action_time_mlp_in = nnx.Linear(2 * action_expert_config.width, action_expert_config.width, rngs=rngs)
+             self.action_time_mlp_out = nnx.Linear(action_expert_config.width, action_expert_config.width, rngs=rngs)
+         self.action_out_proj = nnx.Linear(action_expert_config.width, config.action_dim, rngs=rngs)
++        if _LEARN_U_K or _HEAD_K:
++            _D = config.action_horizon * config.action_dim
++            if _LEARN_U_K:
++                self.snmvp_W = nnx.Param(0.01 * jax.random.normal(rngs.params(), (_D, _LEARN_U_K)))
++            # prediction head: ATTENTION readout over prefix tokens (mean-pooling dilutes
++            # spatial/language structure — Denis 2026-08-06), then a small MLP -> c.
++            _nq, _dh = 4, 256
++            self.snmvp_q = nnx.Param(0.02 * jax.random.normal(rngs.params(), (_nq, _dh)))
++            self.snmvp_k = nnx.Linear(paligemma_config.width, _dh, rngs=rngs)
++            self.snmvp_v = nnx.Linear(paligemma_config.width, _dh, rngs=rngs)
++            _hin = _nq * _dh + (config.action_dim if (_HEAD_K and _HEAD_STATE) else 0)
++            self.snmvp_head_in = nnx.Linear(_hin, 256, rngs=rngs)
++            self.snmvp_head_out = nnx.Linear(256, _LEARN_U_K or _HEAD_K, rngs=rngs)
++            if _HEAD_GEN:
++                # conditional flow over R^K: v(c_t, t | pooled ctx); 16 sin/cos pairs for t
++                _K = _HEAD_K
++                self.snmvp_gen_ctx = nnx.Linear(_hin, 256, rngs=rngs)
++                self.snmvp_gen_h1 = nnx.Linear(_K + 256 + 32, 256, rngs=rngs)
++                self.snmvp_gen_h2 = nnx.Linear(256, 256, rngs=rngs)
++                self.snmvp_gen_out = nnx.Linear(256, _K, rngs=rngs)
++            if _HEAD_FILM:
++                # FiLM variant: trunk sees only (c_t, temb); cond = [state, lang-mean, img-pool]
++                _K = _HEAD_K
++                self.snmvp_lang_proj = nnx.Linear(paligemma_config.width, 256, rngs=rngs)
++                self.snmvp_state_proj = nnx.Linear(config.action_dim, 64, rngs=rngs)
++                self.snmvp_film_h = nnx.Linear(64 + 256 + 256, 256, rngs=rngs)
++                self.snmvp_film1 = nnx.Linear(256, 512, rngs=rngs)
++                self.snmvp_film2 = nnx.Linear(256, 512, rngs=rngs)
++                self.snmvp_gf_in = nnx.Linear(_K + 32, 256, rngs=rngs)
++                self.snmvp_gf_h2 = nnx.Linear(256, 256, rngs=rngs)
++                self.snmvp_gf_out = nnx.Linear(256, _K, rngs=rngs)
++            if _HEAD_GMM:
++                # MDN variant: same three cond channels as FiLM, output = M*(1 + 2K) mixture params
++                _K = _HEAD_K
++                self.snmvp_lang_proj = nnx.Linear(paligemma_config.width, 256, rngs=rngs)
++                self.snmvp_state_proj = nnx.Linear(config.action_dim, 64, rngs=rngs)
++                self.snmvp_gen_ctx = nnx.Linear(_hin, 256, rngs=rngs)
++                self.snmvp_gmm_h1 = nnx.Linear(64 + 256 + 256, 256, rngs=rngs)
++                self.snmvp_gmm_h2 = nnx.Linear(256, 256, rngs=rngs)
++                self.snmvp_gmm_out = nnx.Linear(256, _GMM_M * (1 + 2 * _K), rngs=rngs)
+ 
+         # This attribute gets automatically set by model.train() and model.eval().
+         self.deterministic = True
+@@ -138,7 +308,8 @@ class Pi0(_model.BaseModel):
+ 
+     @at.typecheck
+     def embed_suffix(
+-        self, obs: _model.Observation, noisy_actions: _model.Actions, timestep: at.Float[at.Array, " b"]
++        self, obs: _model.Observation, noisy_actions: _model.Actions, timestep: at.Float[at.Array, " b"],
++        snmvp_sigma=None
+     ) -> tuple[
+         at.Float[at.Array, "b s emb"],
+         at.Bool[at.Array, "b s"],
+@@ -159,6 +330,12 @@ class Pi0(_model.BaseModel):
+         action_tokens = self.action_in_proj(noisy_actions)
+         # embed timestep using sine-cosine positional encoding with sensitivity in the range [0, 1]
+         time_emb = posemb_sincos(timestep, self.action_in_proj.out_features, min_period=4e-3, max_period=4.0)
++        if _PIN_NOISE_COND:
++            _sig = snmvp_sigma
++            if _sig is None:                       # inference default: env dial (0 if unset)
++                _sig = jnp.full(timestep.shape, max(_SIGMA_INFER, 0.0))
++            time_emb = time_emb + posemb_sincos(_sig, self.action_in_proj.out_features,
++                                                min_period=4e-3, max_period=4.0)
+         if self.pi05:
+             # time MLP (for adaRMS)
+             time_emb = self.time_mlp_in(time_emb)
+@@ -194,24 +371,195 @@ class Pi0(_model.BaseModel):
+ 
+         batch_shape = actions.shape[:-2]
+         noise = jax.random.normal(noise_rng, actions.shape)
++        _sigma_cond = None
++        _learn_c = None
++        if _LEARN_U_K:
++            _W = self.snmvp_W.value
++            if _LEARN_U_DIMS:
++                _rowmask = ((jnp.arange(_W.shape[0]) % actions.shape[-1]) < _LEARN_U_DIMS)
++                _W = _W * _rowmask[:, None]
++            _Ul, _ = jnp.linalg.qr(_W)          # D x K, orthonormal columns
++            _b = actions.shape[0]
++            _af = actions.reshape(_b, -1)
++            _nf = noise.reshape(_b, -1)
++            _learn_c = _af @ _Ul                 # self-pin target, exact for any orthonormal U
++            _cp = _learn_c
++            if _PIN_NOISE > 0:
++                _cstd_n = jnp.std(_learn_c, axis=0, keepdims=True)
++                if _PIN_NOISE_RAND:
++                    _sig = _PIN_NOISE * jax.random.uniform(
++                        jax.random.fold_in(noise_rng, 11), (_b, 1))
++                else:
++                    _sig = _PIN_NOISE
++                _cp = _learn_c + _sig * _cstd_n * jax.random.normal(
++                    jax.random.fold_in(noise_rng, 7), _learn_c.shape)
++            _nf = _nf - (_nf @ _Ul) @ _Ul.T + _cp @ _Ul.T
++            noise = _nf.reshape(actions.shape)
++        if _PIN_U is not None:
++            _U = jnp.asarray(_PIN_U)
++            _b = actions.shape[0]
++            _af = actions.reshape(_b, -1)
++            _nf = noise.reshape(_b, -1)
++            _c = _af @ _U
++            if _PIN_COV is not None:  # error-matched: eps ~ N(mean, Sigma) of the measured head
++                _L, _m = jnp.asarray(_PIN_COV[0]), jnp.asarray(_PIN_COV[1])
++                _g5 = jax.random.normal(jax.random.fold_in(noise_rng, 13), _c.shape)
++                _c = _c + _m + _g5 @ _L.T
++            elif _PIN_NOISE > 0:  # soft pin: perturb c so the flow learns to CORRECT prior error from obs
++                _cstd = jnp.std(_c, axis=0, keepdims=True)
++                if _PIN_NOISE_RAND:  # CFG-dropout-style: per-sample sigma ~ U(0, PIN_NOISE) — one
++                    # flow spanning obey<->correct instead of one fixed trust level per checkpoint
++                    _sig = _PIN_NOISE * jax.random.uniform(
++                        jax.random.fold_in(noise_rng, 11), (_c.shape[0], 1))
++                else:
++                    _sig = _PIN_NOISE
++                _c = _c + _sig * _cstd * jax.random.normal(jax.random.fold_in(noise_rng, 7), _c.shape)
++                if _PIN_NOISE_COND:
++                    _sigma_cond = jnp.broadcast_to(jnp.asarray(_sig).reshape(-1), (_b,))
++            if _PIN_ZERO:
++                _c = _c * 0.0
++            _nf = _nf - (_nf @ _U) @ _U.T + _c @ _U.T
++            noise = _nf.reshape(actions.shape)
+         time = jax.random.beta(time_rng, 1.5, 1, batch_shape) * 0.999 + 0.001
+         time_expanded = time[..., None, None]
+         x_t = time_expanded * noise + (1 - time_expanded) * actions
+         u_t = noise - actions
+ 
+-        # one big forward pass of prefix + suffix at once
+         prefix_tokens, prefix_mask, prefix_ar_mask = self.embed_prefix(observation)
+-        suffix_tokens, suffix_mask, suffix_ar_mask, adarms_cond = self.embed_suffix(observation, x_t, time)
+-        input_mask = jnp.concatenate([prefix_mask, suffix_mask], axis=1)
+-        ar_mask = jnp.concatenate([prefix_ar_mask, suffix_ar_mask], axis=0)
+-        attn_mask = make_attn_mask(input_mask, ar_mask)
+-        positions = jnp.cumsum(input_mask, axis=1) - 1
+-        (prefix_out, suffix_out), _ = self.PaliGemma.llm(
+-            [prefix_tokens, suffix_tokens], mask=attn_mask, positions=positions, adarms_cond=[None, adarms_cond]
+-        )
++        suffix_tokens, suffix_mask, suffix_ar_mask, adarms_cond = self.embed_suffix(
++            observation, x_t, time, snmvp_sigma=(_sigma_cond if _PIN_NOISE_COND and _PIN_U is not None else None))
++        if _FLOW_DETACH:
++            # two-pass, mirroring sample_actions: identical forward values to the joint pass, but the
++            # stop-gradded kv cache keeps the flow loss out of the VLM (see flag comment at top)
++            prefix_attn_mask = make_attn_mask(prefix_mask, prefix_ar_mask)
++            prefix_positions = jnp.cumsum(prefix_mask, axis=1) - 1
++            (prefix_out, _), kv_cache = self.PaliGemma.llm(
++                [prefix_tokens, None], mask=prefix_attn_mask, positions=prefix_positions
++            )
++            kv_cache = jax.lax.stop_gradient(kv_cache)
++            suffix_attn_mask = make_attn_mask(suffix_mask, suffix_ar_mask)
++            cross_mask = einops.repeat(prefix_mask, "b p -> b s p", s=suffix_tokens.shape[1])
++            full_attn_mask = jnp.concatenate([cross_mask, suffix_attn_mask], axis=-1)
++            suffix_positions = jnp.sum(prefix_mask, axis=-1)[:, None] + jnp.cumsum(suffix_mask, axis=-1) - 1
++            (_, suffix_out), _ = self.PaliGemma.llm(
++                [None, suffix_tokens],
++                mask=full_attn_mask,
++                positions=suffix_positions,
++                kv_cache=kv_cache,
++                adarms_cond=[None, adarms_cond],
++            )
++        else:
++            # one big forward pass of prefix + suffix at once
++            input_mask = jnp.concatenate([prefix_mask, suffix_mask], axis=1)
++            ar_mask = jnp.concatenate([prefix_ar_mask, suffix_ar_mask], axis=0)
++            attn_mask = make_attn_mask(input_mask, ar_mask)
++            positions = jnp.cumsum(input_mask, axis=1) - 1
++            (prefix_out, suffix_out), _ = self.PaliGemma.llm(
++                [prefix_tokens, suffix_tokens], mask=attn_mask, positions=positions, adarms_cond=[None, adarms_cond]
++            )
+         v_t = self.action_out_proj(suffix_out[:, -self.action_horizon :])
+ 
+-        return jnp.mean(jnp.square(v_t - u_t), axis=-1)
++        loss = jnp.mean(jnp.square(v_t - u_t), axis=-1)
++        if _learn_c is None and _HEAD_K:
++            # oracle c from the ground-truth chunk, exactly as the pin computes it. The head's
++            # PREDICTION is never fed to the pin during training: the flow would co-adapt to the
++            # head's errors (scheduled sampling is a separate experiment, not this).
++            _learn_c = actions.reshape(actions.shape[0], -1) @ _PIN_U
++        if _learn_c is not None:
++            # predictability term (RRR objective, joint): variance-normalized so U cannot
++            # buy loss by rotating into low-variance directions; no stop-grad on _learn_c.
++            _pm = prefix_mask.astype(jnp.float32)
++            _feat = jax.lax.stop_gradient(prefix_out) if (_HEAD_K and _HEAD_DETACH) else prefix_out
++            _keys = self.snmvp_k(_feat)                           # (b, T, dh)
++            _vals = self.snmvp_v(_feat)                           # (b, T, dh)
++            _sc = jnp.einsum("qd,btd->bqt", self.snmvp_q.value, _keys) / jnp.sqrt(256.0)
++            _sc = jnp.where(_pm[:, None, :] > 0, _sc, -1e9)
++            _at = jax.nn.softmax(_sc, axis=-1)                    # (b, nq, T)
++            _ctx = jnp.einsum("bqt,btd->bqd", _at, _vals).reshape(prefix_out.shape[0], -1)
++            if _HEAD_K and _HEAD_STATE:
++                _ctx = jnp.concatenate([_ctx, observation.state], axis=-1)
++            if _HEAD_K and _HEAD_GMM:
++                # MDN over the K-dim command: NLL of the oracle c under an explicit mixture.
++                # Unlike the CFM head there is no t-structure for gradients to hide in — pi and
++                # mu are direct functions of the conditioning, so neglecting it costs NLL at
++                # every branch state.
++                _nl = observation.tokenized_prompt.shape[1]
++                _lm = observation.tokenized_prompt_mask.astype(jnp.float32)[:, :, None]
++                _lang = (_feat[:, -_nl:] * _lm).sum(1) / jnp.clip(_lm.sum(1), 1e-6)
++                _st_b = jax.nn.silu(self.snmvp_state_proj(observation.state))
++                _lg_b = jax.nn.silu(self.snmvp_lang_proj(_lang))
++                _im_b = jax.nn.silu(self.snmvp_gen_ctx(_ctx))
++                if max(_HEAD_COND_DROP) > 0:
++                    _ps, _pi_, _pl = _HEAD_COND_DROP
++                    _b0 = _st_b.shape[0]
++                    def _keep_mask(seed, prob):
++                        return (jax.random.uniform(jax.random.fold_in(noise_rng, seed),
++                                                   (_b0, 1)) >= prob).astype(_st_b.dtype)
++                    _st_b = _st_b * _keep_mask(31, _ps)
++                    _im_b = _im_b * _keep_mask(32, _pi_)
++                    _lg_b = _lg_b * _keep_mask(33, _pl)
++                _cond = jnp.concatenate([_st_b, _lg_b, _im_b], axis=-1)
++                _h = jax.nn.silu(self.snmvp_gmm_h2(jax.nn.silu(self.snmvp_gmm_h1(_cond))))
++                _o = self.snmvp_gmm_out(_h)
++                _M, _K = _GMM_M, _HEAD_K
++                _logit = _o[:, :_M]
++                _mu = _o[:, _M:_M * (1 + _K)].reshape(-1, _M, _K)
++                _logsig = jnp.clip(_o[:, _M * (1 + _K):].reshape(-1, _M, _K), -5.0, 2.0)
++                _logw = jax.nn.log_softmax(_logit, axis=-1)
++                _comp = (-0.5 * jnp.square((_learn_c[:, None] - _mu) / jnp.exp(_logsig))
++                         - _logsig - 0.5 * jnp.log(2 * jnp.pi)).sum(-1)
++                _pred = -jax.nn.logsumexp(_logw + _comp, axis=-1)
++                _lam = _LEARN_U_LAM if _LEARN_U_K else _HEAD_LAM
++                loss = loss + _lam * _pred[:, None]
++                return loss
++            if _HEAD_K and _HEAD_GEN:
++                # CFM over the K-dim command: same interpolant convention as the action flow
++                # (t=1 noise, t=0 data); the sampled draw at serve time commits to ONE mode
++                _b2 = _learn_c.shape[0]
++                _tg = jax.random.uniform(jax.random.fold_in(noise_rng, 21), (_b2, 1)) * 0.998 + 0.001
++                _eg = jax.random.normal(jax.random.fold_in(noise_rng, 22), _learn_c.shape)
++                _cg = _tg * _eg + (1 - _tg) * _learn_c
++                _ug = _eg - _learn_c
++                _fr = 2.0 ** jnp.arange(16)
++                _temb = jnp.concatenate([jnp.sin(_tg * _fr), jnp.cos(_tg * _fr)], axis=-1)
++                if _HEAD_FILM:
++                    # language-token slice: embed_prefix appends the prompt tokens LAST
++                    _nl = observation.tokenized_prompt.shape[1]
++                    _lm = observation.tokenized_prompt_mask.astype(jnp.float32)[:, :, None]
++                    _lang = (_feat[:, -_nl:] * _lm).sum(1) / jnp.clip(_lm.sum(1), 1e-6)
++                    _cond = jnp.concatenate([
++                        jax.nn.silu(self.snmvp_state_proj(observation.state)),
++                        jax.nn.silu(self.snmvp_lang_proj(_lang)),
++                        jax.nn.silu(self.snmvp_gen_ctx(_ctx))], axis=-1)
++                    _f = jax.nn.silu(self.snmvp_film_h(_cond))
++                    _g1, _bb1 = jnp.split(self.snmvp_film1(_f), 2, axis=-1)
++                    _g2, _bb2 = jnp.split(self.snmvp_film2(_f), 2, axis=-1)
++                    _h = jax.nn.silu((1 + _g1) * self.snmvp_gf_in(
++                        jnp.concatenate([_cg, _temb], axis=-1)) + _bb1)
++                    _h = jax.nn.silu((1 + _g2) * self.snmvp_gf_h2(_h) + _bb2)
++                    _vg = self.snmvp_gf_out(_h)
++                else:
++                    _cp = jax.nn.silu(self.snmvp_gen_ctx(_ctx))
++                    _h = jax.nn.silu(self.snmvp_gen_h1(jnp.concatenate([_cg, _cp, _temb], axis=-1)))
++                    _vg = self.snmvp_gen_out(jax.nn.silu(self.snmvp_gen_h2(_h)))
++                _pred = jnp.mean(jnp.square(_vg - _ug), axis=-1)
++                _lam = _LEARN_U_LAM if _LEARN_U_K else _HEAD_LAM
++                loss = loss + _lam * _pred[:, None]
++                return loss
++            _chat = self.snmvp_head_out(jax.nn.silu(self.snmvp_head_in(_ctx)))
++            if _HEAD_LOGMAG:
++                _eps = _HEAD_LOGMAG_EPS
++                _cn = jnp.linalg.norm(_learn_c, axis=-1)
++                _pn = jnp.linalg.norm(_chat, axis=-1)
++                _cos = jnp.sum(_chat * _learn_c, axis=-1) / ((_pn + _eps) * (_cn + _eps))
++                _wdir = _cn / (jnp.mean(_cn) + 1e-6)
++                _pred = _wdir * (1.0 - _cos) + jnp.square(jnp.log(_pn + _eps) - jnp.log(_cn + _eps))
++            else:
++                _cvar = jnp.std(_learn_c, axis=0) + 1e-3
++                _pred = jnp.mean(jnp.square((_chat - _learn_c) / _cvar), axis=-1)
++            _lam = _LEARN_U_LAM if _LEARN_U_K else _HEAD_LAM
++            loss = loss + _lam * _pred[:, None]
++        return loss
+ 
+     @override
+     def sample_actions(
+@@ -221,6 +569,7 @@ class Pi0(_model.BaseModel):
+         *,
+         num_steps: int | at.Int[at.Array, ""] = 10,
+         noise: at.Float[at.Array, "b ah ad"] | None = None,
++        snmvp_sigma: at.Float[at.Array, ""] | None = None,
+     ) -> _model.Actions:
+         observation = _model.preprocess_observation(None, observation, train=False)
+         # note that we use the convention more common in diffusion literature, where t=1 is noise and t=0 is the target
+@@ -236,10 +585,18 @@ class Pi0(_model.BaseModel):
+         positions = jnp.cumsum(prefix_mask, axis=1) - 1
+         _, kv_cache = self.PaliGemma.llm([prefix_tokens, None], mask=prefix_attn_mask, positions=positions)
+ 
++        # per-replan pin-trust dial (sigma-conditioned flows only): tells embed_suffix how
++        # corrupted the carried command should be assumed to be, in the same units the flow was
++        # trained with (fractions of c-std). Passed as an array so jit traces it, not recompiles.
++        _sig_infer = None
++        if snmvp_sigma is not None:
++            _sig_infer = jnp.broadcast_to(jnp.asarray(snmvp_sigma, jnp.float32).reshape(-1)[:1],
++                                          (batch_size,))
++
+         def step(carry):
+             x_t, time = carry
+             suffix_tokens, suffix_mask, suffix_ar_mask, adarms_cond = self.embed_suffix(
+-                observation, x_t, jnp.broadcast_to(time, batch_size)
++                observation, x_t, jnp.broadcast_to(time, batch_size), snmvp_sigma=_sig_infer
+             )
+             # `suffix_attn_mask` is shape (b, suffix_len, suffix_len) indicating how the suffix tokens can attend to each
+             # other
+diff --git a/src/openpi/policies/policy.py b/src/openpi/policies/policy.py
+index b9b708b..affe206 100644
+--- a/src/openpi/policies/policy.py
++++ b/src/openpi/policies/policy.py
+@@ -65,7 +65,8 @@ class Policy(BasePolicy):
+             self._rng = rng or jax.random.key(0)
+ 
+     @override
+-    def infer(self, obs: dict, *, noise: np.ndarray | None = None) -> dict:  # type: ignore[misc]
++    def infer(self, obs: dict, *, noise: np.ndarray | None = None,
++              snmvp_sigma: float | None = None) -> dict:  # type: ignore[misc]
+         # Make a copy since transformations may modify the inputs in place.
+         inputs = jax.tree.map(lambda x: x, obs)
+         inputs = self._input_transform(inputs)
+@@ -86,6 +87,9 @@ class Policy(BasePolicy):
+             if noise.ndim == 2:  # If noise is (action_horizon, action_dim), add batch dimension
+                 noise = noise[None, ...]  # Make it (1, action_horizon, action_dim)
+             sample_kwargs["noise"] = noise
++        if snmvp_sigma is not None:
++            # per-replan pin-trust dial for sigma-conditioned flows; array so jit traces it
++            sample_kwargs["snmvp_sigma"] = jnp.asarray([snmvp_sigma], dtype=jnp.float32)
+ 
+         observation = _model.Observation.from_dict(inputs)
+         start_time = time.monotonic()
+diff --git a/src/openpi/training/checkpoints.py b/src/openpi/training/checkpoints.py
+index f32a831..3ff9aac 100644
+--- a/src/openpi/training/checkpoints.py
++++ b/src/openpi/training/checkpoints.py
+@@ -119,14 +119,25 @@ class Callback(Protocol):
+ 
+ 
+ class CallbackHandler(ocp.AsyncCheckpointHandler):
+-    """A CheckpointHandler for calling an arbitrary function asynchronously. Only for saving, not for restoring."""
++    """A CheckpointHandler for calling an arbitrary function asynchronously. Only for saving, not for restoring.
++
++    LOCAL FIX (2026-08-19): this venv ships orbax 0.11.1, which has no
++    future.CommitFutureAwaitingContractedSignals (the 15a9616-era API). Ported the executor-based
++    async_save from upstream 16affa3, which the venv was built against.
++    """
++
++    def __init__(self):
++        self._executor = futures.ThreadPoolExecutor(max_workers=1)
++
++    def close(self):
++        self._executor.shutdown()
+ 
+     def save(self, directory: epath.Path, args: CallbackSave):
+         if jax.process_index() == 0:
+             args.callback(directory)
+ 
+     async def async_save(self, directory: epath.Path, args: CallbackSave) -> list[futures.Future]:
+-        return [future.CommitFutureAwaitingContractedSignals(asyncio.to_thread(self.save, directory, args))]
++        return [self._executor.submit(self.save, directory, args)]
+ 
+     def restore(self, *args, **kwargs):
+         raise NotImplementedError("CallbackHandler does not support restore")
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index 4ca47e1..d42c85d 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -973,6 +973,65 @@ _CONFIGS = [
+ if len({config.name for config in _CONFIGS}) != len(_CONFIGS):
+     raise ValueError("Config names must be unique.")
+ _CONFIGS_DICT = {config.name: config for config in _CONFIGS}
++import dataclasses as _dcshared
++import openpi.shared.nnx_utils as nnx_utils
++_CONFIGS_DICT["pi0_libero_shared"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_libero_low_mem_finetune"], name="pi0_libero_shared",
++    data=_dcshared.replace(_CONFIGS_DICT["pi0_libero_low_mem_finetune"].data, extra_delta_transform=False))
++_CONFIGS_DICT["pi0_gate"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_libero_shared"], name="pi0_gate",
++    data=_dcshared.replace(_CONFIGS_DICT["pi0_libero_shared"].data, repo_id="local/gate_nav"))
++# Regenerated dataset (2026-08-23): fixed course family (return-corridor berths, funnels,
++# capped correctives) + real-matched start distribution; real 100 eps carried over. Norm stats
++# are gate_nav's, copied into assets/pi0_gate2/ so U bases and c units stay comparable.
++_CONFIGS_DICT["pi0_gate2"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_gate"], name="pi0_gate2",
++    data=_dcshared.replace(_CONFIGS_DICT["pi0_gate"].data, repo_id="local/gate_nav2"))
++# Regen-2 dataset (2026-08-23): two-class waypoints (gate spheres + corridor tubes),
++# old-profile pacing (snap kT=None + time anchors), real-matched starts. Same norm stats.
++_CONFIGS_DICT["pi0_gate3"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_gate"], name="pi0_gate3",
++    data=_dcshared.replace(_CONFIGS_DICT["pi0_gate"].data, repo_id="local/gate_nav3"))
++# Full-variant twin of pi0_gate (no LoRA): its param structure matches raw pi0_base, so
++# create_trained_policy can load the base checkpoint directly — used to extract the features the
++# joint arms see at init (LoRA contributes ~zero at init, so full == LoRA-init features).
++_CONFIGS_DICT["pi0_gate_full"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_gate"], name="pi0_gate_full",
++    model=pi0_config.Pi0Config())
++# C1 arm of the factored command source: the whole VLM (SigLIP tower + prefix expert) is frozen;
++# only the action expert (llm *_1) and the snmvp command head train. With SNMVP_HEAD_DETACH=1 the
++# head is a pure readout on frozen features — the basis-feature pairing fixed at init can never
++# drift. Counterpart of SNMVP_FLOW_DETACH=1 (C2), where the c loss shapes the VLM instead.
++_CONFIGS_DICT["pi0_gate_freezevlm"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_gate"], name="pi0_gate_freezevlm",
++    # norm-stats lookup is keyed by config name; reuse pi0_gate's stats explicitly so this
++    # variant differs from pi0_gate ONLY in the freeze filter
++    data=_dcshared.replace(
++        _CONFIGS_DICT["pi0_gate"].data,
++        assets=AssetsConfig(assets_dir="/home/ubuntu/code/openpi/assets/pi0_gate")),
++    freeze_filter=nnx.All(
++        nnx_utils.PathRegex(".*(llm|img).*"),
++        nnx.Not(nnx_utils.PathRegex(".*llm.*_1.*")),
++        nnx.Not(nnx_utils.PathRegex(".*lora.*")),
++    ))
++# low-data ladder (north-star claim (b)): equal-per-task subsets of gate_nav;
++# norm stats copied from the full set so ladder points differ only by data quantity
++# LIBERO low-data ladder (cross-domain replication of the drone ladder, 2026-08-09):
++# equal per-task subsets of the 40-task set; norm stats reused from the full set.
++for _ln in (2, 5):
++    _CONFIGS_DICT[f"pi0_libero_n{_ln}"] = _dcshared.replace(
++        _CONFIGS_DICT["pi0_libero_shared"], name=f"pi0_libero_n{_ln}",
++        data=_dcshared.replace(_CONFIGS_DICT["pi0_libero_shared"].data,
++                               repo_id=f"local/libero_n{_ln}"))
++for _n in (12, 40, 160, 240):
++    _CONFIGS_DICT[f"pi0_gate_n{_n}"] = _dcshared.replace(
++        _CONFIGS_DICT["pi0_gate"], name=f"pi0_gate_n{_n}",
++        data=_dcshared.replace(_CONFIGS_DICT["pi0_gate"].data, repo_id=f"local/gate_nav_n{_n}"))
++# trajectory-algebra augmented gate data (reverse/crops/hover; snmvp rung3 A3, 2026-08-04).
++# Reuses gate_nav norm stats (copied to assets/pi0_gate_aug/) so U coords/clamps stay comparable.
++_CONFIGS_DICT["pi0_gate_aug"] = _dcshared.replace(
++    _CONFIGS_DICT["pi0_gate"], name="pi0_gate_aug",
++    data=_dcshared.replace(_CONFIGS_DICT["pi0_gate"].data, repo_id="local/gate_nav_aug"))
+ 
+ 
+ def cli() -> TrainConfig:
+@@ -981,9 +1040,30 @@ def cli() -> TrainConfig:
+ 
+ def get_config(config_name: str) -> TrainConfig:
+     """Get a config by name."""
++    if config_name == "pi0_libero_shared" and config_name not in _CONFIGS_DICT:
++        import dataclasses as _dcs
++        _base = _CONFIGS_DICT["pi0_libero_low_mem_finetune"]
++        _CONFIGS_DICT[config_name] = _dcs.replace(
++            _base, name="pi0_libero_shared",
++            data=_dcs.replace(_base.data, extra_delta_transform=False))
+     if config_name not in _CONFIGS_DICT:
+         closest = difflib.get_close_matches(config_name, _CONFIGS_DICT.keys(), n=1, cutoff=0.0)
+         closest_str = f" Did you mean '{closest[0]}'? " if closest else ""
+         raise ValueError(f"Config '{config_name}' not found.{closest_str}")
+ 
+-    return _CONFIGS_DICT[config_name]
++    _cfg = _CONFIGS_DICT[config_name]
++    import os as _os
++    _init = _os.environ.get("SNMVP_INIT_CKPT")
++    if _init:
++        import dataclasses as _dc, logging as _lg
++        _cfg = _dc.replace(_cfg, weight_loader=weight_loaders.CheckpointWeightLoader(_init))
++        _lg.getLogger("openpi").info(f"SNMVP init-from-checkpoint: {_init}")
++    _wd = _os.environ.get("SNMVP_WD"); _ema = _os.environ.get("SNMVP_EMA")
++    if _wd or _ema:
++        import dataclasses as _dc2, logging as _lg2
++        if _wd:
++            _cfg = _dc2.replace(_cfg, optimizer=_dc2.replace(_cfg.optimizer, weight_decay=float(_wd)))
++        if _ema:
++            _cfg = _dc2.replace(_cfg, ema_decay=float(_ema))
++        _lg2.getLogger("openpi").info(f"SNMVP reg: wd={_wd} ema={_ema}")
++    return _cfg
+diff --git a/src/openpi/training/data_loader.py b/src/openpi/training/data_loader.py
+index e2ee7dd..43ae584 100644
+--- a/src/openpi/training/data_loader.py
++++ b/src/openpi/training/data_loader.py
+@@ -127,6 +127,29 @@ class FakeDataset(Dataset):
+         return self._num_samples
+ 
+ 
++class _ZeroPadActions(_transforms.DataTransformFn):
++    """Zero action steps flagged by `<key>_is_pad`, in raw delta space.
++
++    LeRobot pads terminal action chunks by clamping indices to ep_end-1, i.e. by repeating the
++    final action. For per-step DELTA actions that injects motion which never happens (measured
++    8.5x inflation of net displacement ten steps from an episode end, 2026-08-11), and the pin
++    carries it into the commanded coarse displacement. Zero means "stay put after the episode
++    ends", which is what the demonstration shows. Enabled by SNMVP_ZERO_PAD_ACTIONS=1.
++    """
++
++    def __call__(self, item: dict) -> dict:
++        out = dict(item)
++        for key in ("actions", "action"):
++            mask_key = f"{key}_is_pad"
++            if key in out and mask_key in out:
++                arr = np.asarray(out[key]).copy()
++                pad = np.asarray(out[mask_key]).astype(bool)
++                if pad.any():
++                    arr[pad] = 0.0
++                out[key] = arr
++        return out
++
++
+ def create_torch_dataset(
+     data_config: _config.DataConfig, action_horizon: int, model_config: _model.BaseModelConfig
+ ) -> Dataset:
+@@ -137,17 +160,46 @@ def create_torch_dataset(
+     if repo_id == "fake":
+         return FakeDataset(model_config, num_samples=1024)
+ 
+-    dataset_meta = lerobot_dataset.LeRobotDatasetMetadata(repo_id)
++    # local/* repos exist only under LEROBOT_HOME; hub resolution 401s on that namespace anonymously
++    local_only = repo_id.startswith("local/")
++    dataset_meta = lerobot_dataset.LeRobotDatasetMetadata(repo_id, local_files_only=local_only)
+     dataset = lerobot_dataset.LeRobotDataset(
+         data_config.repo_id,
+         delta_timestamps={
+             key: [t / dataset_meta.fps for t in range(action_horizon)] for key in data_config.action_sequence_keys
+         },
++        local_files_only=local_only,
+     )
+ 
+     if data_config.prompt_from_task:
+         dataset = TransformedDataset(dataset, [_transforms.PromptFromLeRobotTask(dataset_meta.tasks)])
+ 
++    import os as _os
++    import json as _json
++
++    # SNMVP_ZERO_PAD_ACTIONS: zero the padded tail of terminal action chunks (see
++    # _ZeroPadActions at module scope for why). Must be a module-level class: the torch
++    # DataLoader spawns workers and pickles the transform.
++    if _os.environ.get("SNMVP_ZERO_PAD_ACTIONS") == "1":
++        dataset = TransformedDataset(dataset, [_ZeroPadActions()])
++        logging.info("SNMVP: zeroing padded action steps (delta space)")
++
++
++    _ep_path = _os.environ.get("SNMVP_EPISODES")
++    if _ep_path:
++        import torch as _torch
++        _eps = sorted(set(_json.load(open(_ep_path))))
++        _base = dataset
++        while hasattr(_base, "_dataset"):
++            _base = _base._dataset
++        _edi = _base.episode_data_index
++        _idx = []
++        for _e in _eps:
++            _idx.extend(range(int(_edi["from"][_e]), int(_edi["to"][_e])))
++        import logging as _lg; _lg.getLogger("openpi").info(
++            f"SNMVP holdout: {len(_eps)} episodes -> {len(_idx)} frames (Subset)")
++        dataset = _torch.utils.data.Subset(dataset, _idx)
++
+     return dataset
+ 
+ 
+diff --git a/src/openpi/training/weight_loaders.py b/src/openpi/training/weight_loaders.py
+index 0eee1c6..b791033 100644
+--- a/src/openpi/training/weight_loaders.py
++++ b/src/openpi/training/weight_loaders.py
+@@ -51,7 +51,8 @@ class CheckpointWeightLoader(WeightLoader):
+         # We are loading np.ndarray and relying on the training code to properly convert and shard the params.
+         loaded_params = _model.restore_params(download.maybe_download(self.params_path), restore_type=np.ndarray)
+         # Add all missing LoRA weights.
+-        return _merge_params(loaded_params, params, missing_regex=".*lora.*")
++        # snmvp learned-U params are new (not in pretrained checkpoints) — init them fresh
++        return _merge_params(loaded_params, params, missing_regex=".*(lora|snmvp).*")
+ 
+ 
+ @dataclasses.dataclass(frozen=True)

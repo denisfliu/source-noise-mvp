@@ -1,0 +1,29 @@
+{
+  "K": 10,
+  "cross_embodiment_within_task": {
+    "bank": 0.53,
+    "vertical": 0.488,
+    "slalom": 0.934
+  },
+  "cross_task": {
+    "bank->bank": 0.526,
+    "bank->vertical": 0.533,
+    "bank->slalom": 0.972,
+    "vertical->bank": 0.539,
+    "vertical->vertical": 0.491,
+    "vertical->slalom": 0.966,
+    "slalom->bank": 0.955,
+    "slalom->vertical": 0.961,
+    "slalom->slalom": 0.919
+  },
+  "oracle_pca": {
+    "bank": 0.177,
+    "vertical": 0.131,
+    "slalom": 0.276
+  },
+  "random": {
+    "bank": 0.965,
+    "vertical": 0.959,
+    "slalom": 0.965
+  }
+}

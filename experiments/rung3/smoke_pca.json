@@ -1,0 +1,117 @@
+{
+  "config": {
+    "K": 12,
+    "ITERS": 150,
+    "SET_A": [
+      "Panda",
+      "IIWA",
+      "UR5e"
+    ],
+    "HELDOUT": [
+      "Jaco"
+    ],
+    "top_gen_eig": 745893.9
+  },
+  "ceilings": {
+    "Panda": 0.787,
+    "IIWA": 0.654,
+    "UR5e": 0.81,
+    "Jaco": 0.738
+  },
+  "pooled_success": {
+    "Jaco_S": 0.025,
+    "Jaco_GLAP": 0.742,
+    "Jaco_GLAP_or": 0.683,
+    "Jaco_GLAP_steer": -0.002,
+    "Jaco_PCA": 0.15,
+    "Jaco_PCA_or": 0.208,
+    "Jaco_PCA_steer": -0.0,
+    "Jaco_F": 0.158,
+    "Jaco_Rand": 0.175
+  },
+  "pooled_cinvariance": {
+    "GLAP": {
+      "Jaco": 0.075
+    },
+    "PCA": {
+      "Jaco": 0.136
+    },
+    "F": {
+      "Jaco": 0.096
+    },
+    "Rand": {
+      "Jaco": 0.133
+    }
+  },
+  "per_seed": {
+    "s0": {
+      "cinv_GLAP": {
+        "Jaco": 0.071
+      },
+      "cinv_PCA": {
+        "Jaco": 0.131
+      },
+      "cinv_F": {
+        "Jaco": 0.092
+      },
+      "cinv_Rand": {
+        "Jaco": 0.132
+      },
+      "Jaco_S": 0.0,
+      "Jaco_GLAP": 0.675,
+      "Jaco_GLAP_or": 0.75,
+      "Jaco_GLAP_steer": -0.0,
+      "Jaco_PCA": 0.125,
+      "Jaco_PCA_or": 0.125,
+      "Jaco_PCA_steer": 0.0,
+      "Jaco_F": 0.1,
+      "Jaco_Rand": 0.125
+    },
+    "s1": {
+      "cinv_GLAP": {
+        "Jaco": 0.078
+      },
+      "cinv_PCA": {
+        "Jaco": 0.134
+      },
+      "cinv_F": {
+        "Jaco": 0.095
+      },
+      "cinv_Rand": {
+        "Jaco": 0.134
+      },
+      "Jaco_S": 0.025,
+      "Jaco_GLAP": 0.825,
+      "Jaco_GLAP_or": 0.625,
+      "Jaco_GLAP_steer": -0.018,
+      "Jaco_PCA": 0.175,
+      "Jaco_PCA_or": 0.25,
+      "Jaco_PCA_steer": 0.001,
+      "Jaco_F": 0.225,
+      "Jaco_Rand": 0.225
+    },
+    "s2": {
+      "cinv_GLAP": {
+        "Jaco": 0.076
+      },
+      "cinv_PCA": {
+        "Jaco": 0.142
+      },
+      "cinv_F": {
+        "Jaco": 0.1
+      },
+      "cinv_Rand": {
+        "Jaco": 0.134
+      },
+      "Jaco_S": 0.05,
+      "Jaco_GLAP": 0.725,
+      "Jaco_GLAP_or": 0.675,
+      "Jaco_GLAP_steer": 0.011,
+      "Jaco_PCA": 0.15,
+      "Jaco_PCA_or": 0.25,
+      "Jaco_PCA_steer": -0.002,
+      "Jaco_F": 0.15,
+      "Jaco_Rand": 0.175
+    }
+  }
+}

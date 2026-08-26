@@ -1,0 +1,35 @@
+{
+  "real_ceiling": 0.789,
+  "deconv": {
+    "nid2": {
+      "deconv_success": 0.975,
+      "recon_rel_err": 0.409
+    },
+    "nid5": {
+      "deconv_success": 1.0,
+      "recon_rel_err": 0.395
+    },
+    "nid10": {
+      "deconv_success": 1.0,
+      "recon_rel_err": 0.391
+    },
+    "nid25": {
+      "deconv_success": 1.0,
+      "recon_rel_err": 0.389
+    }
+  },
+  "additive_baseline": {
+    "n10": {
+      "scratch": 0.283,
+      "GLAP_additive": 0.692
+    },
+    "n25": {
+      "scratch": 0.35,
+      "GLAP_additive": 0.742
+    },
+    "n50": {
+      "scratch": 0.308,
+      "GLAP_additive": 0.7
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "task_suite": "libero_object",
+  "seed": 7,
+  "init_states": "canonical",
+  "invariant": null,
+  "tasks": [
+    {
+      "task_id": 5,
+      "language": "pick up the tomato sauce and place it in the basket",
+      "episodes": 10,
+      "successes": 8,
+      "success_rate": 0.8
+    }
+  ],
+  "total_episodes": 10,
+  "total_successes": 8,
+  "total_success_rate": 0.8
+}

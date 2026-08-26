@@ -1,0 +1,31 @@
+{
+  "per_seed": {
+    "s0": {
+      "A": 0.025,
+      "F": 0.219,
+      "Frand": 0.006
+    },
+    "s1": {
+      "A": 0.0,
+      "F": 0.431,
+      "Frand": 0.013
+    },
+    "s2": {
+      "A": 0.037,
+      "F": 0.5,
+      "Frand": 0.006
+    }
+  },
+  "verdict": {
+    "pooled": {
+      "A": 0.021,
+      "F": 0.383,
+      "Frand": 0.008
+    },
+    "F_minus_A": 0.362,
+    "F_minus_Frand": 0.375,
+    "demo_ceiling": 0.82,
+    "n_pins": 3,
+    "note": "F>A => discovered structure helps the bottlenecked policy on the hard task (scaled analog of toy +17pt); F>Frand => it is the LEARNED structure, not any pin."
+  }
+}

@@ -1,0 +1,1702 @@
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 971bd3d..fd27ff4 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -239,11 +239,11 @@ Falsify has **two** policy adapters that talk to a VLA over WebSocket:
+ - `VLAPolicy` — the legacy path, speaks `openpi_client`'s protocol against
+   an OpenPI websocket server (moraband's, or a self-hosted one). Used for
+   SousVide-era checkpoints **and** the gate-drone pi0 finetunes (below).
+-  Its `action_space` config selects `delta` (SousVide-era per-step MOCAP
+-  deltas, integrated cumulatively) or `absolute` (absolute MOCAP
+-  position/yaw targets, re-anchored to the current pose — for pi0
+-  delta-action checkpoints whose returned actions are already absolute).
+-  CLI flag: `--action-space`.
++  Its `action_space` config selects `delta` (default — per-step MOCAP
++  deltas, integrated cumulatively; correct for SousVide-era **and** the
++  gate-drone pi0 checkpoints) or `absolute` (absolute MOCAP position/yaw
++  targets, re-anchored to the current pose — kept for checkpoints that
++  genuinely emit absolute waypoints). CLI flag: `--action-space`.
+ - `PiGatewayPolicy` — speaks `pi_inference_client`'s commercial-gateway
+   wire protocol (`load` / `infer` / `reset` / `telemetry` over WSS with
+   an `Authorization: Api-Key` header). Used for the dronevla v7
+@@ -277,9 +277,16 @@ speaks) via `tools/gate_pi0/serve_gate.py` / `serve_gate_pin.py` running in a
+ separate `~/code/openpi` JAX venv. Requires an openpi patch (`pi0_gate`
+ config + source-noise `noise=` threading) and 7→32 norm-stats padding; the
+ pin variant injects `noise = g − (g·U)Uᵀ + (c·Uᵀ)` from an instruction-prior
+-MLP. Client side: `run_vla_episode … --action-space absolute
+---actions-per-chunk 8`. **Full recipe, download links, the openpi patch, and
+-findings: `tools/gate_pi0/README.md`.**
++MLP. Client side: `run_vla_episode … --action-space delta
++--actions-per-chunk 8`.
++
++The `pi0_gate` config **must not** inherit `pi0_libero`'s
++`DeltaActions`/`AbsoluteActions` push — these checkpoints emit per-step
++EE-deltas, and that transform adds raw `state` to every action row (which
++then blows up under cumsum: 50 × ~1.53 m ⇒ z 1.5 → 76.6 → 3983 → …).
++`tools/gate_pi0/probe_action_space.py` is the regression check.
++**Full recipe, download links, the openpi patch, and findings:
++`tools/gate_pi0/README.md`.**
+ 
+ ### Multi-policy bridge
+ 
+diff --git a/configs/courses/through_center_gate_from_left.yaml b/configs/courses/through_center_gate_from_left.yaml
+index 447a50d..af82d36 100644
+--- a/configs/courses/through_center_gate_from_left.yaml
++++ b/configs/courses/through_center_gate_from_left.yaml
+@@ -37,11 +37,15 @@ waypoints:
+   #                            lets the spline curl smoothly toward hover
+   # hover       yaw=0       → arrival at hover XYZ (south of gate plane)
+   # hover_hold  yaw=0       → 2 s of station-keeping at hover
+-  - { name: start,       p: [0.00,  0.00, 1.5], yaw: 0.0, t: 0.0 }
+-  - { name: approach,    p: [1.40,  0.50, 1.5] }
+-  - { name: pre_gate,    p: [2.75,  0.25, 1.5] }
+-  - { name: gate,        p: [2.75, -0.25, 1.5], yaw: -1.5708 }
+-  - { name: post_gate,   p: [2.75, -0.67, 1.5] }
++  - { name: start,       p: [0.00,  0.00, 1.5], yaw: 0.0, t: 0.0, jitter_m: 0.0 }
++  - { name: approach,    p: [1.40,  0.50, 1.5], t: 8.0, jitter_m: 0.2 }
++  - { name: east_leg,    p: [2.35, 0.58, 1.45], t: 12.0, jitter_m: 0.2 }
++  - { name: pre_gate,    p: [2.75,  0.25, 1.5], jitter_m: 0.15 }
++  - { name: gate,        p: [2.75, -0.25, 1.5], yaw: -1.5708, t: 19.0, jitter_m: 0.03 }
++  - { name: post_gate,   p: [2.75, -0.67, 1.5], t: 21.0, jitter_m: 0.2 }
++  # return_south (2026-08-22): the direct post_gate->hover leg ran ~0.31 m
++  # from the center gate's WEST post; dips south for >0.4 m berth.
++  - { name: return_south, p: [2.10, -0.80, 1.2], t: 23.5, jitter_m: 0.2 }
+   - { name: hover,       p: [1.525, -0.615, 1.0], yaw: 0.0, t: 28.0 }
+   - { name: hover_hold,  p: [1.525, -0.615, 1.0], yaw: 0.0, t: 30.0 }
+ 
+@@ -55,7 +59,7 @@ velocity_constraints:
+ corrective_perturbations:
+   target_waypoint: pre_gate
+   modes: [up, down, left, right]
+-  magnitude_range_m: [0.1, 0.3]
++  magnitude_range_m: [0.1, 0.25]  # capped 2026-08-22, matches from_right
+   probability: 0.8              # ~70% of samples are corrective, ~30% are pure baseline+noise
+ 
+ # Trajectory noise: every non-anchor waypoint is jittered by a vector drawn
+@@ -63,7 +67,7 @@ corrective_perturbations:
+ trajectory_perturbations:
+   radius_m: 0.05
+   exclude_waypoints: []
+-  samples: 50
++  samples: 70   # 2026-08-23: plan surplus; generation keeps the first 50 judge+clearance-passing
+   seed: 0
+ 
+ # `pre_gate` (not `approach`) is the gate-1 pre anchor — it sits
+diff --git a/configs/courses/through_center_gate_from_right.yaml b/configs/courses/through_center_gate_from_right.yaml
+index 7af8f96..5e15e5f 100644
+--- a/configs/courses/through_center_gate_from_right.yaml
++++ b/configs/courses/through_center_gate_from_right.yaml
+@@ -36,18 +36,34 @@ waypoints:
+   # post_gate               → south overshoot, sets up wider arc back to hover
+   # hover       yaw=0       → body_x back to +x_mocap (arrival at hover XYZ)
+   # hover_hold  yaw=0       → same XYZ as hover; ~2 s of station-keeping
+-  - { name: start,       p: [0.00,  0.00, 1.5], yaw: 0.0, t: 0.0 }
+-  - { name: approach,    p: [1.40,  -1.0, 1.5] }
+-  - { name: pre_gate,    p: [2.75,  -0.75, 1.5] }
+-  - { name: gate,        p: [2.75, -0.25, 1.5], yaw: -1.5708 }
+-  - { name: post_gate,   p: [2.75, 0.23, 1.4] }
++  - { name: start,       p: [0.00,  0.00, 1.5], yaw: 0.0, t: 0.0, jitter_m: 0.0 }
++  # drift (2026-08-23): pins the slow first leg at the old step-40 mean — the remaining
++  # OUT_OF_BOUNDS failures were start-segment back-swings under 8 s of slack
++  - { name: drift,       p: [0.30, -0.58, 1.55], t: 4.0, jitter_m: 0.2 }
++  - { name: approach,    p: [1.25, -0.95, 1.5], t: 8.0, jitter_m: 0.2 }
++  # east_leg (2026-08-23): old-profile mid waypoint — pins the slow eastward leg so pure
++  # min-snap fills the 17.5 s approach with forward motion instead of ballooning out of bounds
++  - { name: east_leg,    p: [2.25, -1.05, 1.45], t: 12.5, jitter_m: 0.15 }
++  # se_corner (2026-08-23): splits the slack between east_leg and pre_gate — min-snap spent
++  # 4.2 s of schedule slack on a +/-0.7 m vertical porpoise (z 0.57..2.19 vs old 1.14..1.57);
++  # shorter segments bound the polynomial's excursions
++  - { name: se_corner,   p: [2.62, -1.00, 1.42], t: 14.5, jitter_m: 0.15 }
++  - { name: pre_gate,    p: [2.75,  -0.90, 1.38], t: 16.2, jitter_m: 0.10 }  # standoff 0.75->0.90 + t anchor + tighter tube (2026-08-23): slow-paced transit collided when the funnel wobbled at 0.5 m standoff  # z 1.5->1.38 (2026-08-22): up-corrective headroom vs the 1.875 top bar
++  - { name: gate,        p: [2.75, -0.25, 1.5], yaw: -1.5708, t: 17.5, jitter_m: 0.03 }
++  - { name: post_gate,   p: [2.75, 0.23, 1.4], t: 19.0, jitter_m: 0.2 }
+   # arc_left forces the return spline to swing wide LEFT (+y, above the
+   # table) on the way to hover so we don't cut diagonally back across
+   # the table footprint after the north-overshoot post_gate. Mirrors
+   # the same waypoint in through_right_and_center.yaml; positioned over
+   # table-center-x but well north of the table footprint (y_max=0.40)
+   # and above the table top (z=0.6).
+-  - { name: arc_left,    p: [1.50,  0.70, 1.2] }
++  - { name: arc_left,    p: [1.50,  0.70, 1.2], t: 21.5, jitter_m: 0.2 }
++  # cross_west pins the southbound re-crossing of the gate plane at x=1.30 —
++  # more than 1 m west of the aperture's west post (x=2.356). Added 2026-08-22:
++  # the previous arc_left->hover segment crossed at x~2.0-2.1 (one demo within
++  # 0.22 m of the post) and the POLICY cut that corner to x~2.4, i.e. through
++  # the frame (gmsig CFR wrong_dir=1 on every rollout, grazes 0.03-0.15 m).
++  - { name: cross_west,  p: [1.30,  0.05, 1.10], t: 24.0, jitter_m: 0.2 }
+   - { name: hover,       p: [1.525, -0.615, 1.0], yaw: 0.0, t: 28.0 }
+   - { name: hover_hold,  p: [1.525, -0.615, 1.0], yaw: 0.0, t: 30.0 }
+ 
+@@ -58,13 +74,13 @@ velocity_constraints:
+ corrective_perturbations:
+   target_waypoint: pre_gate
+   modes: [up, down, left, right]
+-  magnitude_range_m: [0.1, 0.3]
++  magnitude_range_m: [0.1, 0.25]  # capped 2026-08-22: 0.3-up variants grazed the 1.875 top bar
+   probability: 0.7
+ 
+ trajectory_perturbations:
+   radius_m: 0.05
+   exclude_waypoints: []
+-  samples: 50
++  samples: 70   # 2026-08-23: plan surplus; generation keeps the first 50 judge+clearance-passing
+   seed: 0
+ 
+ phases:
+diff --git a/configs/courses/through_left_gate.yaml b/configs/courses/through_left_gate.yaml
+index e11b7cb..61637f5 100644
+--- a/configs/courses/through_left_gate.yaml
++++ b/configs/courses/through_left_gate.yaml
+@@ -37,10 +37,16 @@ waypoints:
+   #                            (1.18, 0.45) ↔ (0.65, 1.05))
+   #   hover  yaw=0           → body_x back to +x_mocap
+   # approach + post_gate inherit yaw_mode: tangent (spline derivative).
+-  - { name: start,     p: [0.00, 0.00, 1.5], yaw: 0.0, t: 0.0 }
+-  - { name: approach,  p: [0.45, 0.40, 1.5] }
+-  - { name: gate,      p: [0.915, 0.75, 1.5], yaw: 0.724 }
+-  - { name: post_gate, p: [1.75, 1.30, 1.4] }
++  - { name: start,     p: [0.00, 0.00, 1.5], yaw: 0.0, t: 0.0, jitter_m: 0.0 }
++  - { name: approach,  p: [0.45, 0.40, 1.5], jitter_m: 0.2 }
++  # pre_gate funnel (2026-08-22): see through_right_gate.yaml — re-converges the
++  # real-matched start variance onto the aperture normal before transit.
++  - { name: pre_gate,  p: [0.58, 0.45, 1.5], jitter_m: 0.15 }
++  - { name: gate,      p: [0.915, 0.75, 1.5], yaw: 0.724, t: 7.0, jitter_m: 0.03 }
++  - { name: post_gate, p: [1.75, 1.30, 1.4], t: 13.0, jitter_m: 0.2 }
++  # descend (2026-08-23): mid-return anchor at the old-data step-170 mean — pure min-snap
++  # balloons over long un-anchored segments; this pins the descent corridor (wide tube kept)
++  - { name: descend,   p: [1.80, 0.43, 1.17], t: 17.0, jitter_m: 0.2 }
+   - { name: hover,       p: [1.525, -0.615, 1.0], yaw: 0.0, t: 22.0 }
+   - { name: hover_hold,  p: [1.525, -0.615, 1.0], yaw: 0.0, t: 24.0 }
+ 
+@@ -57,7 +63,7 @@ corrective_perturbations:
+ trajectory_perturbations:
+   radius_m: 0.05
+   exclude_waypoints: []
+-  samples: 50
++  samples: 70   # 2026-08-23: plan surplus; generation keeps the first 50 judge+clearance-passing
+   seed: 0
+ 
+ # Phase metadata — consumed by the recovery pipeline to classify the
+diff --git a/configs/courses/through_right_gate.yaml b/configs/courses/through_right_gate.yaml
+index 0eba0dc..c7ba2a5 100644
+--- a/configs/courses/through_right_gate.yaml
++++ b/configs/courses/through_right_gate.yaml
+@@ -16,10 +16,21 @@ total_time_s: 24.0   # 22 s to reach hover + 2 s hover hold
+ yaw_mode: tangent
+ 
+ waypoints:
+-  - { name: start,     p: [ 0.00,  0.00, 1.5], yaw: 0.0, t: 0.0 }
+-  - { name: approach,  p: [ 0.15, -0.65, 1.5] }
+-  - { name: gate,      p: [ 0.495, -1.21, 1.5] }       # true gate center per visual inspection
+-  - { name: post_gate, p: [ 0.70, -1.50, 1.4] }
++  - { name: start,     p: [ 0.00,  0.00, 1.5], yaw: 0.0, t: 0.0, jitter_m: 0.0 }
++  - { name: approach,  p: [ 0.15, -0.65, 1.5], jitter_m: 0.2 }
++  # pre_gate funnel (2026-08-22): on the aperture normal at ~0.45 m standoff so
++  # start-distribution variance (now matched to real teleop, std ~0.15 m) is
++  # re-converged before the transit — without it, jittered starts carried
++  # lateral velocity through the gate (COLLISION_GATE on 5/10 planned variants).
++  - { name: pre_gate,  p: [ 0.30, -0.85, 1.5], jitter_m: 0.15 }
++  - { name: gate,      p: [ 0.495, -1.21, 1.5], t: 10.0, jitter_m: 0.03 }       # true gate center per visual inspection
++  - { name: post_gate, p: [ 0.70, -1.50, 1.4], t: 13.0, jitter_m: 0.2 }
++  # return_east (2026-08-22): the direct post_gate->hover leg passed only
++  # ~0.21 m from the gate's EAST post (the "clips on the way back" class) —
++  # nominal squeaked by, real-matched start jitter broke it on ~half the
++  # variants (COLLISION_GATE at steps 64-79, post-transit). This waypoint
++  # gives the post >0.4 m berth on both return segments.
++  - { name: return_east, p: [ 1.35, -1.25, 1.2], t: 17.0, jitter_m: 0.2 }
+   - { name: hover,       p: [ 1.525, -0.615, 1.0], yaw: 0.0, t: 22.0 } # shared goal across both gate scenes
+   - { name: hover_hold,  p: [ 1.525, -0.615, 1.0], yaw: 0.0, t: 24.0 }
+ 
+@@ -36,7 +47,7 @@ corrective_perturbations:
+ trajectory_perturbations:
+   radius_m: 0.05
+   exclude_waypoints: []
+-  samples: 50
++  samples: 70   # 2026-08-23: plan surplus; generation keeps the first 50 judge+clearance-passing
+   seed: 0
+ 
+ phases:
+diff --git a/scripts/dataset/plan_course_variants.py b/scripts/dataset/plan_course_variants.py
+index c68ee93..bd4c5e8 100644
+--- a/scripts/dataset/plan_course_variants.py
++++ b/scripts/dataset/plan_course_variants.py
+@@ -63,6 +63,20 @@ def main(argv: list[str] | None = None) -> int:
+                         "courses and clipping is a known, tolerated artifact.")
+     p.add_argument("--limit", type=int, default=None,
+                    help="Plan only the first N variants (smoke-testing).")
++    p.add_argument("--start-jitter", type=str, default=None,
++                   help="SX,SY,SZ,SYAW Gaussian std applied to each variant's "
++                        "start waypoint (m, m, m, rad). Added 2026-08-22 to "
++                        "match the real teleop start variance (real std "
++                        "~0.15,0.10,0.12,0.06 vs the ball-jitter 0.02).")
++    p.add_argument("--snap-kt", type=str, default=None,
++                   help="Minimum-time weight for the snap stage. 'none' = pure "
++                        "min-snap honoring waypoint t anchors (dataset pacing "
++                        "matches the course schedule instead of being "
++                        "time-compressed; the planner default 10.0 parks the "
++                        "drone at ~40% of the episode). Numeric = custom weight.")
++    p.add_argument("--start-mean", type=str, default=None,
++                   help="DX,DY,DZ shift added to every start waypoint "
++                        "(real starts center at (-0.20, +0.05, 1.44)).")
+     args = p.parse_args(argv)
+ 
+     sys.path.insert(0, str(REPO_ROOT / "src"))
+@@ -90,6 +104,29 @@ def main(argv: list[str] | None = None) -> int:
+     if args.limit is not None:
+         variants = variants[:args.limit]
+ 
++    if args.start_jitter or args.start_mean:
++        # start-distribution matching: jitter/shift ONLY the start waypoint, on
++        # top of the course's own ball jitter, so synth starts span the real
++        # teleop start distribution instead of a pinpoint at the nominal start.
++        import numpy as _np
++        from dataclasses import replace as _replace
++        js = [float(x) for x in (args.start_jitter or "0,0,0,0").split(",")]
++        dm = [float(x) for x in (args.start_mean or "0,0,0").split(",")]
++        if len(js) != 4 or len(dm) != 3:
++            raise SystemExit("--start-jitter wants SX,SY,SZ,SYAW; --start-mean DX,DY,DZ")
++        _srng = _np.random.default_rng(
++            int(base.trajectory_perturbations.seed or 0) + 7777)
++        _out = []
++        for v in variants:
++            wps = list(v.course.waypoints)
++            w0 = wps[0]
++            dp = _np.asarray(dm) + _srng.normal(0.0, 1.0, 3) * _np.asarray(js[:3])
++            yaw0 = (w0.yaw or 0.0) + (float(_srng.normal(0.0, js[3])) if js[3] > 0 else 0.0)
++            wps[0] = _replace(w0, p=w0.p + dp, yaw=yaw0)
++            _out.append(_replace(v, course=_replace(v.course, waypoints=tuple(wps))))
++        variants = _out
++        print(f"[plan] start-jitter applied: std={js} mean-shift={dm}")
++
+     safety_path = args.safety
+     if safety_path is None:
+         candidate = REPO_ROOT / "configs" / "safety" / f"{args.scene.stem}.yaml"
+@@ -99,6 +136,15 @@ def main(argv: list[str] | None = None) -> int:
+         print(f"[plan] WARN: no safety YAML for {args.scene.stem!r} — "
+               "variants NOT validated")
+ 
++    _policy_cfg = None
++    if args.snap_kt is not None:
++        import copy
++        from falsify.planning.mpc import _DEFAULT_POLICY_CFG
++        _policy_cfg = copy.deepcopy(_DEFAULT_POLICY_CFG)
++        _policy_cfg["plan"]["kT"] = (None if args.snap_kt.lower() == "none"
++                                     else float(args.snap_kt))
++        print(f"[plan] snap kT = {_policy_cfg['plan']['kT']}")
++
+     args.out_dir.mkdir(parents=True, exist_ok=True)
+     n_ok = n_bad = 0
+     for i, v in enumerate(variants):
+@@ -106,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
+             traj = plan_spline(v.course, fg, prompt=args.prompt)
+         else:
+             traj = plan_mpc(v.course, fg, prompt=args.prompt,
+-                            frame_cfg=args.mpc_frame)
++                            frame_cfg=args.mpc_frame, policy_cfg=_policy_cfg)
+ 
+         ok = True
+         if safety_cfg is not None:
+diff --git a/src/falsify/cli/CLAUDE.md b/src/falsify/cli/CLAUDE.md
+index c822fdc..51fc147 100644
+--- a/src/falsify/cli/CLAUDE.md
++++ b/src/falsify/cli/CLAUDE.md
+@@ -81,10 +81,11 @@
+   includes a `/admin/switch_policy` call when the YAML names a bridge.
+   Runs one episode at `--hz` with chunks of `--actions-per-chunk`
+   waypoints. `--action-space {delta,absolute}` (OpenPI backend) selects how
+-  the server's action columns are interpreted — `delta` (default;
+-  SousVide-era) integrates per-step MOCAP deltas, `absolute` treats them as
+-  absolute MOCAP targets re-anchored to the current pose (gate-drone pi0
+-  finetunes; see `tools/gate_pi0/`). Writes the following under `--out`:
++  the server's action columns are interpreted — `delta` (default) integrates
++  per-step MOCAP deltas and is correct for the SousVide-era checkpoints and
++  the gate-drone pi0 finetunes (see `tools/gate_pi0/`); `absolute` treats
++  them as absolute MOCAP targets re-anchored to the current pose.
++  Writes the following under `--out`:
+   `frames/combined_<frame>.ply` (trajectory + scene clouds),
+   `flythrough.mp4` (forward-camera renders along the flown path),
+   `vla_io/query_*` (per-query VLA inputs/outputs),
+diff --git a/src/falsify/planning/perturbations.py b/src/falsify/planning/perturbations.py
+index 6e4ec94..82b2a9a 100644
+--- a/src/falsify/planning/perturbations.py
++++ b/src/falsify/planning/perturbations.py
+@@ -224,10 +224,11 @@ def sample_stochastic_variants(
+         # ---- step 2: per-waypoint trajectory noise ------------------------
+         new_wps = []
+         for wp in shifted.waypoints:
+-            if wp.name in excluded or radius == 0.0:
++            wp_radius = radius if getattr(wp, "jitter_m", None) is None else float(wp.jitter_m)
++            if wp.name in excluded or wp_radius == 0.0:
+                 new_wps.append(wp)
+                 continue
+-            noise = _sample_in_ball(rng, radius)
++            noise = _sample_in_ball(rng, wp_radius)
+             new_wps.append(replace(wp, p=wp.p + noise))
+         new_course = replace(shifted, waypoints=tuple(new_wps))
+ 
+diff --git a/src/falsify/planning/waypoints.py b/src/falsify/planning/waypoints.py
+index ba12e4a..ef67b2b 100644
+--- a/src/falsify/planning/waypoints.py
++++ b/src/falsify/planning/waypoints.py
+@@ -78,6 +78,11 @@ class Waypoint:
+     p: np.ndarray                # (3,) position in `Course.frame`
+     yaw: Optional[float] = None  # radians; None → resolved by yaw_mode
+     t: Optional[float] = None    # seconds since course start; None → auto-assigned
++    # per-waypoint trajectory-noise radius (2026-08-23, Denis): two waypoint classes —
++    # PRECISION waypoints (gate apertures) keep a small sphere so all variants converge
++    # through the gate, CORRIDOR waypoints carry much larger tubes so the data fans out
++    # everywhere precision is not required. None -> the course-level radius_m default.
++    jitter_m: Optional[float] = None
+ 
+     def __post_init__(self):
+         p = np.asarray(self.p, dtype=np.float64)
+@@ -444,6 +449,7 @@ def load_course(path: str | Path) -> Course:
+             p=np.asarray(w["p"], dtype=np.float64),
+             yaw=(float(w["yaw"]) if "yaw" in w else None),
+             t=(float(w["t"]) if "t" in w else None),
++            jitter_m=(float(w["jitter_m"]) if "jitter_m" in w else None),
+         )
+         for i, w in enumerate(cfg["waypoints"])
+     )
+diff --git a/src/falsify/policy/CLAUDE.md b/src/falsify/policy/CLAUDE.md
+index 68390db..7a1223d 100644
+--- a/src/falsify/policy/CLAUDE.md
++++ b/src/falsify/policy/CLAUDE.md
+@@ -51,9 +51,19 @@ The OpenPI VLA on moraband was trained in MOCAP-Z-up with SousVide perm5
+    - `prompt`                    — str
+    The `front_1`/`down_1` keys that exist in some SousVide payloads are fake duplicates and intentionally skipped.
+ 5. Receives `actions` (N×≥3 MOCAP position/yaw columns) and turns them into waypoints per `action_space`:
+-   - `"delta"` (default, SousVide-era): per-step MOCAP position/yaw **deltas**, integrated cumulatively from the current pose.
+-   - `"absolute"` (pi0 delta-action checkpoints — the gate-drone finetunes): the returned actions are **absolute** MOCAP targets (the model adds the current state back server-side). We **re-anchor** each chunk to the current pose (`anchored = actions + (pos_mocap − actions[0])`, same for yaw) — keeps the model's relative motion shape while starting exactly where the drone is. Without this, the v0 teleport-replay integrator hitches ~2-3 cm backward at every re-query seam (raw absolute targets sit slightly behind the just-reached pose).
++   - `"delta"` (default): per-step MOCAP position/yaw **deltas**, integrated cumulatively from the current pose. Correct for the SousVide-era checkpoints **and** the gate-drone pi0 finetunes (`tools/gate_pi0/`) — both are trained on per-step EE-deltas.
++   - `"absolute"`: the returned actions are **absolute** MOCAP targets. We **re-anchor** each chunk to the current pose (`anchored = actions + (pos_mocap − actions[0])`, same for yaw) — keeps the model's relative motion shape while starting exactly where the drone is, and removes the ~2-3 cm backward hitch the v0 teleport-replay integrator otherwise takes at every re-query seam.
+    Both prepend the current pose so the chunk starts where the drone is, and build a yaw-only quaternion per waypoint (NED yaw, sign-flipped relative to the MOCAP yaw).
++
++   **Diagnosing which one you need.** A server that returns rows whose
++   *offset* matches the current state but whose *spread* matches the action
++   norm-stats std is not emitting absolute waypoints — it is a delta model
++   with an `AbsoluteActions` output transform wrongly enabled server-side.
++   Fix the server config rather than switching to `"absolute"` here:
++   re-anchoring cancels the state offset **and** the real motion
++   (`abs[k] − abs[0]` = `delta[k] − delta[0]` ≈ 0), so the policy will look
++   like it barely moves. This exact trap cost us a debugging cycle on the
++   gate-drone pi0 family — see `tools/gate_pi0/README.md § Action space`.
+ 6. Converts the whole `Trajectory` back to NED and returns it.
+ 
+ `openpi_client` is imported lazily; for testing inject a `pol._client`
+@@ -215,7 +225,7 @@ there is no admin endpoint to call and the handshake is skipped.
+ - `hz`, `actions_per_chunk` — chunk shape; orchestrator's `chunk_steps` should match `actions_per_chunk`.
+ - `image_size`, `forward_camera`, `downward_camera` — input shape.
+ - `server_frame` (default `"mocap"`).
+-- `action_space` (default `"delta"`) — `"delta"` integrates per-step MOCAP deltas; `"absolute"` treats the actions as absolute MOCAP targets and re-anchors each chunk to the current pose (pi0 delta-action checkpoints — the gate-drone finetunes; see `tools/gate_pi0/`). CLI: `--action-space`.
++- `action_space` (default `"delta"`) — `"delta"` integrates per-step MOCAP deltas (SousVide-era **and** the gate-drone pi0 finetunes, see `tools/gate_pi0/`); `"absolute"` treats the actions as absolute MOCAP targets and re-anchors each chunk to the current pose. CLI: `--action-space`.
+ - `third_person_image_path` — optional static 3pov channel (defaults to zeros).
+ - `record_dir` — when set, each query saves a debug bundle under
+   `record_dir/query_<NNNN>_step_<KKKKK>/`: native + post-resize renders for
+diff --git a/tools/gate_pi0/LEFT_GATE_RENDER_HANDOFF.txt b/tools/gate_pi0/LEFT_GATE_RENDER_HANDOFF.txt
+new file mode 100644
+index 0000000..03583a9
+--- /dev/null
++++ b/tools/gate_pi0/LEFT_GATE_RENDER_HANDOFF.txt
+@@ -0,0 +1,699 @@
++================================================================================
++ left_gate gsplat render — reproduction handoff
++ Target: a DIFFERENT machine with the OLD code (sagesplat / Splat-MOVER stack),
++ to reproduce the falsify render of configs/scenes/left_gate.yaml in a
++ standalone gsplat-1.5.3 script (no nerfstudio / no FiGS).
++
++ Extracted from the working falsify renderer. Numbers are exact (float32 repr).
++================================================================================
++
++SOURCE ENVIRONMENT (where these numbers came from)
++--------------------------------------------------
++- model class : sagesplat.sagesplat.SageSplatModel   (Splat-MOVER)
++- gsplat      : 0.1.13  — has NO gsplat.rendering.rasterization, so sagesplat
++                defines its OWN `rasterization(...)` shim (a gsplat-1.x-style API
++                reimplemented on top of 0.1.13). The kwargs it is called with are
++                exactly a gsplat-1.x rasterization() call, so on a machine with
++                real gsplat-1.5.3 you feed the SAME kwargs to gsplat.rasterization.
++- checkpoint  : data/gate_scenes_export/left_scene/mocap_outputs/sagesplat_mocap/
++                sagesplat/2026-05-11_153901/nerfstudio_models/step-000029999.ckpt
++- N gaussians : 6,087,883
++- gauss params (raw ckpt) shapes:
++    means        (N, 3)
++    scales       (N, 3)     # log-space
++    quats        (N, 4)     # UNNORMALIZED in ckpt
++    opacities    (N, 1)     # logits
++    features_dc  (N, 3)     # SH DC term
++    features_rest(N, 15, 3) # SH rest (deg 1..3)
++    (also affordance (N,1), clip_embeds (N,3) — Splat-MOVER extras, IGNORE for RGB)
++
++
++================================================================================
++ 1. WORLD -> MODEL-FRAME TRANSFORM
++================================================================================
++The renderer places a camera pose into the model (gaussian) frame with:
++    Tc2g = Tw2g @ T_c2w              # camera-to-model (NS), OpenGL/nerfstudio cam axes
++T_c2w is camera->world in the FiGS **NED** world frame.
++Tw2g input frame  = NED
++Tw2g output frame = NS (nerfstudio/model frame the gaussians live in)
++Tw2g already folds in the dataparser scale (its 3x3 block ~ 0.1261 * R).
++
++dataparser_scale = 0.12614457225472883
++
++dataparser_transform (3x4)  [from pipeline.datamanager.train_dataparser_outputs]:
++  [ 0.9999979734420776,  -1.695393439149484e-05,  0.0020061566028743982, -1.2423747777938843 ]
++  [-1.695393439149484e-05, 0.9998571872711182,    0.01690067909657955,   -0.6352672576904297 ]
++  [-0.0020061566028743982,-0.01690067909657955,   0.9998551607131958,    -1.4881443977355957 ]
++
++Tw2g (4x4)  [NED -> NS, the matrix actually used for rendering]:
++  [ 0.12614431661544656,   2.138646801849853e-06, -0.00025306576654559085, -0.15671883492487332 ]
++  [-2.138646801849853e-06,-0.1261265572041315,    -0.0021319289354524646,  -0.08013551648879384 ]
++  [-0.00025306576654559085,0.0021319289354524646, -0.12612630156484925,    -0.18772133850562778 ]
++  [ 0.0,                    0.0,                    0.0,                     1.0 ]
++
++NOTE on gaussians vs dataparser: means/quats are the RAW ckpt params, already in
++the NS model frame. The dataparser transform is NOT applied to the gaussians at
++load — ONLY the camera is transformed (via Tw2g). Verified: quats fed to the
++rasterizer == raw ckpt quats (max abs diff 0.0).
++
++
++================================================================================
++ 2. REFERENCE RENDER (drone mocap [0,0,1.5], yaw 0, forward camera)
++================================================================================
++Reference drone/camera pose:
++  drone_pos_mocap   = [0.0, 0.0, 1.5]
++  drone_quat_xyzw   = [0.0, 0.0, 0.0, 1.0]   (identity, yaw 0; in NED)
++  drone_pos_ned     = [0.0, 0.0, -1.5]
++
++T_c2w_ned (4x4, forward camera-to-world in NED; OpenGL/nerfstudio cam axes):
++  [ 0.0,  0.0, -1.0,  0.10 ]
++  [ 1.0,  0.0,  0.0, -0.03 ]
++  [ 0.0, -1.0,  0.0, -1.51 ]
++  [ 0.0,  0.0,  0.0,  1.0  ]
++
++THE viewmat actually passed to the rasterizer (world/NS -> camera, OpenCV axes:
++x-right, y-down, z-forward). Built by sagesplat get_viewmat():
++    R = c2w[:3,:3] * [1,-1,-1]       # OpenGL -> OpenCV/gsplat flip of y,z
++    R_inv = R.T ;  t_inv = -R_inv @ c2w[:3,3]
++    viewmat = [[R_inv, t_inv],[0,0,0,1]]
++where c2w = Tc2g = Tw2g @ T_c2w_ned.
++
++viewmat (4x4, world/NS -> cam, OpenCV):
++  [ 2.1386467778938822e-06, -0.12612655758857727,   0.0021319289226084948, -0.009229300543665886 ]
++  [-0.0002530657802708447,  -0.0021319289226084948,-0.12612630426883698,    0.0001407026284141466 ]
++  [ 0.12614431977272034,    -2.1386467778938822e-06,-0.0002530657802708447,  0.018130268901586533 ]
++  [ 0.0,                      0.0,                    0.0,                    1.0 ]
++
++K (3x3, carl_dual FORWARD pinhole intrinsics, no downscale):
++  [ 502.2632141113281,   0.0,               506.3970947265625 ]
++  [ 0.0,                 500.6736145019531, 385.4100036621094 ]
++  [ 0.0,                 0.0,               1.0 ]
++width  = 1024
++height = 768
++
++Camera convention: viewmat is WORLD->CAMERA in OpenCV axes (x-right, y-down,
++z-forward). It is NOT a c2w. gsplat-1.5.3 `viewmats` expects exactly this.
++
++rasterization kwargs used:
++  packed         = False
++  near_plane     = 0.001
++  far_plane      = 1e10
++  render_mode    = "RGB+ED"   ("RGB" is fine if you don't need depth)
++  sh_degree      = 3
++  rasterize_mode = "classic"  (=> opacity is plain sigmoid; NO antialias comp.)
++
++Background composite (needed for an EXACT pixel match):
++  background = [0.14900000393390656, 0.1647000014781952, 0.21570000052452087]
++  rgb = render[..., :3] + (1 - alpha) * background
++  rgb = clamp(rgb, 0, 1)
++
++Reference PNG: reference_forward_render.png (1024x768) — compare against this.
++
++
++================================================================================
++ 3. GAUSSIAN ACTIVATION RECIPE (apply to the RAW ckpt gauss_params.*)
++================================================================================
++Verified by measuring the exact tensors handed to the rasterizer (no crop at
++inference -> full arrays):
++  scales     = exp(scales)                       # verified: max abs diff 2.5e-6
++  opacities  = sigmoid(opacities).squeeze(-1)    # verified: max abs diff 9e-8, -> (N,)
++  quats      = RAW (unnormalized)                # verified diff 0.0; rasterization
++                                                 #   L2-normalizes internally
++  colors     = cat(features_dc[:,None,:], features_rest)  -> SH coeffs (N, 16, 3)
++               passed with sh_degree=3; gsplat does SH->RGB internally.
++  means      = RAW (already in NS model frame)
++
++(If you instead reproduce SH by hand: rgbs = SH_eval(deg=3, viewdirs, coeffs);
++ rgbs = clamp(rgbs + 0.5, min=0). The DC-only convention is SH2RGB(x)=x*C0+0.5,
++ C0 = 0.28209479177387814. But easiest is to let gsplat.rasterization do it via
++ the colors=(N,16,3) + sh_degree=3 path.)
++
++
++================================================================================
++ 4. FINAL POLICY IMAGE SPEC (render -> what the VLA server receives)
++================================================================================
++  render resolution : 1024 x 768   (the K above)
++  resize            : to image_size x image_size, square  (runs used image_size = 224)
++  interpolation     : PIL BILINEAR
++  channel order     : RGB  (no swap; RGB-era convention)
++  sent as           : uint8 (image_size, image_size, 3)
++
++
++================================================================================
++ STANDALONE gsplat-1.5.3 REPRODUCTION (drop-in)
++================================================================================
++import torch
++import numpy as np
++from gsplat import rasterization            # gsplat 1.5.3
++
++DEV = "cuda"
++ckpt = torch.load("step-000029999.ckpt", map_location=DEV)
++sd = ckpt["pipeline"]                       # nerfstudio pipeline state_dict
++
++# Gauss params. Key prefix is usually "_model.gauss_params." (newer) or
++# "_model." (older splatfacto). Print sd.keys() if unsure.
++def g(name):
++    for pre in ("_model.gauss_params.", "_model."):
++        if pre + name in sd:
++            return sd[pre + name].to(DEV)
++    raise KeyError(name)
++
++means     = g("means")                      # (N,3) RAW, NS frame
++quats     = g("quats")                      # (N,4) RAW (rasterization normalizes)
++scales    = torch.exp(g("scales"))          # (N,3)
++opacities = torch.sigmoid(g("opacities")).squeeze(-1)   # (N,)
++colors    = torch.cat([g("features_dc")[:, None, :], g("features_rest")], dim=1)  # (N,16,3)
++
++# Camera (from this handoff). Either paste the dumped viewmat directly:
++viewmat = torch.tensor([
++  [ 2.1386467778938822e-06, -0.12612655758857727,   0.0021319289226084948, -0.009229300543665886],
++  [-0.0002530657802708447,  -0.0021319289226084948,-0.12612630426883698,    0.0001407026284141466],
++  [ 0.12614431977272034,    -2.1386467778938822e-06,-0.0002530657802708447,  0.018130268901586533],
++  [ 0.0, 0.0, 0.0, 1.0]], device=DEV, dtype=torch.float32)[None]     # (1,4,4)
++
++# ...or compute it for an arbitrary NED camera pose T_c2w_ned:
++#   Tw2g = <paste Tw2g 4x4>
++#   c2w  = Tw2g @ T_c2w_ned
++#   R = c2w[:3,:3] * torch.tensor([1.,-1.,-1.], device=DEV)
++#   R_inv = R.T ; t_inv = -R_inv @ c2w[:3,3]
++#   viewmat = torch.eye(4); viewmat[:3,:3]=R_inv; viewmat[:3,3]=t_inv; viewmat=viewmat[None]
++
++K = torch.tensor([[502.2632141113281, 0.0, 506.3970947265625],
++                  [0.0, 500.6736145019531, 385.4100036621094],
++                  [0.0, 0.0, 1.0]], device=DEV, dtype=torch.float32)[None]   # (1,3,3)
++W, H = 1024, 768
++bg = torch.tensor([0.14900000393390656, 0.1647000014781952, 0.21570000052452087], device=DEV)
++
++render, alpha, info = rasterization(
++    means=means, quats=quats, scales=scales, opacities=opacities, colors=colors,
++    viewmats=viewmat, Ks=K, width=W, height=H,
++    packed=False, near_plane=0.001, far_plane=1e10,
++    render_mode="RGB", sh_degree=3, rasterize_mode="classic",
++)
++rgb = (render[..., :3] + (1.0 - alpha) * bg).clamp(0, 1).squeeze(0)   # (H,W,3) in [0,1]
++# uint8: (rgb*255).byte().cpu().numpy()   -> compare vs reference_forward_render.png
++
++# Policy image: PIL.Image.fromarray(rgb_uint8).resize((224,224), Image.BILINEAR), RGB.
++
++================================================================================
++ APPENDIX A — full render_spec.json  (exact dump)
++================================================================================
++{
++  "1_world_to_model": {
++    "dataparser_transform_3x4": [
++      [
++        0.9999979734420776,
++        -1.695393439149484e-05,
++        0.0020061566028743982,
++        -1.2423747777938843
++      ],
++      [
++        -1.695393439149484e-05,
++        0.9998571872711182,
++        0.01690067909657955,
++        -0.6352672576904297
++      ],
++      [
++        -0.0020061566028743982,
++        -0.01690067909657955,
++        0.9998551607131958,
++        -1.4881443977355957
++      ]
++    ],
++    "dataparser_scale": 0.12614457225472883,
++    "Tw2g_4x4": [
++      [
++        0.12614431661544656,
++        2.138646801849853e-06,
++        -0.00025306576654559085,
++        -0.15671883492487332
++      ],
++      [
++        -2.138646801849853e-06,
++        -0.1261265572041315,
++        -0.0021319289354524646,
++        -0.08013551648879384
++      ],
++      [
++        -0.00025306576654559085,
++        0.0021319289354524646,
++        -0.12612630156484925,
++        -0.18772133850562778
++      ],
++      [
++        0.0,
++        0.0,
++        0.0,
++        1.0
++      ]
++    ],
++    "Tw2g_input_frame": "ned",
++    "Tw2g_output_frame": "ns (nerfstudio/model frame the gaussians live in)",
++    "note": "renderer applies Tc2g = Tw2g @ T_c2w; camera_to_worlds handed to splatfacto is camera->NS."
++  },
++  "ref_pose": {
++    "drone_pos_mocap": [
++      0.0,
++      0.0,
++      1.5
++    ],
++    "drone_quat_xyzw_ned": [
++      0.0,
++      0.0,
++      0.0,
++      1.0
++    ],
++    "drone_pos_ned": [
++      0.0,
++      0.0,
++      -1.5
++    ],
++    "T_c2w_ned_4x4": [
++      [
++        0.0,
++        0.0,
++        -1.0,
++        0.1
++      ],
++      [
++        1.0,
++        0.0,
++        0.0,
++        -0.03
++      ],
++      [
++        0.0,
++        -1.0,
++        0.0,
++        -1.51
++      ],
++      [
++        0.0,
++        0.0,
++        0.0,
++        1.0
++      ]
++    ],
++    "intrinsics": {
++      "width": 1024,
++      "height": 768,
++      "fx": 502.2632,
++      "fy": 500.6736,
++      "cx": 506.3971,
++      "cy": 385.41
++    }
++  },
++  "patched_modules": {
++    "project": [
++      "gsplat.project_gaussians",
++      "gsplat",
++      "nerfstudio.models.splatfacto",
++      "sagesplat.sagesplat"
++    ],
++    "rasterize": [
++      "gsplat.rasterize",
++      "gsplat",
++      "nerfstudio.models.splatfacto",
++      "sagesplat.sagesplat"
++    ]
++  },
++  "model_class": "sagesplat.sagesplat.SageSplatModel",
++  "2_reference_render": {
++    "renderer_api": "sagesplat's gsplat-1.x-API `rasterization` shim (running on gsplat 0.1.13). These are the exact kwargs to feed real gsplat-1.5.3 `rasterization(...)`.",
++    "viewmat_4x4_world_to_cam": [
++      [
++        2.1386467778938822e-06,
++        -0.12612655758857727,
++        0.0021319289226084948,
++        -0.009229300543665886
++      ],
++      [
++        -0.0002530657802708447,
++        -0.0021319289226084948,
++        -0.12612630426883698,
++        0.0001407026284141466
++      ],
++      [
++        0.12614431977272034,
++        -2.1386467778938822e-06,
++        -0.0002530657802708447,
++        0.018130268901586533
++      ],
++      [
++        0.0,
++        0.0,
++        0.0,
++        1.0
++      ]
++    ],
++    "K_3x3": [
++      [
++        502.2632141113281,
++        0.0,
++        506.3970947265625
++      ],
++      [
++        0.0,
++        500.6736145019531,
++        385.4100036621094
++      ],
++      [
++        0.0,
++        0.0,
++        1.0
++      ]
++    ],
++    "width": 1024,
++    "height": 768,
++    "camera_convention": "viewmats = world(NS model frame)->camera, OpenCV axes (x-right, y-down, z-forward). get_viewmat: R=c2w_R*[1,-1,-1] (OpenGL->OpenCV flip), R_inv=R^T, T_inv=-R_inv@t.",
++    "rasterization_kwargs": {
++      "packed": false,
++      "near_plane": 0.001,
++      "far_plane": 10000000000.0,
++      "render_mode": "RGB+ED",
++      "sh_degree": 3,
++      "rasterize_mode": "classic"
++    },
++    "background_color": [
++      0.14900000393390656,
++      0.1647000014781952,
++      0.21570000052452087
++    ],
++    "post": "rgb = render[...,:3] + (1-alpha)*background; rgb = clamp(rgb, 0, 1)",
++    "png": "/home/dfliu/code/falsify/tools/gate_pi0/render_spec_dump/reference_forward_render.png"
++  },
++  "3_activation": {
++    "gauss_param_shapes": {
++      "affordance": [
++        6087883,
++        1
++      ],
++      "clip_embeds": [
++        6087883,
++        3
++      ],
++      "features_dc": [
++        6087883,
++        3
++      ],
++      "features_rest": [
++        6087883,
++        15,
++        3
++      ],
++      "means": [
++        6087883,
++        3
++      ],
++      "opacities": [
++        6087883,
++        1
++      ],
++      "quats": [
++        6087883,
++        4
++      ],
++      "scales": [
++        6087883,
++        3
++      ]
++    },
++    "sh_degree_config": 3,
++    "sh_degree_used_at_render": 3,
++    "recipe_checks": {
++      "n_rasterization_calls": 3,
++      "scales_arg == exp(raw_scales)  max_abs_diff": 2.541789037024955e-06,
++      "opacities_arg == sigmoid(raw)  max_abs_diff": 8.924630934270539e-08,
++      "quats_arg == RAW ckpt quats    max_abs_diff": 0.0,
++      "colors_arg_shape (SH coeffs N,K,3)": [
++        6087883,
++        16,
++        3
++      ]
++    },
++    "means_are_raw_ckpt": "means/quats are the raw ckpt params (model frame = NS); ONLY the camera is transformed via Tw2g. The dataparser transform is NOT applied to gaussians at load.",
++    "recipe": "Pass to gsplat.rasterization: means=RAW means; quats=RAW quats (rasterization L2-normalizes internally); scales=exp(RAW scales); opacities=sigmoid(RAW opacities); colors=cat(features_dc[:,None,:], features_rest) as SH coeffs (N,16,3) with sh_degree=3 (gsplat does SH->RGB). Then rgb=render[...,:3]+(1-alpha)*bg; clamp(rgb,0,1).",
++    "measured": {
++      "raw_scales_range": {
++        "min": -20.982343673706055,
++        "max": 4.216732501983643,
++        "shape": [
++          6087883,
++          3
++        ]
++      },
++      "raw_quats_norm_range (unnormalized in ckpt)": {
++        "min": 0.5372283458709717,
++        "max": 3.752967596054077,
++        "shape": [
++          6087883
++        ]
++      },
++      "raw_opacities_range": {
++        "min": -7.295793056488037,
++        "max": 18.380294799804688,
++        "shape": [
++          6087883,
++          1
++        ]
++      },
++      "rz_opacities_arg_range (sigmoid, [0,1])": {
++        "min": 0.0006779268151149154,
++        "max": 1.0,
++        "shape": [
++          6087883
++        ]
++      },
++      "rz_colors_arg_shape": [
++        6087883,
++        16,
++        3
++      ]
++    },
++    "get_outputs_source": "tools/gate_pi0/render_spec_dump/splatfacto_get_outputs.txt"
++  },
++  "4_policy_image": {
++    "render_resolution": [
++      1024,
++      768
++    ],
++    "resize_to": "image_size x image_size (square). Runs used image_size=224.",
++    "interpolation": "PIL BILINEAR (falsify.policy.camera_postprocess.CameraPostprocess step 1 / VLAPolicy._resize_image)",
++    "channel_order": "RGB (channel_order='RGB' default; renders are already RGB; no swap for this era)",
++    "note": "VLAPolicy sends observation/image as uint8 (image_size, image_size, 3) RGB after the resize."
++  }
++}
++
++================================================================================
++ APPENDIX B — sagesplat SageSplatModel.get_outputs (ACTIVE path; legacy
++ commented-out old-gsplat-API block at top elided)
++================================================================================
++        if not isinstance(camera, Cameras):
++            print("Called get_outputs with not a camera")
++            return {}
++
++        if self.training:
++            assert camera.shape[0] == 1, "Only one camera at a time"
++            optimized_camera_to_world = self.camera_optimizer.apply_to_camera(camera)
++        else:
++            optimized_camera_to_world = camera.camera_to_worlds
++
++        # cropping
++        if self.crop_box is not None and not self.training:
++            crop_ids = self.crop_box.within(self.means).squeeze()
++            if crop_ids.sum() == 0:
++                return self.get_empty_outputs(
++                    int(camera.width.item()), int(camera.height.item()), self.background_color
++                )
++        else:
++            crop_ids = None
++
++        if crop_ids is not None:
++            opacities_crop = self.opacities[crop_ids]
++            means_crop = self.means[crop_ids]
++            features_dc_crop = self.features_dc[crop_ids]
++            features_rest_crop = self.features_rest[crop_ids]
++            scales_crop = self.scales[crop_ids]
++            quats_crop = self.quats[crop_ids]
++            clip_embeds_crop = self.clip_embeds[crop_ids]
++            affordance_crop = self.affordance[crop_ids]
++        else:
++            opacities_crop = self.opacities
++            means_crop = self.means
++            features_dc_crop = self.features_dc
++            features_rest_crop = self.features_rest
++            scales_crop = self.scales
++            quats_crop = self.quats
++            clip_embeds_crop = self.clip_embeds
++            affordance_crop = self.affordance
++        colors_crop = torch.cat((features_dc_crop[:, None, :], features_rest_crop), dim=1)
++
++        camera_scale_fac = self._get_downscale_factor()
++        camera.rescale_output_resolution(1 / camera_scale_fac)
++        viewmat = get_viewmat(optimized_camera_to_world)
++        K = camera.get_intrinsics_matrices().cuda()
++        W, H = int(camera.width.item()), int(camera.height.item())
++        self.last_size = (H, W)
++        # camera.rescale_output_resolution(camera_scale_fac)  # type: ignore
++
++        # apply the compensation of screen space blurring to gaussians
++        if self.config.rasterize_mode not in ["antialiased", "classic"]:
++            raise ValueError("Unknown rasterize_mode: %s", self.config.rasterize_mode)
++
++        if self.config.output_depth_during_training or not self.training:
++            render_mode = "RGB+ED"
++        else:
++            render_mode = "RGB"
++
++        if self.config.sh_degree > 0:
++            sh_degree_to_use = min(self.step // self.config.sh_degree_interval, self.config.sh_degree)
++        else:
++            colors_crop = torch.sigmoid(colors_crop).squeeze(1)  # [N, 1, 3] -> [N, 3]
++            sh_degree_to_use = None
++
++        render, alpha, self.info = rasterization(  # type: ignore[reportPossiblyUnboundVariable]
++            means=means_crop,
++            quats=quats_crop,  # rasterization does normalization internally
++            scales=torch.exp(scales_crop),
++            opacities=torch.sigmoid(opacities_crop).squeeze(-1),
++            colors=colors_crop,
++            viewmats=viewmat,  # [1, 4, 4]
++            Ks=K,  # [1, 3, 3]
++            width=W,
++            height=H,
++            packed=False,
++            near_plane=0.001,
++            far_plane=1e10,
++            render_mode=render_mode,
++            sh_degree=sh_degree_to_use,
++            sparse_grad=False,
++            absgrad=self.strategy.absgrad if isinstance(self.strategy, DefaultStrategy) else False,
++            rasterize_mode=self.config.rasterize_mode,
++            # set some threshold to disregrad small gaussians for faster rendering.
++            # radius_clip=3.0,
++        )
++        self.xys = self.info["means2d"]
++        self.radii = self.info["radii"]
++        camera.rescale_output_resolution(camera_scale_fac)
++        if renderers.BACKGROUND_COLOR_OVERRIDE is not None:
++            background = renderers.BACKGROUND_COLOR_OVERRIDE.to(self.device)
++        else:
++            background = self.background_color.to(self.device)
++        alpha = alpha[:, ...]
++        rgb = render[:, ..., :3] + (1 - alpha) * background
++        rgb = torch.clamp(rgb, 0.0, 1.0) # type: ignore
++        depth_im = None
++        if render_mode == "RGB+ED":
++            depth_im = render[:, ..., 3:4]
++            depth_im = torch.where(alpha > 0, depth_im, depth_im.detach().max()).squeeze(0)
++        else:
++            depth_im = None
++        # if self.config.output_depth_during_training or not self.training:
++        #     depth_im = rasterize_gaussians(  # type: ignore
++        #         self.xys,
++        #         depths,
++        #         self.radii,
++        #         conics,
++        #         num_tiles_hit,  # type: ignore
++        #         depths[:, None].repeat(1, 3),
++        #         opacities,
++        #         H,
++        #         W,
++        #         BLOCK_WIDTH,
++        #         background=torch.zeros(3, device=self.device),
++        #     )[
++        #         ..., 0:1
++        #     ]  # type: ignore
++        #     depth_im = torch.where(alpha > 0, depth_im / alpha, depth_im.detach().max())
++
++        # CLIP Embeddings
++        # clip_embeds_im = rasterize_gaussians(  # type: ignore
++        #     self.xys,
++        #     depths,
++        #     self.radii,
++        #     conics,
++        #     num_tiles_hit,
++        #     clip_embeds_crop,
++        #     opacities,
++        #     H,
++        #     W,
++        #     BLOCK_WIDTH,
++        #     self.clip_background,
++        # )
++        clip_embeds_im, clip_alpha, _ = rasterization(  # type: ignore[reportPossiblyUnboundVariable]
++            means=means_crop,
++            quats=quats_crop,  # rasterization does normalization internally
++            scales=torch.exp(scales_crop),
++            opacities=torch.sigmoid(opacities_crop).squeeze(-1),
++            colors=clip_embeds_crop,
++            viewmats=viewmat,  # [1, 4, 4]
++            Ks=K,  # [1, 3, 3]
++            width=W,
++            height=H,
++            packed=False,
++            near_plane=0.001,
++            far_plane=1e10,
++            render_mode=render_mode,
++            sh_degree=None,
++            sparse_grad=False,
++            absgrad=self.strategy.absgrad if isinstance(self.strategy, DefaultStrategy) else False,
++            rasterize_mode=self.config.rasterize_mode,
++            # set some threshold to disregrad small gaussians for faster rendering.
++            # radius_clip=3.0,
++        )
++        clip_embeds_im = clip_embeds_im[:, ..., :3] + (1 - clip_alpha) * self.clip_background
++        affordance_im, _, _ = rasterization(  # type: ignore[reportPossiblyUnboundVariable]
++            means=means_crop,
++            quats=quats_crop,  # rasterization does normalization internally
++            scales=torch.exp(scales_crop),
++            opacities=torch.sigmoid(opacities_crop).squeeze(-1),
++            colors=affordance_crop,
++            viewmats=viewmat,  # [1, 4, 4]
++            Ks=K,  # [1, 3, 3]
++            width=W,
++            height=H,
++            packed=False,
++            near_plane=0.001,
++            far_plane=1e10,
++            render_mode=render_mode,
++            sh_degree=None,
++            sparse_grad=False,
++            absgrad=self.strategy.absgrad if isinstance(self.strategy, DefaultStrategy) else False,
++            rasterize_mode=self.config.rasterize_mode,
++            # set some threshold to disregrad small gaussians for faster rendering.
++            # radius_clip=3.0,
++        )
++        # # Affordance
++        # affordance_im = rasterize_gaussians(  # type: ignore
++        #     self.xys,
++        #     depths,
++        #     self.radii,
++        #     conics,
++        #     num_tiles_hit,
++        #     torch.sigmoid(affordance_crop).repeat(1, 3),
++        #     opacities,
++        #     H,
++        #     W,
++        #     BLOCK_WIDTH,
++        #     self.affordance_background,
++        # )[..., 0:1]
++        # clamp the outputs
++        affordance_im = torch.clamp(affordance_im, max=1.0)
++        affordance_im = affordance_im.squeeze(0)
++        # outputs
++        outputs = {
++            "rgb": rgb.squeeze(0),
++            "depth": depth_im,
++            "clip": clip_embeds_im.squeeze(0),
++            "affordance": affordance_im[..., 0:1],
++            "accumulation": alpha.squeeze(0),
++            "background": background,
++        }  # type: ignore
++
++        if (
++            self.config.output_semantics_during_training or not self.training
++        ) and compute_semantics:
++            # Compute semantic inputs, e.g., composited similarity.
++            outputs = self.get_semantic_outputs(outputs=outputs)
++
++        return outputs
+diff --git a/tools/gate_pi0/README.md b/tools/gate_pi0/README.md
+index 0473473..46b17b2 100644
+--- a/tools/gate_pi0/README.md
++++ b/tools/gate_pi0/README.md
+@@ -60,9 +60,15 @@ needs. Both are in **`openpi_gate_pi0.patch`** (this dir):
+    (the LIBERO `LiberoInputs`/`Outputs` transforms already match
+    `gate_inference.py`'s fed keys: `observation/image`,
+    `observation/wrist_image`, `observation/state`, `prompt`) repointed at
+-   `repo_id="local/gate_nav"`. The real base was a custom `pi0_libero_shared`,
+-   but its delta is training-only (norm-stats sharing) and irrelevant to
+-   inference.
++   `repo_id="local/gate_nav"`. The real base was a custom `pi0_libero_shared`.
++
++   **Critical**: `pi0_libero` also pushes `DeltaActions` (input) /
++   `AbsoluteActions` (output) onto `data_transforms`, which add `state` to
++   every action row. The gate dataset is **already per-step EE-deltas**, so
++   `pi0_gate` must strip that push — the patch subclasses
++   `LeRobotLiberoDataConfig` as `_GateDataConfig` to filter both transforms
++   out. See "§ Action space" below for how to prove it and what goes wrong
++   if you leave it in.
+ 2. **Source-noise ("pin") threading** (`policies/policy.py` +
+    `models/pi0.py`) — lets `Policy.infer(obs, noise=…)` inject the flow's
+    initial `x_1` instead of sampling it. Required by the pin path.
+@@ -133,22 +139,52 @@ export PYTHONPATH=src:external/FiGS/src:external/splatnav:$PYTHONPATH
+     --prompt-name left_gate \
+     --host 127.0.0.1 --port 8000 \
+     --image-size 224 \
+-    --action-space absolute \      # REQUIRED for these checkpoints (see below)
+-    --actions-per-chunk 8 \        # receding horizon per the README (replan ~8, not 50)
++    --action-space delta \         # per-step deltas → cumsum (see below); this is the default
++    --actions-per-chunk 8 \        # receding horizon per the HF README (replan ~8, not 50)
+     --horizon-s 60 \
+     --out runs/gate_pi0_smoke/left_gate_pin
+ ```
+ 
+-### `--action-space absolute` (why)
++### Action space — `delta`, and the bug that made it look absolute
+ 
+-These pi0 checkpoints emit **absolute MOCAP position/yaw waypoints** (the
+-delta-action model adds the current state back server-side), *not* per-step
+-deltas. The default `VLAPolicy` `action_space="delta"` cumsum-integrates them
+-→ geometric blow-up (z 1.5 → 78 → 3983 …). Tell-tale: action col 2 (z) ≈ 1.53
+-= absolute altitude; action norm stats are delta-like (mean≈0, std≈0.004)
+-because the training deltas are chunk-relative. `absolute` mode also
+-**re-anchors** each chunk to the drone's current pose (keeps the model's
+-relative motion shape, removes the teleport-replay seam discontinuity).
++**These checkpoints emit per-step EE-deltas.** The HF README says so ("7-D
++EE-delta action chunk of length 50"), and the shipped norm stats prove it:
++`scripts/compute_norm_stats.py` runs *after* `data_transforms.inputs`, and the
++action stats are per-step-sized (z mean −0.0011, std 0.0044, q99 0.0101) rather
++than up-to-50-step chunk displacements, while state z mean is 1.3924. So use
++`--action-space delta` (cumsum) — the `VLAPolicy` default.
++
++**We initially got this wrong.** Deriving `pi0_gate` from `pi0_libero` dragged
++in LIBERO's `DeltaActions`/`AbsoluteActions` push, so the output chain ran
++`Unnormalize → AbsoluteActions → LiberoOutputs` and added the raw state to
++every row. Symptoms:
++
++- action col 2 (z) came back ≈ 1.5291–1.5328 at drone altitude 1.5 m — a
++  state-sized *offset* with a delta-sized *spread* (0.0037 ≈ the 0.0044 z std);
++- `delta` mode then exploded geometrically: 50 rows × ~1.53 m ⇒ z 1.5 → 76.6 →
++  3983 → …  (the observed chunk-0 cumsum was exactly 76.571);
++- `absolute` mode papered over it, because re-anchoring subtracts row 0 and
++  cancels the constant state offset — but that also cancels the real motion
++  (`abs[k] − abs[0]` = `delta[k] − delta[0]` ≈ 0), which is why "honest
++  re-anchored integration" made the policy look like it barely moved.
++
++`_GateDataConfig` in the patch removes the push. Verify with:
++
++```bash
++env -u VIRTUAL_ENV XLA_PYTHON_CLIENT_PREALLOCATE=false \
++    ~/code/openpi/.venv/bin/python tools/gate_pi0/probe_action_space.py \
++    --ckpt local/checkpoints/gate_both_scratch --norm local/assets/gate_nav
++```
++
++It infers twice on one image at state z = 1.5 and z = 2.5. Correct output:
++`data_transforms` = `[LiberoInputs]` / `[LiberoOutputs]`, every action column
++inside the norm-stats envelope, and mean(col2) shifting by ~0 (measured
++−0.0062) rather than +1.0. Measured chunk cumsum over 50 steps:
++`[+0.912, −0.135, −0.043, −0.095]` — ~0.9 m of forward travel over 5 s at
++10 Hz, which is a sane drone speed.
++
++`--action-space absolute` remains available in `VLAPolicy` for checkpoints that
++genuinely emit absolute targets, but **it is not the setting for this family.**
+ 
+ ---
+ 
+@@ -156,21 +192,29 @@ relative motion shape, removes the teleport-replay seam discontinuity).
+ 
+ - **Integration is correct & glitch-free.** Full path validated:
+   bucket → openpi (`pi0_gate` + norm padding + source-noise patch) → serve →
+-  `VLAPolicy` (absolute + re-anchor) → sim rollout.
++  `VLAPolicy` (`delta`, cumsum) → sim rollout.
+ - **Pin works and measurably shifts the trajectory** vs scratch — the
+   instruction-prior pinning has a real, visible effect in-sim.
+-- **Chunk-seam "teleport" glitch** (raw absolute + v0 teleport-replay
+-  integrator): ~2-3 cm backward hitch at every re-query seam. Fixed by
+-  re-anchoring absolute chunks to the current pose (`VLAPolicy`, 0/74 seams).
+-- **The apparent forward flight was mostly that glitch.** Raw-absolute moved
+-  1.33 m/60 s at replan-8, but ~1.37 cm/chunk of that came from seam teleports
+-  vs the model's genuine ~0.5 cm/chunk. With honest (re-anchored) integration
+-  the policy barely moves.
+-- **Real bottleneck = domain / start-pose gap.** The model emits targets ~2 cm
+-  *behind* itself with ~5 mm forward span → timid → hovers. Training state
+-  mean x≈1.17 but the drone starts at x≈0 (out of distribution). Next lever:
+-  start the drone in-distribution and/or improve render fidelity vs training
+-  footage — not more integration tweaks.
++- **The action-space detour.** We first mis-derived `pi0_gate` from
++  `pi0_libero` and inherited its `AbsoluteActions` output transform, which
++  made the chunks *look* absolute (z ≈ 1.53 at altitude 1.5 m) and blew up
++  under cumsum. Adding an `absolute` + re-anchor mode hid the symptom but
++  cancelled the real motion (1.33 m/60 s → 0.08 m/60 s), which we then
++  misread as "the policy barely moves". Root cause was the transform, not
++  the checkpoint. See § Action space.
++- **With `delta` on the fixed config the policy flies** (`gate_both_pin`,
++  `left_gate`, 60 s @ 10 Hz, replan 8, 75 chunks): net NED displacement
++  1.269 m, 0/74 backward chunk seams, no blow-up. It advances x −0.02 → ~1.7,
++  drifts y toward the goal, and climbs z −1.54 → −1.22 (goal NED
++  `[1.525, 0.615, −1.0]`), ending ~0.7 m short. Run:
++  `runs/gate_pi0_deltafix/left_gate_pin/`.
++- **Open question — lateral sign.** The drone tracks toward the goal but at
++  MOCAP y ≈ −0.4, while the *left* gate aperture is at MOCAP y ∈ [0.12, 1.27].
++  Worth checking whether it actually transits the gate or flies around it, and
++  whether the NED↔MOCAP y/yaw flip matches these checkpoints' training frame.
++- **Start pose is still out of distribution.** Training state mean x ≈ 1.17;
++  the drone starts at x ≈ 0. Starting in-distribution is the next lever to
++  test, along with render fidelity vs the training footage.
+ 
+ ---
+ 
+diff --git a/tools/gate_pi0/extract_render_spec.py b/tools/gate_pi0/extract_render_spec.py
+new file mode 100644
+index 0000000..60cd893
+--- /dev/null
++++ b/tools/gate_pi0/extract_render_spec.py
+@@ -0,0 +1,236 @@
++"""Extract the EXACT gsplat render spec for configs/scenes/left_gate.yaml so the
++render can be reproduced in a standalone gsplat-1.5.3 script (no nerfstudio/FiGS).
++
++Reuses falsify's own render path: builds the FrameGraph + GSplatRenderer, places
++the forward camera at the drone start pose (mocap [0,0,1.5], yaw 0), and renders.
++It monkeypatches nerfstudio-splatfacto's `project_gaussians` + `rasterize_gaussians`
++to capture the exact tensors the rasterizer receives (viewmat, K, activated
++scales/quats/opacities/colors), so the activation recipe is measured, not guessed.
++
++Dumps everything (exact, unrounded) to tools/gate_pi0/render_spec_dump/.
++Run under tools/env.sh:
++  source tools/env.sh
++  PYTHONPATH=src:external/FiGS/src:external/splatnav .venv/bin/python \
++      tools/gate_pi0/extract_render_spec.py
++"""
++import json
++from pathlib import Path
++
++import numpy as np
++import torch
++
++REPO = Path(__file__).resolve().parents[2]
++OUT = REPO / "tools" / "gate_pi0" / "render_spec_dump"
++OUT.mkdir(parents=True, exist_ok=True)
++
++from falsify.io import load_yaml, build_frame_graph
++from falsify.sim.renderer import GSplatRenderer
++from falsify.sim.poses import camera_to_world_pose
++from falsify.sensors.camera import make_camera_sensor_from_yaml
++from falsify.orchestrator.orchestrator import build_initial_state
++
++SCENE = REPO / "configs/scenes/left_gate.yaml"
++FRAME = REPO / "configs/frames/carl_dual.yaml"
++
++
++def dump_np(name, arr):
++    arr = np.asarray(arr)
++    np.save(OUT / f"{name}.npy", arr)
++    return arr.tolist()
++
++
++def main():
++    report = {}
++    scene_cfg = load_yaml(SCENE)
++    frame_cfg = load_yaml(FRAME)
++    scene_dir = SCENE.parent
++    fg = build_frame_graph(scene_cfg, base_path=scene_dir)
++
++    renderer = GSplatRenderer.from_scene_cfg(scene_cfg, scene_dir=scene_dir)
++    pipe = renderer.pipeline
++    model = pipe.model
++
++    # ---- (1) world->model transforms -------------------------------------
++    dpo = pipe.datamanager.train_dataparser_outputs
++    dp_transform = dpo.dataparser_transform.cpu().numpy()   # (3,4)
++    dp_scale = float(dpo.dataparser_scale)
++    Tw2g = np.asarray(renderer._impl.Tw2g)                   # (4,4) NED->NS (model frame)
++    report["1_world_to_model"] = {
++        "dataparser_transform_3x4": dump_np("dataparser_transform", dp_transform),
++        "dataparser_scale": dp_scale,
++        "Tw2g_4x4": dump_np("Tw2g", Tw2g),
++        "Tw2g_input_frame": renderer.world_frame,     # "ned"
++        "Tw2g_output_frame": "ns (nerfstudio/model frame the gaussians live in)",
++        "note": "renderer applies Tc2g = Tw2g @ T_c2w; camera_to_worlds handed to splatfacto is camera->NS.",
++    }
++
++    # ---- reference camera pose (forward cam @ start) ---------------------
++    state = build_initial_state(scene_cfg, fg, rng=None)     # NED, quat identity (yaw 0)
++    fwd = make_camera_sensor_from_yaml(
++        "forward", frame_cfg["cameras"]["forward"], fg,
++        renderer=renderer.render, body_to_world=camera_to_world_pose)
++    cam_pose = camera_to_world_pose(state, fwd.spec.body_from_camera)   # Pose in NED
++    T_c2w_ned = cam_pose.as_matrix()
++    report["ref_pose"] = {
++        "drone_pos_mocap": scene_cfg["start_position_mocap"],
++        "drone_quat_xyzw_ned": state.quat_xyzw.tolist(),
++        "drone_pos_ned": state.pos.xyz.tolist(),
++        "T_c2w_ned_4x4": dump_np("T_c2w_ned", T_c2w_ned),
++        "intrinsics": dict(fwd.spec.intrinsics),
++    }
++
++    # ---- (2) capture the exact rasterizer inputs -------------------------
++    # The model is `sagesplat`, not vanilla splatfacto — it imports
++    # project_gaussians / rasterize_gaussians into its OWN module namespace.
++    # Patch every loaded module that holds the gsplat functions.
++    import sys
++    cap = {}
++    restore = []  # (module, name, original)
++
++    def install(name, key):
++        for mod in list(sys.modules.values()):
++            fn = getattr(mod, name, None)
++            if fn is None:
++                continue
++            if not getattr(fn, "__module__", "").startswith("gsplat"):
++                continue
++            orig = fn
++            def spy(*a, _orig=orig, _key=key, **k):
++                cap.setdefault(_key + "_calls", []).append((a, k))
++                return _orig(*a, **k)
++            setattr(mod, name, spy)
++            restore.append((mod, name, orig))
++            cap.setdefault(key + "_patched_modules", []).append(mod.__name__)
++
++    install("project_gaussians", "proj")
++    install("rasterize_gaussians", "rast")
++    # gsplat 0.1.13 has no gsplat.rendering.rasterization, so sagesplat defines
++    # its OWN `rasterization` shim (gsplat-1.x API over 0.1.13). __module__ is
++    # sagesplat, so patch it directly — its call args are the gsplat-1.x call.
++    import sagesplat.sagesplat as _ss
++    _rz_orig = _ss.rasterization
++    def _rz_spy(*a, **k):
++        cap.setdefault("rz_calls", []).append((a, k))
++        return _rz_orig(*a, **k)
++    _ss.rasterization = _rz_spy
++    restore.append((_ss, "rasterization", _rz_orig))
++    try:
++        rgb, _ = renderer.render(cam_pose, fwd.spec.intrinsics)
++    finally:
++        for mod, name, orig in restore:
++            setattr(mod, name, orig)
++    report["patched_modules"] = {"project": cap.get("proj_patched_modules"),
++                                 "rasterize": cap.get("rast_patched_modules")}
++    report["model_class"] = f"{type(model).__module__}.{type(model).__name__}"
++
++    from PIL import Image
++    Image.fromarray(rgb).save(OUT / "reference_forward_render.png")
++
++    def as_np(x):
++        return x.detach().cpu().numpy() if torch.is_tensor(x) else x
++
++    def rng_str(x):
++        x = np.asarray(x, np.float64)
++        return {"min": float(x.min()), "max": float(x.max()), "shape": list(x.shape)}
++
++    # The real render is a single gsplat.rasterization(...) call (all kwargs).
++    # compute_semantics adds more calls; the FIRST is the RGB render.
++    rz = cap["rz_calls"][0][1]          # kwargs dict
++    viewmat = as_np(rz["viewmats"]).squeeze()          # (4,4) world(NS)->cam
++    K = as_np(rz["Ks"]).squeeze()                      # (3,3)
++    img_w, img_h = int(rz["width"]), int(rz["height"])
++    rz_scales = as_np(rz["scales"]); rz_quats = as_np(rz["quats"])
++    rz_opac = as_np(rz["opacities"]); rz_colors = as_np(rz["colors"])
++    try:
++        bg = as_np(model.background_color)
++    except Exception:
++        bg = None
++
++    report["2_reference_render"] = {
++        "renderer_api": "sagesplat's gsplat-1.x-API `rasterization` shim (running on gsplat 0.1.13). "
++                        "These are the exact kwargs to feed real gsplat-1.5.3 `rasterization(...)`.",
++        "viewmat_4x4_world_to_cam": dump_np("viewmat", np.asarray(viewmat)),
++        "K_3x3": dump_np("K", np.asarray(K)),
++        "width": img_w, "height": img_h,
++        "camera_convention": "viewmats = world(NS model frame)->camera, OpenCV axes (x-right, y-down, z-forward). "
++                             "get_viewmat: R=c2w_R*[1,-1,-1] (OpenGL->OpenCV flip), R_inv=R^T, T_inv=-R_inv@t.",
++        "rasterization_kwargs": {
++            "packed": bool(rz.get("packed", False)),
++            "near_plane": float(rz.get("near_plane", 0.0)),
++            "far_plane": float(rz.get("far_plane", 0.0)),
++            "render_mode": rz.get("render_mode"),
++            "sh_degree": (int(rz["sh_degree"]) if rz.get("sh_degree") is not None else None),
++            "rasterize_mode": rz.get("rasterize_mode"),
++        },
++        "background_color": (np.asarray(bg).tolist() if bg is not None else None),
++        "post": "rgb = render[...,:3] + (1-alpha)*background; rgb = clamp(rgb, 0, 1)",
++        "png": str((OUT / "reference_forward_render.png")),
++    }
++
++    # ---- (3) activation recipe (measured against raw params, no crop) -----
++    gp = model.gauss_params if hasattr(model, "gauss_params") else {
++        "means": model.means, "scales": model.scales, "quats": model.quats,
++        "opacities": model.opacities, "features_dc": model.features_dc,
++        "features_rest": model.features_rest}
++    raw = {k: as_np(v) for k, v in gp.items()}
++    shapes = {k: list(v.shape) for k, v in raw.items()}
++
++    sig_raw = 1.0 / (1.0 + np.exp(-raw["opacities"].reshape(-1).astype(np.float64)))
++    exp_raw = np.exp(raw["scales"].astype(np.float64))
++    recipe_checks = {
++        "n_rasterization_calls": len(cap["rz_calls"]),
++        "scales_arg == exp(raw_scales)  max_abs_diff": float(np.abs(rz_scales.astype(np.float64) - exp_raw).max()),
++        "opacities_arg == sigmoid(raw)  max_abs_diff": float(np.abs(rz_opac.reshape(-1).astype(np.float64) - sig_raw).max()),
++        "quats_arg == RAW ckpt quats    max_abs_diff": float(np.abs(rz_quats.astype(np.float64) - raw["quats"].astype(np.float64)).max()),
++        "colors_arg_shape (SH coeffs N,K,3)": list(np.asarray(rz_colors).shape),
++    }
++
++    report["3_activation"] = {
++        "gauss_param_shapes": shapes,
++        "sh_degree_config": int(getattr(model.config, "sh_degree", -1)),
++        "sh_degree_used_at_render": (int(rz["sh_degree"]) if rz.get("sh_degree") is not None else None),
++        "recipe_checks": recipe_checks,
++        "means_are_raw_ckpt": "means/quats are the raw ckpt params (model frame = NS); ONLY the camera is "
++                              "transformed via Tw2g. The dataparser transform is NOT applied to gaussians at load.",
++        "recipe": ("Pass to gsplat.rasterization: means=RAW means; quats=RAW quats (rasterization "
++                   "L2-normalizes internally); scales=exp(RAW scales); opacities=sigmoid(RAW opacities); "
++                   "colors=cat(features_dc[:,None,:], features_rest) as SH coeffs (N,16,3) with sh_degree=3 "
++                   "(gsplat does SH->RGB). Then rgb=render[...,:3]+(1-alpha)*bg; clamp(rgb,0,1)."),
++        "measured": {
++            "raw_scales_range": rng_str(raw["scales"]),
++            "raw_quats_norm_range (unnormalized in ckpt)": rng_str(np.linalg.norm(raw["quats"], axis=-1)),
++            "raw_opacities_range": rng_str(raw["opacities"]),
++            "rz_opacities_arg_range (sigmoid, [0,1])": rng_str(rz_opac),
++            "rz_colors_arg_shape": list(np.asarray(rz_colors).shape),
++        },
++    }
++
++    # dump raw gauss params for the standalone script + a sample slice
++    for k, v in raw.items():
++        np.save(OUT / f"gauss_{k}.npy", v)
++
++    # ---- splatfacto get_outputs source (ground truth for the recipe) -----
++    import inspect
++    try:
++        src = inspect.getsource(model.get_outputs)
++        (OUT / "splatfacto_get_outputs.txt").write_text(src)
++        report["3_activation"]["get_outputs_source"] = "tools/gate_pi0/render_spec_dump/splatfacto_get_outputs.txt"
++    except Exception as e:
++        report["3_activation"]["get_outputs_source"] = f"(unavailable: {e})"
++
++    # ---- (4) policy image spec -------------------------------------------
++    report["4_policy_image"] = {
++        "render_resolution": [img_w, img_h],
++        "resize_to": "image_size x image_size (square). Runs used image_size=224.",
++        "interpolation": "PIL BILINEAR (falsify.policy.camera_postprocess.CameraPostprocess step 1 / VLAPolicy._resize_image)",
++        "channel_order": "RGB (channel_order='RGB' default; renders are already RGB; no swap for this era)",
++        "note": "VLAPolicy sends observation/image as uint8 (image_size, image_size, 3) RGB after the resize.",
++    }
++
++    (OUT / "render_spec.json").write_text(json.dumps(report, indent=2))
++    print("WROTE", OUT / "render_spec.json")
++    print(json.dumps(report, indent=2))
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tools/gate_pi0/openpi_gate_pi0.patch b/tools/gate_pi0/openpi_gate_pi0.patch
+index 0783f42..f4fd61a 100644
+--- a/tools/gate_pi0/openpi_gate_pi0.patch
++++ b/tools/gate_pi0/openpi_gate_pi0.patch
+@@ -54,10 +54,10 @@ index ff1635a..ff60b55 100644
+  
+          # Unbatch and convert to np.ndarray.
+ diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+-index 164d59b..7ae5c13 100644
++index 164d59b..ff487d4 100644
+ --- a/src/openpi/training/config.py
+ +++ b/src/openpi/training/config.py
+-@@ -656,6 +656,31 @@ if len({config.name for config in _CONFIGS}) != len(_CONFIGS):
++@@ -656,6 +656,56 @@ if len({config.name for config in _CONFIGS}) != len(_CONFIGS):
+      raise ValueError("Config names must be unique.")
+  _CONFIGS_DICT = {config.name: config for config in _CONFIGS}
+  
+@@ -69,13 +69,38 @@ index 164d59b..7ae5c13 100644
+ +# the LiberoInputs/Outputs transforms already match gate_inference.py's fed keys
+ +# (observation/image, observation/wrist_image, observation/state, prompt), the
+ +# checkpoint is standard PaliGemma pi0, and norm_stats are passed explicitly at
+-+# serve time. Only the dataset id changes (+ local-only to avoid a hub lookup).
+++# serve time.
+++#
+++# CRITICAL: `pi0_libero` additionally pushes DeltaActions (input) /
+++# AbsoluteActions (output), which add `state` to every action row. The gate
+++# dataset is ALREADY per-step EE-deltas (HF README: "7-D EE-delta action chunk
+++# of length 50"), and the shipped norm_stats prove it — they are computed AFTER
+++# data_transforms.inputs, yet actions are tiny per-step deltas (z mean -0.0011,
+++# std 0.0044, q99 0.0101) rather than up-to-50-step chunk displacements, while
+++# state z mean is 1.3924. So the gate config must NOT apply that transform;
+++# leaving it on makes the server return `delta + state` per row, which a
+++# downstream cumsum integrator explodes (50 rows x ~1.53 m = ~76 m of altitude).
+++class _GateDataConfig(LeRobotLiberoDataConfig):
+++    """LeRobotLiberoDataConfig with the delta<->absolute action push removed."""
+++
+++    @override
+++    def create(self, assets_dirs: pathlib.Path, model_config: _model.BaseModelConfig) -> DataConfig:
+++        cfg = super().create(assets_dirs, model_config)
+++        dt = cfg.data_transforms
+++        return dataclasses.replace(
+++            cfg,
+++            data_transforms=_transforms.Group(
+++                inputs=[t for t in dt.inputs if not isinstance(t, _transforms.DeltaActions)],
+++                outputs=[t for t in dt.outputs if not isinstance(t, _transforms.AbsoluteActions)],
+++            ),
+++        )
+++
+++
+ +_gate_base = _CONFIGS_DICT["pi0_libero"]
+ +_CONFIGS_DICT["pi0_gate"] = dataclasses.replace(
+ +    _gate_base,
+ +    name="pi0_gate",
+-+    data=dataclasses.replace(
+-+        _gate_base.data,
+++    data=_GateDataConfig(
+ +        repo_id="local/gate_nav",
+ +        base_config=dataclasses.replace(
+ +            _gate_base.data.base_config,
+diff --git a/tools/gate_pi0/probe_action_space.py b/tools/gate_pi0/probe_action_space.py
+new file mode 100644
+index 0000000..c71d4bc
+--- /dev/null
++++ b/tools/gate_pi0/probe_action_space.py
+@@ -0,0 +1,106 @@
++"""In-process probe: does the gate pi0 policy return per-step deltas or
++absolute MOCAP targets?
++
++Discriminator: infer twice on the SAME image at two state altitudes (z and
++z + 1.0). If the returned action column 2 shifts by ~1.0, openpi's
++``AbsoluteActions`` output transform is adding ``state`` to every row (chunk is
++absolute). If it does not shift and the columns sit inside the action
++norm-stats envelope, the chunk is per-step deltas and must be cumsum-integrated
++(falsify ``--action-space delta``).
++
++Runs both the fixed ``pi0_gate`` config and a copy with the delta/absolute push
++restored, so the two are compared side by side in one process.
++
++    env -u VIRTUAL_ENV XLA_PYTHON_CLIENT_PREALLOCATE=false \
++        ~/code/openpi/.venv/bin/python tools/gate_pi0/probe_action_space.py \
++        --ckpt local/checkpoints/gate_both_scratch --norm local/assets/gate_nav
++"""
++import argparse
++import dataclasses
++import json
++
++import numpy as np
++
++import openpi.training.config as _cfg
++import openpi.policies.policy_config as _pc
++import openpi.shared.normalize as _nz
++import openpi.transforms as _transforms
++from openpi.transforms import NormStats
++
++
++PROMPT = "go through the gate on the left and hover over the stuffed animal"
++
++
++def pad_stats(ns: dict[str, NormStats], dim: int) -> dict[str, NormStats]:
++    out = {}
++    for k, s in ns.items():
++        n = np.asarray(s.mean).shape[-1]
++        if n >= dim:
++            out[k] = s
++            continue
++        pad = dim - n
++
++        def ext(arr, fill):
++            return None if arr is None else np.concatenate(
++                [np.asarray(arr, np.float32), np.full(pad, fill, np.float32)])
++
++        out[k] = NormStats(mean=ext(s.mean, 0.0), std=ext(s.std, 1.0),
++                           q01=ext(s.q01, 0.0), q99=ext(s.q99, 1.0))
++    return out
++
++
++def query(policy, state, image):
++    out = policy.infer({
++        "observation/image": image,
++        "observation/wrist_image": image,
++        "observation/state": np.asarray(state, np.float32),
++        "prompt": PROMPT,
++    })
++    return np.asarray(out["actions"])[:, :7]
++
++
++def report(tag, policy, image, lo, hi):
++    a0 = query(policy, lo, image)
++    a1 = query(policy, hi, image)
++    print(f"\n=== {tag} ===")
++    print(f"  chunk shape {a0.shape}")
++    print("  state z=1.5 col[min,max]:", " ".join(
++        f"c{i}[{a0[:, i].min():+.4f},{a0[:, i].max():+.4f}]" for i in range(4)))
++    print("  state z=2.5 col[min,max]:", " ".join(
++        f"c{i}[{a1[:, i].min():+.4f},{a1[:, i].max():+.4f}]" for i in range(4)))
++    print(f"  shift of mean(col2) when state z += 1.0: {a1[:, 2].mean() - a0[:, 2].mean():+.4f}")
++    print("  cumsum over 8 steps [:4]:", np.round(a0[:8].cumsum(0)[-1, :4], 4))
++    print("  cumsum over 50 steps[:4]:", np.round(a0.cumsum(0)[-1, :4], 4))
++    return a0
++
++
++def main():
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--ckpt", default="local/checkpoints/gate_both_scratch")
++    ap.add_argument("--norm", default="local/assets/gate_nav")
++    a = ap.parse_args()
++
++    rng = np.random.default_rng(0)
++    image = (rng.random((224, 224, 3)) * 255).astype(np.uint8)
++    lo = np.array([0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0], np.float32)
++    hi = lo.copy()
++    hi[2] += 1.0
++
++    cfg = _cfg.get_config("pi0_gate")
++    ns = pad_stats(_nz.load(a.norm), cfg.model.action_dim)
++
++    stats = json.load(open(f"{a.norm}/norm_stats.json"))["norm_stats"]["actions"]
++    print("norm_stats actions mean[:4]", np.round(stats["mean"][:4], 5))
++    print("norm_stats actions std [:4]", np.round(stats["std"][:4], 5))
++    print("norm_stats actions q99 [:4]", np.round(stats["q99"][:4], 5))
++
++    dc = cfg.data.create(cfg.assets_dirs, cfg.model)
++    print("data_transforms.inputs :", [type(t).__name__ for t in dc.data_transforms.inputs])
++    print("data_transforms.outputs:", [type(t).__name__ for t in dc.data_transforms.outputs])
++
++    pol = _pc.create_trained_policy(cfg, a.ckpt, norm_stats=ns)
++    report("pi0_gate (fixed: no DeltaActions/AbsoluteActions)", pol, image, lo, hi)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tools/gate_pi0/upload_gsplat_hf.py b/tools/gate_pi0/upload_gsplat_hf.py
+new file mode 100644
+index 0000000..c9aa658
+--- /dev/null
++++ b/tools/gate_pi0/upload_gsplat_hf.py
+@@ -0,0 +1,53 @@
++"""One-shot upload of the falsify gate gsplat assets to a HF dataset repo.
++
++Mirrors ~/los_tts/upload_hf.py's auth: reads a write token from
++~/los_tts/.hf_token (never passed on the command line) and pushes via HfApi.
++Uploads data/gate_scenes_export/ (the two sagesplat scenes + objects_final)
++to a dataset repo <user>/gate-gsplat-assets, EXCLUDING the ~1.2 GB of
++TensorBoard training logs (*tfevents*) that rendering doesn't need. Resumable
++and idempotent (upload_large_folder) — rerun to finish an interrupted push.
++
++Run with a python that has huggingface_hub, e.g. the same venv the tts
++uploader uses:
++
++  ~/venvs/chatterbox-tts/bin/python tools/gate_pi0/upload_gsplat_hf.py
++
++Then the other machine fetches the assets into the path the scene YAMLs expect:
++
++  hf download <user>/gate-gsplat-assets --repo-type dataset \
++      --local-dir data/gate_scenes_export
++"""
++import sys
++from pathlib import Path
++
++from huggingface_hub import HfApi
++
++TOKEN_FILE = Path.home() / "los_tts" / ".hf_token"
++# tools/gate_pi0/upload_gsplat_hf.py -> repo root is parents[2]
++FOLDER = Path(__file__).resolve().parents[2] / "data" / "gate_scenes_export"
++REPO_NAME = "gate-gsplat-assets"
++
++
++def main():
++    if not TOKEN_FILE.exists():
++        sys.exit(f"no HF token at {TOKEN_FILE}")
++    if not FOLDER.exists():
++        sys.exit(f"no gsplat assets at {FOLDER}")
++    token = TOKEN_FILE.read_text().strip()
++    api = HfApi(token=token)
++    user = api.whoami()["name"]
++    repo_id = f"{user}/{REPO_NAME}"
++    api.create_repo(repo_id, repo_type="dataset", exist_ok=True, private=False)
++    print(f"authenticated as {user}; uploading {FOLDER} -> {repo_id} "
++          f"(excluding *tfevents*)", flush=True)
++    api.upload_large_folder(
++        repo_id=repo_id,
++        repo_type="dataset",
++        folder_path=str(FOLDER),
++        ignore_patterns=["*tfevents*"],
++    )
++    print(f"done: https://huggingface.co/datasets/{repo_id}", flush=True)
++
++
++if __name__ == "__main__":
++    main()

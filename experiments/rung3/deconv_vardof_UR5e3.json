@@ -1,0 +1,24 @@
+{
+  "tag": "vardof_UR5e3",
+  "body": "UR5e",
+  "C": 3,
+  "ceiling": 0.765,
+  "deconv": {
+    "nid2": {
+      "deconv_success": 0.758,
+      "recon_rel_err": 0.469
+    },
+    "nid5": {
+      "deconv_success": 0.733,
+      "recon_rel_err": 0.464
+    },
+    "nid10": {
+      "deconv_success": 0.7,
+      "recon_rel_err": 0.463
+    },
+    "nid25": {
+      "deconv_success": 0.542,
+      "recon_rel_err": 0.464
+    }
+  }
+}

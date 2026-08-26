@@ -1,0 +1,247 @@
+{
+  "pins": [
+    {
+      "axis": [
+        1.0,
+        0.0
+      ],
+      "omega": 0,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        1.0,
+        0.0
+      ],
+      "omega": 1,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        1.0,
+        0.0
+      ],
+      "omega": 2,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        0.0,
+        1.0
+      ],
+      "omega": 0,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        0.0,
+        1.0
+      ],
+      "omega": 1,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        0.0,
+        1.0
+      ],
+      "omega": 2,
+      "mode": "mod2pi",
+      "mag": true
+    }
+  ],
+  "config": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "iters": 8000,
+    "train_scenes": 60,
+    "demos": 4,
+    "eval_scenes": 60,
+    "n_roll": 4,
+    "err_scale": 8.0995,
+    "smoke": false
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "A": {
+        "fwd": {
+          "err": 0.0099,
+          "err_std": 0.0078,
+          "chunk_rmse": 0.0406,
+          "mean_abs_action": 0.259,
+          "endpoint_spread": 0.0059,
+          "success": 1.0
+        },
+        "rev": {
+          "err": 0.0138,
+          "err_std": 0.0046,
+          "chunk_rmse": 0.1791,
+          "mean_abs_action": 0.2856,
+          "endpoint_spread": 0.0051
+        },
+        "hover": {
+          "err": 0.0117,
+          "err_std": 0.0073,
+          "chunk_rmse": 0.0885,
+          "mean_abs_action": 0.0706,
+          "endpoint_spread": 0.0059
+        }
+      },
+      "B": {
+        "fwd": {
+          "err": 0.011,
+          "err_std": 0.0077,
+          "chunk_rmse": 0.0374,
+          "mean_abs_action": 0.2589,
+          "endpoint_spread": 0.0059,
+          "success": 1.0
+        },
+        "rev": {
+          "err": 0.0098,
+          "err_std": 0.0039,
+          "chunk_rmse": 0.0365,
+          "mean_abs_action": 0.2587,
+          "endpoint_spread": 0.0045
+        },
+        "hover": {
+          "err": 0.0105,
+          "err_std": 0.008,
+          "chunk_rmse": 0.0233,
+          "mean_abs_action": 0.018,
+          "endpoint_spread": 0.0052
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "A": {
+        "fwd": {
+          "err": 0.01,
+          "err_std": 0.007,
+          "chunk_rmse": 0.0392,
+          "mean_abs_action": 0.2592,
+          "endpoint_spread": 0.0057,
+          "success": 1.0
+        },
+        "rev": {
+          "err": 0.0165,
+          "err_std": 0.0066,
+          "chunk_rmse": 0.2107,
+          "mean_abs_action": 0.2958,
+          "endpoint_spread": 0.0067
+        },
+        "hover": {
+          "err": 0.0124,
+          "err_std": 0.0063,
+          "chunk_rmse": 0.1102,
+          "mean_abs_action": 0.0872,
+          "endpoint_spread": 0.0059
+        }
+      },
+      "B": {
+        "fwd": {
+          "err": 0.0115,
+          "err_std": 0.0071,
+          "chunk_rmse": 0.0372,
+          "mean_abs_action": 0.2591,
+          "endpoint_spread": 0.0068,
+          "success": 1.0
+        },
+        "rev": {
+          "err": 0.0112,
+          "err_std": 0.0058,
+          "chunk_rmse": 0.0362,
+          "mean_abs_action": 0.2587,
+          "endpoint_spread": 0.0059
+        },
+        "hover": {
+          "err": 0.0123,
+          "err_std": 0.0071,
+          "chunk_rmse": 0.0241,
+          "mean_abs_action": 0.0187,
+          "endpoint_spread": 0.0068
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "A": {
+        "fwd": {
+          "err": 0.0107,
+          "err_std": 0.0077,
+          "chunk_rmse": 0.039,
+          "mean_abs_action": 0.2589,
+          "endpoint_spread": 0.0067,
+          "success": 1.0
+        },
+        "rev": {
+          "err": 0.0153,
+          "err_std": 0.0055,
+          "chunk_rmse": 0.1912,
+          "mean_abs_action": 0.289,
+          "endpoint_spread": 0.0065
+        },
+        "hover": {
+          "err": 0.0126,
+          "err_std": 0.0063,
+          "chunk_rmse": 0.0981,
+          "mean_abs_action": 0.0777,
+          "endpoint_spread": 0.0066
+        }
+      },
+      "B": {
+        "fwd": {
+          "err": 0.0108,
+          "err_std": 0.0084,
+          "chunk_rmse": 0.0364,
+          "mean_abs_action": 0.2588,
+          "endpoint_spread": 0.0063,
+          "success": 1.0
+        },
+        "rev": {
+          "err": 0.0085,
+          "err_std": 0.004,
+          "chunk_rmse": 0.0358,
+          "mean_abs_action": 0.2587,
+          "endpoint_spread": 0.004
+        },
+        "hover": {
+          "err": 0.0091,
+          "err_std": 0.005,
+          "chunk_rmse": 0.0242,
+          "mean_abs_action": 0.0185,
+          "endpoint_spread": 0.0047
+        }
+      }
+    }
+  ],
+  "pooled_err": {
+    "A": {
+      "fwd": 0.0102,
+      "rev": 0.0152,
+      "hover": 0.0122
+    },
+    "B": {
+      "fwd": 0.0111,
+      "rev": 0.0098,
+      "hover": 0.0106
+    }
+  },
+  "bars": {
+    "bar1_B_rev_le_2x_Bfwd": true,
+    "bar1_B_hover_le_2x_Bfwd": true,
+    "bar2_Bfwd_le_1p5x_Afwd": true,
+    "bar3_A_fails_rev (A_rev > 2x A_fwd)": false,
+    "bar1": true
+  },
+  "runtime_s": 239.7
+}

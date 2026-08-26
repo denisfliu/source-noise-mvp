@@ -1,0 +1,24 @@
+{
+  "tag": "crossarm_Jaco6",
+  "body": "Jaco",
+  "C": 6,
+  "ceiling": 0.738,
+  "deconv": {
+    "nid2": {
+      "deconv_success": 0.083,
+      "recon_rel_err": 0.39
+    },
+    "nid5": {
+      "deconv_success": 0.0,
+      "recon_rel_err": 0.389
+    },
+    "nid10": {
+      "deconv_success": 0.142,
+      "recon_rel_err": 0.388
+    },
+    "nid25": {
+      "deconv_success": 0.058,
+      "recon_rel_err": 0.388
+    }
+  }
+}

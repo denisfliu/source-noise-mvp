@@ -1,0 +1,18 @@
+{
+  "checkpoint": "/home/ubuntu/code/openpi/checkpoints/pi0_libero/armA_baseline_s42/15000/",
+  "task_suite": "libero_spatial",
+  "trials_per_task": 10,
+  "total_success_rate": 0.89,
+  "final_task_success_rates_trace": [
+    0.9,
+    1.0,
+    1.0,
+    0.8,
+    0.9,
+    0.7,
+    0.9,
+    1.0,
+    0.9,
+    0.8
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "config": {
+    "K": 12,
+    "ITERS": 10000,
+    "SET_A": [
+      "Panda",
+      "IIWA",
+      "UR5e"
+    ],
+    "HELDOUT": [
+      "Jaco"
+    ],
+    "top_gen_eig": 745893.9
+  },
+  "ceilings": {
+    "Panda": 0.787,
+    "IIWA": 0.654,
+    "UR5e": 0.81,
+    "Jaco": 0.738
+  },
+  "pooled_success": {
+    "Jaco_S": 0.225,
+    "Jaco_GLAP": 0.75,
+    "Jaco_GLAP_or": 0.725,
+    "Jaco_F": 0.383,
+    "Jaco_Rand": 0.3
+  },
+  "pooled_cinvariance": {
+    "GLAP": {
+      "Jaco": 0.075
+    },
+    "F": {
+      "Jaco": 0.096
+    },
+    "Rand": {
+      "Jaco": 0.133
+    }
+  },
+  "per_seed": {
+    "s0": {
+      "cinv_GLAP": {
+        "Jaco": 0.071
+      },
+      "cinv_F": {
+        "Jaco": 0.092
+      },
+      "cinv_Rand": {
+        "Jaco": 0.132
+      },
+      "Jaco_S": 0.175,
+      "Jaco_GLAP": 0.675,
+      "Jaco_GLAP_or": 0.775,
+      "Jaco_F": 0.45,
+      "Jaco_Rand": 0.25
+    },
+    "s1": {
+      "cinv_GLAP": {
+        "Jaco": 0.078
+      },
+      "cinv_F": {
+        "Jaco": 0.095
+      },
+      "cinv_Rand": {
+        "Jaco": 0.134
+      },
+      "Jaco_S": 0.225,
+      "Jaco_GLAP": 0.8,
+      "Jaco_GLAP_or": 0.7,
+      "Jaco_F": 0.45,
+      "Jaco_Rand": 0.325
+    },
+    "s2": {
+      "cinv_GLAP": {
+        "Jaco": 0.076
+      },
+      "cinv_F": {
+        "Jaco": 0.1
+      },
+      "cinv_Rand": {
+        "Jaco": 0.134
+      },
+      "Jaco_S": 0.275,
+      "Jaco_GLAP": 0.775,
+      "Jaco_GLAP_or": 0.7,
+      "Jaco_F": 0.25,
+      "Jaco_Rand": 0.325
+    }
+  }
+}

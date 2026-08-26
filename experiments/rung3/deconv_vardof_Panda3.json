@@ -1,0 +1,24 @@
+{
+  "tag": "vardof_Panda3",
+  "body": "Panda",
+  "C": 3,
+  "ceiling": 1.0,
+  "deconv": {
+    "nid2": {
+      "deconv_success": 0.975,
+      "recon_rel_err": 0.356
+    },
+    "nid5": {
+      "deconv_success": 0.95,
+      "recon_rel_err": 0.352
+    },
+    "nid10": {
+      "deconv_success": 0.942,
+      "recon_rel_err": 0.352
+    },
+    "nid25": {
+      "deconv_success": 0.942,
+      "recon_rel_err": 0.351
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "task_suite": "libero_goal",
+  "seed": 7,
+  "init_states": "canonical",
+  "invariant": null,
+  "tasks": [
+    {
+      "task_id": 3,
+      "language": "open the top drawer and put the bowl inside",
+      "episodes": 12,
+      "successes": 0,
+      "success_rate": 0.0
+    }
+  ],
+  "total_episodes": 12,
+  "total_successes": 0,
+  "total_success_rate": 0.0
+}

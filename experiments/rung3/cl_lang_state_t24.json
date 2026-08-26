@@ -1,0 +1,18 @@
+{
+  "task_suite": "libero_object",
+  "seed": 7,
+  "init_states": "canonical",
+  "invariant": null,
+  "tasks": [
+    {
+      "task_id": 0,
+      "language": "pick up the alphabet soup and place it in the basket",
+      "episodes": 12,
+      "successes": 0,
+      "success_rate": 0.0
+    }
+  ],
+  "total_episodes": 12,
+  "total_successes": 0,
+  "total_success_rate": 0.0
+}

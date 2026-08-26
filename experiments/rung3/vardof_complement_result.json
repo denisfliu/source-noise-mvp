@@ -1,0 +1,61 @@
+{
+  "config": {
+    "SET_A": [
+      "pose_Panda",
+      "pose_IIWA",
+      "pose_UR5e"
+    ],
+    "HELD": "pos_UR5e",
+    "K": 10,
+    "ITERS": 9000,
+    "cinv_ACH": 0.156,
+    "gap_PLAN": 0.996
+  },
+  "ceilings": {
+    "pose_Panda": 0.658,
+    "pose_IIWA": 0.506,
+    "pose_UR5e": 0.557,
+    "pos_UR5e": 0.526
+  },
+  "pooled": {
+    "n10": {
+      "S": 0.542,
+      "ACH": 0.467,
+      "PLAN": 0.0,
+      "DECONV": 0.075,
+      "ACH_or": 0.35,
+      "PLAN_or": 0.242,
+      "S_traj": 0.35,
+      "ACH_traj": 0.329,
+      "PLAN_traj": 6.102,
+      "DECONV_traj": 0.475,
+      "fir_err": 0.475
+    },
+    "n25": {
+      "S": 0.533,
+      "ACH": 0.575,
+      "PLAN": 0.0,
+      "DECONV": 0.083,
+      "ACH_or": 0.467,
+      "PLAN_or": 0.4,
+      "S_traj": 0.35,
+      "ACH_traj": 0.338,
+      "PLAN_traj": 6.157,
+      "DECONV_traj": 0.473,
+      "fir_err": 0.473
+    },
+    "n50": {
+      "S": 0.492,
+      "ACH": 0.55,
+      "PLAN": 0.0,
+      "DECONV": 0.075,
+      "ACH_or": 0.608,
+      "PLAN_or": 0.45,
+      "S_traj": 0.348,
+      "ACH_traj": 0.33,
+      "PLAN_traj": 4.906,
+      "DECONV_traj": 0.474,
+      "fir_err": 0.474
+    }
+  }
+}

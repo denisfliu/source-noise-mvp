@@ -1,0 +1,18 @@
+{
+  "pairwise_c": {
+    "arm2~arm3": 0.933,
+    "arm2~arm4": 0.937,
+    "arm2~point": 0.792,
+    "arm3~arm4": 0.924,
+    "arm3~point": 0.806,
+    "arm4~point": 0.812
+  },
+  "mean_arm_arm": 0.931,
+  "mean_arm_point": 0.803,
+  "ceiling": {
+    "arm2": 0.622,
+    "arm3": 0.829,
+    "arm4": 0.998,
+    "point": 1.0
+  }
+}

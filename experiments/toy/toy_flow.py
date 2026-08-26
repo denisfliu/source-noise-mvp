@@ -11,6 +11,10 @@ Arms (all tiny flow-matching MLPs, identical capacity where possible):
   B  v(x_t, t, obs, m)         plain noise            (conditioning branch)
   C  v(x_t, t, obs)            pinned noise L(eps)=m  (source-carried, ours)
   D  v(x_t, t, obs, m)         pinned noise           (both)
+  P  v(x_t, t, obs)            pin DROPOUT p=0.2      (CFG-style: pin present
+     for 80% of training samples, plain Gaussian for the rest; one model
+     supports both pinned sampling [steering] and unpinned sampling [plain
+     policy], with inference-time pin strength alpha as the guidance knob)
 
 Evaluations:
   in-dist / held-out endpoint error   train angles [0,300); test [300,360)
@@ -70,16 +74,21 @@ def make_episodes(n, rng, angle_range):
     # L(chunk) = ACT_SCALE * p, endpoints divided back out in evaluate()
 
 
+PIN_DROPOUT = 0.2  # arm P: fraction of training samples left unpinned
+ALPHA_SWEEP = (0.0, 0.25, 0.5, 0.75, 1.0)
+
+
 def uses_m_input(arm):
     return arm in ("B", "D")
 
 
 def pins_noise(arm):
-    return arm in ("C", "D")
+    return arm in ("C", "D", "P", "Q")
 
 
 def input_dim(arm):
-    return H * D + 1 + 2 + (2 if uses_m_input(arm) else 0)
+    return (H * D + 1 + 2 + (2 if uses_m_input(arm) else 0)
+            + (1 if arm == "Q" else 0))
 
 
 def init_params(arm, rng):
@@ -88,10 +97,12 @@ def init_params(arm, rng):
             for a, b in zip(dims[:-1], dims[1:])]
 
 
-def forward(params, xt, t, obs, m, arm):
+def forward(params, xt, t, obs, m, arm, pin_flag=None):
     parts = [xt.reshape(xt.shape[0], -1), t.reshape(-1, 1), obs]
     if uses_m_input(arm):
         parts.append(m)
+    if arm == "Q":  # CFG-style presence flag: 1 = noise is pinned
+        parts.append(pin_flag.reshape(-1, 1))
     h = anp.concatenate(parts, axis=1)
     for w, b in params[:-1]:
         h = anp.maximum(0.0, h @ w + b)
@@ -107,12 +118,17 @@ def make_loss(arm, obs_all, chunks_all, sc):
         idx = rng.integers(0, len(obs_all), size=BATCH)
         obs, a0, m = obs_all[idx], chunks_all[idx], m_all[idx]
         eps = rng.normal(size=a0.shape)
-        if pins_noise(arm):
+        flag = anp.ones(BATCH)
+        if arm in ("P", "Q"):
+            keep = (rng.random(BATCH) >= PIN_DROPOUT)[:, None, None]
+            eps = np.where(keep, sc(eps, m), eps)
+            flag = keep[:, 0, 0].astype(float)
+        elif pins_noise(arm):
             eps = sc(eps, m)
         t = rng.uniform(0, 1, size=BATCH)
         xt = t[:, None, None] * eps + (1 - t[:, None, None]) * a0
         v = eps - a0
-        vhat = forward(params, xt, t, obs, m, arm)
+        vhat = forward(params, xt, t, obs, m, arm, pin_flag=flag)
         return anp.mean((vhat - v) ** 2)
 
     return loss
@@ -122,10 +138,11 @@ def rollout(params, arm, obs, m, sc, rng):
     """Euler ODE from t=1 (noise) to t=0 (actions). Returns (n, H, D)."""
     eps = rng.normal(size=(obs.shape[0], H, D))
     x = sc(eps, m) if pins_noise(arm) else eps
+    flag = np.full(obs.shape[0], float(getattr(sc, "alpha", 1.0) > 0))
     dt = 1.0 / EULER_STEPS
     for k in range(EULER_STEPS):
         t = np.full(obs.shape[0], 1.0 - k * dt)
-        v = forward(params, x, t, obs, m, arm)
+        v = forward(params, x, t, obs, m, arm, pin_flag=flag)
         x = x - dt * v
     return x
 
@@ -150,6 +167,37 @@ def evaluate(params, arm, sc, rng):
         d_obs = np.linalg.norm(end - p, axis=1)
         res["probe_follow_noise_rate"] = float((d_cmd < d_obs).mean())
         res["probe_err_to_command"] = float(d_cmd.mean())
+
+    # arm P extras: (b) unpinned-mode endpoint error (does pin training hurt or
+    # help the plain obs-following policy?) and an alpha guidance sweep on the
+    # wrong-invariant probe (CFG-style steering strength).
+    if arm in ("P", "Q"):
+        p, _ = make_episodes(200, rng, TRAIN_ANGLES)
+        sc0 = SourceConstructor(alpha=0.0)
+        chunks = rollout(params, arm, p, p * ACT_SCALE, sc0, rng)
+        err = np.linalg.norm(chunks.sum(1) / ACT_SCALE - p, axis=1)
+        res["unpinned_in_dist_err"] = float(err.mean())
+        p_h, _ = make_episodes(200, rng, HELDOUT_ANGLES)
+        chunks = rollout(params, arm, p_h, p_h * ACT_SCALE, sc0, rng)
+        err = np.linalg.norm(chunks.sum(1) / ACT_SCALE - p_h, axis=1)
+        res["unpinned_held_out_err"] = float(err.mean())
+
+        c120, s120 = np.cos(np.deg2rad(120)), np.sin(np.deg2rad(120))
+        p, _ = make_episodes(200, rng, TRAIN_ANGLES)
+        q = p @ np.array([[c120, s120], [-s120, c120]])
+        sweep = {}
+        for a in ALPHA_SWEEP:
+            sca = SourceConstructor(alpha=a)
+            chunks = rollout(params, arm, p, q * ACT_SCALE, sca, rng)
+            end = chunks.sum(1) / ACT_SCALE
+            sweep[str(a)] = {
+                "err_to_command": float(np.linalg.norm(end - q, axis=1).mean()),
+                "err_to_obs": float(np.linalg.norm(end - p, axis=1).mean()),
+                "follow_noise_rate": float(
+                    (np.linalg.norm(end - q, axis=1)
+                     < np.linalg.norm(end - p, axis=1)).mean()),
+            }
+        res["alpha_sweep"] = sweep
 
     # diversity: fixed scene, 40 draws; does bimodal left/right style survive?
     p, _ = make_episodes(1, rng, TRAIN_ANGLES)
@@ -205,7 +253,7 @@ def report():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--arm", choices=list("ABCD"))
+    ap.add_argument("--arm", choices=list("ABCDPQ"))
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--report", action="store_true")
     args = ap.parse_args()

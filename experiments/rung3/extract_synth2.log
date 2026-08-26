@@ -1,0 +1,3 @@
+Returning existing local_dir `/home/dfliu/.cache/huggingface/lerobot/local/gate_nav2` as remote repo cannot be accessed in `snapshot_download` (None).
+Returning existing local_dir `/home/dfliu/.cache/huggingface/lerobot/local/gate_nav2` as remote repo cannot be accessed in `snapshot_download` (None).
+GATE_RAW_DONE /home/dfliu/code/source-noise-mvp/experiments/rung3/data_gate_synth2 n=200 tasks=[0, 1, 2, 3]

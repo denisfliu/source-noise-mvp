@@ -1,0 +1,146 @@
+"""Serve a jointly-trained flow: the command head comes from the flow's OWN checkpoint.
+
+No external prior file, so there is no basis or feature-source pairing to get wrong — the head was
+fitted against these exact weights and travels with them. Contrast the langprior path, where a
+separately-cached prior could be (and was) served against a different checkpoint's VLM, costing 0/10
+closed-loop at an offline c-R2 of 0.94.
+
+  SNMVP_HEAD=1 SNMVP_PIN_U=<U> python serve_gate_pin_joint.py --ckpt <flow> --config pi0_gate \
+      --norm <assets> --pin-u <U> --port 8900
+"""
+import argparse
+import os
+import sys
+
+import numpy as np
+
+RD = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, RD)
+
+# the head submodules are constructed env-gated inside pi0.py, so this must precede openpi imports
+import joint_head                                                     # noqa: E402
+_pin_u_early = os.environ.get("SNMVP_PIN_U", f"{RD}/pin_U_gate_rrr_k5.npy")
+joint_head.enable_head(_pin_u_early)
+
+import openpi.policies.policy_config as _pc                           # noqa: E402
+import openpi.shared.normalize as _nz                                 # noqa: E402
+import openpi.training.config as _cfg                                 # noqa: E402
+from openpi.serving.websocket_policy_server import WebsocketPolicyServer  # noqa: E402
+from openpi.transforms import NormStats                               # noqa: E402
+
+H, AD = 50, 32
+
+
+class JointPinPolicy:
+    def __init__(self, policy, pin_u_path):
+        self.policy = policy
+        self.U = np.load(pin_u_path).astype(np.float32)
+        self._rng = np.random.default_rng(0)
+        self.CLOG = os.environ.get("CLOG", "")
+        self._log = []
+        # MDN serve state: per-trial latched component for pi-hysteresis. Keyed by the client's
+        # "snmvp_trial" tag because two batch clients fly interleaved trials against one server —
+        # a single global latch would carry one trial's commitment into another's replans.
+        self._latch = {}
+        self._hyst = float(os.environ.get("SNMVP_GMM_HYST", "0.2"))
+        # sigma-gated pin trust (2026-08-21): SNMVP_GMM_SIGGATE="lo,hi,amin" softens the pin when
+        # the head's OWN sigma* is high — alpha ramps 1 -> amin as ||sigma*|| goes lo -> hi, and
+        # c_eff = alpha*c + (1-alpha)*(g@U) so alpha=0 is exactly the unpinned Gaussian. Grounded:
+        # sigma* rank-tracks the head's command error at rho=0.82 on demo frames
+        # (sigma_phase_probe); thresholds are demo-sigma quantiles, not phase/regime rules.
+        sg = os.environ.get("SNMVP_GMM_SIGGATE", "")
+        self._gate = tuple(float(v) for v in sg.split(",")) if sg else None
+        if self._gate:
+            print(f"[joint] sigma gate: lo,hi,amin = {self._gate}", flush=True)
+        # sigma-CONDITIONED serve (2026-08-21, the trained trust dial): SNMVP_SIGMA_MAP names a
+        # json {"sig_star": [...], "sig_serve": [...], "cap": f} mapping the head's ||sigma*|| to
+        # the pin-noise level the flow was TRAINED to expect (fractions of c-std). The command is
+        # always delivered at full amplitude; sigma_serve only tells the flow how much to trust
+        # it. Requires a SNMVP_PIN_NOISE_COND-trained checkpoint — on any other flow the value is
+        # silently ignored at embed time, so the map is only set for conditioned arms.
+        self._sigmap = None
+        mp = os.environ.get("SNMVP_SIGMA_MAP", "")
+        if mp:
+            import json as _json
+            d = _json.load(open(mp))
+            self._sigmap = (np.asarray(d["sig_star"], np.float32),
+                            np.asarray(d["sig_serve"], np.float32), float(d["cap"]))
+            print(f"[joint] sigma-conditioned serve: map from {mp} cap={d['cap']}", flush=True)
+        print(f"[joint] head from the checkpoint, U {self.U.shape} from {pin_u_path}", flush=True)
+
+    def infer(self, obs):
+        obs = dict(obs)
+        trial = obs.pop("snmvp_trial", "default")
+        if hasattr(self.policy._model, "snmvp_gmm_out"):
+            # argmax-mode serve with hysteresis: switch components only when the incumbent's
+            # weight has fallen more than SNMVP_GMM_HYST below the argmax — commits like the toy's
+            # gmm_argmax but without chattering at pi ~ 0.5. pi AND the served component's
+            # ||sigma|| are logged per replan (CLOG row = [pos(3), c(K), pi(M), signorm(1)]):
+            # sigma tracks the head's own command error at rho=0.82 on demo frames
+            # (sigma_phase_probe 2026-08-20), so the closed-loop sigma trace is the direct test
+            # of whether the thrash rows are confident-wrong or known-uncertain.
+            c, w, mu, sig = joint_head.head_c(self.policy, [obs], return_gmm=True)
+            w, mu, sig = w[0], mu[0], sig[0]
+            j = int(w.argmax())
+            jprev = self._latch.get(trial)
+            if jprev is not None and w[jprev] >= w[j] - self._hyst:
+                j = jprev
+            self._latch[trial] = j
+            c = mu[j]
+            sstar = float(np.linalg.norm(sig[j]))
+            alpha = 1.0
+            if self._gate:
+                lo, hi, amin = self._gate
+                alpha = float(np.clip((hi - sstar) / max(hi - lo, 1e-6), amin, 1.0))
+            sig_serve = None
+            if self._sigmap is not None:
+                xs, ys, cap = self._sigmap
+                sig_serve = float(np.clip(np.interp(sstar, xs, ys), 0.0, cap))
+            extra = np.concatenate([w, [sstar, alpha,
+                                        sig_serve if sig_serve is not None else -1.0]]).astype(np.float32)
+        else:
+            c, alpha, sig_serve = joint_head.head_c(self.policy, [obs])[0], 1.0, None
+            extra = np.zeros(0, np.float32)
+        if self.CLOG:
+            pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
+            self._log.append(np.concatenate([pos, c, extra]).astype(np.float32))
+            np.save(self.CLOG, np.stack(self._log))
+        g = self._rng.standard_normal((H, AD)).astype(np.float32).reshape(-1)
+        c_eff = alpha * c + (1.0 - alpha) * (g @ self.U)
+        noise = (g - (g @ self.U) @ self.U.T + (c_eff @ self.U.T)).reshape(H, AD).astype(np.float32)
+        return self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve)
+
+
+def _pad(ns, dim):
+    o = {}
+    for k, s in ns.items():
+        n = len(s.mean)
+        if n >= dim:
+            o[k] = s
+            continue
+        p = dim - n
+        ext = lambda a, f: None if a is None else np.concatenate(
+            [np.asarray(a, np.float32), np.full(p, f, np.float32)])
+        o[k] = NormStats(mean=ext(s.mean, 0), std=ext(s.std, 1), q01=ext(s.q01, 0), q99=ext(s.q99, 1))
+    return o
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--ckpt", required=True)
+    ap.add_argument("--config", default="pi0_gate")
+    ap.add_argument("--norm", required=True)
+    ap.add_argument("--pin-u", default=f"{RD}/pin_U_gate_rrr_k5.npy")
+    ap.add_argument("--host", default="127.0.0.1")
+    ap.add_argument("--port", type=int, default=8900)
+    a = ap.parse_args()
+    cfg = _cfg.get_config(a.config)
+    ns = _pad(_nz.load(a.norm), cfg.model.action_dim)
+    policy = _pc.create_trained_policy(cfg, a.ckpt, norm_stats=ns)
+    pin = JointPinPolicy(policy, a.pin_u)
+    print(f"[serve_gate_pin_joint] ready on ws://{a.host}:{a.port}", flush=True)
+    WebsocketPolicyServer(policy=pin, host=a.host, port=a.port).serve_forever()
+
+
+if __name__ == "__main__":
+    main()

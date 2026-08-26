@@ -1,0 +1,107 @@
+{
+  "robots": [
+    "berkeley_autolab_ur5",
+    "bridge",
+    "toto",
+    "viola"
+  ],
+  "KS": [
+    4,
+    8,
+    12
+  ],
+  "result": {
+    "berkeley_autolab_ur5": {
+      "k4": {
+        "GLAP": 0.911,
+        "perchannel": 0.737,
+        "PCA_setA": 0.813,
+        "PCA_heldout": 0.695,
+        "random": 0.979
+      },
+      "k8": {
+        "GLAP": 0.904,
+        "perchannel": 0.614,
+        "PCA_setA": 0.619,
+        "PCA_heldout": 0.543,
+        "random": 0.959
+      },
+      "k12": {
+        "GLAP": 0.87,
+        "perchannel": 0.475,
+        "PCA_setA": 0.549,
+        "PCA_heldout": 0.433,
+        "random": 0.939
+      }
+    },
+    "bridge": {
+      "k4": {
+        "GLAP": 0.944,
+        "perchannel": 0.91,
+        "PCA_setA": 0.98,
+        "PCA_heldout": 0.735,
+        "random": 0.976
+      },
+      "k8": {
+        "GLAP": 0.924,
+        "perchannel": 0.871,
+        "PCA_setA": 0.887,
+        "PCA_heldout": 0.625,
+        "random": 0.954
+      },
+      "k12": {
+        "GLAP": 0.896,
+        "perchannel": 0.758,
+        "PCA_setA": 0.849,
+        "PCA_heldout": 0.538,
+        "random": 0.933
+      }
+    },
+    "toto": {
+      "k4": {
+        "GLAP": 0.871,
+        "perchannel": 0.719,
+        "PCA_setA": 0.948,
+        "PCA_heldout": 0.159,
+        "random": 0.977
+      },
+      "k8": {
+        "GLAP": 0.871,
+        "perchannel": 0.038,
+        "PCA_setA": 0.74,
+        "PCA_heldout": 0.024,
+        "random": 0.968
+      },
+      "k12": {
+        "GLAP": 0.793,
+        "perchannel": 0.013,
+        "PCA_setA": 0.145,
+        "PCA_heldout": 0.011,
+        "random": 0.93
+      }
+    },
+    "viola": {
+      "k4": {
+        "GLAP": 0.881,
+        "perchannel": 0.674,
+        "PCA_setA": 0.807,
+        "PCA_heldout": 0.414,
+        "random": 0.977
+      },
+      "k8": {
+        "GLAP": 0.88,
+        "perchannel": 0.373,
+        "PCA_setA": 0.457,
+        "PCA_heldout": 0.243,
+        "random": 0.962
+      },
+      "k12": {
+        "GLAP": 0.829,
+        "perchannel": 0.235,
+        "PCA_setA": 0.357,
+        "PCA_heldout": 0.155,
+        "random": 0.942
+      }
+    }
+  }
+}

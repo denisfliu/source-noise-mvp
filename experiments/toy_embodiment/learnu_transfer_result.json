@@ -1,0 +1,151 @@
+{
+  "config": {
+    "K": 6,
+    "ITERS": 3000,
+    "N_SCENES": 200,
+    "SET_A": [
+      "arm2",
+      "arm3",
+      "arm4",
+      "arm5"
+    ],
+    "HELDOUT": [
+      "point",
+      "point_drag",
+      "arm_short"
+    ],
+    "top_gen_eig": 275.73
+  },
+  "pooled_success": {
+    "point_S": 0.55,
+    "point_Ulearn": 0.767,
+    "point_Ulearn_o": 0.806,
+    "point_F": 0.517,
+    "point_Urand": 0.778,
+    "point_drag_S": 0.511,
+    "point_drag_Ulearn": 0.767,
+    "point_drag_Ulearn_o": 0.756,
+    "point_drag_F": 0.511,
+    "point_drag_Urand": 0.761,
+    "arm_short_S": 0.283,
+    "arm_short_Ulearn": 0.456,
+    "arm_short_Ulearn_o": 0.439,
+    "arm_short_F": 0.544,
+    "arm_short_Urand": 0.461
+  },
+  "pooled_cinvariance": {
+    "Ulearn": {
+      "point": 0.07,
+      "point_drag": 0.271,
+      "arm_short": 0.07
+    },
+    "F": {
+      "point": 0.098,
+      "point_drag": 0.147,
+      "arm_short": 0.072
+    },
+    "Urand": {
+      "point": 0.156,
+      "point_drag": 0.321,
+      "arm_short": 0.131
+    }
+  },
+  "per_seed": {
+    "s0": {
+      "cinv_Ulearn": {
+        "point": 0.065,
+        "point_drag": 0.18,
+        "arm_short": 0.067
+      },
+      "cinv_F": {
+        "point": 0.102,
+        "point_drag": 0.135,
+        "arm_short": 0.075
+      },
+      "cinv_Urand": {
+        "point": 0.179,
+        "point_drag": 0.228,
+        "arm_short": 0.14
+      },
+      "point_S": 0.6166666666666667,
+      "point_Ulearn": 0.75,
+      "point_Ulearn_o": 0.7833333333333333,
+      "point_F": 0.55,
+      "point_Urand": 0.8,
+      "point_drag_S": 0.5166666666666667,
+      "point_drag_Ulearn": 0.75,
+      "point_drag_Ulearn_o": 0.75,
+      "point_drag_F": 0.5,
+      "point_drag_Urand": 0.75,
+      "arm_short_S": 0.25,
+      "arm_short_Ulearn": 0.4,
+      "arm_short_Ulearn_o": 0.38333333333333336,
+      "arm_short_F": 0.5666666666666667,
+      "arm_short_Urand": 0.4
+    },
+    "s1": {
+      "cinv_Ulearn": {
+        "point": 0.069,
+        "point_drag": 0.364,
+        "arm_short": 0.068
+      },
+      "cinv_F": {
+        "point": 0.1,
+        "point_drag": 0.164,
+        "arm_short": 0.074
+      },
+      "cinv_Urand": {
+        "point": 0.114,
+        "point_drag": 0.339,
+        "arm_short": 0.099
+      },
+      "point_S": 0.5666666666666667,
+      "point_Ulearn": 0.8333333333333334,
+      "point_Ulearn_o": 0.8333333333333334,
+      "point_F": 0.5666666666666667,
+      "point_Urand": 0.8166666666666667,
+      "point_drag_S": 0.5333333333333333,
+      "point_drag_Ulearn": 0.8333333333333334,
+      "point_drag_Ulearn_o": 0.7833333333333333,
+      "point_drag_F": 0.5833333333333334,
+      "point_drag_Urand": 0.8333333333333334,
+      "arm_short_S": 0.31666666666666665,
+      "arm_short_Ulearn": 0.5166666666666667,
+      "arm_short_Ulearn_o": 0.45,
+      "arm_short_F": 0.5666666666666667,
+      "arm_short_Urand": 0.5166666666666667
+    },
+    "s2": {
+      "cinv_Ulearn": {
+        "point": 0.077,
+        "point_drag": 0.27,
+        "arm_short": 0.074
+      },
+      "cinv_F": {
+        "point": 0.091,
+        "point_drag": 0.143,
+        "arm_short": 0.068
+      },
+      "cinv_Urand": {
+        "point": 0.175,
+        "point_drag": 0.396,
+        "arm_short": 0.155
+      },
+      "point_S": 0.4666666666666667,
+      "point_Ulearn": 0.7166666666666667,
+      "point_Ulearn_o": 0.8,
+      "point_F": 0.43333333333333335,
+      "point_Urand": 0.7166666666666667,
+      "point_drag_S": 0.48333333333333334,
+      "point_drag_Ulearn": 0.7166666666666667,
+      "point_drag_Ulearn_o": 0.7333333333333333,
+      "point_drag_F": 0.45,
+      "point_drag_Urand": 0.7,
+      "arm_short_S": 0.2833333333333333,
+      "arm_short_Ulearn": 0.45,
+      "arm_short_Ulearn_o": 0.48333333333333334,
+      "arm_short_F": 0.5,
+      "arm_short_Urand": 0.4666666666666667
+    }
+  }
+}

@@ -1,0 +1,176 @@
+diff --git a/src/openpi/models/pi0.py b/src/openpi/models/pi0.py
+index ae7c459..df1b096 100644
+--- a/src/openpi/models/pi0.py
++++ b/src/openpi/models/pi0.py
+@@ -15,6 +15,42 @@ from openpi.shared import array_typing as at
+ 
+ logger = logging.getLogger("openpi")
+ 
++# --- SNMVP source-noise pin (env-gated; no-op unless SNMVP_PIN_U is set) ---
++import os as _os
++import numpy as _np
++_PIN_U = None
++_pin_path = _os.environ.get("SNMVP_PIN_U")
++if _pin_path:
++    _PIN_U = _np.load(_pin_path).astype("float32")  # numpy constant (baked into jit), (D=ah*ad, K)
++    logger.info(f"SNMVP pin enabled: U from {_pin_path} shape {_PIN_U.shape}")
++_PIN_NOISE = float(_os.environ.get("SNMVP_PIN_NOISE", "0"))
++_PIN_NOISE_RAND = _os.environ.get("SNMVP_PIN_NOISE_RAND", "") == "1"
++# sigma-CONDITIONING (Denis, 2026-08-06): tell the model each sample's pin-noise level
++# so trust becomes an INFERENCE dial (SNMVP_SIGMA_INFER at serving); requires RAND.
++_PIN_NOISE_COND = _os.environ.get("SNMVP_PIN_NOISE_COND", "") == "1"
++# VLM-error-matched soft pin v1 (Denis, 2026-08-06): sample the pin perturbation from
++# the MEASURED error distribution of the VLM command head, N(mean, Sigma), instead of
++# isotropic sigma*std*eps — the flow learns to correct the errors it will see.
++_PIN_COV = None
++_cov_path = _os.environ.get("SNMVP_PIN_NOISE_COV")
++if _cov_path:
++    _cv = _np.load(_cov_path)
++    _PIN_COV = (_np.linalg.cholesky(_cv["Sigma"] + 1e-6 * _np.eye(len(_cv["Sigma"]))).astype("float32"),
++                _cv["mean"].astype("float32"))
++    logger.info(f"SNMVP cov-matched pin noise from {_cov_path}")
++_SIGMA_INFER = float(_os.environ.get("SNMVP_SIGMA_INFER", "-1"))
++# Learned factorization (no assumed RRR U): SNMVP_LEARN_U=K adds a learnable
++# orthonormal D x K pin basis (QR of a free matrix) trained jointly with the flow,
++# plus an observation head P(prefix-pool) -> c whose variance-normalized error is
++# added to the loss WITHOUT stop-grad — the RRR predictability objective learned
++# end-to-end. SNMVP_LEARN_U_DIMS masks the basis to the leading real action dims
++# (padded dims are constant-zero => trivially predictable => collapse magnet).
++_LEARN_U_K = int(_os.environ.get("SNMVP_LEARN_U", "0"))
++_LEARN_U_LAM = float(_os.environ.get("SNMVP_LEARN_U_LAM", "1.0"))
++_LEARN_U_DIMS = int(_os.environ.get("SNMVP_LEARN_U_DIMS", "0"))
++if _LEARN_U_K:
++    logger.info(f"SNMVP learned-U enabled: K={_LEARN_U_K} lam={_LEARN_U_LAM} dims={_LEARN_U_DIMS}")
++
+ 
+ def make_attn_mask(input_mask, mask_ar):
+     """Adapted from big_vision.
+@@ -98,6 +134,17 @@ class Pi0(_model.BaseModel):
+             self.action_time_mlp_in = nnx.Linear(2 * action_expert_config.width, action_expert_config.width, rngs=rngs)
+             self.action_time_mlp_out = nnx.Linear(action_expert_config.width, action_expert_config.width, rngs=rngs)
+         self.action_out_proj = nnx.Linear(action_expert_config.width, config.action_dim, rngs=rngs)
++        if _LEARN_U_K:
++            _D = config.action_horizon * config.action_dim
++            self.snmvp_W = nnx.Param(0.01 * jax.random.normal(rngs.params(), (_D, _LEARN_U_K)))
++            # prediction head: ATTENTION readout over prefix tokens (mean-pooling dilutes
++            # spatial/language structure — Denis 2026-08-06), then a small MLP -> c.
++            _nq, _dh = 4, 256
++            self.snmvp_q = nnx.Param(0.02 * jax.random.normal(rngs.params(), (_nq, _dh)))
++            self.snmvp_k = nnx.Linear(paligemma_config.width, _dh, rngs=rngs)
++            self.snmvp_v = nnx.Linear(paligemma_config.width, _dh, rngs=rngs)
++            self.snmvp_head_in = nnx.Linear(_nq * _dh, 256, rngs=rngs)
++            self.snmvp_head_out = nnx.Linear(256, _LEARN_U_K, rngs=rngs)
+ 
+         # This attribute gets automatically set by model.train() and model.eval().
+         self.deterministic = True
+@@ -138,7 +185,8 @@ class Pi0(_model.BaseModel):
+ 
+     @at.typecheck
+     def embed_suffix(
+-        self, obs: _model.Observation, noisy_actions: _model.Actions, timestep: at.Float[at.Array, " b"]
++        self, obs: _model.Observation, noisy_actions: _model.Actions, timestep: at.Float[at.Array, " b"],
++        snmvp_sigma=None
+     ) -> tuple[
+         at.Float[at.Array, "b s emb"],
+         at.Bool[at.Array, "b s"],
+@@ -159,6 +207,12 @@ class Pi0(_model.BaseModel):
+         action_tokens = self.action_in_proj(noisy_actions)
+         # embed timestep using sine-cosine positional encoding with sensitivity in the range [0, 1]
+         time_emb = posemb_sincos(timestep, self.action_in_proj.out_features, min_period=4e-3, max_period=4.0)
++        if _PIN_NOISE_COND:
++            _sig = snmvp_sigma
++            if _sig is None:                       # inference default: env dial (0 if unset)
++                _sig = jnp.full(timestep.shape, max(_SIGMA_INFER, 0.0))
++            time_emb = time_emb + posemb_sincos(_sig, self.action_in_proj.out_features,
++                                                min_period=4e-3, max_period=4.0)
+         if self.pi05:
+             # time MLP (for adaRMS)
+             time_emb = self.time_mlp_in(time_emb)
+@@ -194,6 +248,53 @@ class Pi0(_model.BaseModel):
+ 
+         batch_shape = actions.shape[:-2]
+         noise = jax.random.normal(noise_rng, actions.shape)
++        _sigma_cond = None
++        _learn_c = None
++        if _LEARN_U_K:
++            _W = self.snmvp_W.value
++            if _LEARN_U_DIMS:
++                _rowmask = ((jnp.arange(_W.shape[0]) % actions.shape[-1]) < _LEARN_U_DIMS)
++                _W = _W * _rowmask[:, None]
++            _Ul, _ = jnp.linalg.qr(_W)          # D x K, orthonormal columns
++            _b = actions.shape[0]
++            _af = actions.reshape(_b, -1)
++            _nf = noise.reshape(_b, -1)
++            _learn_c = _af @ _Ul                 # self-pin target, exact for any orthonormal U
++            _cp = _learn_c
++            if _PIN_NOISE > 0:
++                _cstd_n = jnp.std(_learn_c, axis=0, keepdims=True)
++                if _PIN_NOISE_RAND:
++                    _sig = _PIN_NOISE * jax.random.uniform(
++                        jax.random.fold_in(noise_rng, 11), (_b, 1))
++                else:
++                    _sig = _PIN_NOISE
++                _cp = _learn_c + _sig * _cstd_n * jax.random.normal(
++                    jax.random.fold_in(noise_rng, 7), _learn_c.shape)
++            _nf = _nf - (_nf @ _Ul) @ _Ul.T + _cp @ _Ul.T
++            noise = _nf.reshape(actions.shape)
++        if _PIN_U is not None:
++            _U = jnp.asarray(_PIN_U)
++            _b = actions.shape[0]
++            _af = actions.reshape(_b, -1)
++            _nf = noise.reshape(_b, -1)
++            _c = _af @ _U
++            if _PIN_COV is not None:  # error-matched: eps ~ N(mean, Sigma) of the measured head
++                _L, _m = jnp.asarray(_PIN_COV[0]), jnp.asarray(_PIN_COV[1])
++                _g5 = jax.random.normal(jax.random.fold_in(noise_rng, 13), _c.shape)
++                _c = _c + _m + _g5 @ _L.T
++            elif _PIN_NOISE > 0:  # soft pin: perturb c so the flow learns to CORRECT prior error from obs
++                _cstd = jnp.std(_c, axis=0, keepdims=True)
++                if _PIN_NOISE_RAND:  # CFG-dropout-style: per-sample sigma ~ U(0, PIN_NOISE) — one
++                    # flow spanning obey<->correct instead of one fixed trust level per checkpoint
++                    _sig = _PIN_NOISE * jax.random.uniform(
++                        jax.random.fold_in(noise_rng, 11), (_c.shape[0], 1))
++                else:
++                    _sig = _PIN_NOISE
++                _c = _c + _sig * _cstd * jax.random.normal(jax.random.fold_in(noise_rng, 7), _c.shape)
++                if _PIN_NOISE_COND:
++                    _sigma_cond = jnp.broadcast_to(jnp.asarray(_sig).reshape(-1), (_b,))
++            _nf = _nf - (_nf @ _U) @ _U.T + _c @ _U.T
++            noise = _nf.reshape(actions.shape)
+         time = jax.random.beta(time_rng, 1.5, 1, batch_shape) * 0.999 + 0.001
+         time_expanded = time[..., None, None]
+         x_t = time_expanded * noise + (1 - time_expanded) * actions
+@@ -201,7 +302,8 @@ class Pi0(_model.BaseModel):
+ 
+         # one big forward pass of prefix + suffix at once
+         prefix_tokens, prefix_mask, prefix_ar_mask = self.embed_prefix(observation)
+-        suffix_tokens, suffix_mask, suffix_ar_mask, adarms_cond = self.embed_suffix(observation, x_t, time)
++        suffix_tokens, suffix_mask, suffix_ar_mask, adarms_cond = self.embed_suffix(
++            observation, x_t, time, snmvp_sigma=(_sigma_cond if _PIN_NOISE_COND and _PIN_U is not None else None))
+         input_mask = jnp.concatenate([prefix_mask, suffix_mask], axis=1)
+         ar_mask = jnp.concatenate([prefix_ar_mask, suffix_ar_mask], axis=0)
+         attn_mask = make_attn_mask(input_mask, ar_mask)
+@@ -211,7 +313,22 @@ class Pi0(_model.BaseModel):
+         )
+         v_t = self.action_out_proj(suffix_out[:, -self.action_horizon :])
+ 
+-        return jnp.mean(jnp.square(v_t - u_t), axis=-1)
++        loss = jnp.mean(jnp.square(v_t - u_t), axis=-1)
++        if _learn_c is not None:
++            # predictability term (RRR objective, joint): variance-normalized so U cannot
++            # buy loss by rotating into low-variance directions; no stop-grad on _learn_c.
++            _pm = prefix_mask.astype(jnp.float32)
++            _keys = self.snmvp_k(prefix_out)                      # (b, T, dh)
++            _vals = self.snmvp_v(prefix_out)                      # (b, T, dh)
++            _sc = jnp.einsum("qd,btd->bqt", self.snmvp_q.value, _keys) / jnp.sqrt(256.0)
++            _sc = jnp.where(_pm[:, None, :] > 0, _sc, -1e9)
++            _at = jax.nn.softmax(_sc, axis=-1)                    # (b, nq, T)
++            _ctx = jnp.einsum("bqt,btd->bqd", _at, _vals).reshape(prefix_out.shape[0], -1)
++            _chat = self.snmvp_head_out(jax.nn.silu(self.snmvp_head_in(_ctx)))
++            _cvar = jnp.std(_learn_c, axis=0) + 1e-3
++            _pred = jnp.mean(jnp.square((_chat - _learn_c) / _cvar), axis=-1)
++            loss = loss + _LEARN_U_LAM * _pred[:, None]
++        return loss
+ 
+     @override
+     def sample_actions(

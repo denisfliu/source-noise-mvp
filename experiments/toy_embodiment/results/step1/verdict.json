@@ -1,0 +1,9 @@
+{
+  "synthetic_ok": true,
+  "frame_found": true,
+  "n_selected": 22,
+  "divergence_ordering_ok": true,
+  "mean_arm_arm": 0.931,
+  "mean_arm_point": 0.803,
+  "G_FRAME_PASS": true
+}

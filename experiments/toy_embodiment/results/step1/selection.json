@@ -1,0 +1,150 @@
+{
+  "g1_pass": true,
+  "axis_err_deg_per_strong_bin": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 2.0,
+    "3": 2.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0
+  },
+  "selected": [
+    {
+      "axis_deg": 0.0,
+      "omega": 0,
+      "mode": "mod2pi",
+      "gamma": 1.0
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 0,
+      "mode": "mod2pi",
+      "gamma": 0.963
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 1,
+      "mode": "mod2pi",
+      "gamma": 0.995
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 1,
+      "mode": "mod2pi",
+      "gamma": 0.871
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 2,
+      "mode": "mod2pi",
+      "gamma": 0.995
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 2,
+      "mode": "mod2pi",
+      "gamma": 0.86
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 3,
+      "mode": "mod2pi",
+      "gamma": 0.967
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 3,
+      "mode": "mod2pi",
+      "gamma": 0.815
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 4,
+      "mode": "mod2pi",
+      "gamma": 0.981
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 4,
+      "mode": "mod2pi",
+      "gamma": 0.801
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 5,
+      "mode": "mod2pi",
+      "gamma": 0.984
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 5,
+      "mode": "mod2pi",
+      "gamma": 0.803
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 6,
+      "mode": "mod2pi",
+      "gamma": 0.984
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 6,
+      "mode": "mod2pi",
+      "gamma": 0.828
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 7,
+      "mode": "mod2pi",
+      "gamma": 0.984
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 7,
+      "mode": "mod2pi",
+      "gamma": 0.867
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 8,
+      "mode": "mod2pi",
+      "gamma": 0.984
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 8,
+      "mode": "mod2pi",
+      "gamma": 0.866
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 9,
+      "mode": "mod2pi",
+      "gamma": 0.983
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 9,
+      "mode": "mod2pi",
+      "gamma": 0.867
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 10,
+      "mode": "mod2pi",
+      "gamma": 0.983
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 10,
+      "mode": "mod2pi",
+      "gamma": 0.867
+    }
+  ]
+}

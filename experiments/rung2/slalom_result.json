@@ -1,0 +1,31 @@
+{
+  "per_seed": {
+    "s0": {
+      "A": 0.013,
+      "F": 0.25,
+      "Frand": 0.031
+    },
+    "s1": {
+      "A": 0.013,
+      "F": 0.306,
+      "Frand": 0.025
+    },
+    "s2": {
+      "A": 0.037,
+      "F": 0.325,
+      "Frand": 0.05
+    }
+  },
+  "verdict": {
+    "pooled": {
+      "A": 0.021,
+      "F": 0.294,
+      "Frand": 0.035
+    },
+    "F_minus_A": 0.273,
+    "F_minus_Frand": 0.259,
+    "demo_ceiling": 0.596,
+    "n_pins": 5,
+    "task": "two-obstacle slalom (S-curve detour)"
+  }
+}

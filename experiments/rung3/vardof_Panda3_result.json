@@ -1,0 +1,48 @@
+{
+  "config": {
+    "SET_A": [
+      [
+        "IIWA",
+        "6"
+      ],
+      [
+        "UR5e",
+        "6"
+      ],
+      [
+        "Jaco",
+        "6"
+      ]
+    ],
+    "HELD": [
+      [
+        "Panda",
+        "3"
+      ]
+    ],
+    "K": 10,
+    "ITERS": 10000
+  },
+  "pooled": {
+    "Panda_S": 1.0,
+    "Panda_GLAP": 0.975,
+    "Panda_GLAP_or": 0.992
+  },
+  "per_seed": {
+    "s0": {
+      "Panda_S": 1.0,
+      "Panda_GLAP": 1.0,
+      "Panda_GLAP_or": 1.0
+    },
+    "s1": {
+      "Panda_S": 1.0,
+      "Panda_GLAP": 0.925,
+      "Panda_GLAP_or": 0.975
+    },
+    "s2": {
+      "Panda_S": 1.0,
+      "Panda_GLAP": 1.0,
+      "Panda_GLAP_or": 1.0
+    }
+  }
+}

@@ -1,0 +1,271 @@
+<title>SNMVP experiment tracker</title>
+<style>
+:root{--bg:#f6f6f4;--ink:#22242a;--mut:#6b6f7a;--line:#dddfd8;--card:#fff;
+ --ok:#1a7f4b;--okbg:#e3f2e9;--bad:#b3382e;--badbg:#f9e7e4;--pt:#8a6410;--ptbg:#f6ecd4;
+ --run:#2b5d8a;--runbg:#e3ecf5;--acc:#2b5d8a}
+@media(prefers-color-scheme:dark){:root{--bg:#15171c;--ink:#e8e8e4;--mut:#9aa0ac;--line:#33363e;--card:#1e2026;
+ --ok:#5fce93;--okbg:#1d3a2b;--bad:#f0917f;--badbg:#43231f;--pt:#dfb75e;--ptbg:#3a3020;--run:#7fb0dd;--runbg:#1e2c3a;--acc:#7fb0dd}}
+:root[data-theme=dark]{--bg:#15171c;--ink:#e8e8e4;--mut:#9aa0ac;--line:#33363e;--card:#1e2026;
+ --ok:#5fce93;--okbg:#1d3a2b;--bad:#f0917f;--badbg:#43231f;--pt:#dfb75e;--ptbg:#3a3020;--run:#7fb0dd;--runbg:#1e2c3a;--acc:#7fb0dd}
+:root[data-theme=light]{--bg:#f6f6f4;--ink:#22242a;--mut:#6b6f7a;--line:#dddfd8;--card:#fff;
+ --ok:#1a7f4b;--okbg:#e3f2e9;--bad:#b3382e;--badbg:#f9e7e4;--pt:#8a6410;--ptbg:#f6ecd4;--run:#2b5d8a;--runbg:#e3ecf5;--acc:#2b5d8a}
+body{background:var(--bg);color:var(--ink);font:14.5px/1.55 "Avenir Next",Seravek,ui-sans-serif,system-ui;margin:0;padding:24px 30px 60px;max-width:1060px}
+h1{font-size:1.3rem;margin:0 0 2px}
+.sub{color:var(--mut);margin:0 0 16px}
+nav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px}
+nav button{font:600 .85rem ui-monospace,Menlo,monospace;color:var(--mut);background:none;border:none;
+ padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent}
+nav button.on{color:var(--ink);border-bottom-color:var(--acc)}
+.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:12px 15px;margin:0 0 10px}
+.card h3{font-size:.95rem;margin:0 0 3px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.chip{font:600 .68rem/1.2 ui-monospace,Menlo,monospace;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.chip.ok{color:var(--ok);background:var(--okbg)} .chip.bad{color:var(--bad);background:var(--badbg)}
+.chip.part{color:var(--pt);background:var(--ptbg)} .chip.run{color:var(--run);background:var(--runbg)}
+.card p{margin:4px 0 0}
+.card ul{margin:5px 0 0 18px;padding:0}
+.card li{margin:2px 0}
+.learn{margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);color:var(--ink)}
+.learn b{font-size:.78rem;letter-spacing:.05em;color:var(--mut)}
+.links{margin-top:6px;font:.8rem ui-monospace,Menlo,monospace}
+.links a{color:var(--acc);text-decoration:none;margin-right:14px}
+.qn{font:600 .8rem ui-monospace,Menlo,monospace;color:var(--mut);margin-right:6px}
+h2{font-size:1rem;margin:22px 0 8px;color:var(--mut);font-weight:600}
+</style>
+<h1>Source-noise MVP — experiment tracker</h1>
+<p class="sub">North star: factor an action into a coarse command carried in the flow model's source noise plus
+denoised detail. Goals: steerability, interpretability, low-data-regime competence. Updated 2026-08-13.</p>
+<nav>
+ <button class="on" data-t="now">Running now</button>
+ <button data-t="queue">Queue</button>
+ <button data-t="hist">History by theme</button>
+</nav>
+
+<div class="tab on" id="now">
+<div class="card"><h3><span class="chip run">GPU0</span> gen1det — detached generative head</h3>
+<p>Sampling CFM head on B1-style flow-shaped features (probe: those keep task structure at EVERY phase,
+Fisher 2.96 at tail vs 0.4 coupled). Tests whether gradient hygiene alone calibrates the posterior's
+mode weights. Zero new code — existing flags.</p></div>
+<div class="card"><h3><span class="chip run">GPU1</span> gen16s7 — mode-allocation lottery test</h3>
+<p>gen16's exact recipe at training seed 7: does WHICH gate a generative run owns follow basis/λ, or is
+it a per-run lottery? Calibrates every single-run claim in the routing table.</p></div>
+<div class="card"><h3><span class="chip part">HELD</span> FiLM-conditioned CFM (awaiting Denis)</h3>
+<p>The localized fix for conditioning neglect: ctx modulates the velocity field multiplicatively
+(AdaLN — the mechanism pi0's own expert uses for time) instead of one additive concat. Fixes the
+measured cause of the calibration coin-flip at training time; new architecture code, so held for
+sign-off.</p></div>
+</div>
+
+<div class="tab" id="queue">
+<p class="sub">Ordering rule (Denis, 2026-08-07): shorter items run first; long trains go last or into otherwise-idle
+overnight GPU slots.</p>
+<div class="card"><h3><span class="qn">1</span>Right-gate endgame: stop/hover vocabulary <span class="chip">next big lever</span></h3>
+<p>b2lam03 makes this the binding residual: all 10 right flights transit cleanly and then overshoot the hover box by
+0.1–0.6 m in +x (no stop). The aug flow has G2-proven hover/stop vocabulary; combining it with the joint head — or
+tail-weighting the head's c loss — is the experiment.</p></div>
+<div class="card"><h3><span class="qn">2</span>Separate flow-loss vs head-loss logging <span class="chip">~30 min</span></h3>
+<p>The train log records only the SUM, so "coupling improves the flow" is currently unevaluable (a lower sum can be
+pure head-term reduction). Needed before interpreting b2long/C2 loss curves.</p></div>
+<div class="card"><h3><span class="qn">3</span>Second seed of the best routing arm <span class="chip">~4 h</span></h3>
+<p>Whichever of b2lam03 / C2 / C1 leads the 2&times;2 table gets a second training seed — flow-vs-flow single runs
+have burned us before (the historical RRR-beats-PCA closed-loop claim).</p></div>
+<div class="card"><h3><span class="qn">4</span>Coupling-tradeoff CLOG analysis <span class="chip">~1 h</span></h3>
+<p>Per-inference command error by gate across B1 / b2lam03 / B2 / C2, from the CLOGs already recorded: does coupling
+degrade right-gate c near the gate (command-side) or is the loss downstream?</p></div>
+<h2>Shelved</h2>
+<div class="card"><h3>σ-conditioned trust dial</h3><p>Checkpoint trained (gate_both_pin_rrr_sigcond); evaluation deferred. Provides a serving-time trust parameter if later needed.</p></div>
+<div class="card"><h3>Learned-U variants</h3><p>λ sweep and RRR warm start, following the result that joint training assigns the pin to high-frequency components at λ=1.</p></div>
+<div class="card"><h3>Paraphrase-robust task selection</h3><p>Four methods failed the 0.90 bar; requires a different mechanism than heads on current features.</p></div>
+<div class="card"><h3>Compound command targets</h3><p>Demo-statistics-derived aim points (altitude, carry-through) as prior training targets for the compound route.</p></div>
+</div>
+
+<div class="tab" id="hist">
+
+<h2>Theme 1 — Does the pin mechanism work? (core factorization)</h2>
+<div class="card"><h3>Low-data ladder: where the advantage lives <span class="chip ok">RESULT</span></h3>
+<ul><li>Transits with the pin are 20/20 from 3 demonstrations per task upward; the no-pin arm manages 10&ndash;14/20
+through 40 demos/task and completes zero tasks there.</li>
+<li>Completions cross: at 60 demos/task the no-pin arm catches up (transits tie 20/20; completions 13/20 vs 9/20,
+not significant at n=20). At ~100 the pin system reaches 19/20.</li>
+<li>Earlier claim corrected: "the no-pin arm completes zero tasks at any size" was generalised from the 3/10/40
+rungs and is false at 60.</li></ul>
+<p class="learn"><b>LEARNED</b> — the factorization buys competence in the data-starved regime and its advantage
+decays as data grows, reproducing the LIBERO conditional (structure helps only when the policy is the bottleneck)
+as a located crossing point on a single curve.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/c7fbc5f8-2452-4c3b-9b06-519e57153ee2">ladder page</a></div></div>
+<div class="card"><h3>Grounded command source without a task list <span class="chip part">RESULT</span></h3>
+<ul><li>c = MLP([state, PCA of the post-fusion language-token embedding]); no task list, classifier, or string
+matching. 13/20 completions vs 19/20 for the string-matched scaffold on the same flow; clearance is the weak axis.</li>
+<li>Measured limit: with four prompts the language subspace is exactly 3-dimensional (PCA keeps 100% of it), so the
+interface is enumeration-free while the data is not. Held-out paraphrases fly the left gate as well as the trained
+prompt (3/5) and collapse on the right (0/5).</li>
+<li>Paraphrase augmentation raised every offline metric (c-R&sup2; 0.939 &rarr; 0.962) and lowered closed-loop
+success (13/20 &rarr; 5/10) — a fifth instance of offline gains not transferring.</li>
+<li>Latching the embedding buys nothing measurable (10/20 live vs 13/20 latched, n.s.) and breaks multi-stage
+instructions, so live embeddings are now the default.</li></ul>
+<p class="learn"><b>LEARNED</b> — grounding the command in language works well enough to complete tasks, and its
+remaining gap is precision, not task identity. Paraphrase robustness needs more distinct tasks, not more wordings
+of four.</p></div>
+
+<div class="card"><h3>Mechanism decomposition (component battery + zero-pin control) <span class="chip ok">RESULT</span></h3>
+<ul><li>Additive control (scratch flow + post-hoc coarse overwrite, same oracle c): matches the pin flow on transits and
+completions at n160 but clearance collapses (4/10 vs 10/10, clips to 0.002 m) — the coarse channel steers largely
+algebraically; pin training buys complement coherence.</li>
+<li>Zero-pin control (source orthogonalized exactly like the pin but c = 0 — consistent noise, no answer, no channel):
+0/10 transits at n12, vs pin 10/10 and scratch 6/10 — source consistency alone buys nothing.</li>
+<li>Demo-oracle execution ceilings: record 10/7/10 (transit/full/clean per 10); n12 8/0/4 — under perfect commands,
+goal-phase execution and cleanliness are the data-hungry components; transit steering is nearly free.</li></ul>
+<p class="learn"><b>LEARNED</b> — the low-data advantage is the supplied coarse answer, not source familiarity; the
+channel is identity by construction; training with pins makes the residual detail cooperate with the command.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/1341df28-c8a4-4060-80bf-034e26546a40">component rollouts</a></div></div>
+<div class="card"><h3>Noise channel vs conditioning channel <span class="chip ok">RESULT</span></h3>
+<ul><li>CPU toy: pinned-noise arm executes contradictory commands at ~1% error; the same command through a conditioning branch is ~26× worse. Diversity preserved.</li>
+<li>Flying sim: pin steers ~5.5× harder than language conditioning; pin overrides the visible scene when commanded against it.</li></ul>
+<p class="learn"><b>LEARNED</b> — control carried in the source distribution is followed far more reliably than control fed as conditioning; this is the basis for the whole program.</p></div>
+<div class="card"><h3>Closed-loop system on the drone <span class="chip ok">RESULT</span></h3>
+<ul><li>Record config: RRR pin flow + no-clock state prior = 39/40 strict (L 9/10, R 10/10, CFL 10/10, CFR 10/10), the simplest system tried.</li>
+<li>Controls: scratch π0 transits 20/20 but completes 0/20; progress clock retired (its benefit was compensation for a label bug).</li>
+<li>Clearance re-audit later confirmed L/R/CFL clean 10/10; CFR 4/10 clean (grazes 0.11–0.16 m).</li></ul>
+<p class="learn"><b>LEARNED</b> — predicted-c through the pin completes tasks a scratch policy cannot; the command source, not the flow, is the binding component.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/394cf6fd-520e-4bab-96b9-d6e827789c0c">recent grids</a></div></div>
+<div class="card"><h3>Movement vocabulary <span class="chip ok">RESULT</span></h3>
+<ul><li>Toy multi-continuation: one executor trained on forward/reversed/hover continuations from shared states selects among them by commanded c alone; no mode collapse.</li>
+<li>Drone aug flow (reverse/crop/hover variants): reverse ADE ≈ forward ADE; hover drift 8 mm (teacher-forced).</li></ul>
+<p class="learn"><b>LEARNED</b> — c functions as a command-selectable vocabulary over movements, not only a regression target.</p></div>
+
+<h2>Theme 2 — What should c be? (basis U and target design)</h2>
+<div class="card"><h3>Basis selection <span class="chip ok">RESULT</span></h3>
+<ul><li>RRR (subspace predictable from state+language) beats PCA in every multi-task LIBERO regime at equal coverage.</li>
+<li>U anatomy: net-displacement 4-space (principal angles 3.7–14°) + a yaw-ramp timing mode; <0.2% energy above DCT mode 2; c decodes linearly to meters.</li></ul>
+<p class="learn"><b>LEARNED</b> — the useful coarse code is the observation-predictable subspace; it is interpretable (displacement + timing).</p></div>
+<div class="card"><h3>Learning U end-to-end <span class="chip bad">NEGATIVE</span></h3>
+<ul><li>Learnable orthonormal U + prediction head, trained jointly with the flow (λ=1): 1/5 directions near the displacement space; the rest high-frequency, yaw-dominant.</li></ul>
+<p class="learn"><b>LEARNED</b> — the flow loss prefers pinning components it predicts worst (fine detail); a coarse factorization requires explicit structure (RRR) or stronger predictability pressure.</p></div>
+<div class="card"><h3>Domain dependence of U <span class="chip part">MEASURED</span></h3>
+<ul><li>Real vs synthetic RRR bases: shared ~3-dim displacement core (6–26°), two divergent directions (47–61°); real basis tilts away from pure displacement; real-chunk coordinates only partially transportable (|corr| 0.45–0.95).</li>
+<li>Per-embodiment (earlier arc): invariance-selected bases transfer across arms (GLAP 0.75 vs PCA 0.34); variable-DOF transfer fails because the pin partly captures realization.</li></ul>
+<p class="learn"><b>LEARNED</b> — U is body- and domain-dependent beyond a shared displacement core.</p></div>
+<div class="card"><h3>Per-domain U <span class="chip bad">NEGATIVE</span></h3>
+<ul><li>Bases refit with one recipe (ridge λ=10, K=5) and authoritative labels: real vs clean-synth bases share ~1–2
+directions (5.9°, then 40–83°); pooled stays within 10° of the deployed basis in 4 of 5 directions.</li>
+<li>Held-out REAL c-R² of the prior, the deployment-relevant number: real basis + real data 0.50; deployed synth basis
++ real data 0.69; pooled basis + pooled data 0.69; deployed basis + pooled data 0.72 (best). The real basis's later
+directions are barely state-predictable (per-dim tail 0.18/0.16).</li>
+<li>Real chunks are harder to predict in any basis (best 0.72 vs 0.97 on synth) — a data property, not a basis
+mismatch.</li></ul>
+<p class="learn"><b>LEARNED</b> — refitting U per domain does not improve command predictability; the RRR objective
+(feature-predictable chunk variance) selects real-data directions the state prior cannot predict. Deployed basis
+retained; the contingent closed-loop retrain is cancelled.</p></div>
+<div class="card"><h3>c precision requirements <span class="chip part">MEASURED</span></h3>
+<ul><li>c ≈ g(pose) with g near-isometric: command error ≈ pose error. Gate aperture tolerance ~±5 cm.</li>
+<li>c is 99% state-driven in this data (language ~1%).</li></ul>
+<p class="learn"><b>LEARNED</b> — c is low-dimensional and predictable but not error-tolerant: it encodes metric geometry, so the precision burden of the task sits in the coarse channel. Motivates queue #5 (target re-parameterization) and trust calibration (Theme 3).</p></div>
+
+<h2>Theme 3 — Command-error tolerance (soft pin, σ)</h2>
+<div class="card"><h3>Soft pin on LIBERO <span class="chip ok">RESULT</span></h3>
+<ul><li>Training with c + σ·std·ε (σ=0.7): closed-loop with VLM-predicted c goes 0.00 → 0.87.</li></ul>
+<p class="learn"><b>LEARNED</b> — a flow trained only on exact pins executes command errors; injecting command noise in training teaches correction.</p></div>
+<div class="card"><h3>VLM-error-matched soft pin (covpin) <span class="chip bad">NEGATIVE</span></h3>
+<ul><li>Record-recipe flow trained with pin noise ~ N(mean, Σ) from the union head's measured error distribution
+(per-dim ratios 0.25–0.39 of a std, cross-dim correlations to ±0.51; the mean is negligible at 0.02–0.06 std).</li>
+<li>Battery vs the isotropic references, same command sources: state prior — left 0/5 transit (4/5 reach the gate
+region but never cross clean) vs 8–9/10 full for the hard-pin and σ=0.35 flows; right 5/5 transit, 0 full. Union head —
+right 2/5 transit vs 4/5 on the σ=0.35 aug flow.</li></ul>
+<p class="learn"><b>LEARNED</b> — error-shaped (correlated) pin noise is worse than isotropic at comparable magnitude.
+Working hypothesis: the head's errors correlate with task-relevant command directions, so tolerating that noise trains
+the flow to ignore the subspace where commands differ — selective degradation, not uniform softening. Version 2 is not
+triggered (pre-registered rule); line closed.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/aae60e98-7301-4652-8787-948e24aad282">all 20 rollouts</a></div></div>
+<div class="card"><h3>σ sweep on the drone <span class="chip part">RESULT</span></h3>
+<ul><li>Aug config, right-scene transits by σ: hard 2/5 (with contacts) → σ=0.35 5/5 clean → σ=0.7 0/5. σ=0.35 also the only aug flow with full successes (5/10).</li><li>σ=0.7 produced the first VLM-map transits but degraded prior-command competence; teacher-forced ADE did not predict the closed-loop cost.</li>
+<li>σ~U(0,0.7) per sample (unconditioned): best correction (VLM map 3/5 right transits; prior 10/10 clean transits) but 0 goal-phase completions.</li>
+<li>Record config + σ=0.35 at n=10: left 8/10 full; right 10/10 clean transits, 0/10 goal.</li></ul>
+<p class="learn"><b>LEARNED</b> — trust is a real dial with a task-dependent optimum; moderate σ can outperform the hard pin; correction ability and terminal-phase commitment trade off. σ-conditioning (inference-time dial) is trained and shelved.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/b3d941f2-e7de-4677-bad2-72e9e504bec5">σ=0.7 videos</a><a href="https://claude.ai/code/artifact/394cf6fd-520e-4bab-96b9-d6e827789c0c">σ=0.35 videos</a><a href="https://claude.ai/code/artifact/8f6dfc20-4614-44e6-ba9f-a2a723927b09">σ-random videos</a></div></div>
+
+<h2>Theme 4 — Predicting c from observation (the command source)</h2>
+<div class="card"><h3>Joint training + gradient routing (in-checkpoint command head) <span class="chip part">ACTIVE</span></h3>
+<ul><li>Root cause of the grounded source's 0/10: the prior consumed features from a different checkpoint than it was
+fitted on (fine-tuning moves 18–22% of embedding dims &gt;3σ). Re-pairing alone: left 0/5 &rarr; 10/10 clean, no retraining.
+Structural fix: the head lives INSIDE the flow checkpoint, so mispairing is impossible by construction.</li>
+<li>Coupling axis (10 trials/side, strict = judge + clearance): <b>B1 detached</b> — right 7/10, left shaves the post
+(0.13–0.17 m). <b>B2 coupled λ=1</b> — left 10/10 strict, right 0/10 transit. <b>λ=0.3</b> — left 10/10 strict AND
+right 10/10 clean transit (clearances 0.31–0.38, demo-level), but 3/10 strict on right: flights overshoot the hover
+box by 0.1–0.6 m. Partial coupling recovers the right ROUTE; the endgame (no stop) is the remaining failure.</li>
+<li>More optimisation hurts or is neutral: b1long (15k annealed) lost the right gate 7/10 &rarr; 0/5; adding state to
+the head (B1s) worse everywhere.</li>
+<li>RRR-from-VLA claim re-verified as a clean 2&times;2 on 3 unseen-task LIBERO splits: the VLM-feature PREDICTOR is
+the win (+0.2..+0.4 vs one-hot −3.4..−3.8); the basis is a wash (RRR≈PCA here). Unseen language goals still weak.</li>
+<li>Now completing the routing 2&times;2 with C2 (VLM trained by c loss only; flow loss provably detached — forward
+identical, VLM grad exactly 0) and C1 (VLM frozen; pairing cannot drift).</li></ul>
+<p class="learn"><b>LEARNED</b> — the feature-source pairing, not the architecture, killed the grounded command
+source; and WHICH losses reach the VLM decides which gate works. Coupling strength is a real dial: λ=0.3 is the
+first enumeration-free source to transit both gates 10/10 clean.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/2c0f3000-9f98-4287-9148-236d28b7736a">trajectory explorer</a><a href="https://claude.ai/code/artifact/e054d3cf-97c4-449d-a713-534c94663542">routing claim tier</a></div></div>
+<div class="card"><h3>State-based priors <span class="chip ok">RESULT</span></h3>
+<ul><li>MLP on (state, task): held c-R² 0.96–0.97; carries the 39/40 record. Progress clock removed after it caused a settle failure; duration knowledge rejected as an input.</li>
+<li>Weakness: large c2 errors at episode tails on-manifold; goal-phase completion is the recurring residual on aug/soft flows.</li></ul>
+<p class="learn"><b>LEARNED</b> — position input makes c prediction accurate and closed-loop robust; endgame commands are the weak segment.</p></div>
+<div class="card"><h3>VLM-feature heads: the offline/closed-loop gap <span class="chip part">EXPLAINED</span></h3>
+<ul><li>Deterministic maps on fused features: offline c-R² 0.92–0.96, closed-loop 0/N repeatedly.</li>
+<li>Basin probe (new instrument): feedback gain vs perturbation radius. Prior gain grows with deviation (0.39→0.73 at 1 m); feature-map gain decays (0.23→0.11). Stability basin ≈ data tube (~0.3 m).</li>
+<li>Pose decomposition: pooled features localize to 0.14–0.20 m; cascade (prior fed feature-estimated pose) shifts the command field 0.21 m; direct feature heads sit at 0.54 m → ~0.21 m information limit + ~0.33 m fitting error.</li>
+<li>Jitter: feature heads 1.5–2.5× the prior's command jitter; for CFM heads it is sampling noise; k=8 mean + EMA(0.5) removes it at no accuracy cost.</li></ul>
+<p class="learn"><b>LEARNED</b> — offline R² does not measure closed-loop viability. The gap decomposes into basin width (data coverage), pose information (feature quality), and jitter (removable). Standing instruments: basin probe, disagreement probe, jitter measurement.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/55062bc5-127c-402b-8467-c73ec0860402">3D command-field viewer</a></div></div>
+<div class="card"><h3>Attention readout over VLM tokens <span class="chip part">RESULT</span></h3>
+<ul><li>4 learned queries over 34 structured tokens (4×4-pooled patch grid per camera + text + global) vs mean pooling:
+held on-route c-R² 0.912 vs 0.905; basin gain at 1.0 m y/z 0.93/0.72 — not a clean win on any instrument.</li></ul>
+<p class="learn"><b>LEARNED</b> — the pooled readout is not the binding constraint at this data scale; the pooled head
+is retained. Attention over full-resolution patch/text tokens remains the intended interface once the command head is
+trained at larger scale.</p></div>
+<div class="card"><h3>Coverage experiments <span class="chip part">RESULT</span></h3>
+<ul><li>Fat tube only (return-to-route labels, ±1 m offsets): basin gain at 1 m 0.05→0.70, but on-route R² dropped to 0.79 and closed-loop was 0/20.</li>
+<li>Union (on-route + tube): R² restored (0.905), basin held, and the feature-only head achieved 4/5 right-scene transits — first reliable transits with no state input and no task one-hot.</li></ul>
+<p class="learn"><b>LEARNED</b> — coverage must be added to on-route data, not substituted for it; with coverage, features alone can command transits. Tube construction is a small-data patch; at scale, coverage should come from data diversity.</p></div>
+<div class="card"><h3>Hybrid (state ⊕ features) heads <span class="chip bad">NEGATIVE</span></h3>
+<ul><li>Concat hybrids underperform both parents across flows (union hybrid 1/5 vs feature-only 4/5).</li>
+<li>Disagreement probe: image-only input change moves the command ~85% of the full response; state-only ~45% — the feature channel dominates. Consistent-perturbation probes miss this.</li></ul>
+<p class="learn"><b>LEARNED</b> — concatenation assigns authority by gradient dynamics, not information quality; the state pathway needs architectural priority (queue #4).</p></div>
+<div class="card"><h3>Two-stage flow matching for c <span class="chip part">RESULT</span></h3>
+<ul><li>CFM head on (state, one-hot): closed-loop parity with the deterministic prior (L 5/5, R 4/5 full).</li><li>CFM on fused features: offline parity (0.911 vs 0.926); same-frame prompt change moves sampled c along the true behavioral axis (cos 0.983, 870 pairs) — language input is used.</li>
+<li>Compound route: sampled heads reproduce the same wide-crossing as regression heads — mode averaging is not the compound failure mechanism. No off-manifold uncertainty signal (spread does not inflate).</li>
+<li>Hybrid CFM produced one full strict success (right scene) from a language-grounded source — first such completion.</li></ul>
+<p class="learn"><b>LEARNED</b> — a generative stage-1 is viable and language-responsive but does not by itself fix accuracy, coverage, or compound behavior; sampling adds removable jitter.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/d497da6a-a829-4541-bb2a-d40b6c69fc39">two-stage videos</a></div></div>
+<div class="card"><h3>Language and task selection <span class="chip part">MIXED</span></h3>
+<ul><li>Canonical prompts: task selection from fused features 100% (canonical + swapped).</li>
+<li>Paraphrases: four methods (zero-shot head, augmented head, language-pooled head, retrieval) all below the 0.90 bar (0.18–0.73) — deficit is representational after VLA fine-tuning on 4 fixed strings.</li>
+<li>Within-scene contrasts (fwd/back/hold on identical frames): grounded with a plain ridge (cos 0.999).</li></ul>
+<p class="learn"><b>LEARNED</b> — fused features ground language when the training data contains within-scene language contrast; paraphrase robustness needs a different mechanism.</p></div>
+
+<h2>Theme 5 — Composition and multi-gate tasks</h2>
+<div class="card"><h3>Compound route (left gate → center gate) <span class="chip part">PARTIAL</span></h3>
+<ul><li>Route topology composes: milestone-switched priors latch both gates in order in most runs.</li><li>Failure factorial (0/30): momentum, hold-splice (seam velocity verified ~0), flow variant, and render each eliminated; on-route commands point at the gate (cos→1.0) yet crossings land 0.4–0.65 m wide — the deficit is command content near the gate.</li>
+<li>Oracle command source: transit-level success (compound 8/10, right 5/5) was vetoed on video + clearance audit — every run contacted the gate; cause was an aim height taken from the safety-file midpoint (z=1.0) vs the opening demos use (z≈1.5). With demo-derived aim: right 5/5 strict full; compound 5/5 both-gates with clean transits, goal dwell still short.</li>
+<li>Gate locator probe: in a two-gate scene never seen in training, the prompt selects which gate is localized (0.27 m named-left; 0.72 m on the duplicated gate).</li></ul>
+<p class="learn"><b>LEARNED</b> — execution supports composition; the missing pieces are learned command targets near the gate (demo-statistics aim) and the terminal phase. Oracles and sim ground truth are diagnostics only (rule, 2026-08-05): products may not train on waypoints or scene-file coordinates.</p>
+<div class="links"><a href="https://claude.ai/code/artifact/d2b14abf-2fcb-4793-bcc3-192c3b61f613">oracle videos</a></div></div>
+
+<h2>Theme 6 — Sim → real</h2>
+<div class="card"><h3>Prior transfer <span class="chip part">RESULT</span></h3>
+<ul><li>Sim-only prior on real: negative (−0.32/0.00). Real-only: 0.56/0.73. Naive fine-tune: ties real-only, forgets synthetic center (−59). Fine-tune on one task: −10⁸ off-support.</li>
+<li>Mixed co-training: 0.66/0.75 with synthetic center preserved (0.98) — current deployment choice.</li>
+<li>Shared task-independent residual Δ(state) fit on real-left: left −0.32→0.40 but right 0.00→−1.88 — correction is task-specific; hypothesis refuted.</li></ul>
+<p class="learn"><b>LEARNED</b> — sim→real correction does not factor into a shared state-conditioned map; co-training works. Basis-level analogue queued (#3).</p></div>
+
+<h2>Theme 7 — Measurement and method</h2>
+<div class="card"><h3>Scoring integrity <span class="chip ok">RULES</span></h3>
+<ul><li>Region-box bug: an aperture check against a 1.2×2.0 m face passed drift as success; scorer bounds must match the physical opening.</li>
+<li>Clearance audit added after video review caught gate contact the transit judge passed (judge aperture spans the posts). Demo calibration: clean flights clear by 0.28–0.38 m.</li>
+<li>Standing rules: strict success = transit judge + clearance audit + human video; videos always shown full-length regardless of detector flags; 5 trials for screens, ≥10 for claims; whole-trajectory metrics only.</li></ul>
+<p class="learn"><b>LEARNED</b> — every scorer needs calibration against demos and human review; three offline instruments (steer diagnostic, basin probe, disagreement probe) now gate closed-loop spend.</p></div>
+
+</div>
+<script>
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
+ document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+ b.classList.add("on");document.getElementById(b.dataset.t).classList.add("on");
+}));
+</script>

@@ -1,0 +1,137 @@
+{
+  "pins": [
+    {
+      "axis": [
+        1.0,
+        0.0
+      ],
+      "omega": 0,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        1.0,
+        0.0
+      ],
+      "omega": 1,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        1.0,
+        0.0
+      ],
+      "omega": 2,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        0.0,
+        1.0
+      ],
+      "omega": 0,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        0.0,
+        1.0
+      ],
+      "omega": 1,
+      "mode": "mod2pi",
+      "mag": true
+    },
+    {
+      "axis": [
+        0.0,
+        1.0
+      ],
+      "omega": 2,
+      "mode": "mod2pi",
+      "mag": true
+    }
+  ],
+  "config": {
+    "seeds": [
+      0
+    ],
+    "iters": 300,
+    "train_scenes": 60,
+    "demos": 4,
+    "eval_scenes": 10,
+    "n_roll": 4,
+    "err_scale": 8.3575,
+    "smoke": true
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "A": {
+        "fwd": {
+          "err": 0.0896,
+          "err_std": 0.0266,
+          "mean_abs_action": 0.2919,
+          "endpoint_spread": 0.0424,
+          "success": 0.975
+        },
+        "rev": {
+          "err": 0.1277,
+          "err_std": 0.036,
+          "mean_abs_action": 0.3157,
+          "endpoint_spread": 0.0531
+        },
+        "hover": {
+          "err": 0.111,
+          "err_std": 0.0234,
+          "mean_abs_action": 0.1497,
+          "endpoint_spread": 0.0496
+        }
+      },
+      "B": {
+        "fwd": {
+          "err": 0.088,
+          "err_std": 0.0244,
+          "mean_abs_action": 0.2914,
+          "endpoint_spread": 0.0432,
+          "success": 0.925
+        },
+        "rev": {
+          "err": 0.0958,
+          "err_std": 0.0283,
+          "mean_abs_action": 0.2941,
+          "endpoint_spread": 0.0564
+        },
+        "hover": {
+          "err": 0.0995,
+          "err_std": 0.0269,
+          "mean_abs_action": 0.1279,
+          "endpoint_spread": 0.0545
+        }
+      }
+    }
+  ],
+  "pooled_err": {
+    "A": {
+      "fwd": 0.0896,
+      "rev": 0.1277,
+      "hover": 0.111
+    },
+    "B": {
+      "fwd": 0.088,
+      "rev": 0.0958,
+      "hover": 0.0995
+    }
+  },
+  "bars": {
+    "bar1_B_rev_le_2x_Bfwd": true,
+    "bar1_B_hover_le_2x_Bfwd": true,
+    "bar2_Bfwd_le_1p5x_Afwd": true,
+    "bar3_A_fails_rev (A_rev > 2x A_fwd)": false,
+    "bar1": true
+  },
+  "runtime_s": 3.1
+}

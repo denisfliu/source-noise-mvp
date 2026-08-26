@@ -1,0 +1,18 @@
+{
+  "task_suite": "libero_object",
+  "seed": 7,
+  "init_states": "canonical",
+  "invariant": null,
+  "tasks": [
+    {
+      "task_id": 4,
+      "language": "pick up the ketchup and place it in the basket",
+      "episodes": 50,
+      "successes": 4,
+      "success_rate": 0.08
+    }
+  ],
+  "total_episodes": 50,
+  "total_successes": 4,
+  "total_success_rate": 0.08
+}

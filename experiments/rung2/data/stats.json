@@ -1,0 +1,26 @@
+{
+  "Panda": {
+    "n": 80,
+    "success_rate": 0.9,
+    "mean_disp_m": 0.194,
+    "mean_reach_err_m": 0.0119
+  },
+  "Sawyer": {
+    "n": 80,
+    "success_rate": 0.637,
+    "mean_disp_m": 0.194,
+    "mean_reach_err_m": 0.0258
+  },
+  "IIWA": {
+    "n": 80,
+    "success_rate": 0.762,
+    "mean_disp_m": 0.194,
+    "mean_reach_err_m": 0.0309
+  },
+  "UR5e": {
+    "n": 80,
+    "success_rate": 0.887,
+    "mean_disp_m": 0.194,
+    "mean_reach_err_m": 0.0145
+  }
+}

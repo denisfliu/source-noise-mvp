@@ -1,0 +1,15 @@
+{
+  "closed_loop": {
+    "scratch": 0.175,
+    "GLAP": 0.675
+  },
+  "offline": {
+    "scratch": 0.15,
+    "GLAP": 0.7
+  },
+  "agreement": {
+    "scratch": 0.925,
+    "GLAP": 0.925
+  },
+  "M": 40
+}

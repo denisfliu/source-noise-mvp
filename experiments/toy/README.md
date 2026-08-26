@@ -50,3 +50,29 @@ Tiny flow-matching MLPs (3x128 relu, ~10k Adam steps, CPU, ~25 s/arm via
   same normalized space (already noted in docs/openpi_integration.md).
 - `autograd` used instead of torch (sandbox constraint); the model is small
   enough that this changes nothing. `pip install autograd` to rerun.
+
+## Addendum (2026-07-05): CFG-style pin dropout kills the channel
+
+Tested before committing GPU time to a pin-dropout arm (P) and a variant with
+a CFG-style "pin present" flag input (Q). Both train with the pin on 80% of
+samples. Results (3 seeds):
+
+| arm | probe err-to-command | unpinned endpoint err | pinned endpoint err |
+|---|---|---|---|
+| C (always pinned) | **0.027** | — | 0.018 |
+| P (dropout 0.2) | 2.43 (90x worse) | 0.115 (3x worse than A) | 0.024 |
+| Q (dropout + flag) | 2.26 | 0.116 | 0.024 |
+
+Follow rate 0.0 at every inference alpha for both P and Q; rollouts land on
+the OBS target (err_to_obs ~0.11-0.17) — the model corrects the contradictory
+pin away. Mechanism: with dropout, the obs->endpoint decode must be learned
+for the unpinned samples, and once learned it is correct on ALL samples, so
+no gradient pressure maintains the pin-read. The always-on pin of arm C wins
+because it is the *cheaper* feature (linear read off x_t), not because obs is
+insufficient. The presence flag does not change the economics.
+
+=> Design consequence: the pin must be always-on in training. There is no
+free "unpinned/plain policy" mode from one checkpoint; a scene-consistent
+invariant must be supplied at inference (oracle now, learned prior in
+Phase 2). Inference-time alpha<1 on an always-pinned model is a different
+regime and remains a valid ablation.

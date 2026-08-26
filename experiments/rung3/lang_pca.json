@@ -1,0 +1,50 @@
+{
+ "ckpt": "/home/ubuntu/code/openpi/checkpoints/pi0_libero_shared/snmvp_src_pin_shared/4999",
+ "U": "/home/ubuntu/code/source-noise-mvp/experiments/rung3/pin_U_pca_k5_shared.npy",
+ "suites": {
+  "goal(lang)": {
+   "no_pin": {
+    "subspace_r2": -0.10471253755415533,
+    "full_r2": -0.2579150257247891,
+    "n": 64
+   },
+   "state": {
+    "subspace_r2": 0.08269966824801456,
+    "full_r2": -0.09780372940498094,
+    "n": 64
+   },
+   "state_lang": {
+    "subspace_r2": 0.5907633028101735,
+    "full_r2": 0.2540463905945368,
+    "n": 64
+   },
+   "oracle": {
+    "subspace_r2": 0.9872305429259591,
+    "full_r2": 0.6509393410736419,
+    "n": 64
+   }
+  },
+  "object(state)": {
+   "no_pin": {
+    "subspace_r2": -0.6790969105541969,
+    "full_r2": -0.9484269476357694,
+    "n": 56
+   },
+   "state": {
+    "subspace_r2": -0.6059176801240043,
+    "full_r2": -0.8816630316433769,
+    "n": 56
+   },
+   "state_lang": {
+    "subspace_r2": 0.4153584302069424,
+    "full_r2": -0.17769194627365237,
+    "n": 56
+   },
+   "oracle": {
+    "subspace_r2": 0.9827766600886818,
+    "full_r2": 0.41758386022819516,
+    "n": 56
+   }
+  }
+ }
+}

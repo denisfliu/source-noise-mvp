@@ -1,0 +1,53 @@
+{
+  "per_seed": {
+    "s0": {
+      "ceil": 0.825,
+      "A": 0.1,
+      "F": 0.3,
+      "F_oracle": 0.3,
+      "F_prior_err": 1.999,
+      "R": 0.25,
+      "R_oracle": 0.25,
+      "R_prior_err": 1.551
+    },
+    "s1": {
+      "ceil": 0.825,
+      "A": 0.15,
+      "F": 0.25,
+      "F_oracle": 0.25,
+      "F_prior_err": 1.767,
+      "R": 0.25,
+      "R_oracle": 0.2,
+      "R_prior_err": 1.505
+    },
+    "s2": {
+      "ceil": 0.825,
+      "A": 0.1,
+      "F": 0.1,
+      "F_oracle": 0.1,
+      "F_prior_err": 1.93,
+      "R": 0.2,
+      "R_oracle": 0.2,
+      "R_prior_err": 1.409
+    }
+  },
+  "verdict": {
+    "pooled": {
+      "A": 0.117,
+      "F": 0.217,
+      "R": 0.233,
+      "F_oracle": 0.217,
+      "R_oracle": 0.217,
+      "F_prior_err": 1.899,
+      "R_prior_err": 1.488,
+      "ceil": 0.825
+    },
+    "F_minus_A": 0.1,
+    "F_minus_R": -0.016,
+    "Foracle_minus_F": 0.0,
+    "Foracle_minus_Roracle": 0.0,
+    "K": 10,
+    "C": 6,
+    "task": "6-DOF pose-reach around obstacle (offline geometric)"
+  }
+}

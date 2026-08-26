@@ -1,0 +1,467 @@
+{
+  "E1_residual_transfer": {
+    "bank": {
+      "residual_energy_frac": 0.53,
+      "by_m": {
+        "10": {
+          "in_sample": 0.286,
+          "transfer": 0.406,
+          "oracle": 0.229,
+          "random": 0.969
+        },
+        "20": {
+          "in_sample": 0.171,
+          "transfer": 0.316,
+          "oracle": 0.122,
+          "random": 0.952
+        }
+      }
+    },
+    "vertical": {
+      "residual_energy_frac": 0.488,
+      "by_m": {
+        "10": {
+          "in_sample": 0.209,
+          "transfer": 0.33,
+          "oracle": 0.159,
+          "random": 0.973
+        },
+        "20": {
+          "in_sample": 0.113,
+          "transfer": 0.272,
+          "oracle": 0.072,
+          "random": 0.943
+        }
+      }
+    },
+    "slalom": {
+      "residual_energy_frac": 0.934,
+      "by_m": {
+        "10": {
+          "in_sample": 0.276,
+          "transfer": 0.376,
+          "oracle": 0.214,
+          "random": 0.969
+        },
+        "20": {
+          "in_sample": 0.161,
+          "transfer": 0.268,
+          "oracle": 0.106,
+          "random": 0.951
+        }
+      }
+    }
+  },
+  "E2_coverage_transfer_knee": {
+    "bank": [
+      {
+        "K": 2,
+        "in_sample": 0.762,
+        "transfer": 0.759,
+        "gap": -0.003,
+        "oracle_pca": 0.291,
+        "random": 0.997
+      },
+      {
+        "K": 4,
+        "in_sample": 0.677,
+        "transfer": 0.675,
+        "gap": -0.002,
+        "oracle_pca": 0.256,
+        "random": 0.988
+      },
+      {
+        "K": 6,
+        "in_sample": 0.61,
+        "transfer": 0.611,
+        "gap": 0.001,
+        "oracle_pca": 0.227,
+        "random": 0.981
+      },
+      {
+        "K": 8,
+        "in_sample": 0.561,
+        "transfer": 0.562,
+        "gap": 0.001,
+        "oracle_pca": 0.199,
+        "random": 0.964
+      },
+      {
+        "K": 10,
+        "in_sample": 0.522,
+        "transfer": 0.53,
+        "gap": 0.008,
+        "oracle_pca": 0.177,
+        "random": 0.984
+      },
+      {
+        "K": 12,
+        "in_sample": 0.496,
+        "transfer": 0.506,
+        "gap": 0.01,
+        "oracle_pca": 0.16,
+        "random": 0.971
+      },
+      {
+        "K": 16,
+        "in_sample": 0.44,
+        "transfer": 0.457,
+        "gap": 0.017,
+        "oracle_pca": 0.135,
+        "random": 0.984
+      },
+      {
+        "K": 24,
+        "in_sample": 0.343,
+        "transfer": 0.356,
+        "gap": 0.013,
+        "oracle_pca": 0.097,
+        "random": 0.947
+      },
+      {
+        "K": 32,
+        "in_sample": 0.279,
+        "transfer": 0.284,
+        "gap": 0.005,
+        "oracle_pca": 0.072,
+        "random": 0.929
+      },
+      {
+        "K": 48,
+        "in_sample": 0.22,
+        "transfer": 0.215,
+        "gap": -0.006,
+        "oracle_pca": 0.042,
+        "random": 0.846
+      },
+      {
+        "K": 64,
+        "in_sample": 0.191,
+        "transfer": 0.181,
+        "gap": -0.01,
+        "oracle_pca": 0.026,
+        "random": 0.742
+      },
+      {
+        "K": 96,
+        "in_sample": 0.108,
+        "transfer": 0.102,
+        "gap": -0.006,
+        "oracle_pca": 0.009,
+        "random": 0.715
+      }
+    ],
+    "vertical": [
+      {
+        "K": 2,
+        "in_sample": 0.793,
+        "transfer": 0.793,
+        "gap": -0.0,
+        "oracle_pca": 0.245,
+        "random": 0.997
+      },
+      {
+        "K": 4,
+        "in_sample": 0.669,
+        "transfer": 0.666,
+        "gap": -0.003,
+        "oracle_pca": 0.2,
+        "random": 0.981
+      },
+      {
+        "K": 6,
+        "in_sample": 0.584,
+        "transfer": 0.585,
+        "gap": 0.001,
+        "oracle_pca": 0.173,
+        "random": 0.984
+      },
+      {
+        "K": 8,
+        "in_sample": 0.544,
+        "transfer": 0.544,
+        "gap": -0.0,
+        "oracle_pca": 0.15,
+        "random": 0.987
+      },
+      {
+        "K": 10,
+        "in_sample": 0.489,
+        "transfer": 0.488,
+        "gap": -0.001,
+        "oracle_pca": 0.131,
+        "random": 0.97
+      },
+      {
+        "K": 12,
+        "in_sample": 0.462,
+        "transfer": 0.463,
+        "gap": 0.001,
+        "oracle_pca": 0.114,
+        "random": 0.976
+      },
+      {
+        "K": 16,
+        "in_sample": 0.389,
+        "transfer": 0.387,
+        "gap": -0.002,
+        "oracle_pca": 0.092,
+        "random": 0.963
+      },
+      {
+        "K": 24,
+        "in_sample": 0.337,
+        "transfer": 0.34,
+        "gap": 0.003,
+        "oracle_pca": 0.063,
+        "random": 0.917
+      },
+      {
+        "K": 32,
+        "in_sample": 0.298,
+        "transfer": 0.295,
+        "gap": -0.003,
+        "oracle_pca": 0.046,
+        "random": 0.925
+      },
+      {
+        "K": 48,
+        "in_sample": 0.239,
+        "transfer": 0.245,
+        "gap": 0.006,
+        "oracle_pca": 0.025,
+        "random": 0.885
+      },
+      {
+        "K": 64,
+        "in_sample": 0.194,
+        "transfer": 0.199,
+        "gap": 0.005,
+        "oracle_pca": 0.014,
+        "random": 0.812
+      },
+      {
+        "K": 96,
+        "in_sample": 0.142,
+        "transfer": 0.141,
+        "gap": -0.0,
+        "oracle_pca": 0.005,
+        "random": 0.732
+      }
+    ],
+    "slalom": [
+      {
+        "K": 2,
+        "in_sample": 0.949,
+        "transfer": 0.981,
+        "gap": 0.032,
+        "oracle_pca": 0.511,
+        "random": 0.998
+      },
+      {
+        "K": 4,
+        "in_sample": 0.922,
+        "transfer": 0.969,
+        "gap": 0.047,
+        "oracle_pca": 0.427,
+        "random": 0.987
+      },
+      {
+        "K": 6,
+        "in_sample": 0.907,
+        "transfer": 0.956,
+        "gap": 0.049,
+        "oracle_pca": 0.366,
+        "random": 0.986
+      },
+      {
+        "K": 8,
+        "in_sample": 0.902,
+        "transfer": 0.944,
+        "gap": 0.042,
+        "oracle_pca": 0.311,
+        "random": 0.98
+      },
+      {
+        "K": 10,
+        "in_sample": 0.886,
+        "transfer": 0.934,
+        "gap": 0.048,
+        "oracle_pca": 0.276,
+        "random": 0.975
+      },
+      {
+        "K": 12,
+        "in_sample": 0.865,
+        "transfer": 0.894,
+        "gap": 0.029,
+        "oracle_pca": 0.248,
+        "random": 0.967
+      },
+      {
+        "K": 16,
+        "in_sample": 0.827,
+        "transfer": 0.831,
+        "gap": 0.004,
+        "oracle_pca": 0.202,
+        "random": 0.954
+      },
+      {
+        "K": 24,
+        "in_sample": 0.759,
+        "transfer": 0.775,
+        "gap": 0.016,
+        "oracle_pca": 0.142,
+        "random": 0.935
+      },
+      {
+        "K": 32,
+        "in_sample": 0.685,
+        "transfer": 0.703,
+        "gap": 0.018,
+        "oracle_pca": 0.102,
+        "random": 0.916
+      },
+      {
+        "K": 48,
+        "in_sample": 0.63,
+        "transfer": 0.647,
+        "gap": 0.016,
+        "oracle_pca": 0.059,
+        "random": 0.89
+      },
+      {
+        "K": 64,
+        "in_sample": 0.497,
+        "transfer": 0.492,
+        "gap": -0.005,
+        "oracle_pca": 0.035,
+        "random": 0.801
+      },
+      {
+        "K": 96,
+        "in_sample": 0.311,
+        "transfer": 0.324,
+        "gap": 0.013,
+        "oracle_pca": 0.013,
+        "random": 0.724
+      }
+    ]
+  },
+  "E2b_datafit_transfer": {
+    "bank": [
+      {
+        "K": 4,
+        "gridlap_transfer": 0.675,
+        "pca_insample_transfer": 0.3,
+        "coherence_geneig_transfer": 0.764
+      },
+      {
+        "K": 8,
+        "gridlap_transfer": 0.562,
+        "pca_insample_transfer": 0.261,
+        "coherence_geneig_transfer": 0.761
+      },
+      {
+        "K": 12,
+        "gridlap_transfer": 0.506,
+        "pca_insample_transfer": 0.229,
+        "coherence_geneig_transfer": 0.759
+      },
+      {
+        "K": 16,
+        "gridlap_transfer": 0.457,
+        "pca_insample_transfer": 0.207,
+        "coherence_geneig_transfer": 0.758
+      },
+      {
+        "K": 24,
+        "gridlap_transfer": 0.356,
+        "pca_insample_transfer": 0.179,
+        "coherence_geneig_transfer": 0.755
+      },
+      {
+        "K": 32,
+        "gridlap_transfer": 0.284,
+        "pca_insample_transfer": 0.151,
+        "coherence_geneig_transfer": 0.749
+      }
+    ],
+    "vertical": [
+      {
+        "K": 4,
+        "gridlap_transfer": 0.666,
+        "pca_insample_transfer": 0.231,
+        "coherence_geneig_transfer": 0.701
+      },
+      {
+        "K": 8,
+        "gridlap_transfer": 0.544,
+        "pca_insample_transfer": 0.199,
+        "coherence_geneig_transfer": 0.697
+      },
+      {
+        "K": 12,
+        "gridlap_transfer": 0.463,
+        "pca_insample_transfer": 0.174,
+        "coherence_geneig_transfer": 0.694
+      },
+      {
+        "K": 16,
+        "gridlap_transfer": 0.387,
+        "pca_insample_transfer": 0.161,
+        "coherence_geneig_transfer": 0.688
+      },
+      {
+        "K": 24,
+        "gridlap_transfer": 0.34,
+        "pca_insample_transfer": 0.141,
+        "coherence_geneig_transfer": 0.679
+      },
+      {
+        "K": 32,
+        "gridlap_transfer": 0.295,
+        "pca_insample_transfer": 0.126,
+        "coherence_geneig_transfer": 0.674
+      }
+    ],
+    "slalom": [
+      {
+        "K": 4,
+        "gridlap_transfer": 0.969,
+        "pca_insample_transfer": 0.524,
+        "coherence_geneig_transfer": 0.925
+      },
+      {
+        "K": 8,
+        "gridlap_transfer": 0.944,
+        "pca_insample_transfer": 0.425,
+        "coherence_geneig_transfer": 0.919
+      },
+      {
+        "K": 12,
+        "gridlap_transfer": 0.894,
+        "pca_insample_transfer": 0.351,
+        "coherence_geneig_transfer": 0.916
+      },
+      {
+        "K": 16,
+        "gridlap_transfer": 0.831,
+        "pca_insample_transfer": 0.313,
+        "coherence_geneig_transfer": 0.913
+      },
+      {
+        "K": 24,
+        "gridlap_transfer": 0.775,
+        "pca_insample_transfer": 0.243,
+        "coherence_geneig_transfer": 0.909
+      },
+      {
+        "K": 32,
+        "gridlap_transfer": 0.703,
+        "pca_insample_transfer": 0.206,
+        "coherence_geneig_transfer": 0.905
+      }
+    ]
+  }
+}

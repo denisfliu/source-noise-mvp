@@ -1,0 +1,71 @@
+{
+  "config": {
+    "SET_A": [
+      [
+        5.0,
+        1.0
+      ],
+      [
+        5.0,
+        1.2
+      ],
+      [
+        5.0,
+        1.4
+      ]
+    ],
+    "HELD_W": 5.0,
+    "K": 6,
+    "N_ID": 5
+  },
+  "sweep": {
+    "zeta1.0": {
+      "additive_err": 0.001,
+      "laplace_err": 0.008,
+      "identified_wz": [
+        5.06,
+        1.0
+      ],
+      "true_wz": [
+        5.0,
+        1.0
+      ]
+    },
+    "zeta0.8": {
+      "additive_err": 0.007,
+      "laplace_err": 0.009,
+      "identified_wz": [
+        5.06,
+        0.8
+      ],
+      "true_wz": [
+        5.0,
+        0.8
+      ]
+    },
+    "zeta0.6": {
+      "additive_err": 0.024,
+      "laplace_err": 0.011,
+      "identified_wz": [
+        5.06,
+        0.6
+      ],
+      "true_wz": [
+        5.0,
+        0.6
+      ]
+    },
+    "zeta0.4": {
+      "additive_err": 0.067,
+      "laplace_err": 0.017,
+      "identified_wz": [
+        5.06,
+        0.4
+      ],
+      "true_wz": [
+        5.0,
+        0.4
+      ]
+    }
+  }
+}

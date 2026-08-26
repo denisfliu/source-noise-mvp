@@ -1,8 +1,8 @@
 diff --git a/scripts/train_pytorch.py b/scripts/train_pytorch.py
-index c7ddd2b..b466c97 100644
+index c7ddd2b..476dec0 100644
 --- a/scripts/train_pytorch.py
 +++ b/scripts/train_pytorch.py
-@@ -38,6 +38,15 @@ import torch
+@@ -38,6 +38,19 @@ import torch
  import torch.distributed as dist
  import torch.nn.parallel
  import tqdm
@@ -14,11 +14,15 @@ index c7ddd2b..b466c97 100644
 +except ImportError:
 +    _SnmvpSC = None
 +_SNMVP_ALPHA = float(os.environ.get("SNMVP_PIN_ALPHA", "0"))
++# SNMVP_PINNED_DIMS=N pins only the leading N (actuated) action dims,
++# matching the inference adapter; unset = all padded dims (legacy behavior).
++_SNMVP_NDIMS = int(os.environ.get("SNMVP_PINNED_DIMS", "0"))
++_SNMVP_PINNED = list(range(_SNMVP_NDIMS)) if _SNMVP_NDIMS > 0 else None
 +
  import wandb
  
  import openpi.models.pi0_config
-@@ -526,7 +535,16 @@ def train_loop(config: _config.TrainConfig):
+@@ -526,7 +539,17 @@ def train_loop(config: _config.TrainConfig):
                  pg["lr"] = lr_schedule(global_step)
  
              # Forward pass
@@ -29,7 +33,8 @@ index c7ddd2b..b466c97 100644
 +                # satisfies L(u_t) = 0 at every t (carried invariant).
 +                _base = model.module if hasattr(model, "module") else model
 +                _noise = _base.sample_noise(actions.shape, actions.device)
-+                _noise = _SnmvpSC(alpha=_SNMVP_ALPHA)(_noise, _snmvp_extract(actions))
++                _noise = _SnmvpSC(alpha=_SNMVP_ALPHA, pinned_dims=_SNMVP_PINNED)(
++                    _noise, _snmvp_extract(actions))
 +                losses = model(observation, actions, noise=_noise)
 +            else:
 +                losses = model(observation, actions)

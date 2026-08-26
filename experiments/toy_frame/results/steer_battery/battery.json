@@ -1,0 +1,137 @@
+{
+  "typical_C": 1.3303,
+  "arms": {
+    "plain": {
+      "follow_err_natural": 1.0291,
+      "follow_err_contra": 1.1129,
+      "success_natural": 0.38,
+      "success_contra": 0.46,
+      "steer_slope": 0.0118,
+      "steer_r2": 0.0448,
+      "endpoint_cv_under_sweep": 0.0017,
+      "sweep_alphas": [
+        -2.661,
+        -1.995,
+        -1.33,
+        -0.665,
+        0.0,
+        0.665,
+        1.33,
+        1.995,
+        2.661
+      ],
+      "sweep_produced_bend": [
+        -0.0361,
+        0.0486,
+        0.2582,
+        0.1148,
+        -0.0964,
+        0.0861,
+        0.1351,
+        0.098,
+        0.1137
+      ],
+      "tax_vs_plain": 0.0
+    },
+    "condition": {
+      "follow_err_natural": 0.3713,
+      "follow_err_contra": 0.5531,
+      "success_natural": 0.81,
+      "success_contra": 0.08,
+      "steer_slope": 1.0694,
+      "steer_r2": 0.9975,
+      "endpoint_cv_under_sweep": 0.0019,
+      "sweep_alphas": [
+        -2.661,
+        -1.995,
+        -1.33,
+        -0.665,
+        0.0,
+        0.665,
+        1.33,
+        1.995,
+        2.661
+      ],
+      "sweep_produced_bend": [
+        -2.7874,
+        -2.2394,
+        -1.5477,
+        -0.8436,
+        -0.0839,
+        0.7931,
+        1.5024,
+        2.1142,
+        2.6831
+      ],
+      "tax_vs_plain": -0.43
+    },
+    "pin": {
+      "follow_err_natural": 0.6408,
+      "follow_err_contra": 0.8389,
+      "success_natural": 0.59,
+      "success_contra": 0.2,
+      "steer_slope": 0.4773,
+      "steer_r2": 0.9994,
+      "endpoint_cv_under_sweep": 0.0017,
+      "sweep_alphas": [
+        -2.661,
+        -1.995,
+        -1.33,
+        -0.665,
+        0.0,
+        0.665,
+        1.33,
+        1.995,
+        2.661
+      ],
+      "sweep_produced_bend": [
+        -1.2689,
+        -0.9037,
+        -0.5967,
+        -0.2579,
+        0.0411,
+        0.3583,
+        0.6342,
+        0.9736,
+        1.3161
+      ],
+      "tax_vs_plain": -0.21
+    },
+    "csfm": {
+      "follow_err_natural": 0.4417,
+      "follow_err_contra": 0.7022,
+      "success_natural": 0.71,
+      "success_contra": 0.14,
+      "steer_slope": 1.1205,
+      "steer_r2": 0.9898,
+      "endpoint_cv_under_sweep": 0.0068,
+      "sweep_alphas": [
+        -2.661,
+        -1.995,
+        -1.33,
+        -0.665,
+        0.0,
+        0.665,
+        1.33,
+        1.995,
+        2.661
+      ],
+      "sweep_produced_bend": [
+        -2.86,
+        -2.3647,
+        -1.7039,
+        -1.0376,
+        -0.0943,
+        1.028,
+        1.6761,
+        2.193,
+        2.6955
+      ],
+      "tax_vs_plain": -0.33
+    }
+  },
+  "verdict": {
+    "baseline_success": 0.38,
+    "note": "steerability = follow_err_contra (lower=obeys contradictory command) + steer_slope~1/r2~1; tax = success drop vs plain when commanding the scene's own bend; interpretability = steer_slope near 1, high r2, low endpoint_cv (one knob moves bend only). Hypothesis: csfm ~ pin on follow, but lower tax + cleaner sweep."
+  }
+}

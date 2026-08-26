@@ -1,0 +1,45 @@
+Arm B conditioning hook for openpi scripts/train_pytorch.py.
+APPLY ORDER: requires openpi_arm_c_training.patch applied first.
+Enable with SNMVP_COND_STATS=/path/to/invariant_stats.json; inert when unset.
+
+--- a/scripts/train_pytorch.py
++++ b/scripts/train_pytorch.py
+@@ -51,6 +51,21 @@
+ _SNMVP_NDIMS = int(os.environ.get("SNMVP_PINNED_DIMS", "0"))
+ _SNMVP_PINNED = list(range(_SNMVP_NDIMS)) if _SNMVP_NDIMS > 0 else None
+ 
++# --- snmvp: branch-carried invariant conditioning (arm B/D). Enable by setting
++# SNMVP_COND_STATS to the dataset's invariant_stats.json (see
++# source-noise-mvp/scripts/compute_invariant_stats.py). Inert when unset. ---
++try:
++    from snmvp.conditioning import inject_invariant_state as _snmvp_inject
++    from snmvp.conditioning import load_invariant_stats as _snmvp_load_stats
++except ImportError:
++    _snmvp_inject = None
++_SNMVP_COND_DIMS = int(os.environ.get("SNMVP_COND_DIMS", "7"))
++_SNMVP_COND_STATS = (
++    _snmvp_load_stats(os.environ["SNMVP_COND_STATS"])
++    if _snmvp_inject is not None and os.environ.get("SNMVP_COND_STATS")
++    else None
++)
++
+ import wandb
+ 
+ import openpi.models.pi0_config
+@@ -539,6 +554,16 @@
+                 pg["lr"] = lr_schedule(global_step)
+ 
+             # Forward pass
++            if _SNMVP_COND_STATS is not None:
++                # snmvp arm B/D: the same chunk invariant, branch-carried —
++                # z-normalized and written into trailing (padding) proprio
++                # state dims, so the action expert receives it as a
++                # conditioning input with zero parameter-count change.
++                _snmvp_inject(
++                    observation.state,
++                    _snmvp_extract(actions)[:, :_SNMVP_COND_DIMS],
++                    *_SNMVP_COND_STATS,
++                )
+             if _SnmvpSC is not None and _SNMVP_ALPHA > 0:
+                 # snmvp arm C: pin the chunk invariant L(a) = sum_t a_t into the
+                 # source noise; the flow target u_t = noise - actions then

@@ -1,0 +1,46 @@
+{
+  "config": {
+    "SET_A": [
+      "sim1",
+      "sim2",
+      "sim3"
+    ],
+    "HELD": [
+      "real"
+    ],
+    "K": 12,
+    "L": 6,
+    "ITERS": 9000,
+    "cinv_ACH": 0.109,
+    "realization_gap_PLAN": 0.541
+  },
+  "ceilings": {
+    "sim1": 0.771,
+    "sim2": 0.676,
+    "sim3": 0.573,
+    "real": 0.789
+  },
+  "pooled": {
+    "n10": {
+      "S": 0.283,
+      "ACH": 0.692,
+      "PLAN": 0.167,
+      "DECONV": 1.0,
+      "fir_err": 0.391
+    },
+    "n25": {
+      "S": 0.35,
+      "ACH": 0.742,
+      "PLAN": 0.175,
+      "DECONV": 1.0,
+      "fir_err": 0.389
+    },
+    "n50": {
+      "S": 0.308,
+      "ACH": 0.7,
+      "PLAN": 0.375,
+      "DECONV": 1.0,
+      "fir_err": 0.389
+    }
+  }
+}

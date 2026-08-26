@@ -1,0 +1,60 @@
+{
+ "ckpt": "/home/ubuntu/code/openpi/checkpoints/pi0_gate/gate_synth_pin/4999",
+ "U": "/home/ubuntu/code/source-noise-mvp/experiments/rung3/pin_U_gate_k5.npy",
+ "suites": {
+  "goal(lang)": {
+   "no_pin": {
+    "subspace_r2": -0.41917094940267674,
+    "full_r2": -0.3117103174648608,
+    "n": 60
+   },
+   "state": {
+    "subspace_r2": -0.6833304968808094,
+    "full_r2": -0.36566311132647233,
+    "n": 60
+   },
+   "state_lang": {
+    "subspace_r2": -0.2474341950974337,
+    "full_r2": -0.21698333207093645,
+    "n": 60
+   },
+   "mlp": {
+    "subspace_r2": 0.43505883587866157,
+    "full_r2": -0.018160883199781708,
+    "n": 60
+   },
+   "oracle": {
+    "subspace_r2": 0.831705422899821,
+    "full_r2": 0.1336858525082194,
+    "n": 60
+   }
+  },
+  "object(state)": {
+   "no_pin": {
+    "subspace_r2": 1.0,
+    "full_r2": 1.0,
+    "n": 0
+   },
+   "state": {
+    "subspace_r2": 1.0,
+    "full_r2": 1.0,
+    "n": 0
+   },
+   "state_lang": {
+    "subspace_r2": 1.0,
+    "full_r2": 1.0,
+    "n": 0
+   },
+   "mlp": {
+    "subspace_r2": 1.0,
+    "full_r2": 1.0,
+    "n": 0
+   },
+   "oracle": {
+    "subspace_r2": 1.0,
+    "full_r2": 1.0,
+    "n": 0
+   }
+  }
+ }
+}

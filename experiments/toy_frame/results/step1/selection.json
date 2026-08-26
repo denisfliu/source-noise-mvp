@@ -1,0 +1,123 @@
+{
+  "thetas_deg_step": 2.0,
+  "n_scenes": 200,
+  "n_demos": 8,
+  "g1_pass": true,
+  "axis_err_deg_per_strong_bin": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 2.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0
+  },
+  "selected": [
+    {
+      "axis_deg": 0.0,
+      "omega": 0,
+      "mode": "mod2pi",
+      "gamma": 1.0
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 0,
+      "mode": "mod2pi",
+      "gamma": 0.975
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 1,
+      "mode": "mod2pi",
+      "gamma": 0.95
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 1,
+      "mode": "mod2pi",
+      "gamma": 0.796
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 2,
+      "mode": "mod2pi",
+      "gamma": 0.942
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 2,
+      "mode": "mod2pi",
+      "gamma": 0.706
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 3,
+      "mode": "mod2pi",
+      "gamma": 0.752
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 4,
+      "mode": "modpi",
+      "gamma2": 0.79
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 5,
+      "mode": "modpi",
+      "gamma2": 0.98
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 6,
+      "mode": "modpi",
+      "gamma2": 0.992
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 7,
+      "mode": "modpi",
+      "gamma2": 0.995
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 7,
+      "mode": "mod2pi",
+      "gamma": 0.668
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 8,
+      "mode": "modpi",
+      "gamma2": 0.997
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 8,
+      "mode": "mod2pi",
+      "gamma": 0.712
+    },
+    {
+      "axis_deg": 0.0,
+      "omega": 9,
+      "mode": "modpi",
+      "gamma2": 0.999
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 9,
+      "mode": "mod2pi",
+      "gamma": 0.735
+    },
+    {
+      "axis_deg": 90.0,
+      "omega": 10,
+      "mode": "mod2pi",
+      "gamma": 0.735
+    }
+  ]
+}

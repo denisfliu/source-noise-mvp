@@ -1,0 +1,94 @@
+{
+  "corr": {
+    "0": {
+      "radius(endpoint)": -0.05,
+      "lateral(side)": -0.97,
+      "bank_angle": 1.0,
+      "obst_r": -0.06
+    },
+    "1": {
+      "radius(endpoint)": 0.04,
+      "lateral(side)": 0.97,
+      "bank_angle": -1.0,
+      "obst_r": 0.05
+    },
+    "2": {
+      "radius(endpoint)": 0.02,
+      "lateral(side)": 0.97,
+      "bank_angle": -1.0,
+      "obst_r": 0.05
+    },
+    "3": {
+      "radius(endpoint)": 0.05,
+      "lateral(side)": 0.97,
+      "bank_angle": -1.0,
+      "obst_r": 0.04
+    },
+    "4": {
+      "radius(endpoint)": -0.06,
+      "lateral(side)": -0.97,
+      "bank_angle": 1.0,
+      "obst_r": -0.06
+    },
+    "5": {
+      "radius(endpoint)": -0.04,
+      "lateral(side)": -0.96,
+      "bank_angle": 0.98,
+      "obst_r": -0.05
+    },
+    "6": {
+      "radius(endpoint)": -0.24,
+      "lateral(side)": -0.94,
+      "bank_angle": 0.97,
+      "obst_r": -0.09
+    },
+    "7": {
+      "radius(endpoint)": -0.08,
+      "lateral(side)": -0.94,
+      "bank_angle": 0.98,
+      "obst_r": -0.06
+    },
+    "8": {
+      "radius(endpoint)": 0.05,
+      "lateral(side)": 0.95,
+      "bank_angle": -0.97,
+      "obst_r": 0.08
+    },
+    "9": {
+      "radius(endpoint)": 0.07,
+      "lateral(side)": 0.92,
+      "bank_angle": -0.95,
+      "obst_r": 0.07
+    }
+  },
+  "side_k": 0,
+  "end_k": 6,
+  "passthrough_slope": 1.0,
+  "passthrough_resid": 2.158,
+  "command_range": 36.67,
+  "detour_slope": -0.0053,
+  "bank_slope": -0.0293,
+  "detour_flips_sign": true,
+  "detours": [
+    0.093,
+    0.07,
+    0.05,
+    0.029,
+    -0.004,
+    -0.034,
+    -0.054,
+    -0.075,
+    -0.095
+  ],
+  "banks": [
+    0.537,
+    0.402,
+    0.268,
+    0.134,
+    -0.0,
+    -0.134,
+    -0.269,
+    -0.403,
+    -0.537
+  ]
+}

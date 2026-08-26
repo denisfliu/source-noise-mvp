@@ -1,0 +1,287 @@
+{
+  "rows": [
+    {
+      "B": "point",
+      "seed": 0,
+      "n": 5,
+      "T": 0.4025,
+      "Toracle": 0.4713,
+      "S": 0.2188,
+      "Cond": 0.2375,
+      "Trand": 0.2425
+    },
+    {
+      "B": "point",
+      "seed": 0,
+      "n": 10,
+      "T": 0.6587,
+      "Toracle": 0.7925,
+      "S": 0.4487,
+      "Cond": 0.5062,
+      "Trand": 0.4375
+    },
+    {
+      "B": "point",
+      "seed": 0,
+      "n": 25,
+      "T": 0.6625,
+      "Toracle": 0.7738,
+      "S": 0.4825,
+      "Cond": 0.6913,
+      "Trand": 0.4288
+    },
+    {
+      "B": "point",
+      "seed": 0,
+      "n": 50,
+      "T": 0.6737,
+      "Toracle": 0.8013,
+      "S": 0.52,
+      "Cond": 0.6613,
+      "Trand": 0.4437
+    },
+    {
+      "B": "point",
+      "seed": 1,
+      "n": 5,
+      "T": 0.2225,
+      "Toracle": 0.2313,
+      "S": 0.1525,
+      "Cond": 0.19,
+      "Trand": 0.2238
+    },
+    {
+      "B": "point",
+      "seed": 1,
+      "n": 10,
+      "T": 0.5687,
+      "Toracle": 0.6262,
+      "S": 0.46,
+      "Cond": 0.41,
+      "Trand": 0.445
+    },
+    {
+      "B": "point",
+      "seed": 1,
+      "n": 25,
+      "T": 0.6562,
+      "Toracle": 0.7462,
+      "S": 0.495,
+      "Cond": 0.655,
+      "Trand": 0.4612
+    },
+    {
+      "B": "point",
+      "seed": 1,
+      "n": 50,
+      "T": 0.6625,
+      "Toracle": 0.8013,
+      "S": 0.4963,
+      "Cond": 0.6525,
+      "Trand": 0.48
+    },
+    {
+      "B": "point",
+      "seed": 2,
+      "n": 5,
+      "T": 0.13,
+      "Toracle": 0.1625,
+      "S": 0.3362,
+      "Cond": 0.4575,
+      "Trand": 0.3125
+    },
+    {
+      "B": "point",
+      "seed": 2,
+      "n": 10,
+      "T": 0.7137,
+      "Toracle": 0.82,
+      "S": 0.5175,
+      "Cond": 0.5913,
+      "Trand": 0.505
+    },
+    {
+      "B": "point",
+      "seed": 2,
+      "n": 25,
+      "T": 0.7063,
+      "Toracle": 0.8462,
+      "S": 0.5225,
+      "Cond": 0.7375,
+      "Trand": 0.4863
+    },
+    {
+      "B": "point",
+      "seed": 2,
+      "n": 50,
+      "T": 0.6963,
+      "Toracle": 0.84,
+      "S": 0.5025,
+      "Cond": 0.6775,
+      "Trand": 0.4537
+    },
+    {
+      "B": "arm4",
+      "seed": 0,
+      "n": 5,
+      "T": 0.2737,
+      "Toracle": 0.3137,
+      "S": 0.1638,
+      "Cond": 0.1338,
+      "Trand": 0.1825
+    },
+    {
+      "B": "arm4",
+      "seed": 0,
+      "n": 10,
+      "T": 0.4825,
+      "Toracle": 0.53,
+      "S": 0.3875,
+      "Cond": 0.3975,
+      "Trand": 0.3025
+    },
+    {
+      "B": "arm4",
+      "seed": 0,
+      "n": 25,
+      "T": 0.6613,
+      "Toracle": 0.7388,
+      "S": 0.4375,
+      "Cond": 0.6238,
+      "Trand": 0.395
+    },
+    {
+      "B": "arm4",
+      "seed": 0,
+      "n": 50,
+      "T": 0.665,
+      "Toracle": 0.7688,
+      "S": 0.4612,
+      "Cond": 0.6412,
+      "Trand": 0.435
+    },
+    {
+      "B": "arm4",
+      "seed": 1,
+      "n": 5,
+      "T": 0.2025,
+      "Toracle": 0.2175,
+      "S": 0.1988,
+      "Cond": 0.1663,
+      "Trand": 0.16
+    },
+    {
+      "B": "arm4",
+      "seed": 1,
+      "n": 10,
+      "T": 0.5825,
+      "Toracle": 0.6288,
+      "S": 0.4387,
+      "Cond": 0.37,
+      "Trand": 0.435
+    },
+    {
+      "B": "arm4",
+      "seed": 1,
+      "n": 25,
+      "T": 0.6525,
+      "Toracle": 0.7275,
+      "S": 0.4475,
+      "Cond": 0.585,
+      "Trand": 0.4387
+    },
+    {
+      "B": "arm4",
+      "seed": 1,
+      "n": 50,
+      "T": 0.6575,
+      "Toracle": 0.7712,
+      "S": 0.4925,
+      "Cond": 0.6388,
+      "Trand": 0.4462
+    },
+    {
+      "B": "arm4",
+      "seed": 2,
+      "n": 5,
+      "T": 0.095,
+      "Toracle": 0.1375,
+      "S": 0.29,
+      "Cond": 0.3,
+      "Trand": 0.2812
+    },
+    {
+      "B": "arm4",
+      "seed": 2,
+      "n": 10,
+      "T": 0.6837,
+      "Toracle": 0.7863,
+      "S": 0.5012,
+      "Cond": 0.6162,
+      "Trand": 0.4587
+    },
+    {
+      "B": "arm4",
+      "seed": 2,
+      "n": 25,
+      "T": 0.7238,
+      "Toracle": 0.855,
+      "S": 0.4875,
+      "Cond": 0.6763,
+      "Trand": 0.5012
+    },
+    {
+      "B": "arm4",
+      "seed": 2,
+      "n": 50,
+      "T": 0.665,
+      "Toracle": 0.7987,
+      "S": 0.4763,
+      "Cond": 0.6488,
+      "Trand": 0.4363
+    }
+  ],
+  "coherence_c": {
+    "point": 0.893,
+    "arm4": 0.933
+  },
+  "n_pins": 8,
+  "verdict": {
+    "G_transfer_pass": true,
+    "per_body_lown": {
+      "point": {
+        "T": 0.449,
+        "S": 0.356,
+        "Cond": 0.399,
+        "Trand": 0.361,
+        "T_gt_S": true,
+        "T_gt_Cond": true,
+        "T_gt_Trand": true,
+        "gain_T_minus_S": 0.094
+      },
+      "arm4": {
+        "T": 0.387,
+        "S": 0.33,
+        "Cond": 0.331,
+        "Trand": 0.303,
+        "T_gt_S": true,
+        "T_gt_Cond": true,
+        "T_gt_Trand": true,
+        "gain_T_minus_S": 0.057
+      }
+    },
+    "coherence_c": {
+      "point": 0.893,
+      "arm4": 0.933
+    },
+    "gain_order": [
+      "arm4",
+      "point"
+    ],
+    "coherence_order": [
+      "point",
+      "arm4"
+    ],
+    "G_predict_note": "compare gain_order vs coherence_order by hand; n=2 bodies is directional only"
+  }
+}

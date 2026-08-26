@@ -1,0 +1,79 @@
+{
+  "task_suite": "libero_spatial",
+  "seed": 424242,
+  "n_states_per_task": 10,
+  "date_utc": "2026-07-04",
+  "note": "fresh BDDL placement samples; canonical init states are in-distribution for the demos and are NOT held-out",
+  "tasks": [
+    {
+      "task_id": 0,
+      "language": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "file": "task00.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.018741880726564464
+    },
+    {
+      "task_id": 1,
+      "language": "pick up the black bowl next to the ramekin and place it on the plate",
+      "file": "task01.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.014853626561344146
+    },
+    {
+      "task_id": 2,
+      "language": "pick up the black bowl from table center and place it on the plate",
+      "file": "task02.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.01736772343066484
+    },
+    {
+      "task_id": 3,
+      "language": "pick up the black bowl on the cookie box and place it on the plate",
+      "file": "task03.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.016415791356339998
+    },
+    {
+      "task_id": 4,
+      "language": "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate",
+      "file": "task04.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.01846684262988521
+    },
+    {
+      "task_id": 5,
+      "language": "pick up the black bowl on the ramekin and place it on the plate",
+      "file": "task05.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.01392932735457624
+    },
+    {
+      "task_id": 6,
+      "language": "pick up the black bowl next to the cookie box and place it on the plate",
+      "file": "task06.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.01699403837493369
+    },
+    {
+      "task_id": 7,
+      "language": "pick up the black bowl on the stove and place it on the plate",
+      "file": "task07.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.020737429211361902
+    },
+    {
+      "task_id": 8,
+      "language": "pick up the black bowl next to the plate and place it on the plate",
+      "file": "task08.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.01674301485017234
+    },
+    {
+      "task_id": 9,
+      "language": "pick up the black bowl on the wooden cabinet and place it on the plate",
+      "file": "task09.npy",
+      "state_dim": 92,
+      "min_linf_dist_to_canonical": 0.02195998306948388
+    }
+  ]
+}

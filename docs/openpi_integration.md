@@ -55,6 +55,19 @@ dims of your robot — worth doing before any headline run.
   extra input token (proprio-style) instead of into the noise. Keep tokenizer
   changes minimal so parameter counts stay comparable.
 
+  Implemented (2026-07-04) in `patches/openpi_arm_b_conditioning.patch`
+  (applies ON TOP of the arm C patch): the z-normalized invariant is written
+  into the trailing 7 dims of the 32-dim padded proprio state (LIBERO uses
+  only the leading 8, so those dims are constant zero otherwise). The state
+  token feeds the action expert through the existing `state_proj` linear —
+  parameter count is EXACTLY unchanged, which is the fairest B-vs-C
+  comparison available. Enabled by `SNMVP_COND_STATS=/path/to/
+  invariant_stats.json` (generate with `scripts/compute_invariant_stats.py`;
+  stats must come from the same data subset the run trains on); inert when
+  unset. Arm D = `SNMVP_COND_STATS=... SNMVP_PIN_ALPHA=1.0`. Eval-side, apply
+  `snmvp.conditioning.inject_invariant_state` to the normalized state with
+  the SAME stats file before `sample_actions`/`policy.infer`.
+
 ## Blackwell notes
 
 - openpi's pinned torch may predate Blackwell (sm_100/sm_120). Check

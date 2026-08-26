@@ -1,0 +1,613 @@
+Map:   0%|          | 0/236 [00:00<?, ? examples/s]Map: 100%|██████████| 236/236 [00:00<00:00, 1764.90 examples/s]Map: 100%|██████████| 236/236 [00:00<00:00, 1747.59 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 300.26ba/s]
+Map:   0%|          | 0/251 [00:00<?, ? examples/s]Map: 100%|██████████| 251/251 [00:00<00:00, 1922.65 examples/s]Map: 100%|██████████| 251/251 [00:00<00:00, 1901.96 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 337.33ba/s]
+Map:   0%|          | 0/208 [00:00<?, ? examples/s]Map: 100%|██████████| 208/208 [00:00<00:00, 1900.00 examples/s]Map: 100%|██████████| 208/208 [00:00<00:00, 1886.01 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 390.52ba/s]
+Map:   0%|          | 0/244 [00:00<?, ? examples/s]Map: 100%|██████████| 244/244 [00:00<00:00, 2057.29 examples/s]Map: 100%|██████████| 244/244 [00:00<00:00, 2044.48 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 333.09ba/s]
+Map:   0%|          | 0/245 [00:00<?, ? examples/s]Map: 100%|██████████| 245/245 [00:00<00:00, 2110.69 examples/s]Map: 100%|██████████| 245/245 [00:00<00:00, 2097.41 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 346.87ba/s]
+Map:   0%|          | 0/186 [00:00<?, ? examples/s]Map: 100%|██████████| 186/186 [00:00<00:00, 1991.25 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 152.53ba/s]
+Map:   0%|          | 0/200 [00:00<?, ? examples/s]Map: 100%|██████████| 200/200 [00:00<00:00, 2035.47 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 136.30ba/s]
+Map:   0%|          | 0/215 [00:00<?, ? examples/s]Map: 100%|██████████| 215/215 [00:00<00:00, 2048.90 examples/s]Map: 100%|██████████| 215/215 [00:00<00:00, 2034.86 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 224.67ba/s]
+Map:   0%|          | 0/198 [00:00<?, ? examples/s]Map: 100%|██████████| 198/198 [00:00<00:00, 2028.33 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 172.05ba/s]
+Map:   0%|          | 0/250 [00:00<?, ? examples/s]Map: 100%|██████████| 250/250 [00:00<00:00, 2087.30 examples/s]Map: 100%|██████████| 250/250 [00:00<00:00, 2074.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 318.31ba/s]
+Map:   0%|          | 0/298 [00:00<?, ? examples/s]Map:  94%|█████████▍| 281/298 [00:00<00:00, 2795.29 examples/s]Map: 100%|██████████| 298/298 [00:00<00:00, 2076.61 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 298.98ba/s]
+Map:   0%|          | 0/222 [00:00<?, ? examples/s]Map: 100%|██████████| 222/222 [00:00<00:00, 2062.22 examples/s]Map: 100%|██████████| 222/222 [00:00<00:00, 2048.30 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 367.35ba/s]
+Map:   0%|          | 0/209 [00:00<?, ? examples/s]Map: 100%|██████████| 209/209 [00:00<00:00, 2061.48 examples/s]Map: 100%|██████████| 209/209 [00:00<00:00, 2044.78 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 384.09ba/s]
+Map:   0%|          | 0/236 [00:00<?, ? examples/s]Map: 100%|██████████| 236/236 [00:00<00:00, 2079.16 examples/s]Map: 100%|██████████| 236/236 [00:00<00:00, 2064.63 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 364.14ba/s]
+Map:   0%|          | 0/180 [00:00<?, ? examples/s]Map: 100%|██████████| 180/180 [00:00<00:00, 2182.52 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 361.56ba/s]
+Map:   0%|          | 0/346 [00:00<?, ? examples/s]Map:  80%|████████  | 277/346 [00:00<00:00, 2757.71 examples/s]Map: 100%|██████████| 346/346 [00:00<00:00, 1980.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 199.29ba/s]
+Map:   0%|          | 0/180 [00:00<?, ? examples/s]Map: 100%|██████████| 180/180 [00:00<00:00, 1962.04 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 180.21ba/s]
+Map:   0%|          | 0/255 [00:00<?, ? examples/s]Map: 100%|██████████| 255/255 [00:00<00:00, 2052.74 examples/s]Map: 100%|██████████| 255/255 [00:00<00:00, 2039.99 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 205.45ba/s]
+Map:   0%|          | 0/411 [00:00<?, ? examples/s]Map:  65%|██████▌   | 269/411 [00:00<00:00, 2667.87 examples/s]Map: 100%|██████████| 411/411 [00:00<00:00, 1874.06 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/5 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 5/5 [00:00<00:00, 223.50ba/s]
+Map:   0%|          | 0/203 [00:00<?, ? examples/s]Map: 100%|██████████| 203/203 [00:00<00:00, 2047.60 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 256.55ba/s]
+Map:   0%|          | 0/180 [00:00<?, ? examples/s]Map: 100%|██████████| 180/180 [00:00<00:00, 2182.85 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 191.24ba/s]
+Map:   0%|          | 0/258 [00:00<?, ? examples/s]Map: 100%|██████████| 258/258 [00:00<00:00, 2078.56 examples/s]Map: 100%|██████████| 258/258 [00:00<00:00, 2065.68 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 199.32ba/s]
+Map:   0%|          | 0/303 [00:00<?, ? examples/s]Map:  90%|█████████ | 274/303 [00:00<00:00, 2721.06 examples/s]Map: 100%|██████████| 303/303 [00:00<00:00, 2056.25 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 232.34ba/s]
+Map:   0%|          | 0/278 [00:00<?, ? examples/s]Map:  97%|█████████▋| 271/278 [00:00<00:00, 2691.13 examples/s]Map: 100%|██████████| 278/278 [00:00<00:00, 1890.62 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 185.79ba/s]
+Map:   0%|          | 0/346 [00:00<?, ? examples/s]Map:  77%|███████▋  | 266/346 [00:00<00:00, 2643.13 examples/s]Map: 100%|██████████| 346/346 [00:00<00:00, 1860.36 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 202.14ba/s]
+...25/300 episodes
+Map:   0%|          | 0/219 [00:00<?, ? examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 1987.56 examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 1971.80 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 201.06ba/s]
+Map:   0%|          | 0/283 [00:00<?, ? examples/s]Map:  96%|█████████▋| 273/283 [00:00<00:00, 2718.54 examples/s]Map: 100%|██████████| 283/283 [00:00<00:00, 2047.12 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 182.56ba/s]
+Map:   0%|          | 0/255 [00:00<?, ? examples/s]Map:  93%|█████████▎| 236/255 [00:00<00:00, 2338.86 examples/s]Map: 100%|██████████| 255/255 [00:00<00:00, 1693.66 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 185.53ba/s]
+Map:   0%|          | 0/266 [00:00<?, ? examples/s]Map: 100%|█████████▉| 265/266 [00:00<00:00, 2636.00 examples/s]Map: 100%|██████████| 266/266 [00:00<00:00, 2004.95 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 202.97ba/s]
+Map:   0%|          | 0/283 [00:00<?, ? examples/s]Map:  96%|█████████▋| 273/283 [00:00<00:00, 2707.88 examples/s]Map: 100%|██████████| 283/283 [00:00<00:00, 2037.99 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 193.13ba/s]
+Map:   0%|          | 0/194 [00:00<?, ? examples/s]Map: 100%|██████████| 194/194 [00:00<00:00, 1958.23 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 160.34ba/s]
+Map:   0%|          | 0/386 [00:00<?, ? examples/s]Map:  71%|███████   | 273/386 [00:00<00:00, 2712.37 examples/s]Map: 100%|██████████| 386/386 [00:00<00:00, 1875.29 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 180.93ba/s]
+Map:   0%|          | 0/155 [00:00<?, ? examples/s]Map: 100%|██████████| 155/155 [00:00<00:00, 2066.93 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 207.01ba/s]
+Map:   0%|          | 0/267 [00:00<?, ? examples/s]Map: 100%|██████████| 267/267 [00:00<00:00, 2082.12 examples/s]Map: 100%|██████████| 267/267 [00:00<00:00, 2068.46 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 185.90ba/s]
+Map:   0%|          | 0/204 [00:00<?, ? examples/s]Map: 100%|██████████| 204/204 [00:00<00:00, 2011.11 examples/s]Map: 100%|██████████| 204/204 [00:00<00:00, 1995.90 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 231.33ba/s]
+Map:   0%|          | 0/232 [00:00<?, ? examples/s]Map: 100%|██████████| 232/232 [00:00<00:00, 2042.97 examples/s]Map: 100%|██████████| 232/232 [00:00<00:00, 2029.45 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 200.03ba/s]
+Map:   0%|          | 0/256 [00:00<?, ? examples/s]Map: 100%|██████████| 256/256 [00:00<00:00, 2042.97 examples/s]Map: 100%|██████████| 256/256 [00:00<00:00, 2029.77 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 199.94ba/s]
+Map:   0%|          | 0/192 [00:00<?, ? examples/s]Map: 100%|██████████| 192/192 [00:00<00:00, 2041.23 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 202.87ba/s]
+Map:   0%|          | 0/251 [00:00<?, ? examples/s]Map: 100%|██████████| 251/251 [00:00<00:00, 2078.84 examples/s]Map: 100%|██████████| 251/251 [00:00<00:00, 2064.17 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 209.04ba/s]
+Map:   0%|          | 0/209 [00:00<?, ? examples/s]Map: 100%|██████████| 209/209 [00:00<00:00, 2050.15 examples/s]Map: 100%|██████████| 209/209 [00:00<00:00, 2035.92 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 238.06ba/s]
+Map:   0%|          | 0/204 [00:00<?, ? examples/s]Map: 100%|██████████| 204/204 [00:00<00:00, 2039.61 examples/s]Map: 100%|██████████| 204/204 [00:00<00:00, 2024.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 220.01ba/s]
+Map:   0%|          | 0/249 [00:00<?, ? examples/s]Map: 100%|██████████| 249/249 [00:00<00:00, 2047.90 examples/s]Map: 100%|██████████| 249/249 [00:00<00:00, 2035.06 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 195.72ba/s]
+Map:   0%|          | 0/167 [00:00<?, ? examples/s]Map: 100%|██████████| 167/167 [00:00<00:00, 2135.79 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 180.96ba/s]
+Map:   0%|          | 0/210 [00:00<?, ? examples/s]Map: 100%|██████████| 210/210 [00:00<00:00, 1877.40 examples/s]Map: 100%|██████████| 210/210 [00:00<00:00, 1864.87 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 233.74ba/s]
+Map:   0%|          | 0/219 [00:00<?, ? examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 2036.16 examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 2019.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 221.32ba/s]
+Map:   0%|          | 0/179 [00:00<?, ? examples/s]Map: 100%|██████████| 179/179 [00:00<00:00, 2163.33 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 170.82ba/s]
+Map:   0%|          | 0/204 [00:00<?, ? examples/s]Map: 100%|██████████| 204/204 [00:00<00:00, 2019.70 examples/s]Map: 100%|██████████| 204/204 [00:00<00:00, 2005.24 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 279.83ba/s]
+Map:   0%|          | 0/203 [00:00<?, ? examples/s]Map: 100%|██████████| 203/203 [00:00<00:00, 2022.46 examples/s]Map: 100%|██████████| 203/203 [00:00<00:00, 2007.12 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 247.77ba/s]
+Map:   0%|          | 0/228 [00:00<?, ? examples/s]Map:  97%|█████████▋| 221/228 [00:00<00:00, 1393.27 examples/s]Map: 100%|██████████| 228/228 [00:00<00:00, 1199.89 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 225.06ba/s]
+Map:   0%|          | 0/202 [00:00<?, ? examples/s]Map: 100%|██████████| 202/202 [00:00<00:00, 1999.16 examples/s]Map: 100%|██████████| 202/202 [00:00<00:00, 1984.68 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 245.71ba/s]
+...50/300 episodes
+Map:   0%|          | 0/287 [00:00<?, ? examples/s]Map:  94%|█████████▍| 270/287 [00:00<00:00, 2690.18 examples/s]Map: 100%|██████████| 287/287 [00:00<00:00, 1954.29 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 247.65ba/s]
+Map:   0%|          | 0/405 [00:00<?, ? examples/s]Map:  67%|██████▋   | 273/405 [00:00<00:00, 2708.19 examples/s]Map: 100%|██████████| 405/405 [00:00<00:00, 1858.21 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/5 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 5/5 [00:00<00:00, 284.27ba/s]
+Map:   0%|          | 0/365 [00:00<?, ? examples/s]Map:  75%|███████▌  | 275/365 [00:00<00:00, 2724.71 examples/s]Map: 100%|██████████| 365/365 [00:00<00:00, 1858.35 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 260.33ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  80%|████████  | 242/301 [00:00<00:00, 2408.47 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1894.35 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 306.84ba/s]
+Map:   0%|          | 0/462 [00:00<?, ? examples/s]Map:  59%|█████▊    | 271/462 [00:00<00:00, 2694.65 examples/s]Map: 100%|██████████| 462/462 [00:00<00:00, 1871.20 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/5 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 5/5 [00:00<00:00, 241.10ba/s]
+Map:   0%|          | 0/353 [00:00<?, ? examples/s]Map:  76%|███████▌  | 267/353 [00:00<00:00, 2658.33 examples/s]Map: 100%|██████████| 353/353 [00:00<00:00, 1790.37 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 253.07ba/s]
+Map:   0%|          | 0/290 [00:00<?, ? examples/s]Map:  87%|████████▋ | 252/290 [00:00<00:00, 2500.05 examples/s]Map: 100%|██████████| 290/290 [00:00<00:00, 1936.33 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 245.69ba/s]
+Map:   0%|          | 0/208 [00:00<?, ? examples/s]Map: 100%|██████████| 208/208 [00:00<00:00, 2028.67 examples/s]Map: 100%|██████████| 208/208 [00:00<00:00, 2013.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 294.61ba/s]
+Map:   0%|          | 0/340 [00:00<?, ? examples/s]Map:  79%|███████▉  | 269/340 [00:00<00:00, 2675.58 examples/s]Map: 100%|██████████| 340/340 [00:00<00:00, 1968.37 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 279.63ba/s]
+Map:   0%|          | 0/221 [00:00<?, ? examples/s]Map: 100%|██████████| 221/221 [00:00<00:00, 2040.20 examples/s]Map: 100%|██████████| 221/221 [00:00<00:00, 2026.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 298.70ba/s]
+Map:   0%|          | 0/303 [00:00<?, ? examples/s]Map:  90%|█████████ | 273/303 [00:00<00:00, 2711.38 examples/s]Map: 100%|██████████| 303/303 [00:00<00:00, 2058.98 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 298.69ba/s]
+Map:   0%|          | 0/183 [00:00<?, ? examples/s]Map: 100%|██████████| 183/183 [00:00<00:00, 1971.87 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 242.37ba/s]
+Map:   0%|          | 0/246 [00:00<?, ? examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2038.14 examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2025.35 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 285.16ba/s]
+Map:   0%|          | 0/193 [00:00<?, ? examples/s]Map: 100%|██████████| 193/193 [00:00<00:00, 2019.03 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 235.09ba/s]
+Map:   0%|          | 0/263 [00:00<?, ? examples/s]Map: 100%|██████████| 263/263 [00:00<00:00, 2077.76 examples/s]Map: 100%|██████████| 263/263 [00:00<00:00, 2064.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 275.20ba/s]
+Map:   0%|          | 0/274 [00:00<?, ? examples/s]Map: 100%|██████████| 274/274 [00:00<00:00, 2080.09 examples/s]Map: 100%|██████████| 274/274 [00:00<00:00, 2067.85 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 259.93ba/s]
+Map:   0%|          | 0/257 [00:00<?, ? examples/s]Map: 100%|██████████| 257/257 [00:00<00:00, 2070.21 examples/s]Map: 100%|██████████| 257/257 [00:00<00:00, 2057.49 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 270.65ba/s]
+Map:   0%|          | 0/279 [00:00<?, ? examples/s]Map:  99%|█████████▊| 275/279 [00:00<00:00, 2731.53 examples/s]Map: 100%|██████████| 279/279 [00:00<00:00, 2057.67 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 260.81ba/s]
+Map:   0%|          | 0/275 [00:00<?, ? examples/s]Map: 100%|██████████| 275/275 [00:00<00:00, 2075.78 examples/s]Map: 100%|██████████| 275/275 [00:00<00:00, 2062.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 249.88ba/s]
+Map:   0%|          | 0/253 [00:00<?, ? examples/s]Map: 100%|██████████| 253/253 [00:00<00:00, 2028.34 examples/s]Map: 100%|██████████| 253/253 [00:00<00:00, 2014.75 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 281.59ba/s]
+Map:   0%|          | 0/219 [00:00<?, ? examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 2042.48 examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 2027.35 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 232.39ba/s]
+Map:   0%|          | 0/316 [00:00<?, ? examples/s]Map:  86%|████████▋ | 273/316 [00:00<00:00, 2717.00 examples/s]Map: 100%|██████████| 316/316 [00:00<00:00, 2068.85 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 224.56ba/s]
+Map:   0%|          | 0/222 [00:00<?, ? examples/s]Map: 100%|██████████| 222/222 [00:00<00:00, 1877.16 examples/s]Map: 100%|██████████| 222/222 [00:00<00:00, 1865.58 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 233.14ba/s]
+Map:   0%|          | 0/274 [00:00<?, ? examples/s]Map:  89%|████████▊ | 243/274 [00:00<00:00, 2417.33 examples/s]Map: 100%|██████████| 274/274 [00:00<00:00, 1853.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 198.25ba/s]
+Map:   0%|          | 0/225 [00:00<?, ? examples/s]Map: 100%|██████████| 225/225 [00:00<00:00, 2034.78 examples/s]Map: 100%|██████████| 225/225 [00:00<00:00, 2021.33 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 220.81ba/s]
+...75/300 episodes
+Map:   0%|          | 0/236 [00:00<?, ? examples/s]Map: 100%|██████████| 236/236 [00:00<00:00, 2035.16 examples/s]Map: 100%|██████████| 236/236 [00:00<00:00, 2022.21 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 212.80ba/s]
+Map:   0%|          | 0/212 [00:00<?, ? examples/s]Map: 100%|██████████| 212/212 [00:00<00:00, 1987.80 examples/s]Map: 100%|██████████| 212/212 [00:00<00:00, 1974.34 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 228.76ba/s]
+Map:   0%|          | 0/278 [00:00<?, ? examples/s]Map:  97%|█████████▋| 271/278 [00:00<00:00, 2686.43 examples/s]Map: 100%|██████████| 278/278 [00:00<00:00, 2033.76 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 187.91ba/s]
+Map:   0%|          | 0/246 [00:00<?, ? examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2009.47 examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 1997.01 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 210.07ba/s]
+Map:   0%|          | 0/219 [00:00<?, ? examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 1963.37 examples/s]Map: 100%|██████████| 219/219 [00:00<00:00, 1948.88 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 235.79ba/s]
+Map:   0%|          | 0/244 [00:00<?, ? examples/s]Map: 100%|██████████| 244/244 [00:00<00:00, 2040.03 examples/s]Map: 100%|██████████| 244/244 [00:00<00:00, 2027.16 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 217.90ba/s]
+Map:   0%|          | 0/305 [00:00<?, ? examples/s]Map:  89%|████████▉ | 271/305 [00:00<00:00, 2688.51 examples/s]Map: 100%|██████████| 305/305 [00:00<00:00, 2047.13 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 328.43ba/s]
+Map:   0%|          | 0/284 [00:00<?, ? examples/s]Map:  97%|█████████▋| 275/284 [00:00<00:00, 2733.21 examples/s]Map: 100%|██████████| 284/284 [00:00<00:00, 2063.30 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 253.04ba/s]
+Map:   0%|          | 0/240 [00:00<?, ? examples/s]Map: 100%|██████████| 240/240 [00:00<00:00, 2042.41 examples/s]Map: 100%|██████████| 240/240 [00:00<00:00, 2028.70 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 296.58ba/s]
+Map:   0%|          | 0/176 [00:00<?, ? examples/s]Map: 100%|██████████| 176/176 [00:00<00:00, 2191.31 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/2 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 2/2 [00:00<00:00, 241.94ba/s]
+Map:   0%|          | 0/279 [00:00<?, ? examples/s]Map:  97%|█████████▋| 271/279 [00:00<00:00, 2694.65 examples/s]Map: 100%|██████████| 279/279 [00:00<00:00, 2040.91 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 257.79ba/s]
+Map:   0%|          | 0/252 [00:00<?, ? examples/s]Map: 100%|██████████| 252/252 [00:00<00:00, 2069.11 examples/s]Map: 100%|██████████| 252/252 [00:00<00:00, 2056.44 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 275.40ba/s]
+Map:   0%|          | 0/259 [00:00<?, ? examples/s]Map: 100%|██████████| 259/259 [00:00<00:00, 2068.47 examples/s]Map: 100%|██████████| 259/259 [00:00<00:00, 2055.96 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 282.13ba/s]
+Map:   0%|          | 0/246 [00:00<?, ? examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2052.41 examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2039.35 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 287.13ba/s]
+Map:   0%|          | 0/249 [00:00<?, ? examples/s]Map: 100%|██████████| 249/249 [00:00<00:00, 2018.19 examples/s]Map: 100%|██████████| 249/249 [00:00<00:00, 2005.90 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 273.67ba/s]
+Map:   0%|          | 0/228 [00:00<?, ? examples/s]Map: 100%|██████████| 228/228 [00:00<00:00, 2057.44 examples/s]Map: 100%|██████████| 228/228 [00:00<00:00, 2042.92 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 282.97ba/s]
+Map:   0%|          | 0/420 [00:00<?, ? examples/s]Map:  63%|██████▎   | 266/420 [00:00<00:00, 2644.19 examples/s]Map: 100%|██████████| 420/420 [00:00<00:00, 1853.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/5 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 5/5 [00:00<00:00, 219.57ba/s]
+Map:   0%|          | 0/260 [00:00<?, ? examples/s]Map: 100%|██████████| 260/260 [00:00<00:00, 2064.03 examples/s]Map: 100%|██████████| 260/260 [00:00<00:00, 2051.32 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 212.93ba/s]
+Map:   0%|          | 0/212 [00:00<?, ? examples/s]Map: 100%|██████████| 212/212 [00:00<00:00, 2025.11 examples/s]Map: 100%|██████████| 212/212 [00:00<00:00, 2011.21 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 251.97ba/s]
+Map:   0%|          | 0/275 [00:00<?, ? examples/s]Map:  99%|█████████▉| 273/275 [00:00<00:00, 2713.42 examples/s]Map: 100%|██████████| 275/275 [00:00<00:00, 2059.76 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 199.81ba/s]
+Map:   0%|          | 0/246 [00:00<?, ? examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2061.35 examples/s]Map: 100%|██████████| 246/246 [00:00<00:00, 2048.36 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 221.15ba/s]
+Map:   0%|          | 0/269 [00:00<?, ? examples/s]Map: 100%|██████████| 269/269 [00:00<00:00, 2076.35 examples/s]Map: 100%|██████████| 269/269 [00:00<00:00, 2064.06 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 211.73ba/s]
+Map:   0%|          | 0/277 [00:00<?, ? examples/s]Map: 100%|██████████| 277/277 [00:00<00:00, 2085.55 examples/s]Map: 100%|██████████| 277/277 [00:00<00:00, 2072.99 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 293.05ba/s]
+Map:   0%|          | 0/322 [00:00<?, ? examples/s]Map:  76%|███████▌  | 245/322 [00:00<00:00, 2435.45 examples/s]Map: 100%|██████████| 322/322 [00:00<00:00, 1921.08 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 354.85ba/s]
+Map:   0%|          | 0/322 [00:00<?, ? examples/s]Map:  82%|████████▏ | 265/322 [00:00<00:00, 2639.46 examples/s]Map: 100%|██████████| 322/322 [00:00<00:00, 2028.11 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 333.97ba/s]
+...100/300 episodes
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  91%|█████████▏| 275/301 [00:00<00:00, 2732.23 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1923.32 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 76.81ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  90%|█████████ | 271/301 [00:00<00:00, 2698.65 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1907.92 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 82.25ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 269/301 [00:00<00:00, 2670.37 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1842.97 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.71ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2602.17 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1862.08 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.12ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2645.80 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1876.82 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.45ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2608.19 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1862.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.49ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2633.96 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1872.78 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.80ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2625.93 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1869.17 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.49ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2650.13 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1881.71 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 83.47ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2643.51 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1880.13 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.63ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2636.88 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1873.50 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.10ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2632.48 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1873.37 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.83ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2616.68 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1869.86 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.68ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2628.86 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1866.85 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.27ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2614.34 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1866.77 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.71ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2618.76 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1824.89 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.16ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2629.64 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1878.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.76ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2642.91 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1878.39 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.62ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2636.45 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1876.63 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.18ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2647.35 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1879.83 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.43ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 269/301 [00:00<00:00, 2666.40 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1890.28 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.91ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▋ | 260/301 [00:00<00:00, 2585.38 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1852.52 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.42ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2621.55 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1867.19 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.97ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2629.83 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1872.81 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.96ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2651.71 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1882.40 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.73ba/s]
+...125/300 episodes
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2616.60 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1869.60 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.89ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2610.19 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1864.04 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.69ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2619.68 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1875.01 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.32ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▋ | 260/301 [00:00<00:00, 2590.24 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1855.41 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.97ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 261/301 [00:00<00:00, 2599.92 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1858.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.98ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2616.65 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1870.42 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.00ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▋ | 260/301 [00:00<00:00, 2578.53 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1849.29 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.81ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2655.18 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1883.88 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.74ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2628.79 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1868.31 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.46ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2628.15 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1870.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.07ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2635.12 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1872.00 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.31ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 268/301 [00:00<00:00, 2670.63 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1885.71 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.76ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2650.13 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1880.46 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.64ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2648.91 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1877.42 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.63ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2625.41 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1868.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.55ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2643.11 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1883.90 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.65ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2636.74 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1873.02 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.44ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2638.71 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1875.40 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.06ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2645.70 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1874.51 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.35ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2633.23 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1873.44 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.35ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2629.40 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1653.47 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.64ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2653.35 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1885.04 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.98ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2616.37 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1866.78 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.74ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2603.19 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1863.15 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.31ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 261/301 [00:00<00:00, 2596.43 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1857.47 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.24ba/s]
+...150/300 episodes
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2600.04 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1857.54 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 83.41ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2617.22 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1868.45 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.59ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2608.49 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1862.22 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.50ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2642.94 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1877.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.18ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2626.42 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1869.49 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.72ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2605.93 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1862.68 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.69ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2621.49 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1869.57 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.41ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2642.11 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1878.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.44ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2633.08 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1868.61 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.07ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 261/301 [00:00<00:00, 2594.94 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1852.87 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.04ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2617.35 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1871.04 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.37ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2639.59 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1875.50 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 83.40ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 261/301 [00:00<00:00, 2587.06 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1847.77 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.45ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2601.19 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1852.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.69ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2619.25 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1862.95 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 85.79ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2617.37 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1864.88 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.45ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▌ | 259/301 [00:00<00:00, 2571.15 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1848.54 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.30ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▋ | 260/301 [00:00<00:00, 2589.76 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1854.57 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 83.06ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 261/301 [00:00<00:00, 2587.55 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1856.08 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.34ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2602.84 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1861.32 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.09ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2601.73 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1860.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.02ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2643.10 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1881.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.51ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2607.86 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1866.60 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.19ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2633.81 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1654.25 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.91ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  90%|████████▉ | 270/301 [00:00<00:00, 2684.25 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1901.06 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.18ba/s]
+...175/300 episodes
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2639.84 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1661.80 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.25ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 268/301 [00:00<00:00, 2667.50 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1676.93 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.06ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 269/301 [00:00<00:00, 2674.66 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1890.25 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.66ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2615.10 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1863.79 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.79ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2658.10 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1886.69 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.79ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2642.16 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1876.75 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.86ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2654.92 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1882.12 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 86.76ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 268/301 [00:00<00:00, 2660.77 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1888.49 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.22ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2624.47 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1867.22 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.96ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 262/301 [00:00<00:00, 2602.76 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1861.78 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.68ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  61%|██████    | 184/301 [00:00<00:00, 1390.17 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1350.80 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 89.31ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2634.66 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1876.79 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.16ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 265/301 [00:00<00:00, 2635.94 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1875.50 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 89.06ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▉ | 269/301 [00:00<00:00, 2671.35 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1894.47 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.47ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2617.16 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1868.27 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.76ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2607.33 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1869.36 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 89.05ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  89%|████████▊ | 267/301 [00:00<00:00, 2657.47 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1891.00 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.01ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 264/301 [00:00<00:00, 2619.93 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1875.22 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 89.25ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▋ | 260/301 [00:00<00:00, 2583.64 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1849.00 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.52ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2643.97 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1881.92 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.34ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2614.78 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1873.80 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 89.12ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▌ | 259/301 [00:00<00:00, 2572.41 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1849.20 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 89.08ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  86%|████████▋ | 260/301 [00:00<00:00, 2582.01 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1811.23 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 88.93ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  88%|████████▊ | 266/301 [00:00<00:00, 2641.11 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1879.90 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.86ba/s]
+Map:   0%|          | 0/301 [00:00<?, ? examples/s]Map:  87%|████████▋ | 263/301 [00:00<00:00, 2611.97 examples/s]Map: 100%|██████████| 301/301 [00:00<00:00, 1867.54 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/4 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 4/4 [00:00<00:00, 87.77ba/s]
+...200/300 episodes
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1869.65 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1857.85 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 75.99ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.91 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1941.57 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 77.23ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1972.79 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1960.23 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.55ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1809.23 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1797.88 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.99ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1965.14 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1952.14 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.30ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1942.01 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1930.12 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.61ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1939.26 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1926.01 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.06ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1977.13 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1963.50 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.42ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1957.54 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1945.19 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.84ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1957.55 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1944.25 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.85ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1962.22 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1948.84 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.97ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1966.82 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.53 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.71ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1981.70 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1968.73 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.45ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1979.71 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1966.18 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.94ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1962.81 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1950.05 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.29ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.62 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1942.48 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.31ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1974.51 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1961.16 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.07ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1979.77 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1967.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.69ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1970.58 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.97 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.78ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1968.20 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1955.72 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.14ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1969.46 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.83 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.18ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1974.13 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1960.54 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.40ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1958.80 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1946.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.85ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1958.43 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1945.48 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.50ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1964.82 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1951.61 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.93ba/s]
+...225/300 episodes
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1967.61 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.22 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.18ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1949.62 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1937.23 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.90ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1965.98 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1953.59 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.53ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1989.26 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1976.87 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.82ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1917.57 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1905.38 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.34ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1968.20 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.73 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.78ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1975.56 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1961.90 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.84ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1959.21 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1945.68 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.81ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1963.39 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1950.76 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.71ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1972.32 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1959.87 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.41ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1973.24 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1960.72 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.78ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1947.07 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1934.79 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.41ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1940.83 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1928.58 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.88ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1964.45 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1951.17 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.51ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1983.96 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1971.23 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.53ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1958.51 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1946.24 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.62ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1948.85 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1936.42 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.28ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1963.98 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1950.91 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.59ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1979.35 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1966.92 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.85ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1888.55 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1876.29 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.53ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.56 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1941.34 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.24ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1951.17 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1939.02 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.24ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1939.37 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1927.46 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.63ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1964.92 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1952.81 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.35ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1797.41 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1786.56 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.38ba/s]
+...250/300 episodes
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1970.18 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.67 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.97ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1964.03 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1950.78 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.74ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1949.01 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1936.31 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.96ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1955.85 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1943.41 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.74ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1963.16 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1950.41 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.50ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1993.88 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1981.05 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.21ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1968.97 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.45 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.87ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1966.09 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1953.63 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.59ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.05 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1943.66 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.45ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1961.51 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1948.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.55ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1934.08 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1922.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.56ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1945.84 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1932.68 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.57ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1932.94 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1920.90 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.89ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1929.41 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1916.73 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.20ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1961.27 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1948.85 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.90ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1947.06 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1934.42 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.70ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1952.37 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1940.09 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.29ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1953.98 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1941.62 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.23ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1953.81 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1941.70 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.38ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1949.62 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1936.92 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.80ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1942.58 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1930.39 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.59ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1952.92 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1940.49 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.79ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1935.69 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1921.93 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.47ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1961.64 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1949.39 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.10ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.73 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1943.29 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.03ba/s]
+...275/300 episodes
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1942.26 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1929.89 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.58ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1924.09 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1910.98 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.56ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1954.77 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1942.28 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.40ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1964.44 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1951.39 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.70ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1937.58 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1925.45 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.96ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1947.99 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1933.81 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.07ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1957.69 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1944.34 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.19ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1953.92 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1940.65 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.72ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1918.22 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1904.60 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.34ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1940.74 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1928.40 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.38ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1925.16 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1912.78 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.58ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1968.54 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1955.20 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.71ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1950.90 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1938.49 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.46ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1969.09 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1955.54 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.16ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1932.49 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1919.33 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.52ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1949.90 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1937.43 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.17ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1966.88 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1953.64 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.45ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1965.13 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1952.68 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.54ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1972.37 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1960.05 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.86ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1974.43 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1961.53 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 83.17ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1956.36 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1943.75 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 80.37ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1944.17 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1931.56 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 81.45ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1946.13 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1933.73 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.12ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1957.54 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1945.05 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 82.09ba/s]
+Map:   0%|          | 0/241 [00:00<?, ? examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1963.62 examples/s]Map: 100%|██████████| 241/241 [00:00<00:00, 1949.74 examples/s]
+Creating parquet from Arrow format:   0%|          | 0/3 [00:00<?, ?ba/s]Creating parquet from Arrow format: 100%|██████████| 3/3 [00:00<00:00, 79.16ba/s]
+...300/300 episodes
+GATE_CONVERT_DONE repo=local/gate_nav synth=200 real=100 out=/home/dfliu/.cache/huggingface/lerobot/local/gate_nav

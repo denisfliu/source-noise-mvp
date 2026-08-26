@@ -1,0 +1,38 @@
+{
+ "prior_r2": 0.09816236387987665,
+ "n_samples": 160,
+ "n_train_eps": 200,
+ "n_eval_eps": 80,
+ "K": 5,
+ "gt_action_mag": 0.12454065285855904,
+ "arms": {
+  "no_pin": {
+   "full_r2": -0.542230840234488,
+   "mse_std": 1.4812837618071777,
+   "subspace_r2": -0.10935493108810257,
+   "pred_mag": 0.13840429058991086
+  },
+  "mean_c": {
+   "full_r2": -0.5135845539029618,
+   "mse_std": 1.453769541709934,
+   "subspace_r2": -0.4790219553577486,
+   "pred_mag": 0.06814474666963696,
+   "passthrough_relerr": 0.5379675260767373
+  },
+  "real_prior": {
+   "full_r2": -0.5101575401759537,
+   "mse_std": 1.4504779593781119,
+   "subspace_r2": -0.40798200411821295,
+   "pred_mag": 0.07150701420218344,
+   "passthrough_relerr": 0.5897029785158544
+  },
+  "oracle": {
+   "full_r2": -0.490265243255839,
+   "mse_std": 1.4313717817268252,
+   "subspace_r2": 0.3600647867193061,
+   "pred_mag": 0.07921540002211022,
+   "passthrough_relerr": 0.3710848090003933
+  }
+ },
+ "ckpt": "/home/ubuntu/code/openpi/checkpoints/pi0_libero_shared/snmvp_src_pin_shared/4999"
+}

@@ -1,0 +1,81 @@
+{
+  "task_suite": "libero_spatial",
+  "seed": 7,
+  "init_states": "/home/ubuntu/code/source-noise-mvp/experiments/phase1/heldout_init_states",
+  "invariant": null,
+  "tasks": [
+    {
+      "task_id": 0,
+      "language": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "episodes": 10,
+      "successes": 6,
+      "success_rate": 0.6
+    },
+    {
+      "task_id": 1,
+      "language": "pick up the black bowl next to the ramekin and place it on the plate",
+      "episodes": 10,
+      "successes": 6,
+      "success_rate": 0.6
+    },
+    {
+      "task_id": 2,
+      "language": "pick up the black bowl from table center and place it on the plate",
+      "episodes": 10,
+      "successes": 7,
+      "success_rate": 0.7
+    },
+    {
+      "task_id": 3,
+      "language": "pick up the black bowl on the cookie box and place it on the plate",
+      "episodes": 10,
+      "successes": 9,
+      "success_rate": 0.9
+    },
+    {
+      "task_id": 4,
+      "language": "pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate",
+      "episodes": 10,
+      "successes": 5,
+      "success_rate": 0.5
+    },
+    {
+      "task_id": 5,
+      "language": "pick up the black bowl on the ramekin and place it on the plate",
+      "episodes": 10,
+      "successes": 3,
+      "success_rate": 0.3
+    },
+    {
+      "task_id": 6,
+      "language": "pick up the black bowl next to the cookie box and place it on the plate",
+      "episodes": 10,
+      "successes": 9,
+      "success_rate": 0.9
+    },
+    {
+      "task_id": 7,
+      "language": "pick up the black bowl on the stove and place it on the plate",
+      "episodes": 10,
+      "successes": 3,
+      "success_rate": 0.3
+    },
+    {
+      "task_id": 8,
+      "language": "pick up the black bowl next to the plate and place it on the plate",
+      "episodes": 10,
+      "successes": 5,
+      "success_rate": 0.5
+    },
+    {
+      "task_id": 9,
+      "language": "pick up the black bowl on the wooden cabinet and place it on the plate",
+      "episodes": 10,
+      "successes": 4,
+      "success_rate": 0.4
+    }
+  ],
+  "total_episodes": 100,
+  "total_successes": 57,
+  "total_success_rate": 0.57
+}

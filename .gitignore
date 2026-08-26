@@ -6,3 +6,10 @@ checkpoints/
 wandb/
 *.json.stats
 .DS_Store
+
+# large regenerable / externally-sourced data (see docs/BOX_TRANSFER.md for provenance)
+experiments/rung3/data_gate_synth3/
+experiments/rung3/data_gate_real/
+experiments/rung3/vlm_feat_gate_prefix_local.npz
+experiments/rung3/tmp_scripts_rescue/
+experiments/toy/train.log

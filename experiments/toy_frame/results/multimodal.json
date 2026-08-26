@@ -1,0 +1,20 @@
+{
+  "data_mean_bin1": 3.017,
+  "data_frac_sidepos": 0.503,
+  "arms": {
+    "regress": {
+      "success": 0.075,
+      "produced_mean_bin1": 0.737
+    },
+    "reg_assign": {
+      "success": 0.637
+    },
+    "flow": {
+      "success": 0.22,
+      "mean_frac_side_pos_per_rollout": 0.472
+    },
+    "flow_pin": {
+      "success": 0.338
+    }
+  }
+}

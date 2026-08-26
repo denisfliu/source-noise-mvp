@@ -1,0 +1,29 @@
+{
+  "gate": "phase0_exit_criterion",
+  "date_utc": "2026-07-05",
+  "criterion": "baseline LIBERO-Spatial success within ~2 pts of community reference (~96%)",
+  "measured": 0.946,
+  "protocol": "50 trials/task x 10 tasks, canonical init states, pi0_libero 30k steps",
+  "checkpoint": "armA_baseline_s42/29999",
+  "per_task": [
+    1.0,
+    0.98,
+    0.96,
+    0.96,
+    0.86,
+    0.94,
+    1.0,
+    0.92,
+    0.96,
+    0.88
+  ],
+  "verdict": "PASSED (94.6 vs ~96, delta ~1.4 pts)",
+  "curve_10trial": {
+    "5000": 0.69,
+    "10000": 0.89,
+    "15000": 0.89,
+    "20000": 0.95,
+    "25000": 0.93,
+    "29999": 0.93
+  }
+}

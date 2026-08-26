@@ -1,0 +1,157 @@
+{
+  "config": {
+    "H_l": 8,
+    "d_fsq": 2,
+    "levels": 5,
+    "codebook_per_token": 25,
+    "N": 7200,
+    "set_A": [
+      "arm2",
+      "arm3",
+      "arm4"
+    ]
+  },
+  "mse_vs_K": [
+    0.00258,
+    0.0011,
+    0.00071,
+    0.00053,
+    0.00041,
+    0.00036,
+    0.00034,
+    0.00034
+  ],
+  "recon_full": 0.00034,
+  "data_var": 0.0411,
+  "mi_token_body": [
+    0.0045,
+    0.0058,
+    0.0262,
+    0.0062,
+    0.0129,
+    0.0067,
+    0.0144,
+    0.0012
+  ],
+  "mi_floor_body": 0.0043,
+  "mi_token_radius": [
+    0.2593,
+    1.2245,
+    0.1417,
+    0.1142,
+    0.1545,
+    0.0716,
+    0.1399,
+    0.3306
+  ],
+  "mi_floor_radius": 0.0078,
+  "mi_token_lateral": [
+    0.9138,
+    0.8532,
+    0.0866,
+    0.5097,
+    0.0784,
+    0.1451,
+    0.0947,
+    0.0689
+  ],
+  "mi_floor_lateral": 0.0085,
+  "prefix_decode_body": [
+    {
+      "K": 1,
+      "acc": 0.3163,
+      "chance": 0.3333
+    },
+    {
+      "K": 2,
+      "acc": 0.3372,
+      "chance": 0.3333
+    },
+    {
+      "K": 3,
+      "acc": 0.3833,
+      "chance": 0.3333
+    },
+    {
+      "K": 4,
+      "acc": 0.3847,
+      "chance": 0.3333
+    },
+    {
+      "K": 5,
+      "acc": 0.3896,
+      "chance": 0.3333
+    },
+    {
+      "K": 6,
+      "acc": 0.3899,
+      "chance": 0.3333
+    },
+    {
+      "K": 7,
+      "acc": 0.408,
+      "chance": 0.3333
+    },
+    {
+      "K": 8,
+      "acc": 0.4139,
+      "chance": 0.3333
+    }
+  ],
+  "prefix_decode_goal": [
+    {
+      "K": 1,
+      "acc": 0.2094,
+      "chance": 0.2
+    },
+    {
+      "K": 2,
+      "acc": 0.6417,
+      "chance": 0.2
+    },
+    {
+      "K": 3,
+      "acc": 0.6917,
+      "chance": 0.2
+    },
+    {
+      "K": 4,
+      "acc": 0.7146,
+      "chance": 0.2
+    },
+    {
+      "K": 5,
+      "acc": 0.717,
+      "chance": 0.2
+    },
+    {
+      "K": 6,
+      "acc": 0.7233,
+      "chance": 0.2
+    },
+    {
+      "K": 7,
+      "acc": 0.7285,
+      "chance": 0.2
+    },
+    {
+      "K": 8,
+      "acc": 0.7274,
+      "chance": 0.2
+    }
+  ],
+  "verdict": {
+    "gate_pass": true,
+    "clean_prefix": {
+      "K": 2,
+      "goal_acc": 0.6417,
+      "body_acc": 0.3372,
+      "chance_body": 0.3333
+    },
+    "body_decode_rises_with_K": true,
+    "coarse_to_fine_recon": true,
+    "recon_mse_full": 0.00034,
+    "data_var": 0.0411,
+    "note": "gate_pass = a frozen early-token prefix carries the goal (decode >> chance) while leaking little body identity (decode ~ chance), and body id concentrates in later tokens. If true, OAT gives an ordered cross-embodiment invariant and VLA^2/OAT-invariant transfer is worth building."
+  }
+}

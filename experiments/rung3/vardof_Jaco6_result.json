@@ -1,0 +1,44 @@
+{
+  "config": {
+    "SET_A": [
+      [
+        "Panda",
+        "3"
+      ],
+      [
+        "UR5e",
+        "3"
+      ]
+    ],
+    "HELD": [
+      [
+        "Jaco",
+        "6"
+      ]
+    ],
+    "K": 10,
+    "ITERS": 10000
+  },
+  "pooled": {
+    "Jaco_S": 0.358,
+    "Jaco_GLAP": 0.142,
+    "Jaco_GLAP_or": 0.367
+  },
+  "per_seed": {
+    "s0": {
+      "Jaco_S": 0.275,
+      "Jaco_GLAP": 0.125,
+      "Jaco_GLAP_or": 0.4
+    },
+    "s1": {
+      "Jaco_S": 0.4,
+      "Jaco_GLAP": 0.15,
+      "Jaco_GLAP_or": 0.35
+    },
+    "s2": {
+      "Jaco_S": 0.4,
+      "Jaco_GLAP": 0.15,
+      "Jaco_GLAP_or": 0.35
+    }
+  }
+}

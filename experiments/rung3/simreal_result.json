@@ -1,0 +1,38 @@
+{
+  "config": {
+    "SET_A": [
+      "sim1",
+      "sim2",
+      "sim3"
+    ],
+    "HELD": [
+      "real"
+    ],
+    "K": 12,
+    "top_gen_eig": 1134626.6,
+    "held_c_invariance": 0.109
+  },
+  "ceilings": {
+    "sim1": 0.771,
+    "sim2": 0.676,
+    "sim3": 0.573,
+    "real": 0.789
+  },
+  "pooled": {
+    "n10": {
+      "S": 0.283,
+      "GLAP": 0.692,
+      "GLAP_or": 0.75
+    },
+    "n25": {
+      "S": 0.35,
+      "GLAP": 0.742,
+      "GLAP_or": 0.758
+    },
+    "n50": {
+      "S": 0.308,
+      "GLAP": 0.7,
+      "GLAP_or": 0.758
+    }
+  }
+}

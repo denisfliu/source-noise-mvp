@@ -1,0 +1,14 @@
+{
+  "no_flow": {
+    "success_natural": 0.767,
+    "follow_err_natural": 0.0,
+    "steer_slope": 1.0,
+    "success_contradictory": 0.067
+  },
+  "pin_reference": {
+    "success_natural": 0.8,
+    "steer_slope": 1.0,
+    "phase_err_deg": 1.1
+  },
+  "note": "if no_flow success_natural ~ pin 0.8 and slope ~1, flow matching adds nothing for control/success -> we are just predicting Fourier modes."
+}

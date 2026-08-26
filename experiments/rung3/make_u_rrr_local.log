@@ -1,0 +1,32 @@
+eps=200 tasks={0: 50, 1: 50, 2: 50, 3: 50}
+frames=6900
+  feat 0/6900
+  feat 320/6900
+  feat 640/6900
+  feat 960/6900
+  feat 1280/6900
+  feat 1600/6900
+  feat 1920/6900
+  feat 2240/6900
+  feat 2560/6900
+  feat 2880/6900
+  feat 3200/6900
+  feat 3520/6900
+  feat 3840/6900
+  feat 4160/6900
+  feat 4480/6900
+  feat 4800/6900
+  feat 5120/6900
+  feat 5440/6900
+  feat 5760/6900
+  feat 6080/6900
+  feat 6400/6900
+  feat 6720/6900
+extracted (6900, 2048)
+== VLM-RRR (feat prior)       held c-R2 = +0.966  coverage=0.826
+== PCA U (state+task prior)   held c-R2 = +0.963  coverage=0.828
+== VLM-RRR (state+task prior) held c-R2 = +0.970  coverage=0.826
+principal angles RRR vs PCA (deg): [ 0.13  0.15  0.17  0.28 16.48]  (box reference: ~=PCA within 0.2 deg on 4/5 dirs)
+SAVED /home/dfliu/code/source-noise-mvp/experiments/rung3/pin_U_gate_rrr_k5.npy (1600, 5) sha256=ac49ae6b16bcd8d21b4813d36113339dc7f85ba7c59bd08fe0272b0fde60edd9
+feat_ckpt=/home/dfliu/code/falsify/local/checkpoints/gate_both_pin
+RRR_GATE_LOCAL_DONE

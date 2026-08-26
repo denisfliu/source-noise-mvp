@@ -1,0 +1,35 @@
+{
+  "config": {
+    "SET_A": [
+      "pose_Panda",
+      "pose_IIWA",
+      "pose_UR5e"
+    ],
+    "HELD": "pos_UR5e",
+    "K": 10,
+    "ITERS": 150,
+    "cinv_ACH": 0.156,
+    "gap_PLAN": 0.996
+  },
+  "ceilings": {
+    "pose_Panda": 0.658,
+    "pose_IIWA": 0.506,
+    "pose_UR5e": 0.557,
+    "pos_UR5e": 0.526
+  },
+  "pooled": {
+    "n10": {
+      "S": 0.192,
+      "ACH": 0.208,
+      "PLAN": 0.0,
+      "DECONV": 0.075,
+      "ACH_or": 0.208,
+      "PLAN_or": 0.158,
+      "S_traj": 0.565,
+      "ACH_traj": 0.515,
+      "PLAN_traj": 2.889,
+      "DECONV_traj": 0.475,
+      "fir_err": 0.475
+    }
+  }
+}

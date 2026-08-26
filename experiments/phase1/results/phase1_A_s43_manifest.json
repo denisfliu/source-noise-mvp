@@ -1,0 +1,25 @@
+[
+  {
+    "exp": "phase1_A_s43",
+    "arm": "A",
+    "seed": 43,
+    "launch_mode": "--overwrite",
+    "openpi_commit": "15a9616",
+    "torch": "2.7.1+cu128",
+    "config": {
+      "name": "pi0_libero",
+      "num_train_steps": 15000,
+      "lr_decay_steps": 15000,
+      "batch_size": 32,
+      "save_interval": 2500,
+      "single_gpu": true,
+      "gpu": "1"
+    },
+    "env": {
+      "SNMVP_PIN_ALPHA": null,
+      "SNMVP_PINNED_DIMS": null,
+      "SNMVP_COND_STATS": null
+    },
+    "note": null
+  }
+]
