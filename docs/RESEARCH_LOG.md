@@ -6315,3 +6315,17 @@ endgame corridor — the behavior gap, which is data authoring. GENERAL RESOLUTI
 (b) serve-time rotation verb with an external dtheta source (validated, gain 0.76) for
 aim-critical segments; (c) more real demos to lower the head floor. Cheap adapters are
 ruled out with evidence. `real_c_adapter.py`; rows -> ctxrun/cadapt_rows.npz.
+
+**SYNTHETIC PINS IN REAL (2026-08-27): sim-authored commands are TASK-VALID on real
+perception — 'plan in sim, fly in real through the pin' validated at the aperture level.**
+Matched-state synth oracle pins served on real right-gate observations (sigma=0): heading
+diverges 35-42 deg from the pilot's specific continuation (the behavior gap expressing as
+intended — the fans fly the PLANNER's route), but every chunk reaching the right gate
+crosses IN-APERTURE (11/11, s=0.32 vs real 0.45; head pin 7/8 at s=0.51; real-oracle pin
+12/12 at 0.41) and synth pins restore near-full speed (0.94 m/chunk vs the head's
+under-sped 0.60; the under-speed was the head's timidity, not a generation limit —
+real-oracle pin on right also short at 0.70). No-crosses are chunk range, not misses.
+Deployment recipe update: sim-authored pins (planner or Sketchpad) for route+speed at hard
+segments, rotation verb for residual aim, head+sigma elsewhere — the head need not be right
+at the hard moments. `synthpin_in_real.py`; rows -> ctxrun/synthpin_rows.npz (fan
+trajectories saved for viz on request).
