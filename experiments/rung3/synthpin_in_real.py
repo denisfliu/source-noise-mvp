@@ -62,8 +62,8 @@ def main():
         d = np.load(f"{RD}/data_gate_synth3/ep_{e:04d}.npz", allow_pickle=True)
         st, ac = d["state"].astype(np.float32), d["action"].astype(np.float32)
         for t in range(0, len(st) - H - 1, 5):
-            synth.append((st[t], chunk_c(ac, t)))
-    SS = np.stack([s for s, _ in synth])
+            synth.append((st[t], chunk_c(ac, t), e, t))
+    SS = np.stack([s[0] for s in synth])
     print(f"synth index {len(synth)}", flush=True)
 
     def gen(obs, c):
@@ -93,6 +93,14 @@ def main():
             if not len(cand):
                 continue
             j = int(cand[np.argmin(dp[cand] + 0.3 * dy[cand])])
+            es, ts = synth[j][2], synth[j][3]
+            dsy = np.load(f"{RD}/data_gate_synth3/ep_{es:04d}.npz", allow_pickle=True)
+            obs_sy = {"observation/image": r224(dsy["image"][ts]),
+                      "observation/wrist_image": r224(dsy["wrist"][ts]),
+                      "observation/state": dsy["state"].astype(np.float32)[ts],
+                      "prompt": PROMPTS[side]}
+            wsy, musy, _ = gmm_params(policy, [obs_sy])
+            c_synthhead = musy[0, int(wsy[0].argmax())]
             obs = {"observation/image": r224(d["image"][t]),
                    "observation/wrist_image": r224(d["wrist"][t]),
                    "observation/state": s0, "prompt": PROMPTS[side]}
@@ -103,7 +111,7 @@ def main():
             m = min(25, len(st) - 1 - t)
             rec["hr"] = float(np.arctan2(*(st[t + m, :2] - st[t, :2])[::-1]))
             for tag, c in [("synthpin", synth[j][1]), ("realpin", chunk_c(ac, t)),
-                           ("headpin", c_head)]:
+                           ("headpin", c_head), ("synthheadpin", c_synthhead)]:
                 acts = gen(obs, c.astype(np.float32))
                 traj = s0[:3] + np.cumsum(acts[:, :3], axis=0)
                 rec[f"{tag}_traj"] = np.concatenate([s0[:3][None], traj])

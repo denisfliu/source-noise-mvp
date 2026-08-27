@@ -6329,3 +6329,21 @@ Deployment recipe update: sim-authored pins (planner or Sketchpad) for route+spe
 segments, rotation verb for residual aim, head+sigma elsewhere — the head need not be right
 at the hard moments. `synthpin_in_real.py`; rows -> ctxrun/synthpin_rows.npz (fan
 trajectories saved for viz on request).
+
+**CROSS-DOMAIN PROBES BOTH PASS — THE DOMAIN-SPLIT INTERFACE CONTRACT HOLDS ZERO-SHOT IN
+BOTH DIRECTIONS (2026-08-27, gating Denis's dsplit training experiment):**
+- **Probe A, synth-HEAD pins on real obs (the deployment case, head included): 11/11
+  in-aperture right-gate crossings at s=0.34, chunk length 0.81 m — BETTER than the real
+  head (26.8 deg err, 0.59 m, 8 crossings) on the hard gate; heading 19.3 deg (planner
+  style, as designed). On left the real head is already good (7.9 deg) and synth-head
+  imports planner style (33.7) — divergence, not failure.** Denis's 'use synthetic pins in
+  real' now holds END-TO-END including the sim twin's head.
+- **Probe B, real-demo-as-sketch closed-loop in sim: 5/5 judge + 5/5 CLEARANCE-CLEAN
+  (min 0.34-0.37 m)** — a real pilot's flight (ep050) downsampled to a 10-point pin sketch
+  flies the sim right cell strictly clean. Real behavior is commandable AND certifiable in
+  sim; the certification loop exists zero-shot.
+The dsplit training run (phase A synth-only full recipe 4000 steps -> phase B real-only
+HEAD_LAM=0 +1500 steps, seed 42, gmsig3 as exact control) auto-started on probe completion;
+success criteria pre-registered: hold sim six cells at gmsig3 level AND improve real-frame
+speed/crossing/fidelity; forgetting in sim cells => interleave next. Artifact 4242b0ff
+updated with synth-head fans + the closed-loop section.
