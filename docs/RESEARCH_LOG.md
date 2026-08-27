@@ -6257,3 +6257,26 @@ on real (4.11 vs 3.75) — weak online detectability. ACTION IT ENABLES: behavio
 course tuning — tune planner endgame params to minimize |c_oracle_real - c_oracle_synth| at
 matched states OFFLINE (no training/rollouts), re-render only the winning variant. Sim data
 authoring becomes descent on a measured sim-real distance. Rows -> ctxrun/pingap_rows.npz.
+
+**COUNTERFACTUAL + DANGER + ZERO-CONFIDENCE PASS ON REAL ANCHORS (2026-08-27, Denis's three
+questions; real_counterfactual_chunks.py, page 'Predicted From Real' v2):**
+- RIGHT-GATE PIN ERROR: median 0.273 cstd — same as left (0.283) — but phase-resolved the
+  right ENDGAME is 0.410 vs left's 0.246: the right pins are fine until the goal approach,
+  where they are ~1.5x worse (fourth independent signal pointing at the endgame).
+- **TRUST-DIAL CALIBRATION DOES NOT TRANSFER: corr(sigma*, pin error) on real anchors is
+  0.12 (left) / -0.02 (right)** vs rho=0.82 on synth demo frames — sigma* runs mildly hot on
+  real but does NOT rank-order its own errors there. Real deployment needs a real-frame
+  sigma recalibration (sigma_phase_probe on data_gate_real) before the dial can be trusted.
+- DANGER (fan min-dist to scene structure): medians safe everywhere (~0.7 m); the risk is a
+  TAIL on the right side — full-50-step fans reach 0.02 m (side) / 0.01 m (ctr), vs left
+  minima 0.20/0.13. But over the EXECUTED horizon (first 14 steps, what a replanning loop
+  flies) all groups are clean: min 0.26-0.28, zero fans below 0.18. The visual danger is in
+  chunk TAILS that closed-loop replanning never executes.
+- COUNTERFACTUAL CENTER SWAP: |c_ctr - c_side| median 0.05 cstd, fan-end dx +0.05 m — the
+  prompt swap on real observations barely moves the pin, matching the sim adherence finding
+  (language contrast 0.05-0.09 cstd everywhere). Language alone will not redirect a real
+  flight any more than a sim one; the sketch (or CFG) remains the redirect mechanism.
+- ZERO CONFIDENCE: max-distrust fans (sigma_serve=cap) at the least-confident anchors are
+  the SAFEST group (min 0.55-0.61) — with the pin ignored the flow defaults to conservative
+  demo-like behavior. The trust dial's failure mode is benign.
+Artifact cb568bc4 updated; rows -> ctxrun/real_cf_chunks.npz.
