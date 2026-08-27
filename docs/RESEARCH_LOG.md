@@ -6298,3 +6298,20 @@ plan rotated by -dtheta through the pin at sigma=0 on the real observation -> he
 approach-line monitor announces the angular correction, the pin executes it, plan preserved.
 Real command vocabulary now: sketch = route topology, rotation = aim, sigma = trust.
 `real_angle_fix.py`; rows -> ctxrun/angle_scratch.npz, angle_correct.npz.
+
+**LEARNED RECONCILIATION INVESTIGATION CONCLUDES (2026-08-27): the cheap map does not
+exist — because the head already IS domain-reconciled.** Ladder: (1) c->c affine adapter on
+real anchors: held-out c-err 0.65 -> 0.57 only, generation unimproved (14.4 -> 15.1 deg),
+fit degenerate; (2) + state/phase/side conditioning: 0.56 plateau (oracle floor ~4.1 deg /
+0.07 cstd); (3) DECISIVE reframe test on the pin-gap matched pairs: head(real obs) is
+CLOSER to c_oracle_REAL (0.35) than to c_oracle_SYNTH (0.47), mirror on synth — the head
+predicts domain-appropriate flying; its residual 0.32-0.35 is the same error floor in both
+domains. sigma-confound resolved: head-c at sigma=0 gives 14.4 deg (scatter is command
+content, not trust slack). REVISED UNDERSTANDING of the collision risk: (i) part of the
+10-20 deg 'error' vs the specific real continuation is legitimate continuation ambiguity
+(the pilot's choice vs a plausible mode); (ii) the FUNCTIONAL flaws remain under-speed and
+endgame corridor — the behavior gap, which is data authoring. GENERAL RESOLUTION, ranked:
+(a) behavior-gap-driven course tuning (third independent convergence on this fix);
+(b) serve-time rotation verb with an external dtheta source (validated, gain 0.76) for
+aim-critical segments; (c) more real demos to lower the head floor. Cheap adapters are
+ruled out with evidence. `real_c_adapter.py`; rows -> ctxrun/cadapt_rows.npz.
