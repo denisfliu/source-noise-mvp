@@ -6280,3 +6280,21 @@ questions; real_counterfactual_chunks.py, page 'Predicted From Real' v2):**
   the SAFEST group (min 0.55-0.61) — with the pin ignored the flow defaults to conservative
   demo-like behavior. The trust dial's failure mode is benign.
 Artifact cb568bc4 updated; rows -> ctxrun/real_cf_chunks.npz.
+
+**ANGLE-BIAS ATTRIBUTION + PIN ROTATION-CORRECTION (2026-08-27, Denis: 'every real
+trajectory off by degrees -> colliding at the gate's left side; understand why; compare
+scratch; correct through the pin').** Frame audit first: real dataset actions are
+WORLD-FRAME CLEAN (fit rotation +/-1 deg, gain 0.98) — the angular error is generated, not
+inherited. Attribution on the same real anchors: gmsig3 |heading err| median 10.1 (left) /
+20.3 deg (right); SCRATCH 16.5 / 22.7 — same magnitude, same left-right asymmetry, but
+per-anchor corr(gmsig3, scratch) = 0.17: PER-GENERATION SCATTER whose scale the shared
+data/perception stack sets (right ~2x worse), not a fixed per-frame bias and not the pin
+path. At ~20 deg over the final metre of a right approach (~0.35 m lateral) Denis's
+collision call stands for closed-loop real. THE CORRECTION WORKS: serve the model's OWN
+plan rotated by -dtheta through the pin at sigma=0 on the real observation -> heading error
+10.1->2.9 deg (left), 20.3->4.9 (right), improved on 77-78% of anchors; dose-response gain
+0.76 [0.49-1.04] for commanded +/-15 deg — a calibratable rotation DIAL on real perception
+(command dtheta/0.76). New deployment primitive: the pin's ROTATION VERB — human or
+approach-line monitor announces the angular correction, the pin executes it, plan preserved.
+Real command vocabulary now: sketch = route topology, rotation = aim, sigma = trust.
+`real_angle_fix.py`; rows -> ctxrun/angle_scratch.npz, angle_correct.npz.
