@@ -6243,3 +6243,17 @@ real-sketch risk is purely closed-loop (dynamics/controller/compounding/safety),
 representational; sequencing when hardware exists: real atomics -> sketched compound in the
 mocap room; Sketchpad works as-is (the scene cloud IS the real room's reconstruction).
 `real_pin_follow_probe.py`, rows -> ctxrun/realpin_rows.npz.
+
+**PIN-GAP TRIPLET — THE ACTIONABLE SIM-TO-REAL MEASURE (2026-08-26, pin_gap_probe.py,
+80 matched-state pairs, median match 0.09 m / 0.18 rad):** decomposition in cstd units:
+EXECUTION gap ~0 (0.070 vs 0.068, from real_pin_follow_probe); PREDICTION gap 0.314 — AT
+the in-domain head-error floor (0.32-0.35): real obs predict the same pins as sim obs at
+matched states, perception has crossed the gap (mixed-domain training + shared norm stats);
+BEHAVIOR gap 0.615 [0.48-0.73] — the ENTIRE sim-real distance is in how the datasets FLY
+from matched states, and it grows by phase 0.53 -> 0.61 -> 0.72 toward the ENDGAME — the
+same region as the standing goal-descent west-post graze (two independent lines now point
+at the planner's endgame corridor as the least-real part of the sim). sigma* runs ~10% hot
+on real (4.11 vs 3.75) — weak online detectability. ACTION IT ENABLES: behavior-gap-driven
+course tuning — tune planner endgame params to minimize |c_oracle_real - c_oracle_synth| at
+matched states OFFLINE (no training/rollouts), re-render only the winning variant. Sim data
+authoring becomes descent on a measured sim-real distance. Rows -> ctxrun/pingap_rows.npz.
