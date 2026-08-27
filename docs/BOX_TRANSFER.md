@@ -9,8 +9,10 @@ stands; `docs/LOCAL_CONTINUATION.md` for the ops details behind these steps.
 ## 1. This repo
 
 ```
-git clone <this repo>   # or: git pull the bundle
+git clone git@github.com:denisfliu/source-noise-mvp.git
 ```
+(private; pushed from the local 4090 — the `~/source-noise-mvp-*.bundle` file is a fallback
+if the box lacks GitHub SSH access)
 
 Carries: `experiments/rung3/` (joint head, serve, judges, probes, viz builders, basis .npy,
 sigma maps, adherence caches), `scripts/` (train/eval/regen chains), `docs/`, `patches/`,
