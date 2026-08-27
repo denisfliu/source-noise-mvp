@@ -18,6 +18,16 @@ the destination command source is semantically grounded (VLM-grounded) language.
 
 ## RECORD BOARD (a REFERENCE for orientation, not a requirement — update when results land)
 
+**FRONTIER MOVED (2026-08-27, local-4090 arc):** the board below is EC2-era history. The
+current flagship is **gmsig3: 80/80 route-clean atomics across two training seeds** on
+regenerated gate_nav3 data, plus sketch prompting (human pin sketches fly both compounds),
+the pin's real-perception command vocabulary (sketch/rotation/sigma), and a verified
+cross-domain contract (synth pins execute on real obs; real demos certify in sim). Judging
+now additionally requires ROUTE-CLEAN (zero wrong-direction aperture passes). **Read
+`docs/status_latest.md` then `docs/ITERATION_QUEUE.md` before continuing any line**; the
+dense trail is RESEARCH_LOG + FINDINGS_INDEX as always. Repo pushes to
+github.com/denisfliu/source-noise-mvp — push after every milestone commit.
+
 **Best known closed-loop config** (2026-08-05 evening, strict `gate_success`, corrected center
 render, pending video confirmation): **39/40 — LEFT 9/10 · RIGHT 10/10 · CFL 10/10 · CFR 10/10**,
 and it is the SIMPLEST system tried: **NO clock, no VLM in the command loop**:
@@ -127,6 +137,9 @@ context for the toy + parity/overfit gates.
   CUDA_VISIBLE_DEVICES=-1`. Serve pin with env-gated `patch_pi0_pin.py`; `policy.infer(obs, noise=...)`.
 
 ## Engineering preferences (Denis)
+- **Every run's result trajectories get a point-cloud viewer page (artifact), unprompted**
+  — Denis reads results spatially; his best catches came from the cloud views. Pattern:
+  `experiments/rung3/viz/cloudviewer.py` + build_*_page.py.
 - Commit messages: **never** auto-add an agent name as co-author.
 - Technical decisions: weight quality, simplicity, robustness, scalability, and long-term
   maintainability over development cost.

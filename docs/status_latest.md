@@ -1,78 +1,64 @@
-# Status — 2026-08-13 ~21:00 UTC (written before scheduled loss of box access)
+# Status — 2026-08-27 (local-4090 arc, pre-handoff to the big box)
 
-Successor to the joint-training arc entries in RESEARCH_LOG (which remains the authoritative
-chronology). This is the catch-up page: where every line stands, what is still running
-autonomously, and what to check first on reconnect. Physical inventory: docs/EXTRACTION.md.
+Single source of truth for "where is the science right now." Newest-first pointers:
+`docs/RESEARCH_LOG.md` (bottom = frontier), `experiments/FINDINGS_INDEX.md` (one-liners),
+`docs/ITERATION_QUEUE.md` (what to do next and why). Repo:
+github.com/denisfliu/source-noise-mvp (private).
 
-## The one-paragraph story
+## Headline results (all route-clean judge + clearance; video = the remaining claim gap)
 
-The grounded command source's historical 0/10 was a feature-source pairing bug; the joint
-(in-checkpoint) head fixed that by construction. The endgame ("tail") problem then decomposed,
-by measurement, into: (a) the flat basis cannot EXPRESS the stop (captures 0.34 of stop-segment
-variance; the multi-horizon basis mh16 captures 0.81); (b) regression heads emit INVALID
-mode-averages at branch states (measured shrinkage; fixed by the generative/CFM head — sampled
-commands are full-magnitude and the sampler picks "stop" 85% of the time in the goal region);
-(c) what remains is mid-flight command PRECISION (tightest margin, 1.3-1.4x), whose accumulated
-error delivers arrivals 0.2-0.7 m outside the goal box, where a correctly-chosen stop then
-freezes the miss; and (d) posterior CALIBRATION (which route-mode gets sampled) is uncontrolled —
-coupling strength/detachment/basis demonstrably do not govern it (lam=1: 0.0 left-mode; lam=0.3:
-0.5; detached: 0.6; and gate ownership flips on training seed alone). The measured causes of (c)
-and (d): the head's information diet (no state, language diluted 15-vs-780 tokens in the 4-query
-pool, scene-prompt confounded data) and ignorable concat conditioning. The fix now training:
-genfilm — the CFM head conditioned EXCLUSIVELY via FiLM from three explicit channels (state,
-language-token pool, image pool), i.e., the record system's information diet with language
-instead of one-hot, through conditioning the network cannot ignore.
+- **Flagship, seed-replicated: gmsig3 + gmsig3s7 = 80/80 route-clean judge on the four
+  atomic gate cells (77/80 clearance-clean).** sigma-conditioned GMM head x mh16 basis on
+  gate_nav3 (real 0-99 + synth 100-299, shared norm stats). Scratch control 72/80 (CFR 7/10
+  both seeds) — the pin's edge is seed-stable and lives at CFR + precision.
+- **Sketch prompting (the human element): hand-drawn pin sketches fly both compounds 5/5
+  route-clean** (CMPL also 5/5 clearance); 4-5-click minimal sketches replicate across
+  training AND rollout seeds once near-structure waypoints sit on true geometry ("margin is
+  the portability budget"). Flights track drawn polylines to ~7 cm.
+- **Cross-domain contract verified zero-shot, both directions**: synth-authored pins
+  (oracle AND sim-twin head) execute task-validly on real observations (11/11 in-aperture
+  right-gate crossings, full speed); a real demo replayed as a pin sketch flies the sim
+  cell 5/5 strict clean. "Plan in sim, fly in real through the pin."
+- **Pin command vocabulary on real perception**: sketch = route topology, rotation verb =
+  aim (heading error 10-20 deg -> 3-5 deg, dose gain 0.76), sigma = trust. Language alone
+  cannot redirect (0.05 cstd contrast, both domains).
+- **Sim-to-real is measured, not vibes — the pin-gap triplet**: execution gap ~0,
+  prediction gap at the head's own floor (the head is already domain-reconciled; cheap
+  adapters ruled out with evidence), behavior gap 0.62 cstd concentrated in the endgame
+  (under-speed + descent corridor) = data authoring, tunable offline.
 
-## Running autonomously right now (will complete without supervision)
+## In flight
 
-- GPU1 `c2s7`: seed-7 replication of C2's right-gate 10/10 strict (the only arm that ever solved
-  the stop). Eval ~22:10 UTC. Scores -> /home/ubuntu/ctxrun/arm_c2s7_scores.txt, then center
-  add-on -> ctr_c2s7_scores.txt. IF THE 10/10 REPLICATES: C2's recipe genuinely solves the right
-  endgame; study its mid-flight accuracy (its arrivals land in-box). If not: training lottery,
-  C2's headline downgraded like gen16's center completions.
-- GPU0 `genfilm`: the FiLM arm (mh16 basis, lam=0.3, single-variable vs gen16). Training until
-  ~22:20, then readout gate -> left/right 10-trial eval -> center/compound add-on overnight.
-  Read in this order on reconnect:
-    1. arm_genfilm_scores.txt readout-gate line (is the distribution's center accurate);
-    2. clog_genfilm.npy start rows -> c2-component histogram (left-mode fraction; ladder to beat:
-       0.6 detached / 0.5 lam.3 / 0.0 lam1; calibrated ~= 1.0);
-    3. the six cells (arm_ + ctr_ scores), esp. right-gate goal entry and center.
+- **dsplit experiment** (Denis-approved): phase A synth-only+head 4000 steps -> phase B
+  real-only flow-matching (+1500, HEAD_LAM=0). Pre-registered criteria: hold sim six cells
+  at gmsig3 level AND improve real-frame speed/crossing. Forgetting => interleave next.
+  Chain: `scripts/run_dsplit.sh`; post-eval still to be run when it lands.
 
-## Decision state (Denis)
+## Standing flaws / gaps
 
-- CFG: rejected as a primary fix (bandaid); only ever as a final sharpener.
-- Contrastive CFM training: rejected (enumeration through the back door).
-- Restoring-field / coverage data work: real, measured (b2lam03-right settles outside the box
-  with no corrective vocabulary; demos contain no recovery), EXPLICITLY DEFERRED as a data
-  problem, alongside covariate shift.
-- Tail-weighting and per-band soft pin: rejected as regime-specific patches.
-- Claim-rule addition: training-seed variance is ~±5 strict points at 10 rollouts (b2lam03 s42 vs
-  s7; gen16 gate ownership flipped on seed) — cross-arm deltas under ~5 need seed replication.
-- Pending Denis review for claim tier: C2-right videos (artifact 447bd6f4), b2lam03 compound-left
-  5/5 both-gates (corrected directional prompts), the one-hot right-gate record (b5dfc23f).
+- Center-west-post goal-descent graze: the ONE systematic clearance flaw (CFR atomics,
+  sketch returns, both seeds). Data-side fix via behavior-gap-driven course tuning.
+- Trust dial not calibrated on real frames (corr(sigma*, err) ~0 vs 0.82 in-domain) —
+  recalibrate on data_gate_real before any real closed loop.
+- Compounds remain 0/5 autonomous (structural, both seeds, all arms) — the flywheel
+  (distill sketched successes) is the planned attack.
+- Claim-tier: human video review pending for every 2026-08-25+ row.
 
-## Standing instruments (all in experiments/rung3/, headers document usage)
+## Judging rules (upgraded this arc — do not regress)
 
-readout gate (joint_head --check) · start-draw histogram (clog first rows; calibration) ·
-feature_separation_probe (task info by phase) · manifold_tail_probe (restoring field / on-vs-off
-manifold) · tail_attribution_probe (3-link endgame chain) · mh_basis_audit / refit_rrr_basis
-(basis geometry) · residual_bimodality_audit · sim_real_c_probe · confirm_vlm_rrr (LIBERO).
+Strict success = falsify posthoc transit judge + ROUTE-CLEAN (zero wrong-direction aperture
+passes, demos unanimously clean) + `gate_clearance.py` (0.18 m) + human video. The
+right_and_center safety YAML gate_1 was a half-width box (fixed 2026-08-26; region-box bug
+class) — treat every region box as suspect until checked against the scene cloud.
 
-## Artifacts (Denis's pages)
+## Operating notes for the next Claude
 
-grid (all arms x six scenes): 2c0f3000-9f98-4287-9148-236d28b7736a ·
-tracker: 430ab907-7c05-4a5b-a7df-bd740f1294f9 · C2-right review videos: 447bd6f4-c6d8-4486-ad06-d74eda0c3977
-
-## Late addition (21:58): third autonomous overnight arm
-
-- GPU1 after c2s7's add-on: `c2genfilm` — C2 routing x FiLM generative head on mh16 basis (the
-  first combination of the replicated-endgame routing with the full-information sampler). Same
-  read order as genfilm; scores in arm_c2genfilm_scores.txt / ctr_c2genfilm_scores.txt.
-
-## Final pre-cutoff state (22:38)
-
-- genfilm: readout gate PASS 0.8525 (> gen16's 0.831 same basis). Rollouts started at cutoff;
-  full six cells + calibration histogram complete overnight (read order above).
-- c2s7 add-on complete: center 0/20 success (9-10/10 clean), compounds 0 — C2's full signature
-  (right solved, left/center blind) replicates across seeds in every cell.
-- c2genfilm: queued on GPU1, will train+eval overnight.
+- **Every run's trajectories get a point-cloud page, unprompted** (Denis standing rule;
+  `experiments/rung3/viz/cloudviewer.py` + build_*_page.py patterns, publish as artifact).
+- Screens = 5 trials; claims >= 10 trials + seed rep (protocol noise +/-5-6 pts).
+- Never train product models on sim ground truth; deployable supervision = demos, human
+  input (sketches/corrections), generic perception. Sketch UIs may show judge overlays as
+  scaffold but humans draw against the perception-derived cloud.
+- Ordering rule: U from action statistics -> flow trained with oracle c = U^T a -> features
+  -> prior/head.
+- Norm-space footgun: every c computation uses normalized actions (shared gate_nav stats).
