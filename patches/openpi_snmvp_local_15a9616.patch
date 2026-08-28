@@ -670,13 +670,58 @@ index 4ca47e1..d42c85d 100644
 +        _lg2.getLogger("openpi").info(f"SNMVP reg: wd={_wd} ema={_ema}")
 +    return _cfg
 diff --git a/src/openpi/training/data_loader.py b/src/openpi/training/data_loader.py
-index e2ee7dd..43ae584 100644
+index e2ee7dd..ec01a61 100644
 --- a/src/openpi/training/data_loader.py
 +++ b/src/openpi/training/data_loader.py
-@@ -127,6 +127,29 @@ class FakeDataset(Dataset):
+@@ -127,6 +127,74 @@ class FakeDataset(Dataset):
          return self._num_samples
  
  
++class _XDomSwap(_transforms.DataTransformFn):
++    """S3 cross-supervision (2026-08-28): for REAL frames present in the match table,
++    replace the action chunk with the matched sim state's chunk with probability p.
++    The in-graph pin c = U^T a and the head target follow the swapped chunk, so the
++    model learns 'on real observations, planner-style behavior is a valid COMMANDED
++    continuation' — no alignment loss, no sequencing, no feature drift.
++    Env: SNMVP_XDOM_SWAP=<table.npz>:<p>. Module-level class: workers pickle it."""
++
++    def __init__(self, table_path: str, p: float):
++        import numpy as _np
++        z = _np.load(table_path)
++        self._map = {(int(e), int(f)): i for i, (e, f) in enumerate(zip(z["ep"], z["frame"]))}
++        self._chunks = z["chunk"]
++        self._p = p
++        self._rng = None
++
++    def __call__(self, out: dict) -> dict:
++        import os as _osm
++        import numpy as _np
++        ep = out.get("episode_index")
++        fr = out.get("frame_index")
++        if ep is None or fr is None:
++            return out
++        i = self._map.get((int(ep), int(fr)))
++        if i is None:
++            return out
++        if self._rng is None:
++            self._rng = _np.random.default_rng(_osm.getpid())
++        if self._rng.random() >= self._p:
++            return out
++        rep = self._chunks[i].astype(_np.float32)
++        act = _np.asarray(out["actions"]).copy()
++        n = min(len(act), len(rep))
++        w = min(act.shape[1], rep.shape[1])
++        act[:n, :w] = rep[:n, :w]
++        out["actions"] = act
++        # the swapped chunk is a genuine full-length synth continuation: clear pad flags
++        # so _ZeroPadActions-style masking does not zero it (swap runs after zero-pad)
++        if "actions_is_pad" in out:
++            pad = _np.asarray(out["actions_is_pad"]).copy()
++            pad[:n] = False
++            out["actions_is_pad"] = pad
++        return out
++
++
 +class _ZeroPadActions(_transforms.DataTransformFn):
 +    """Zero action steps flagged by `<key>_is_pad`, in raw delta space.
 +
@@ -703,7 +748,7 @@ index e2ee7dd..43ae584 100644
  def create_torch_dataset(
      data_config: _config.DataConfig, action_horizon: int, model_config: _model.BaseModelConfig
  ) -> Dataset:
-@@ -137,17 +160,46 @@ def create_torch_dataset(
+@@ -137,17 +205,52 @@ def create_torch_dataset(
      if repo_id == "fake":
          return FakeDataset(model_config, num_samples=1024)
  
@@ -731,6 +776,12 @@ index e2ee7dd..43ae584 100644
 +    if _os.environ.get("SNMVP_ZERO_PAD_ACTIONS") == "1":
 +        dataset = TransformedDataset(dataset, [_ZeroPadActions()])
 +        logging.info("SNMVP: zeroing padded action steps (delta space)")
++
++    _xs = _os.environ.get("SNMVP_XDOM_SWAP")
++    if _xs:
++        _tp, _pp = _xs.rsplit(":", 1)
++        dataset = TransformedDataset(dataset, [_XDomSwap(_tp, float(_pp))])
++        logging.info(f"SNMVP: cross-domain chunk swap from {_tp} at p={_pp}")
 +
 +
 +    _ep_path = _os.environ.get("SNMVP_EPISODES")
