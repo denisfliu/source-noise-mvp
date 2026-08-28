@@ -6363,3 +6363,19 @@ domain split survives as a SERVING doctrine (synth-authored pins where real is w
 zero-shot contract), not a training one; v2 (frozen-prefix or interleaved) not recommended —
 upside bounded ~0 by these numbers. dsplit checkpoint kept on disk pending Denis; delete
 for 5.8 G whenever. Artifact 59ec9846 (verdict page). Docs updated.
+
+**REAL-IN-THE-LOOP LADDER (2026-08-28): first closed-loop real-perception measurement —
+directional signal for the sim-twin, with an instrument caveat.** Retrieval emulator
+(retrieved corpus frames as the policy's eyes inside sim physics; 0% fallback, match dist
+0.03-0.08): V0 sanity (retrieved SYNTH frames) passes on left (5/5) and FAILS on right
+(0/5) — retrieval frame-jumping breaks the narrow right gate's visual servoing, so
+right-cell numbers are directional only. Valid reads: LEFT closed-loop real perception with
+the model's own head collapses (A1 0/5 vs open-loop probes' benign 7.9 deg — compounding
+matters); sim-twin commands (A2: head on sim render at pose, flow on real frames) restore
+trajectory coherence (clearance 2/5 -> 5/5 clean) but only 1/5 completions on left; on
+right A2 3/5 vs A1 0/5 (vs broken 0/5 baseline). NET: twin-commands > own-head in both
+cells; absolute levels not claimable from this instrument. The decisive test is xswap
+(S3), which needs no emulator — its real-anchor suite runs after training. Artifact
+b48f72bf. (If the emulator is ever needed quantitatively: episode-coherent retrieval —
+prefer frames from the previously-used episode — is the known fix; not building now per
+Denis's solutions-over-infra direction.)
