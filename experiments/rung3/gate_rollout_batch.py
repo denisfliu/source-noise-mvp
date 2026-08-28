@@ -114,6 +114,37 @@ def draw_overlay(frame,fut_world,V):
         dr.ellipse([u1-6,v1-6,u1+6,v1+6],fill=(255,240,80,255))
     dr.text((10,10),"pin intends -->",fill=(255,255,255,235))
     return np.asarray(im,np.uint8)
+
+# --- real-in-the-loop retrieval emulator (2026-08-28) ---------------------------------
+REALOBS = os.environ.get("REALOBS", "")
+SIMCMD = os.environ.get("SIMCMD", "0") == "1"
+RETR_MAX = float(os.environ.get("RETR_MAX", "0.35"))
+RETR_MAXYAW = float(os.environ.get("RETR_MAXYAW", "0.7"))
+if REALOBS:
+    _RI = np.load(REALOBS, allow_pickle=True)
+    _RI_pos, _RI_yaw = _RI["pos"], _RI["yaw"]
+    _RI_ep, _RI_t = _RI["ep"], _RI["t"]
+    _RI_dir = str(_RI["data_dir"])
+    _RI_cache = {}
+    _RI_stats = {"hit": 0, "miss": 0, "dists": []}
+    def _retrieve(pos, yaw_state):
+        dp = np.linalg.norm(_RI_pos - pos, axis=1)
+        dy = np.abs(np.angle(np.exp(1j * (_RI_yaw - yaw_state))))
+        score = dp + 0.3 * dy
+        j = int(np.argmin(score))
+        if dp[j] > RETR_MAX or dy[j] > RETR_MAXYAW:
+            _RI_stats["miss"] += 1
+            return None
+        e, t = int(_RI_ep[j]), int(_RI_t[j])
+        if e not in _RI_cache:
+            if len(_RI_cache) > 3:
+                _RI_cache.pop(next(iter(_RI_cache)))
+            _RI_cache[e] = np.load(f"{_RI_dir}/ep_{e:04d}.npz", allow_pickle=True)
+        d = _RI_cache[e]
+        _RI_stats["hit"] += 1; _RI_stats["dists"].append(float(dp[j]))
+        _rz = lambda im: np.asarray(Image.fromarray(np.asarray(im)).resize((224, 224), Image.BICUBIC), np.uint8)
+        return _rz(d["image"][t]), _rz(d["wrist"][t])
+# --------------------------------------------------------------------------------------
 BASE_PROMPT=os.environ.get("PROMPT") or "go through the gate on the %s and hover over the stuffed animal"%SIDE
 _st=[float(v) for v in os.environ.get("START","0,0,1.5").split(",")]
 pol=WebsocketClientPolicy(host="127.0.0.1",port=PORT)
@@ -140,7 +171,17 @@ def run_trial(t):
                 PROMPT=COMPOSE
                 print(f"[compose] splice done at step {len(traj)}; final task",flush=True)
         imf=obs_fwd(pos,yaw); imw=obs_wrist(pos,yaw)
+        if REALOBS:
+            _r = _retrieve(pos, -yaw)
+            if _r is not None:
+                if SIMCMD:
+                    _cmd_f, _cmd_w = imf, imw
+                imf, imw = _r
+            else:
+                _cmd_f = _cmd_w = None
         o={"observation/image":imf,"observation/wrist_image":imw,"observation/state":np.array([pos[0],pos[1],pos[2],-yaw,0,0,0],np.float32),"prompt":PROMPT,"progress":min(1.0,executed/271.0)}
+        if REALOBS and SIMCMD and _r is not None:
+            o["snmvp_cmd_image"], o["snmvp_cmd_wrist"] = _cmd_f, _cmd_w
         o["snmvp_trial"]=f"{SCENE}_{SIDE}_{t}"  # per-trial key: the MDN server's pi-hysteresis latch must not leak across interleaved clients/trials
         if ci==0: o["reset"]=True
         act=np.asarray(pol.infer(o)["actions"])[:,:7]; n=min(len(act),apc)
@@ -166,3 +207,12 @@ def run_trial(t):
 for t in range(1,TRIALS+1):
     run_trial(t)
 print("BATCH_DONE",flush=True)
+
+if REALOBS:
+    import atexit
+    def _ri_report():
+        h, m = _RI_stats["hit"], _RI_stats["miss"]
+        d = _RI_stats["dists"]
+        print(f"[retrieval] hits={h} misses={m} ({m/max(h+m,1):.0%} fallback) "
+              f"dist median {np.median(d) if d else float('nan'):.2f}", flush=True)
+    atexit.register(_ri_report)

@@ -158,6 +158,16 @@ class JointPinPolicy:
     def infer(self, obs):
         obs = dict(obs)
         trial = obs.pop("snmvp_trial", "default")
+        # dual-obs mode (real-in-the-loop emulator, 2026-08-28): when the client ships
+        # snmvp_cmd_image/_wrist, the COMMAND path (head) reads those (e.g. the sim twin's
+        # render at the current pose) while the flow executes on the main observation
+        cmd_obs = None
+        if "snmvp_cmd_image" in obs:
+            cmd_obs = dict(obs)
+            cmd_obs["observation/image"] = obs.pop("snmvp_cmd_image")
+            cmd_obs["observation/wrist_image"] = obs.pop("snmvp_cmd_wrist")
+            for k in ("snmvp_cmd_image", "snmvp_cmd_wrist"):
+                cmd_obs.pop(k, None)
         sk_c, sk_sig, sk_phase = None, None, 0
         if self.sketch is not None:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
@@ -174,7 +184,7 @@ class JointPinPolicy:
             # sigma tracks the head's own command error at rho=0.82 on demo frames
             # (sigma_phase_probe 2026-08-20), so the closed-loop sigma trace is the direct test
             # of whether the thrash rows are confident-wrong or known-uncertain.
-            c, w, mu, sig = joint_head.head_c(self.policy, [obs], return_gmm=True)
+            c, w, mu, sig = joint_head.head_c(self.policy, [cmd_obs or obs], return_gmm=True)
             w, mu, sig = w[0], mu[0], sig[0]
             j = int(w.argmax())
             jprev = self._latch.get(trial)
@@ -195,7 +205,7 @@ class JointPinPolicy:
                                         sig_serve if sig_serve is not None else -1.0,
                                         sk_phase]]).astype(np.float32)
         else:
-            c, alpha, sig_serve = joint_head.head_c(self.policy, [obs])[0], 1.0, None
+            c, alpha, sig_serve = joint_head.head_c(self.policy, [cmd_obs or obs])[0], 1.0, None
             extra = np.asarray([sk_phase], np.float32)
         if sk_c is not None:
             c, sig_serve, alpha = sk_c.astype(np.float32), sk_sig, 1.0
