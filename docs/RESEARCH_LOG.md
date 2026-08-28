@@ -6347,3 +6347,19 @@ HEAD_LAM=0 +1500 steps, seed 42, gmsig3 as exact control) auto-started on probe 
 success criteria pre-registered: hold sim six cells at gmsig3 level AND improve real-frame
 speed/crossing/fidelity; forgetting in sim cells => interleave next. Artifact 4242b0ff
 updated with synth-head fans + the closed-loop section.
+
+**DSPLIT VERDICT — CLEAN NEGATIVE, REVERT (2026-08-28).** Six sim cells 0/40 (vs gmsig3
+40/40; flights cruise clearance-clean with dead commands); readout c-R2 NEGATIVE (-0.19);
+real-anchor suite shows NO gain anywhere (realpin 4.2/0.64 vs 4.9/0.65; synthpin 34.1/0.86
+vs 33.3/0.96) and the head stranded (own-head fans 30.9 deg, 0.39 m, 3 crossings vs 8).
+TWO LESSONS: (1) sequential domain phases recreate REPRESENTATION DRIFT inside one
+checkpoint — phase B's real-only fine-tune moved the VLM features out from under the frozen
+phase-A head (the record-board feature-pairing failure, new costume): the head must
+co-train with whatever moves its features, or the features must freeze; (2) the split's
+measurable target was ALREADY SATURATED — mixed training had achieved real-command
+execution at floor (consistent with 'head already domain-reconciled'). RECOMMENDATION
+(accepted framework: 'if not, it's ok and we can revert'): gmsig3 remains flagship; the
+domain split survives as a SERVING doctrine (synth-authored pins where real is weak — the
+zero-shot contract), not a training one; v2 (frozen-prefix or interleaved) not recommended —
+upside bounded ~0 by these numbers. dsplit checkpoint kept on disk pending Denis; delete
+for 5.8 G whenever. Artifact 59ec9846 (verdict page). Docs updated.

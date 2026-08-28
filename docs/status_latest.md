@@ -29,10 +29,9 @@ github.com/denisfliu/source-noise-mvp (private).
 
 ## In flight
 
-- **dsplit experiment** (Denis-approved): phase A synth-only+head 4000 steps -> phase B
-  real-only flow-matching (+1500, HEAD_LAM=0). Pre-registered criteria: hold sim six cells
-  at gmsig3 level AND improve real-frame speed/crossing. Forgetting => interleave next.
-  Chain: `scripts/run_dsplit.sh`; post-eval still to be run when it lands.
+- (dsplit experiment resolved 2026-08-28: clean negative — sequential phases strand the
+  head via in-checkpoint feature drift, and real execution was already saturated. Reverted;
+  see RESEARCH_LOG. Domain split lives on as a serving doctrine.)
 
 ## Standing flaws / gaps
 

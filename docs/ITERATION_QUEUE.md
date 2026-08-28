@@ -4,7 +4,7 @@ Ranked open lines, each with context pointer, success criterion, and what the co
 changes. Read `docs/status_latest.md` first. The 4090 serialized everything through one
 24 GB card; the box removes that constraint — the queue below marks what parallelizes.
 
-## 1. dsplit verdict (in flight; finish first)
+## 1. dsplit verdict — RESOLVED 2026-08-28: clean negative, reverted
 Domain-split training (synth learns pin, real learns denoising) is training via
 `scripts/run_dsplit.sh`. TODO when the checkpoint lands: sigma probe + map (`--data-dir
 data_gate_synth3`!), six sim cells (forgetting detector), and the real-anchor probe suite
