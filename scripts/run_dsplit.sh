@@ -19,14 +19,14 @@ $BASEENV SNMVP_HEAD_LAM=0.3 SNMVP_EPISODES=$RUN/eps_synth.json \
   $VENVPY scripts/train.py pi0_gate3 --exp-name=gate_pin_joint_$NAME \
   --num-train-steps=4000 --lr-schedule.decay-steps=1000000 --save-interval=4000 \
   --seed=42 --no-wandb-enabled --overwrite > $RUN/arm_${NAME}_trainA.log 2>&1
-[ -d "$CKDIR/4000/params" ] || { echo PHASE_A_NO_CKPT > $RUN/dsplit.done; exit 1; }
+[ -d "$CKDIR/3999/params" ] || { echo PHASE_A_NO_CKPT > $RUN/dsplit.done; exit 1; }
 echo PHASE_A_DONE >> $RUN/dsplit_progress
 # Phase B: real-only, head loss off, resume
 $BASEENV SNMVP_HEAD_LAM=0.0 SNMVP_EPISODES=$RUN/eps_real.json \
   $VENVPY scripts/train.py pi0_gate3 --exp-name=gate_pin_joint_$NAME \
   --num-train-steps=5500 --lr-schedule.decay-steps=1000000 --save-interval=5500 \
   --seed=42 --no-wandb-enabled --resume > $RUN/arm_${NAME}_trainB.log 2>&1
-[ -d "$CKDIR/5500/params" ] || { echo PHASE_B_NO_CKPT > $RUN/dsplit.done; exit 1; }
+[ -d "$CKDIR/5499/params" ] || { echo PHASE_B_NO_CKPT > $RUN/dsplit.done; exit 1; }
 rm -rf $CKDIR/*/train_state
 echo PHASE_B_DONE >> $RUN/dsplit_progress
 echo DONE > $RUN/dsplit.done
