@@ -6379,3 +6379,23 @@ cells; absolute levels not claimable from this instrument. The decisive test is 
 b48f72bf. (If the emulator is ever needed quantitatively: episode-coherent retrieval —
 prefer frames from the previously-used episode — is the known fix; not building now per
 Denis's solutions-over-infra direction.)
+
+**S3 XSWAP VERDICT — THE CROSS-SUPERVISION WORKS (2026-08-28).** Matched-pair chunk swap
+(p=0.5 on the 97%-matched real frames, mixed training, no phases):
+- **SIM: 40/40 route-clean AND 40/40 CLEARANCE-CLEAN — the first fully strict-clean sweep
+  of the line** (gmsig3 39/40 strict; s7 had 3 CFR grazes; xswap CFR 10/10 clean — the
+  standing west-post descent graze absent in this run; single-run caution, seed rep to
+  confirm). Compounds 0/5 unguided as always; gate FAIL = known artifact.
+- **REAL anchors, own head, RIGHT (the weak cell): chunk length 0.59 -> 0.79 m, scatter
+  26.8 -> 22.6 deg, gate-reaching nearly DOUBLED (8 -> 15 crossings, 14/15 in-aperture,
+  centered s=0.40 vs pilots' 0.45).** The deployed head moved toward twin grade exactly
+  where it was weak.
+- LEFT: functional parity (crossings 3->2 of 21 range-limited anchors, in-aperture both);
+  headings shift pilot-style (7.9 deg) -> planner-style (32 deg) — the trained-in twin's
+  style, not a capability change. realpin/synthpin controls unchanged (execution was
+  already saturated) — internally consistent.
+DSPLIT vs XSWAP postmortem in one line: same goal, sequencing failed (feature drift),
+co-training delivered. The deployed weights now carry the planner on real frames; the
+serve-time twins (S1 schedules, S2 mirror) remain available above it. NEXT for this line:
+seed rep of xswap (claim ladder + confirm the clearance sweep), then it becomes the
+flagship candidate. Artifact f35f0ebc; rows synthpin_xswap.npz.
