@@ -6413,3 +6413,20 @@ vs 2/5) — rejoin length must scale with structure proximity (gentler carrot ne
 per-waypoint carrot joins per-waypoint sigma on the sketch-format wishlist). For real:
 carrot ON with L>=20 in corridors is the default; near-gate kicks are the case to respect.
 Artifact e9eb6a24.
+
+**ARBITRARY GATE POSES — 35/35 TRANSITS THROUGH NEVER-TRAINED CONFIGURATIONS (2026-08-28,
+Denis's generalization ask).** The right gate rigidly moved INSIDE the splat
+(apply_arbitrary_gate: SE(2) on the gate gaussians about their centroid — visuals AND
+geometry off-distribution), auto 4-point sketch through each new aperture, xswap, sigma=0,
+carrot=20. Poses: yaw -45/-25/+25/+45/+90 deg and two translated (+0.5,-0.3), (30 deg,
+-0.4,+0.4). **Every one of the 35 flights crossed its moved gate and reached the goal —
+including the 90-degree rotation.** Route-clean 27/35: all 8 failures are wrong=1
+RE-crossings by the auto-sketch's straight exit-to-goal leg when the moved gate sits across
+the return path (-45: 3, translation: 5) — the min5 routing lesson again, sketch-side, not
+model-side. Crossing centering varies with approach curvature (post distances 0.01-0.41;
+the 30-deg translated pose is perfectly centered 0.33-0.41) — auto-sketches want longer
+straight run-ins (0.45 -> ~0.8 m standoff). READING: gates are COMMANDABLE OBJECTS, not
+memorized fixtures — the pin supplies the pose, the flow supplies the flying, and neither
+needed to have seen the configuration. This is 'distilling the idea of movement' at the
+scene level, and it converts every future gate rearrangement from a retraining event into
+a re-sketch. Artifact f5d3f184; scores gatemove_scores.txt.
