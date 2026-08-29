@@ -6399,3 +6399,17 @@ co-training delivered. The deployed weights now carry the planner on real frames
 serve-time twins (S1 schedules, S2 mirror) remain available above it. NEXT for this line:
 seed rep of xswap (claim ladder + confirm the clearance sweep), then it becomes the
 flagship candidate. Artifact f35f0ebc; rows synthpin_xswap.npz.
+
+**CARROT/KICK DIVERGENCE TEST (2026-08-28, answering 'do we command the same pin movement
+when off the path?'):** 0.4 m lateral kick mid-corridor on the hand-drawn CMPL sketch.
+(1) The shifted-copy failure mode did NOT materialize even without the carrot: nearest-point
+re-anchor + vision residual recover route 5/5 (post-kick dist-to-line 0.11 m median, one
+0.32 m offset flight, clearance 2/5). The borrowed lateral stability is stronger than
+feared ON demo-like corridors. (2) The pursuit carrot (rejoin offset decaying over 20
+steps, correction ~offset/20 per step) HALVES post-kick error (0.06 m), eliminates the
+offset outlier, zero regression unkicked (5/5 + 5/5 clean). (3) Wrinkle: with the kick this
+close to the crossing, the carrot's direct rejoin cuts nearer the west post (clearance 0/5
+vs 2/5) — rejoin length must scale with structure proximity (gentler carrot near gates;
+per-waypoint carrot joins per-waypoint sigma on the sketch-format wishlist). For real:
+carrot ON with L>=20 in corridors is the default; near-gate kicks are the case to respect.
+Artifact e9eb6a24.
