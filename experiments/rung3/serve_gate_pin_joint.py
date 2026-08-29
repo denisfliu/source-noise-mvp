@@ -64,6 +64,11 @@ class SketchPrompt:
         self.enter = float(d.get("enter_radius", 0.45))
         self.end_i = n - 1 - max(int(float(d.get("end_margin_m", 0.1)) / step), 1)
         self.sigma = float(d.get("sigma_serve", 0.0))
+        # pursuit carrot (2026-08-28): when >0, the served window is built from a rejoin
+        # curve — the drone's cross-track offset decays to zero over `carrot` steps — so
+        # the pin itself carries the comeback instead of outsourcing lateral correction
+        # to the vision residual. carrot=0 reproduces the original open-track behavior.
+        self.carrot = int(d.get("carrot", 0))
         self.prompt_after = d["prompt_after"]
         self.amean, self.astd, self.U = amean, astd, U
         self._st = {}
@@ -97,9 +102,18 @@ class SketchPrompt:
                 else:
                     st["i"] = self.end_i - 1
         if st["phase"] == 1:
-            seg = np.zeros((H, 7), np.float32)
-            m = min(H, len(self.A) - st["i"])
-            seg[:m] = self.A[st["i"]:st["i"] + m]
+            i = st["i"]
+            m = min(H, len(self.A) - i)
+            if self.carrot > 0:
+                off = pos - self.P[i, :3]
+                w = np.maximum(0.0, 1.0 - np.arange(1, m + 1) / self.carrot)[:, None]
+                pts = self.P[i + 1:i + 1 + m, :3] + off[None, :] * w
+                seg = np.zeros((H, 7), np.float32)
+                seg[:m, :3] = np.diff(np.concatenate([pos[None, :], pts]), axis=0)
+                seg[:m, 3] = self.A[i:i + m, 3]
+            else:
+                seg = np.zeros((H, 7), np.float32)
+                seg[:m] = self.A[i:i + m]
             ch = np.zeros((H, AD), np.float32)
             ch[:, :7] = (seg - self.amean) / (self.astd + 1e-6)
             return ch.reshape(-1) @ self.U, self.sigma, self.prompt_after, 1

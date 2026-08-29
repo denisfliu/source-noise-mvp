@@ -135,3 +135,36 @@ def apply_duplicate_gate(means, quats, scales, opac, colors, tw2g, scene="left_a
     opac2 = torch.cat([opac, opac[mt]], 0)
     colors2 = torch.cat([colors, colors[mt]], 0)
     return means2, quats2, scales2, opac2, colors2, int(mask.sum())
+
+
+def apply_arbitrary_gate(means, quats, tw2g, scene, dyaw_rad, dxy):
+    """Move the scene's own gate by an ARBITRARY yaw about its centroid + xy translation
+    (mocap frame). Selection reuses the published duplicate_aabb boxes for the gate
+    (right_and_center selects the right gate; left_and_center the left). Returns
+    (means', quats', centroid_mocap, n_moved). 2026-08-28, gate-generalization sweep."""
+    edit = load_duplicate_edit(scene)
+    A = tw2g[:3, :3] @ np.diag([1.0, -1.0, -1.0]); b = tw2g[:3, 3]
+    Ainv = np.linalg.inv(A)
+    dev = means.device
+    P_mocap = (means.detach().cpu().numpy().astype(np.float64) - b) @ Ainv.T
+    mask = _mask_mocap(P_mocap, edit)
+    cen = P_mocap[mask].mean(0)
+    c_, s_ = math.cos(dyaw_rad), math.sin(dyaw_rad)
+    R = np.array([[c_, -s_, 0.0], [s_, c_, 0.0], [0.0, 0.0, 1.0]])
+    t_vec = cen - R @ cen + np.array([dxy[0], dxy[1], 0.0])
+    moved = (R @ P_mocap[mask].T).T + t_vec
+    P_ns_new = moved @ A.T + b
+    means = means.clone()
+    means[torch.as_tensor(mask, device=dev)] = torch.as_tensor(P_ns_new, dtype=means.dtype, device=dev)
+    scale = np.cbrt(abs(np.linalg.det(A)))
+    R_A = A / scale
+    R_ns = R_A @ R @ R_A.T
+    tr = np.trace(R_ns)
+    qw = math.sqrt(max(0.0, 1.0 + tr)) / 2.0
+    q_R = torch.tensor([qw, (R_ns[2, 1] - R_ns[1, 2]) / (4 * qw),
+                        (R_ns[0, 2] - R_ns[2, 0]) / (4 * qw),
+                        (R_ns[1, 0] - R_ns[0, 1]) / (4 * qw)], dtype=quats.dtype, device=dev)
+    quats = quats.clone()
+    mt = torch.as_tensor(mask, device=dev)
+    quats[mt] = _quat_mul(quats[mt], q_R)
+    return means, quats, cen, int(mask.sum())

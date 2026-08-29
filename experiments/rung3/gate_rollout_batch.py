@@ -64,6 +64,16 @@ elif SCENE in ("left_and_center","right_and_center"):
     from gsplat_scene_edit import apply_duplicate_gate as _adg
     means,quats,scales,opac,colors,_ncopy=_adg(means,quats,scales,opac,colors,Tw2g,SCENE)
     print(f"[scene] {SCENE}: {_ncopy} gaussians duplicated to center",flush=True)
+GATE_TF=os.environ.get("GATE_TF","")
+if GATE_TF:
+    import math as _m
+    _gy,_gx,_gyy=[float(v) for v in GATE_TF.split(",")]
+    from gsplat_scene_edit import apply_arbitrary_gate as _aag
+    means,quats,_gcen,_ngm=_aag(means,quats,Tw2g,
+        "right_and_center" if SIDE=="right" else "left_and_center",
+        _m.radians(_gy),(_gx,_gyy))
+    print(f"[scene] arbitrary gate move: yaw {_gy} deg, dxy ({_gx},{_gyy}), {_ngm} gaussians",flush=True)
+
 COMPOSE=os.environ.get("COMPOSE","")
 COMPOSE_MID=os.environ.get("COMPOSE_MID","")
 COMPOSE_MID_CHUNKS=int(os.environ.get("COMPOSE_MID_CHUNKS","2"))
@@ -115,6 +125,12 @@ def draw_overlay(frame,fut_world,V):
     dr.text((10,10),"pin intends -->",fill=(255,255,255,235))
     return np.asarray(im,np.uint8)
 
+# wind-kick divergence test (2026-08-28): KICK="step:dx,dy,dz" displaces the drone once
+KICK = os.environ.get("KICK", "")
+if KICK:
+    _ks, _kv = KICK.split(":")
+    KICK_STEP = int(_ks)
+    KICK_VEC = np.array([float(v) for v in _kv.split(",")], np.float32)
 # --- real-in-the-loop retrieval emulator (2026-08-28) ---------------------------------
 REALOBS = os.environ.get("REALOBS", "")
 SIMCMD = os.environ.get("SIMCMD", "0") == "1"
@@ -185,6 +201,9 @@ def run_trial(t):
         o["snmvp_trial"]=f"{SCENE}_{SIDE}_{t}"  # per-trial key: the MDN server's pi-hysteresis latch must not leak across interleaved clients/trials
         if ci==0: o["reset"]=True
         act=np.asarray(pol.infer(o)["actions"])[:,:7]; n=min(len(act),apc)
+        if KICK and executed <= KICK_STEP < executed + n:
+            pos = pos + KICK_VEC
+            print(f"[kick] applied {KICK_VEC.tolist()} at step {executed}",flush=True)
         cs_all=np.cumsum(act[:,:3],0); cs=cs_all[:n]
         if VIDEO:
             for i in range(0,n,VSTRIDE):
