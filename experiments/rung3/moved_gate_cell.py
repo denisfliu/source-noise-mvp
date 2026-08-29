@@ -51,19 +51,47 @@ def main():
     if a.make:
         appr = mid - 0.45 * n
         thru = mid + 0.30 * n
-        yaw0 = math.atan2(*(appr - START[:2])[::-1])
-        yaw1 = math.atan2(*n[::-1])
-        yaw2 = math.atan2(*(GOAL[:2] - thru)[::-1])
-        sk = {"points": [[0.0, 0.0, 1.5, round(yaw0, 3)],
-                         [round(appr[0], 3), round(appr[1], 3), ZC, round(yaw1, 3)],
-                         [round(thru[0], 3), round(thru[1], 3), ZC, round(yaw1, 3)],
-                         [round(GOAL[0], 3), round(GOAL[1], 3), 1.2, round(yaw2, 3)]],
+        L = np.linalg.norm(gb - ga)
+
+        def crosses(p, q):
+            """does segment p->q cross the aperture line within span+-0.25?"""
+            dp_, dq_ = (p - ga) @ n, (q - ga) @ n
+            if dp_ * dq_ >= 0:
+                return False
+            f = dp_ / (dp_ - dq_)
+            sxx = ((p + f * (q - p)) - ga) @ tv
+            return -0.25 < sxx < L + 0.25
+
+        def detour(p, q):
+            """route around the nearer post: exterior points beyond each post, pick shorter."""
+            cands = [ga - 0.55 * tv, gb + 0.55 * tv]
+            best = min(cands, key=lambda c: np.linalg.norm(p - c) + np.linalg.norm(c - q))
+            return best
+
+        wp = [START[:2], appr, thru, GOAL[:2]]
+        # leg routing (2026-08-29): insert around-post detours where straight legs would
+        # cross the moved plane — covers gates behind the start and across the return
+        out = [wp[0]]
+        for i, (p, q) in enumerate(zip(wp[:-1], wp[1:])):
+            if i != 1 and crosses(p, q):     # never reroute the approach->thru crossing leg
+                out.append(detour(p, q))
+            out.append(q)
+        zs = {0: 1.5, len(out) - 1: 1.2}
+        pts = []
+        for i, p in enumerate(out):
+            nxt = out[min(i + 1, len(out) - 1)]
+            prv = out[max(i - 1, 0)]
+            seg = (nxt - p) if i < len(out) - 1 else (p - prv)
+            yawv = math.atan2(seg[1], seg[0])
+            pts.append([round(float(p[0]), 3), round(float(p[1]), 3),
+                        zs.get(i, ZC), round(yawv, 3)])
+        sk = {"points": pts,
               "prompt_after": "go through the gate on the right and hover over the stuffed animal",
               "enter_radius": 0.5, "step_m": 0.025, "sigma_serve": 0.0,
               "end_margin_m": 0.1, "carrot": 20}
-        out = f"{RD}/sketch_mg_{a.tag}.json"
-        json.dump(sk, open(out, "w"), indent=1)
-        print(f"wrote {out}; aperture now {np.round(ga,2)}..{np.round(gb,2)}")
+        out_p = f"{RD}/sketch_mg_{a.tag}.json"
+        json.dump(sk, open(out_p, "w"), indent=1)
+        print(f"wrote {out_p} ({len(pts)} pts); aperture {np.round(ga,2)}..{np.round(gb,2)}")
         return
     # score: crossing along +n within post span, wrong-dir count, goal dwell, post distance
     L = np.linalg.norm(gb - ga)
