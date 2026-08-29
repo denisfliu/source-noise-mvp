@@ -167,6 +167,21 @@ class JointPinPolicy:
             self._sigmap = (np.asarray(d["sig_star"], np.float32),
                             np.asarray(d["sig_serve"], np.float32), float(d["cap"]))
             print(f"[joint] sigma-conditioned serve: map from {mp} cap={d['cap']}", flush=True)
+        self.bridge = None
+        bp = os.environ.get("SNMVP_INTENT_WS", "")
+        if bp:
+            from intent_bridge import IntentBridge
+            self.bridge = IntentBridge(int(bp))
+            self._amean_b = np.asarray(act_norm.mean[:32] if act_norm is not None else np.zeros(32), np.float32)
+            self._astd_b = np.asarray(np.pad(np.asarray(act_norm.std, np.float32),
+                                             (0, max(0, 32 - len(act_norm.std)))), np.float32)                 if act_norm is not None else np.ones(32, np.float32)
+            self._cstd_b = np.std(self._rng.standard_normal((512, H * AD)).astype(np.float32) @ self.U, axis=0)
+            try:
+                z = np.load("/home/dfliu/ctxrun/pingap_rows.npz")
+                self._cstd_b = z["cstd"].astype(np.float32)
+            except Exception:
+                pass
+            print(f"[joint] intent bridge on ws://127.0.0.1:{bp}", flush=True)
         print(f"[joint] head from the checkpoint, U {self.U.shape} from {pin_u_path}", flush=True)
 
     def infer(self, obs):
@@ -227,10 +242,40 @@ class JointPinPolicy:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
             self._log.append(np.concatenate([pos, c, extra]).astype(np.float32))
             np.save(self.CLOG, np.stack(self._log))
+        if self.bridge is not None:
+            from intent_bridge import sentence as _sent
+            import math as _m
+            pos_b = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
+            while True:
+                intent = pos_b + np.cumsum((self.U @ c).reshape(H, AD)[:, :3]
+                                           * self._astd_b[:3], axis=0)
+                if self.bridge.sigma_override is not None:
+                    sig_serve = float(self.bridge.sigma_override)
+                dec = self.bridge.propose({
+                    "pos": pos_b.tolist(), "c": np.asarray(c, np.float32).tolist(),
+                    "sigma_star": float(sstar) if "sstar" in dir() else -1.0,
+                    "sigma_serve": sig_serve if sig_serve is not None else -1.0,
+                    "phase": int(sk_phase),
+                    "intent": np.concatenate([pos_b[None], intent]).tolist(),
+                    "text": _sent(np.asarray(c, np.float32), self.U, self._astd_b, self._cstd_b)})
+                if dec.get("action") == "rotate":
+                    th = _m.radians(float(dec.get("deg", 15)))
+                    a_c = (self.U @ c).reshape(H, AD).copy()
+                    R = np.array([[_m.cos(th), -_m.sin(th)], [_m.sin(th), _m.cos(th)]], np.float32)
+                    a_c[:, :2] = a_c[:, :2] @ R.T
+                    c = a_c.reshape(-1) @ self.U
+                    continue
+                break
         g = self._rng.standard_normal((H, AD)).astype(np.float32).reshape(-1)
         c_eff = alpha * c + (1.0 - alpha) * (g @ self.U)
         noise = (g - (g @ self.U) @ self.U.T + (c_eff @ self.U.T)).reshape(H, AD).astype(np.float32)
-        return self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve)
+        out = self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve)
+        if self.bridge is not None:
+            acts = np.asarray(out["actions"], np.float32)[:H, :3]
+            pos_b = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
+            self.bridge.executed({"chunk": np.concatenate(
+                [pos_b[None], pos_b + np.cumsum(acts, axis=0)]).tolist()})
+        return out
 
 
 def _pad(ns, dim):
