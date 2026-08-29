@@ -6430,3 +6430,18 @@ memorized fixtures — the pin supplies the pose, the flow supplies the flying, 
 needed to have seen the configuration. This is 'distilling the idea of movement' at the
 scene level, and it converts every future gate rearrangement from a retraining event into
 a re-sketch. Artifact f5d3f184; scores gatemove_scores.txt.
+
+**EXTREME-OOD GATE POSES — PERFECT SWEEP, 35/35 ROUTE-CLEAN (2026-08-29, Denis: 'pretty
+crazy positions, like behind the starting point').** With the plane-aware leg router in the
+auto-sketcher (detours inserted when straight approach/exit legs would cross the moved
+plane — including the start sitting on the EXIT side): gate BEHIND the start (100 deg,
+center (-0.7,0.35) — the drone turns away from every trained route and threads it facing
+the room's rear wall), 180-flip in place (reversed crossing direction), goal-doorstep
+(cross-and-settle), two 90-deg relocations, and yesterday's two failing poses rerun:
+**every cell 5/5 route-clean** (post distances 0.12-0.41, median 0.16). Two-day cumulative:
+70/70 transits over 14 arbitrary poses; with routing, 62/70 -> route-clean failures = 0.
+CLAIM (screen tier): the flow's residual is POSE-AGNOSTIC over the reconstructed room —
+visuals, headings, and route topology all off-distribution simultaneously — and the entire
+task layout lives in the sketch. Gate rearrangement, including adversarial rearrangement,
+is a re-sketch. Remaining polish: crossing centering (0.12 tails; longer run-ins).
+Artifact 9c80439a; sketch router in moved_gate_cell.py.

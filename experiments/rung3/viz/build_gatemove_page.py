@@ -18,10 +18,13 @@ import cloudviewer
 RUN = "/home/dfliu/ctxrun"
 RD = os.path.dirname(SP)
 GA = np.array([0.195, -1.348]); GB = np.array([0.924, -0.952]); CEN = (GA + GB) / 2
-POSES = [("mgm45_0_0", -45, 0, 0, "2/5"), ("mgm25_0_0", -25, 0, 0, "5/5"),
-         ("mg25_0_0", 25, 0, 0, "5/5"), ("mg45_0_0", 45, 0, 0, "5/5"),
-         ("mg90_0_0", 90, 0, 0, "5/5"), ("mg0_0_5_m0_3", 0, 0.5, -0.3, "0/5"),
-         ("mg30_m0_4_0_4", 30, -0.4, 0.4, "5/5")]
+POSES = [("mx100_m1_26_1_50", 100, -1.26, 1.50, "5/5 — BEHIND THE START"),
+         ("mx180_0_0", 180, 0, 0, "5/5 — direction flipped in place"),
+         ("mxm35_1_34_0_75", -35, 1.34, 0.75, "5/5 — at the goal doorstep"),
+         ("mx90_0_74_1_95", 90, 0.74, 1.95, "5/5 — north side, rotated 90"),
+         ("mx90_m0_26_0_85", 90, -0.26, 0.85, "5/5 — close-in, perpendicular"),
+         ("mxm45_0_0", -45, 0, 0, "5/5 — yesterday's 2/5, router fixed"),
+         ("mx0_0_5_m0_3", 0, 0.5, -0.3, "5/5 — yesterday's 0/5, router fixed")]
 
 Z = np.load(f"{SP}/scene_cloud_right.npz")
 pts0, rgb0 = Z["pts"].astype(np.float32), Z["rgb"]
@@ -56,7 +59,7 @@ for tag, dyaw, dx, dy, score in POSES:
                  cloudviewer.viewer_html("mgtmp", groups, elem_id=f"v_{tag}", max_pts=40000)))
 os.remove(tmp)
 body = "".join(f"<h2>{t}</h2>\n<div class='vc'>{h}</div>\n" for t, h in SECS)
-page = f"""<title>Moved Gates</title>
+page = f"""<title>Extreme Gate Poses</title>
 <style>
 :root{{--bg:#0f1216;--card:#151a21;--line:#28303c;--ink:#e4e9f1;--mut:#8b94a5;--acc:#7cd0f0}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,sans-serif;
@@ -74,17 +77,15 @@ font:12px ui-monospace,Menlo,monospace}}
 .v3dnote{{color:var(--mut);font-size:13px;margin:8px 2px 0;max-width:95ch}}
 </style>
 <main>
-<h1>Moved Gates</h1>
-<p class="sub">The right gate rigidly moved INSIDE the splat (the cloud shown per viewer has
-the gate at its moved pose — what the drone saw), an auto-generated 4-point sketch through
-each new aperture, xswap checkpoint, sigma=0, carrot on. Headline: 35/35 flights crossed
-their moved gate and reached the goal — including the 90-degree rotation — on a model that
-never trained on any of these poses. The 8 route-clean failures are the auto-sketch's exit
-leg re-crossing the moved plane on its way to the goal (the -45 and translated poses put
-the gate across the return path) — sketch routing, not model capability. Crossing
-centering varies (post distances 0.01-0.41): longer straight run-ins would center them.</p>
+<h1>Extreme Gate Poses</h1>
+<p class="sub">Round two, adversarial: the gate BEHIND the starting point (the drone turns
+away from every trained route and threads it facing the room's back wall), flipped 180 in
+place, parked at the goal doorstep, and two 90-degree relocations — plus yesterday's two
+failing poses rerun with the plane-aware leg router. <b>35/35 route-clean. Every cell
+perfect.</b> Post distances 0.12-0.41 (median 0.16). The flow's residual is pose-agnostic
+over the room; the task layout lives entirely in the sketch.</p>
 {body}
 </main>
 """
-open(f"{SP}/moved_gates.html", "w").write(page)
-print("wrote moved_gates.html")
+open(f"{SP}/moved_gates2.html", "w").write(page)
+print("wrote moved_gates2.html")
