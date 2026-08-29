@@ -55,27 +55,31 @@ SECS.append(("the whole sweep, one room", cloudviewer.viewer_html(
     "rectangle is where it actually stood for that cell. Toggle poses to unclutter.")))
 
 # ---- 2. the command vocabulary ------------------------------------------------------
-cstd = np.load(f"{RUN}/pingap_rows.npz")["cstd"]
-origin = np.array([1.2, 0.2, 1.5], np.float32)
 CH = {0: ("x", [240, 110, 110]), 1: ("y", [96, 235, 160]), 2: ("z", [124, 168, 255]),
       3: ("yaw", [255, 230, 90])}
 H80 = [5, 11, 23, 45]
 vg = []
-for k in range(16):
-    ch, col = CH[k % 4]
-    amp = 2.0 * cstd[k] * 3.0        # 2-sigma command, x3 for visibility
-    path = decode_c(np.eye(16, dtype=np.float32)[k] * amp, origin)
-    shade = [int(c * (0.45 + 0.18 * (k // 4))) for c in col]
-    vg.append({"label": f"dim {k}: {ch} @ h~{H80[k // 4]} (2-sigma x3)", "color": shade,
-               "trajs": [path]})
+for ch_i in range(4):
+    name, col = CH[ch_i]
+    trajs = []
+    for h_i in range(4):
+        k = h_i * 4 + ch_i
+        raw = decode_c(np.eye(16, dtype=np.float32)[k], np.zeros(3, np.float32))
+        ext = np.abs(raw).max()
+        glyph = raw / max(ext, 1e-6) * 0.9
+        origin = np.array([1.0 + 2.0 * h_i, 4.0 - 1.1 * ch_i, 1.0], np.float32)
+        trajs.append(origin + glyph)
+    vg.append({"label": f"{name}-words (columns: h~5, 11, 23, 45)", "color": col,
+               "trajs": trajs})
 SECS.append(("the 16-word vocabulary (eigen-movements)", cloudviewer.viewer_html(
-    "right", vg, elem_id="v_vocab", max_pts=25000, note=
-    "Each basis dimension decoded back to the coarse movement it commands (U e_k, "
-    "denormalized, integrated from a common origin; drawn at 2-sigma amplitude x3). The "
-    "structure is clean: four channels (x red, y green, z blue, yaw amber — yaw curves "
-    "because heading rotates the ongoing motion) at four horizons (darker = shorter, "
-    "brighter = longer). Every command the pin ever carries is a weighted sentence of "
-    "these sixteen words.")))
+    "vocab", vg, elem_id="v_vocab", max_pts=2000, note=
+    "Type-specimen sheet, no room: each curve is one basis dimension decoded to the "
+    "movement it commands (U e_k, denormalized, integrated; shape-normalized to ~0.9 m — "
+    "true 2-sigma sizes are 5-35 cm). Rows are channels (x red, y green, z blue, yaw "
+    "amber), columns are horizons, short to long left to right. Short-horizon words move "
+    "then hold; long-horizon words keep moving through the whole chunk; yaw words curl "
+    "because heading rotates the ongoing motion. Every command the pin ever carries is a "
+    "weighted sentence of these sixteen.")))
 
 # ---- 3. pin-intent along the behind-start flight ------------------------------------
 sk = json.load(open(f"{RD}/sketch_mg_mx100_m1_26_1_50.json"))
