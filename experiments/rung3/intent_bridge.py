@@ -48,7 +48,7 @@ class IntentBridge:
                 self._clients.discard(ws)
 
         async def main():
-            async with websockets.serve(handler, "127.0.0.1", self.port):
+            async with websockets.serve(handler, __import__("os").environ.get("SNMVP_INTENT_BIND", "127.0.0.1"), self.port):
                 await asyncio.Future()
 
         self._loop = asyncio.new_event_loop()

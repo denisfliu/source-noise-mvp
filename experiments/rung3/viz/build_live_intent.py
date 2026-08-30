@@ -127,7 +127,9 @@ function log(t){const d=document.createElement("div");
  d.textContent=new Date().toLocaleTimeString()+" "+t;
  logEl.prepend(d);while(logEl.childElementCount>60)logEl.lastChild.remove();}
 let ws,mode="auto";
-function connect(){ws=new WebSocket("ws://127.0.0.1:"+PORT);
+const q=new URLSearchParams(location.search);
+const WSHOST=q.get("ws")||location.hostname||"127.0.0.1";
+function connect(){ws=new WebSocket("ws://"+WSHOST+":"+PORT);
  ws.onopen=()=>{document.getElementById("conn").innerHTML="&#9679; live";
   document.getElementById("conn").style.color="#60eba0";};
  ws.onclose=()=>{document.getElementById("conn").innerHTML="&#9679; disconnected";

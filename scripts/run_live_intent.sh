@@ -14,6 +14,14 @@ CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_xswap/4999
 TRIALS=${1:-3}
 SKETCH=${2:-}
 PORT=9110
+# REMOTE=1: serve the cockpit page over HTTP and open the WS to the network so any
+# device that can reach this box (LAN / tailscale) can drive the session
+if [ "${REMOTE:-0}" = "1" ]; then
+  export SNMVP_INTENT_BIND=0.0.0.0
+  pgrep -f "http.server 8788" >/dev/null ||     { setsid python3 -m http.server 8788 --bind 0.0.0.0 -d $RD/viz >/dev/null 2>&1 & disown; }
+  IP=$(hostname -I | awk '{print $1}')
+  echo "COCKPIT URL:  http://$IP:8788/live_intent_right.html"
+fi
 for p in $(pgrep -f "serve_gate_pin_joint.py --ckpt .* --port $PORT"); do kill -9 "$p" 2>/dev/null; done
 sleep 2
 cd $RD
