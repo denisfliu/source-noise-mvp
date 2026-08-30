@@ -6456,3 +6456,21 @@ clearance that was gmsig3's one flaw. Real-anchor suite (right, own head): 29.0 
 s) REPLICATE; the heading-scatter improvement is seed-variable. Compounds 0/5 unguided
 both seeds (structural, unchanged). Known artifact gate FAIL as always. FLAGSHIP CALL:
 xswap recipe (gmsig recipe + SNMVP_XDOM_SWAP p=0.5) supersedes gmsig3 pending video review.
+
+**OVERNIGHT PIN APPLICATIONS (2026-08-30): PACE IS A COMMAND, AND NEVER-DEMONSTRATED
+PROGRAMS FLY.** xswap, sigma=0, carrot=20, screen tier (5 trials/cell):
+- **TEMPO VERB: near-unit gain.** Same 4-point route resampled at 0.6x/1.0x/1.5x demo
+  speed -> gate crossings at 88/53/37 steps = realized gains 0.60 and 1.43. All 15 flights
+  5/5 judge. COST: clearance degrades off-tempo (0/5 clean at both extremes vs 2/5 at
+  1.0x) — crossing finesse is tuned at demo pace; slow/fast passes need wider sketch
+  margins or per-segment tempo (fast corridors, demo-pace crossings).
+- **ORBIT: 5/5 completions of 1.5 loops around the gate (r=0.9), tracking 0.07-0.10 m,
+  all clearance-clean** — an entire behavior class (loitering/orbiting) absent from every
+  training demo, composed purely from displacement words. (Judge 'fail' expected: orbiting
+  crosses the aperture plane by design.)
+- **FIGURE-8: 5/5 completions, 0.09 m tracking, clean** — sustained curvature reversal,
+  the hardest shape for prefix-sum words.
+Reading: the movement vocabulary COMPOSES — new routes (moved gates), new paces (tempo),
+and new motion programs (orbit/8) all execute at sketch-fidelity without a single new
+demonstration. 'Distilling the idea of movement' now has its composition evidence at three
+levels. Artifact dcace32b (New Verbs).
