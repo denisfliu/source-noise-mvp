@@ -6445,3 +6445,14 @@ visuals, headings, and route topology all off-distribution simultaneously — an
 task layout lives in the sketch. Gate rearrangement, including adversarial rearrangement,
 is a re-sketch. Remaining polish: crossing centering (0.12 tails; longer run-ins).
 Artifact 9c80439a; sketch router in moved_gate_cell.py.
+
+**XSWAP SEED-7 REPLICATION LANDS (2026-08-30 overnight): THE FULL STRICT-CLEAN SWEEP
+REPLICATES — 40/40 route-clean AND 40/40 clearance-clean at seed 7.** Pooled xswap pair:
+80/80 judge + 80/80 clearance across two training seeds (vs gmsig3 pair's 80/80 + 77/80) —
+xswap is now the seed-replicated flagship on every sim axis, including the CFR descent
+clearance that was gmsig3's one flaw. Real-anchor suite (right, own head): 29.0 deg /
+0.72 m / 14 pre-gate crossings (s=0.36) vs s42's 22.6 / 0.79 / 15 and gmsig3's 26.8 /
+0.59 / 8 — the structural real-frame gains (speed ~0.75 m, crossings ~doubled, centered
+s) REPLICATE; the heading-scatter improvement is seed-variable. Compounds 0/5 unguided
+both seeds (structural, unchanged). Known artifact gate FAIL as always. FLAGSHIP CALL:
+xswap recipe (gmsig recipe + SNMVP_XDOM_SWAP p=0.5) supersedes gmsig3 pending video review.
