@@ -53,7 +53,12 @@ class IntentBridge:
 
         self._loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self._loop)
-        self._loop.run_until_complete(main())
+        try:
+            self._loop.run_until_complete(main())
+        except Exception as e:                      # surface bind/loop failures loudly
+            import traceback
+            print(f"[intent_bridge] FATAL: {e}", flush=True)
+            traceback.print_exc()
 
     def _send(self, obj):
         if self._loop is None:

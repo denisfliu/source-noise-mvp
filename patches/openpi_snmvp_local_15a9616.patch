@@ -535,6 +535,23 @@ index b9b708b..affe206 100644
  
          observation = _model.Observation.from_dict(inputs)
          start_time = time.monotonic()
+diff --git a/src/openpi/serving/websocket_policy_server.py b/src/openpi/serving/websocket_policy_server.py
+index bdefa98..f021483 100644
+--- a/src/openpi/serving/websocket_policy_server.py
++++ b/src/openpi/serving/websocket_policy_server.py
+@@ -58,7 +58,11 @@ class WebsocketPolicyServer:
+                 obs = msgpack_numpy.unpackb(await websocket.recv())
+ 
+                 infer_time = time.monotonic()
+-                action = self._policy.infer(obs)
++                # run infer off the event loop so long-blocking policies (e.g. a human
++                # approval gate) don't starve websocket keepalives (2026-08-29)
++                import asyncio as _aio
++                action = await _aio.get_event_loop().run_in_executor(
++                    None, self._policy.infer, obs)
+                 infer_time = time.monotonic() - infer_time
+ 
+                 action["server_timing"] = {
 diff --git a/src/openpi/training/checkpoints.py b/src/openpi/training/checkpoints.py
 index f32a831..3ff9aac 100644
 --- a/src/openpi/training/checkpoints.py
