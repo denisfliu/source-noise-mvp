@@ -4,6 +4,7 @@ set -u
 RUN=/home/dfliu/ctxrun
 RD=/home/dfliu/code/source-noise-mvp/experiments/rung3
 for k in $(seq 1 420); do [ -f $RUN/scrsketch.done ] && break; sleep 60; done
+[ -f $RUN/scrsketch.done ] || { echo GATE_TIMEOUT > $RUN/ablation_evals.fail; exit 1; }
 bash /home/dfliu/code/source-noise-mvp/scripts/run_synthonly_post.sh
 bash /home/dfliu/code/source-noise-mvp/scripts/run_nosig_post.sh
 CKA=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_synthonly/4999

@@ -14,6 +14,7 @@ CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_xswap/4999
 PORT=9120
 rm -f $RUN/pinapps.done $RUN/pinapps_scores.txt
 for k in $(seq 1 400); do [ -f $RUN/arm_xswaps7.done ] && break; sleep 60; done
+[ -f $RUN/arm_xswaps7.done ] || { echo GATE_TIMEOUT > $RUN/pinapps.fail; exit 1; }
 cd $RD
 for SK in tempo06 tempo10 tempo15 orbit fig8; do
   for p in $(pgrep -f "serve_gate_pin_joint.p[y] .*port $PORT"); do kill -9 "$p" 2>/dev/null; done

@@ -13,6 +13,7 @@ PORT=9130
 CMP_L="go through the gate on the left, then through the center gate and hover over the stuffed animal"
 rm -f $RUN/scrsketch.done $RUN/scrsketch_scores.txt
 for k in $(seq 1 420); do [ -f $RUN/ablations.done ] && break; sleep 60; done
+[ -f $RUN/ablations.done ] || { echo GATE_TIMEOUT > $RUN/scrsketch.fail; exit 1; }
 cd $RD
 cell () { # tag sketch side scene prompt
   local TAG=$1 SK=$2 SIDE=$3 SCENE=$4 PR=$5
