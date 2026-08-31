@@ -6474,3 +6474,25 @@ Reading: the movement vocabulary COMPOSES — new routes (moved gates), new pace
 and new motion programs (orbit/8) all execute at sketch-fidelity without a single new
 demonstration. 'Distilling the idea of movement' now has its composition evidence at three
 levels. Artifact dcace32b (New Verbs).
+
+**ABLATION MATRIX COMPLETE (2026-08-31): every axis isolated, every arm informative.**
+- **SCRATCH-SKETCH MECHANISM CONTROL: the pin channel is NECESSARY.** Identical sketch
+  pipeline through scratch3: CMPL 0/5 (vs 5/5); orbit ignored (tracking 0.45-0.68 m vs
+  0.07-0.10 — the 'completion' metric saturates on endpoint proximity, deviation is the
+  honest number). Sharper than predicted: the injected pin noise (4-6 sigma off scratch's
+  training distribution) actively DEGRADES scratch's own flying (atomic right 0/5 vs its
+  usual 10/10) — injection without pin training is harmful, not neutral.
+- **synthonly (no real data): sim 40/40 judge / 39/40 clean, GATE PASS (undiluted synth
+  readout). Real anchors: realpin execution 7.7 deg / 0.59 m (vs xswap 4.7/0.65) — real
+  training data buys ~1.6x real execution fidelity, but synth-only REMAINS FUNCTIONAL on
+  real frames (12 head gate-crossings vs xswap 15, gmsig3 8).** Low-data story: a room's
+  real corpus improves but does not gate real deployment.
+- **nosig (no trust dial): sim 40/40 + 40/40 — sigma-conditioning is free in sim. Real:
+  TIGHTEST execution (realpin 3.3 deg — always-exact pin training) but head crossings 7
+  (gmsig3-level): the SWAP, not sigma, drives the real-frame head gains. sigma's value is
+  the verbs it enables (slack dial, calibrated handback), not base performance — and it
+  costs ~1.4 deg of raw obedience.**
+Matrix on disk (both seeds where applicable): xswap(+s7), gmsig3(+s7), gmsig4, nosig,
+synthonly, scratch3(+s7) + the head-free sketch server. Real-ablation kit COMPLETE.
+Artifact 33fbf136. Ops: the overnight OOM cascade was a fail-open gate wait (now
+fail-closed in all chained scripts) + a monitor matching its own pattern (bracket rule).
