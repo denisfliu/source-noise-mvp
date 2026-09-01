@@ -129,10 +129,17 @@ def main():
                 rec["hfix"] = float(heading(np.sum(acts_fix[:m, :2], axis=0)))
                 rec["traj0"] = st[t, :3] + np.cumsum(acts0[:, :3], axis=0)
                 rec["trajfix"] = st[t, :3] + np.cumsum(acts_fix[:, :3], axis=0)
-                # dose-response: command +/-15 deg rotations of the model's own plan
+                # dose-response: command +/-15 deg rotations of the model's own plan,
+                # both xy-only (original verb) and with a nose ramp (theta spread over the
+                # first 10 steps of dyaw) — testing whether turning the nose closes the
+                # 0.76 gain gap (2026-09-01)
                 for tag, th in [("p15", np.radians(15)), ("m15", np.radians(-15))]:
                     av = gen(obs, proj(rotz(acts0, th)))
                     rec[f"h{tag}"] = float(heading(np.sum(av[:m, :2], axis=0)))
+                    ar = rotz(acts0, th)
+                    ar[:10, 3] += th / 10.0
+                    av2 = gen(obs, proj(ar))
+                    rec[f"h{tag}n"] = float(heading(np.sum(av2[:m, :2], axis=0)))
             out.append(rec)
         print(f"ep{e:03d} [{side}] done", flush=True)
 

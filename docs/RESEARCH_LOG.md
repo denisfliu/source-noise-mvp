@@ -6496,3 +6496,14 @@ Matrix on disk (both seeds where applicable): xswap(+s7), gmsig3(+s7), gmsig4, n
 synthonly, scratch3(+s7) + the head-free sketch server. Real-ablation kit COMPLETE.
 Artifact 33fbf136. Ops: the overnight OOM cascade was a fail-open gate wait (now
 fail-closed in all chained scripts) + a monitor matching its own pattern (bracket rule).
+
+**YAW/ROTATION SANITY AUDIT (2026-09-01, Denis: 'is our yaw basis sensible on rotations?'):
+YES, and the nose-ramp hypothesis is refuted.** (1) Per-step dyaw is rotation-INVARIANT (a
+rigid rotation shifts absolute headings, deltas unchanged) — the right parameterization;
+the four yaw words decode to 'turn X over horizon H' and sustained 540 deg of continuous
+rotation at 8 cm tracking (orbit). (2) The rotation verb rotates in action space and
+reprojects, exact regardless of QR mixing. (3) Dose-response on xswap, 210 doses at +/-15
+deg on real anchors: xy-only gain 0.89 [0.72-1.05]; adding a 10-step nose ramp: 0.91,
+paired +0.02, better on 51% — no effect. The earlier 0.76 gain was the pre-swap checkpoint,
+not a verb deficiency. Paper sentence stands: rotation commands execute at ~0.9 gain on
+real observations with no yaw-side correction required.
