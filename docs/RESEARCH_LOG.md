@@ -6507,3 +6507,12 @@ deg on real anchors: xy-only gain 0.89 [0.72-1.05]; adding a 10-step nose ramp: 
 paired +0.02, better on 51% — no effect. The earlier 0.76 gain was the pre-swap checkpoint,
 not a verb deficiency. Paper sentence stands: rotation commands execute at ~0.9 gain on
 real observations with no yaw-side correction required.
+
+**SIGNIFICANCE TEST FOR THE CROSS-DOMAIN FOLLOW CLAIM (2026-09-01, abstract support):**
+per-frame follow-error norms from realpin_rows.npz, n=60/domain. Oracle-command condition:
+real median 0.081 vs synth 0.075 cstd, Mann-Whitney p=0.272 — 'statistically
+indistinguishable' now backed for the primary condition. Perturbed-command condition:
+real 0.102 vs synth 0.121, p=0.048 (real slightly BETTER). NOTE two summary conventions in
+circulation: norm-of-mean-error 0.070/0.068 (earlier headline) vs median per-frame norm
+0.081/0.075 (this test) — the paper must standardize on one (recommended: per-frame
+median); sweep docs when Denis picks.
