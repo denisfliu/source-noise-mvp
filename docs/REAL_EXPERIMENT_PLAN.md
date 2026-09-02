@@ -13,7 +13,10 @@ video + CLOG) whether it succeeds or not.
 - Latency budget: replan round-trip < 400 ms sustained over WiFi.
 
 ## Phase R1 — closed-loop atomics (fills Table 1's real rows)
-- Tasks: left gate, right gate (room in the matching configuration per task).
+- Tasks: left gate, right gate, center-from-left, center-from-right (room in the matching
+  configuration per task). THE CENTER TASKS ARE THE HEADLINE ROWS: they have ZERO real
+  demonstrations — real success there is the purest sim-to-real task-transfer claim in
+  the paper.
 - Arms: Ours (xswap) vs fine-tuned pi0 (scratch3). n=10 trials/task/arm, start jitter
   matched to the training distribution.
 - Metric: collision-free Success (mocap judge, same route-clean + 0.18 m rule).
