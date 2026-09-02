@@ -1,0 +1,32 @@
+Model	Checkpoint	Task	Trials	How to run
+pi0 baseline	gate_scratch3	Left gate	10	serve_gate_plain.py --ckpt <ckpt>; fly task "left"
+pi0 baseline	gate_scratch3	Right gate	10	same server; task "right"
+pi0 baseline	gate_scratch3	Center gate from left	10	same server; task "center_from_left"
+pi0 baseline	gate_scratch3	Center gate from right	10	same server; task "center_from_right"
+Ours	gate_pin_joint_xswap	Left gate	10	serve_gate_pin_joint.py --ckpt <ckpt> + pin env + SNMVP_SIGMA_MAP=sigma_map_xswap.json; task "left"
+Ours	gate_pin_joint_xswap	Right gate	10	same server; task "right"
+Ours	gate_pin_joint_xswap	Center gate from left	10	same server; task "center_from_left"
+Ours	gate_pin_joint_xswap	Center gate from right	10	same server; task "center_from_right"
+w/o sim-real swap	gate_pin_joint_gmsig3	Left gate	10	serve_gate_pin_joint.py + pin env + SNMVP_SIGMA_MAP=sigma_map_gmsig3.json; task "left"
+w/o sim-real swap	gate_pin_joint_gmsig3	Right gate	10	same server; task "right"
+w/o sim-real swap	gate_pin_joint_gmsig3	Center gate from left	10	same server; task "center_from_left"
+w/o sim-real swap	gate_pin_joint_gmsig3	Center gate from right	10	same server; task "center_from_right"
+Ours	gate_pin_joint_xswap	Two-gate compound, hand-drawn sketch	10	xswap server + SNMVP_PIN_PROMPT=sketch_cmpl_denis.json (or draw new in Sketchpad); compound prompt
+Ours	gate_pin_joint_xswap	Relocated gate, sketch	10	move gate, measure aperture, moved_gate_cell.py --make; xswap server + SNMVP_PIN_PROMPT=<generated sketch>
+sim-data-only	gate_pin_joint_synthonly	Left gate	10	serve_gate_pin_joint.py + pin env + SNMVP_SIGMA_MAP=sigma_map_synthonly.json; task "left"
+sim-data-only	gate_pin_joint_synthonly	Right gate	10	same server; task "right"
+sim-data-only	gate_pin_joint_synthonly	Center gate from left	10	same server; task "center_from_left"
+sim-data-only	gate_pin_joint_synthonly	Center gate from right	10	same server; task "center_from_right"
+Ours	gate_pin_joint_xswap	Rotation command +/-15 deg	20	xswap server + SNMVP_INTENT_WS=8765; issue rotations from live_intent cockpit mid-corridor
+Ours	gate_pin_joint_xswap	Two-gate compound, 4-click sketch	10	xswap server + SNMVP_PIN_PROMPT=sketch_cmpl_min4.json (sigma 0.5 variant: sketch_cmpl_min4s.json)
+pi0 + sketch pipeline	gate_scratch3	Two-gate compound, hand-drawn sketch	5	serve_gate_plain_sketch.py --ckpt <scratch ckpt> --sketch sketch_cmpl_denis.json (NO pin env)
+w/o uncertainty input	gate_pin_joint_nosig	Right gate	5	serve_gate_pin_joint.py WITHOUT SNMVP_PIN_NOISE* flags and WITHOUT SNMVP_SIGMA_MAP; task "right"
+Ours	gate_pin_joint_xswap	Tempo 0.6x	5	xswap server + SNMVP_PIN_PROMPT=sketch_tempo06.json
+Ours	gate_pin_joint_xswap	Tempo 1.0x	5	same, sketch_tempo10.json
+Ours	gate_pin_joint_xswap	Tempo 1.5x	5	same, sketch_tempo15.json
+Ours	gate_pin_joint_xswap	Orbit	5	xswap server + SNMVP_PIN_PROMPT=sketch_orbit.json (wide margins, human gate on)
+Ours	gate_pin_joint_xswap	Figure-eight	5	same, sketch_fig8.json
+Ours seed 2	gate_pin_joint_xswaps7	Right gate	10	as Ours but --ckpt xswaps7 + SNMVP_SIGMA_MAP=sigma_map_xswaps7.json
+Ours seed 2	gate_pin_joint_xswaps7	Center gate from right	10	same server; task "center_from_right"
+pi0 seed 2	gate_scratch3s7	Right gate	10	serve_gate_plain.py --ckpt scratch3s7; task "right"
+pi0 seed 2	gate_scratch3s7	Center gate from right	10	same server; task "center_from_right"
