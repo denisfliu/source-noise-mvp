@@ -6761,7 +6761,8 @@ in serve_gate_pin_joint; chains `scripts/run_decode_only.sh`, `run_decode_src.sh
       start): 5 identical paths per cell.  CFR 5/5 5/5 (clr 0.315), left 5/5 5/5, sketch CMPL 5/5 5/5.
   (2) the pinned SOURCE SAMPLE z = g - UU^T g + U c executed verbatim, fresh g per replan:
       CFR 5/5 4/5 (one contact 0.038), sketch CMPL 5/5 4/5 (one 0.138).
-Realizability at 25 Hz, CFR (speed p95 / accel p95 / path length):
+Realizability at 25 Hz [CORRECTION 2026-09-05: gate_nav3 is 10 Hz; multiply these speeds by 0.4 and
+accelerations by 0.16 -- see the FLIGHT REALISM entry below], CFR (speed p95 / accel p95 / path length):
       z executed 1.30 m/s / 36 m/s^2 / 17.8 m ; U c executed 1.04 / 5 / 9.1 ; pin flight 1.01 / 2 / 7.7 ;
       synth demo 0.78 / 1.1 ; real demo 1.47 / 7.1.
 READS: the ROUTE is in the command (both no-flow executions thread the gate and reach the goal —
@@ -6790,3 +6791,59 @@ median (first call ~8 s compile). Equivalence on 6 real frames: same argmax comp
 bf16 noise) but every sim server from here on runs the compiled head. Open before flying: mocap-to-scene
 registration (R0 wand walk), Wi-Fi round trip from the workstation, and the fisheye convention (training
 frames are raw fisheye; the client applies none — consistent; do not add rectification).
+
+**FLIGHT REALISM LEDGER (2026-09-05; Denis: "the benefit over SDEdit is predicting physically realizable
+trajectories -- the command is embodiment-agnostic, denoising supplies the embodiment; validate the realism
+of our flights and show the command alone, and SDEdit, are physically unrealistic"). Suite
+`experiments/rung3/realism.py` (results `realism_results.json`, page `viz/build_realism_page.py`, artifact
+e58991b0). FIRST A CORRECTION: gate_nav3 is 10 Hz (meta/info.json fps=10, one action per frame, hardware
+publishes one setpoint per step at 10 Hz); the 2026-09-04 realizability numbers were scaled as 25 Hz (build_
+decode_page.py, fixed). Corrected, CFR: U c accel p95 0.9 m/s^2 raw / 0.7 smoothed, z 5.5 / 1.1, pin 0.4 / 0.46,
+real demos 0.9 / 0.76.
+Six metric families on the active segment (start -> first goal-box dwell >= 2 s + 1 s; CFR routes brush the box
+for 0.2 s en route, so "first entry" is the wrong arrival rule): kinematic envelope (raw and 0.7 s Savitzky-
+Golay derivatives, identical for every source), smoothness (dimensionless jerk, velocity power >= 1 Hz),
+command signature (zero-accel step fraction |dv| < 2 cm/s; replan-seam |dv|/dt), quadrotor feasibility
+(differential flatness: required tilt / thrust / body rate vs PX4 defaults acc 3, jerk 8, tilt 45 deg, and vs
+the real demos' own p99 envelope |a| 1.25 m/s^2, |j| 9.7 m/s^3), trackability (PX4-shaped P-PID cascade with
+those limits tracking the 10 Hz stream, velocity feed-forward), distinguishability (logistic regression on
+1 s windows of local kinematics, flights vs real demos, grouped 5-fold AUC; shape variant divides magnitudes by
+window speed). Calibration: real-vs-real AUC 0.55, synth-vs-real 0.999.
+CFR, medians (zero-accel / jerk p95 sm / body-rate p99 / seam / AUC vs real / AUC vs synth-CFR):
+  real demos      0.40 / 2.6 / 22 deg/s /  --  /  --  /  --        synth CFR demos  0.50 / 0.5 /  3 / -- / -- / --
+  U c executed    0.92 / 4.9 / 49 / 2.9 m/s^2 / 0.99 / 1.00        z executed  0.00 / 13.2 / 98 / 4.0 / 0.99 / 1.00 (hf 0.34, 22% steps beyond real jerk p99)
+  pin s42 / s7    0.66 / 2.6 / 35 / 1.9 / 0.92 / 0.90   |   0.71 / 2.1 / 30 / 1.7 / 0.92 / 0.93
+  SDEdit+head t0 0.3 / 0.5 / 0.7 / 0.9:  0.83 0.84 0.78 0.53 / 2.4 2.6 2.4 3.7 / 41 37 42 47 / AUC real 0.96 0.94 0.92 0.92
+  scratch s42 / s7  0.57 / 2.5 / 40 / 2.6 / 0.93 / 0.77  |  0.55 / 3.0 / 41 / 2.6 / 0.94 / 0.76
+  pin flow, plain noise (parks) 0.98 / 1.2 / 17 / 0.9 / 0.97 / 1.00
+Sketch compound (CMPL): U c 0.95 / 2.9 / 33 / AUC 1.00; z 0.00 / 12.7 / 89 / 0.99; pin 0.70 / 2.6 / 25 / 0.86 (s7 0.89);
+SDEdit(sketch) t0 0.3..0.9 zero-accel 0.93-0.98, AUC real 0.94-0.98. Left/right/CFL: every flow arm (pin, SDEdit,
+scratch) sits at zero-accel 0.95-0.98, jerk 0.7-1.9, AUC vs real 0.96-0.99, i.e. indistinguishable from each other
+and from the synth demos of those cells. Tilt never exceeds 12 deg and no source violates a PX4 limit; PX4-cascade
+tracking RMSE is 0.02-0.11 m for everything, the source sample included (the cascade low-passes the jitter).
+READS: (1) "Unrealizable" is the wrong word at room speed: every source, U c and z included, is inside the
+quadrotor's dynamic envelope (tilt < 12 deg, body rate < 100 deg/s, PX4 limits untouched). The right word is
+UNREALISTIC: U c is a velocity staircase (92-95% zero-accel steps, 0.3 m/s velocity jumps at band boundaries =
+2.9 m/s^2 seam spikes, body rate 2x the real demos', AUC 0.99-1.00 against BOTH demo sets), and z carries a third
+of its velocity power above 1 Hz with jerk 5x real. Denoising removes both while keeping the band sums: the pin
+flight halves jerk and body rate relative to U c and is the source closest to the real demos on the two hard cells
+(AUC 0.92 CFR, 0.86-0.89 CMPL). So "the route is in the command, the realism is in the flow" holds, with realism
+measured distributionally against the flights the drone actually made -- the hard-limit test cannot make the case
+at these speeds, and the paper column should be jerk p95 / body rate / zero-accel / AUC, not accel p95.
+(2) The SDEdit half of Denis's hypothesis is NOT supported kinematically. SDEdit's flights are as smooth as the
+pin's on every cell; where they differ (CFR, CMPL) SDEdit retains MORE of the command's staircase (zero-accel
+0.83-0.85 vs 0.66-0.71; body rate 41 vs 35 deg/s) and is slightly more distinguishable from real demos (0.94-0.96
+vs 0.92) -- a lead in the hypothesised direction, inside n=10 single-seed noise. SDEdit's realism failure is the
+one already on record: scene-consistency (CFR clearance 3/10-8/10 across t0 vs the pin's 10/10, 2026-09-03), not
+kinematics. Also note SDEdit runs on scratch3 while the pin runs on xswap, so pin-vs-SDEdit confounds the
+injection mechanism with the flow's training; the training-free framing is the honest one.
+(3) THE SYNTH DEMOS ARE THEMSELVES A STAIRCASE. The planner interpolates waypoints linearly (zero-accel 0.91,
+jerk p95 0.2, synth-vs-real AUC 0.999); two thirds of gate_nav3 teaches the flow that piecewise-constant velocity
+is how a drone moves, which is why every flow arm on left/right/CFL is a near-perfect staircase and why the sim
+flies at v95 0.2-0.5 m/s against the real demos' 0.70 (the known under-speed behavior gap, now with a mechanism).
+Realism must therefore be judged against the REAL demos only, and the cheapest lever on flight realism is the
+data: regenerate the synth courses with a smooth timing law (min-jerk / the real speed profile) -- this is the
+behavior-gap course-tuning item (ITERATION_QUEUE 3) with a concrete target.
+(4) What validates realism from here: this ledger for every sim run (distributional, real-demo reference), and
+on hardware the plant itself -- log mocap alongside the setpoint stream and score tracking error + the same
+ledger on the FLOWN trajectory; the residual's value is decided there.

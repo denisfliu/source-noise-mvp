@@ -35,6 +35,13 @@ github.com/denisfliu/source-noise-mvp (private).
 
 ## Standing flaws / gaps
 
+- (2026-09-05) Flight realism is now measured (`experiments/rung3/realism.py`, real demos as the
+  reference): the command alone is unrealistic (velocity staircase) but not dynamically infeasible;
+  the pin flight is the source closest to real demos on CFR/CMPL; SDEdit is kinematically as smooth
+  as the pin. The synth demos are a planner staircase (synth-vs-real AUC 0.999) -- the sim's
+  under-speed has a mechanism; regenerate synth courses with a smooth timing law. gate_nav3 is
+  10 Hz; every "25 Hz" number before 2026-09-05 is mis-scaled.
+
 - Center-west-post goal-descent graze: the ONE systematic clearance flaw (CFR atomics,
   sketch returns, both seeds). Data-side fix via behavior-gap-driven course tuning.
 - Trust dial not calibrated on real frames (corr(sigma*, err) ~0 vs 0.82 in-domain) —

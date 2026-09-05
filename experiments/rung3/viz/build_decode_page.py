@@ -40,11 +40,12 @@ def rollouts(pat):
 
 
 def realize(prefix):
-    """median over flights of (speed p95 m/s, accel p95 m/s^2, path length m) at 25 Hz."""
+    """median over flights of (speed p95 m/s, accel p95 m/s^2, path length m). gate_nav3 is 10 Hz (meta/info.json
+    fps=10; one action per frame) -- the 2026-09-04 page and log entry scaled these as 25 Hz. realism.py is the full suite."""
     rows = []
     for f in glob.glob(f"{RUN}/traj_{prefix}_*.npy"):
         P = np.load(f)[:, :3]; v = np.diff(P, axis=0); sp = np.linalg.norm(v, axis=1); acc = np.linalg.norm(np.diff(v, axis=0), axis=1)
-        rows.append((np.percentile(sp, 95) * 25, np.percentile(acc, 95) * 625, sp.sum()))
+        rows.append((np.percentile(sp, 95) * 10, np.percentile(acc, 95) * 100, sp.sum()))
     if not rows:
         return "pending"
     m = np.median(np.array(rows), axis=0)
