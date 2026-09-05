@@ -49,6 +49,47 @@ def enable_head(pin_u_path, with_state=None):
 _GEN_RNG = __import__("numpy").random.default_rng(0)
 
 
+_GMM_FWD = {}
+
+
+def _gmm_forward(m, o, state, lang_zero):
+    """Pure-JAX GMM head forward on a preprocessed Observation batch (module method form so it can
+    be frozen + jitted with nnx_utils.module_jit; 2026-09-04 hardware latency fix: 2.4 s -> ~0.1 s)."""
+    import jax
+    import jax.numpy as jnp
+    from openpi.models.pi0 import make_attn_mask
+    tok, mask, ar = m.embed_prefix(o)
+    (prefix_out, _), _ = m.PaliGemma.llm([tok, None], mask=make_attn_mask(mask, ar),
+                                         positions=jnp.cumsum(mask, axis=1) - 1)
+    pm = mask.astype(jnp.float32)
+    keys, vals = m.snmvp_k(prefix_out), m.snmvp_v(prefix_out)
+    sc = jnp.einsum("qd,btd->bqt", m.snmvp_q.value, keys) / jnp.sqrt(256.0)
+    sc = jnp.where(pm[:, None, :] > 0, sc, -1e9)
+    ctx = jnp.einsum("bqt,btd->bqd", jax.nn.softmax(sc, axis=-1), vals).reshape(prefix_out.shape[0], -1)
+    if os.environ.get("SNMVP_HEAD_STATE") == "1":          # must mirror training exactly
+        ctx = jnp.concatenate([ctx, state], axis=-1)
+    nl = o.tokenized_prompt.shape[1]
+    lm = o.tokenized_prompt_mask.astype(jnp.float32)[:, :, None]
+    lang = (prefix_out[:, -nl:] * lm).sum(1) / jnp.clip(lm.sum(1), 1e-6)
+    st_b = jax.nn.silu(m.snmvp_state_proj(state))
+    lg_b = jax.nn.silu(m.snmvp_lang_proj(lang))
+    if lang_zero:
+        lg_b = jnp.zeros_like(lg_b)
+    im_b = jax.nn.silu(m.snmvp_gen_ctx(ctx))
+    cond = jnp.concatenate([st_b, lg_b, im_b], axis=-1)
+    h = jax.nn.silu(m.snmvp_gmm_h2(jax.nn.silu(m.snmvp_gmm_h1(cond))))
+    return m.snmvp_gmm_out(h)
+
+
+def _gmm_fwd_jitted(m):
+    if id(m) not in _GMM_FWD:
+        import types
+        from openpi.shared import nnx_utils
+        bound = types.MethodType(_gmm_forward, m)
+        _GMM_FWD[id(m)] = nnx_utils.module_jit(bound, static_argnames=("lang_zero",))
+    return _GMM_FWD[id(m)]
+
+
 def head_c(policy, raws, return_gmm=False):
     """Commanded c for a batch of raw observation dicts, from the checkpoint's own head.
 
@@ -67,6 +108,29 @@ def head_c(policy, raws, return_gmm=False):
     tds = [policy._input_transform(dict(r)) for r in raws]
     b = jax.tree.map(lambda *xs: jnp.stack([jnp.asarray(x) for x in xs], 0), *tds)
     o = _model.preprocess_observation(None, _model.Observation.from_dict(b), train=False)
+    if hasattr(m, "snmvp_gmm_out"):
+        # MDN head served through the compiled forward (see _gmm_forward); numerics identical to the
+        # eager path below, which is kept for the non-GMM heads.
+        state = jnp.stack([jnp.asarray(t["state"]) for t in tds], 0)
+        fwd = _gmm_fwd_jitted(m)
+        out = np.asarray(fwd(o, state, lang_zero=False), np.float32)
+        K = m.snmvp_head_out.kernel.value.shape[1]
+        M = out.shape[1] // (1 + 2 * K)
+        logit = out[:, :M]
+        mu = out[:, M:M * (1 + K)].reshape(-1, M, K)
+        _w = float(os.environ.get("SNMVP_GMM_LANG_CFG", "1"))
+        if _w != 1.0:
+            out0 = np.asarray(fwd(o, state, lang_zero=True), np.float32)
+            mu0 = out0[:, M:M * (1 + K)].reshape(-1, M, K)
+            mu = mu + (_w - 1.0) * (mu - mu0)
+        sig = np.exp(np.clip(out[:, M * (1 + K):].reshape(-1, M, K), -5.0, 2.0))
+        w = np.exp(logit - logit.max(-1, keepdims=True))
+        w = w / w.sum(-1, keepdims=True)
+        if os.environ.get("SNMVP_GMM_MODE", "argmax") == "mean":
+            c = (w[..., None] * mu).sum(1)
+        else:
+            c = mu[np.arange(len(mu)), w.argmax(-1)]
+        return (c, w, mu, sig) if return_gmm else c
     tok, mask, ar = m.embed_prefix(o)
     # llm returns ((prefix_out, suffix_out), kv_cache); with no suffix the second output is None,
     # so the outer tuple must be unpacked too (same form gate_ctx_common.lang_pool uses)

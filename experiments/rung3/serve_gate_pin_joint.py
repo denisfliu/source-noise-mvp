@@ -32,6 +32,8 @@ H, AD = 50, 32
 
 
 from sketch_prompt import SketchPrompt  # noqa: E402  (extracted 2026-08-30)
+from advice_prompt import AdvicePrompt  # noqa: E402  (2026-09-03)
+from reason_prompt import ReasonPrompt  # noqa: E402  (2026-09-03)
 
 
 class JointPinPolicy:
@@ -49,6 +51,49 @@ class JointPinPolicy:
             amean = np.asarray(act_norm.mean[:7], np.float32)
             astd = np.asarray(act_norm.std[:7], np.float32)
             self.sketch = SketchPrompt(sp, amean, astd, self.U)
+        # minimal command-space advice (2026-09-03): SNMVP_PIN_ADVICE names an AdvicePrompt json;
+        # after the gate-1 transit only the named command coordinates are overridden by a
+        # pursuit toward the target(s); the head keeps the rest. Mutually exclusive with a sketch.
+        self.advice = None
+        adv = os.environ.get("SNMVP_PIN_ADVICE", "")
+        if adv:
+            if self.sketch is not None:
+                raise ValueError("SNMVP_PIN_ADVICE and SNMVP_PIN_PROMPT are mutually exclusive")
+            if act_norm is None:
+                raise ValueError("SNMVP_PIN_ADVICE needs action norm stats (act_norm)")
+            amean = np.asarray(act_norm.mean[:7], np.float32)
+            astd = np.asarray(act_norm.std[:7], np.float32)
+            self.advice = AdvicePrompt(adv, amean, astd, self.U)
+        # VLM movement reasoning (2026-09-03): SNMVP_PIN_REASON=http://host:port of vlm_reason_server;
+        # the reasoner's words fill the coarse coordinates every replan, the head keeps the rest.
+        self.reason = None
+        ru = os.environ.get("SNMVP_PIN_REASON", "")
+        if ru:
+            if self.sketch is not None or self.advice is not None:
+                raise ValueError("SNMVP_PIN_REASON is exclusive with SNMVP_PIN_PROMPT / SNMVP_PIN_ADVICE")
+            if act_norm is None:
+                raise ValueError("SNMVP_PIN_REASON needs action norm stats (act_norm)")
+            amean = np.asarray(act_norm.mean[:7], np.float32)
+            astd = np.asarray(act_norm.std[:7], np.float32)
+            self.reason = ReasonPrompt(ru, amean, astd, self.U, mode=os.environ.get("SNMVP_REASON_MODE", "coarse_xyz"),
+                                       log_path=os.environ.get("SNMVP_REASON_LOG", ""))
+        # ablation (2026-09-03): SNMVP_PIN_OFF=1 serves the pin-trained flow with PLAIN Gaussian noise —
+        # no command in the source — at trust sigma SNMVP_PIN_OFF_SIGMA (default: the sigma cap 1.5,
+        # i.e. "do not trust the command"). The head still runs (logged) but is not used.
+        # diagnostic (2026-09-04): SNMVP_PIN_DECODE_ONLY=1 executes the decoded command U c itself —
+        # the minimum-norm chunk, no denoising — so the trajectory shows what the 16 words encode alone.
+        # =1: execute the decoded minimum-norm chunk U c (deterministic). =2: execute the PINNED SOURCE SAMPLE
+        # itself, z = g - U U^T g + U c (Gaussian in the orthogonal complement, exactly c along U), no denoising.
+        self.decode_only = int(os.environ.get("SNMVP_PIN_DECODE_ONLY", "0") or 0)
+        self._amean7 = None if act_norm is None else np.asarray(act_norm.mean[:7], np.float32)
+        self._astd7 = None if act_norm is None else np.asarray(act_norm.std[:7], np.float32)
+        if self.decode_only:
+            print(f"[joint] DECODE ONLY mode {self.decode_only}: " + ("executing U c (deterministic), no flow" if self.decode_only == 1
+                  else "executing the pinned source sample z itself, no flow"), flush=True)
+        self.pin_off = os.environ.get("SNMVP_PIN_OFF", "") == "1"
+        self.pin_off_sigma = float(os.environ.get("SNMVP_PIN_OFF_SIGMA", "1.5"))
+        if self.pin_off:
+            print(f"[joint] PIN OFF: plain noise, sigma_serve={self.pin_off_sigma}", flush=True)
         self.CLOG = os.environ.get("CLOG", "")
         self._log = []
         # MDN serve state: per-trial latched component for pi-hysteresis. Keyed by the client's
@@ -117,6 +162,14 @@ class JointPinPolicy:
                 obs["prompt"] = sk_prompt      # before head_c: the head sees the swapped task
             if sk_phase == 1:
                 self._latch.pop(trial, None)   # re-latch fresh on handback under the new prompt
+        adv_ch = None
+        if self.advice is not None:
+            pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
+            adv_ch, _adv_sig, adv_prompt, sk_phase = self.advice.window(trial, pos)
+            if adv_prompt is not None:
+                obs["prompt"] = adv_prompt     # the head sees the remaining task
+            if sk_phase == 1:
+                self._latch.pop(trial, None)
         if hasattr(self.policy._model, "snmvp_gmm_out"):
             # argmax-mode serve with hysteresis: switch components only when the incumbent's
             # weight has fallen more than SNMVP_GMM_HYST below the argmax — commits like the toy's
@@ -150,6 +203,11 @@ class JointPinPolicy:
             extra = np.asarray([sk_phase], np.float32)
         if sk_c is not None:
             c, sig_serve, alpha = sk_c.astype(np.float32), sk_sig, 1.0
+        if adv_ch is not None:
+            c, sig_serve, alpha = self.advice.compose(c, adv_ch), 0.0, 1.0
+        if self.reason is not None:
+            rs_ch, _trace = self.reason.window(trial, obs, obs.get("prompt", ""))
+            c, sig_serve, alpha = self.reason.compose(c, rs_ch), 0.0, 1.0
         if self.CLOG:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
             self._log.append(np.concatenate([pos, c, extra]).astype(np.float32))
@@ -179,6 +237,15 @@ class JointPinPolicy:
                     continue
                 break
         g = self._rng.standard_normal((H, AD)).astype(np.float32).reshape(-1)
+        if self.decode_only:
+            cc = np.asarray(c, np.float32)
+            src = (self.U @ cc) if self.decode_only == 1 else (g - (g @ self.U) @ self.U.T + cc @ self.U.T)
+            ch = src.reshape(H, AD)[:, :7]
+            act = ch * (self._astd7 + 1e-6) + self._amean7
+            return {"actions": act.astype(np.float32), "state": np.asarray(obs["observation/state"], np.float32)}
+        if self.pin_off:
+            out = self.policy.infer(obs, noise=g.reshape(H, AD).astype(np.float32), snmvp_sigma=self.pin_off_sigma)
+            return out
         c_eff = alpha * c + (1.0 - alpha) * (g @ self.U)
         noise = (g - (g @ self.U) @ self.U.T + (c_eff @ self.U.T)).reshape(H, AD).astype(np.float32)
         out = self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve)

@@ -50,7 +50,16 @@ class SketchPrompt:
               f"enter_r={self.enter} sigma_serve={self.sigma}", flush=True)
 
     def step(self, trial, pos):
-        """-> (c | None, sigma_serve | None, prompt_override | None, phase 0/1/2).
+        """-> (c | None, sigma_serve | None, prompt_override | None, phase 0/1/2): the
+        window's projection through U (the pin's command)."""
+        ch, sig, prompt, phase = self.window(trial, pos)
+        return (None if ch is None else ch.reshape(-1) @ self.U), sig, prompt, phase
+
+    def window(self, trial, pos):
+        """-> (normalized (H, AD) sketch chunk | None, sigma_serve | None, prompt_override | None,
+        phase 0/1/2). The chunk is the resampled polyline's per-step deltas in the flow's
+        normalized action units (dims 0-3; other dims at the dataset mean, i.e. 0) — what the
+        pin projects, and what an SDEdit-style baseline uses whole as its guide.
 
         Activation is nearest-point-on-the-whole-polyline (entry at that index), not
         radius-to-first-point: replans sample the flight only every ~1.25 m, so a
@@ -89,8 +98,8 @@ class SketchPrompt:
                 seg = np.zeros((H, 7), np.float32)
                 seg[:m] = self.A[i:i + m]
             ch = np.zeros((H, AD), np.float32)
-            ch[:, :7] = (seg - self.amean) / (self.astd + 1e-6)
-            return ch.reshape(-1) @ self.U, self.sigma, self.prompt_after, 1
+            ch[:, :4] = (seg[:, :4] - self.amean[:4]) / (self.astd[:4] + 1e-6)
+            return ch, self.sigma, self.prompt_after, 1
         if st["phase"] == 2:
             return None, None, self.prompt_after, 2
         return None, None, None, 0

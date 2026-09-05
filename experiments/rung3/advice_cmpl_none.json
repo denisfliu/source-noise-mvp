@@ -1,0 +1,35 @@
+{
+ "gate1_corners": [
+  [
+   0.65,
+   1.05,
+   0.2
+  ],
+  [
+   1.18,
+   0.45,
+   0.2
+  ],
+  [
+   1.18,
+   0.45,
+   1.95
+  ],
+  [
+   0.65,
+   1.05,
+   1.95
+  ]
+ ],
+ "prompt_after": "go through the center gate from the left and hover over the stuffed animal",
+ "reach_radius": 0.35,
+ "step_m": 0.025,
+ "targets": [
+  [
+   2.756,
+   -0.65,
+   1.5
+  ]
+ ],
+ "mode": "none"
+}

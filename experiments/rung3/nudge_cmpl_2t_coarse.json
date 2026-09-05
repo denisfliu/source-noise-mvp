@@ -1,0 +1,18 @@
+{
+ "reach_radius": 0.35,
+ "step_m": 0.025,
+ "prompt_after": "go through the center gate from the left and hover over the stuffed animal",
+ "targets": [
+  [
+   0.915,
+   0.95,
+   1.5
+  ],
+  [
+   2.756,
+   -0.65,
+   1.5
+  ]
+ ],
+ "mode": "coarse_xy"
+}

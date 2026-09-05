@@ -6516,3 +6516,277 @@ real 0.102 vs synth 0.121, p=0.048 (real slightly BETTER). NOTE two summary conv
 circulation: norm-of-mean-error 0.070/0.068 (earlier headline) vs median per-frame norm
 0.081/0.075 (this test) — the paper must standardize on one (recommended: per-frame
 median); sweep docs when Denis picks.
+
+**XSWAP SKETCH RE-ATTRIBUTION (2026-09-02): the five sketched-compound rows re-flown on the
+flagship xswap checkpoints, both training seeds, settings identical to the gmsig3 originals
+(same sketch JSONs, carrot 0, sigma per JSON, APC=50, 5 trials/cell). Chain
+`scripts/run_xswap_sketches.sh`, scores `ctxrun/xsk_scores.txt`, trajectories
+`ctxrun/traj_xsk{42,s7}_*`. Route-clean judge / clearance-clean (0.18 m):**
+
+  row                              gmsig3 s42   gmsig3 s7    xswap s42    xswap s7
+  hand-drawn L->C                  5/5  5/5     --           4/5  5/5     5/5  5/5
+  hand-drawn R->C r1               5/5  3/5     --           5/5  2/5     5/5  5/5
+  4-click L->C sigma 0             5/5  0/5     5/5  0/5     5/5  0/5     5/5  2/5
+  4-click L->C sigma 0.5           4/5  4/5     3/5  5/5     4/5  4/5     5/5  5/5
+  5-click R->C corrected (min5f)   5/5  2/5     5/5  1/5     5/5  2/5     5/5  0/5
+
+READS: (1) xswap s42 reproduces gmsig3 s42 cell for cell within one trial — the sketch
+rows are checkpoint-portable across the recipe change, so attributing them to the full
+method is now backed by data. (2) Route-clean transit is 49/50 pooled on xswap; clearance
+is the sketch-geometry story as before: hand-drawn sketches clear (17/20), the 4-click
+sigma-0 line shaves the center west post (2/10), sigma 0.5 buys clearance (9/10), and the
+corrected 5-click R->C still grazes the center west post at the goal descent (2/10;
+xsks7 min5f grazes 0.075-0.165 m all at (2.26-2.31, -0.1..-0.19, 1.3)) — the one
+systematic gate_nav3 flaw, unchanged. Paper Table 3 must carry both numbers per row.
+Hand review pending: gradebook artifact (experiments/rung3/viz/build_gradebook.py; grades
+in the artifact db, collection `grades`).
+
+**REDRAWN TABLE-3 SKETCHES ON XSWAP (2026-09-02, Denis's edits): the two Table-3 drawings were
+grazing by construction (sketch's own clearance to the gate cloud 0.07 m / 0.12 m; new tool
+`experiments/rung3/sketch_geom.py` + sketch review artifact). Edits: 4-click L->C point 3
+(2.756,-0.528)->(3.044,-0.527) so segment 2->3 pierces the center aperture at its midpoint
+(sketch clearance 0.07->0.20 m, center margin 0.15->0.38 m); hand-drawn R->C r2: point 2 to the
+right-aperture midpoint (0.5595,-1.15), points 4,5 forward (+0.2/+0.4 m) onto the center
+midline x=2.756 (0.12->0.30 m). Chain `scripts/run_xswap_sketches3.sh`, `ctxrun/xsk3_scores.txt`.
+Route-clean / clearance-clean, xswap s42 + s7:**
+
+  4-click L->C v2, sigma 0     5/5 4/5  +  5/5 4/5   = 10/10  8/10   (original: 10/10  2/10)
+  4-click L->C v2, sigma 0.5   4/5 4/5  +  5/5 5/5   =  9/10  9/10   (original:  9/10  9/10)
+  hand-drawn R->C r2           5/5 4/5  +  5/5 5/5   = 10/10  9/10   (original: 10/10  7/10)
+
+The remaining v2 sigma-0 grazes are the model's, not the drawing's: all flights cross the
+center gate at x~2.4 (0.17-0.22 m from the west post) while the line pierces at x=2.76 —
+the flow cuts ~0.35 m toward the west post, the same center-west-post signature as CFR.
+Table 3 should use these rows (both counts per row).
+
+**SDEDIT BASELINE FOR SKETCH COMMANDS (2026-09-02; Denis: "see if it works"). It works, at
+small t0.** Meng et al. ICLR'22 applied to the flow policy: identical sketch pipeline, but the
+whole normalized sketch chunk is the guide and the UNPINNED scratch3 (seed 42) starts its Euler
+integration at t0 from x_{t0} = t0*z + (1-t0)*a_sketch (pi0.py `snmvp_t_start`, server
+`serve_gate_sdedit.py`, chain `scripts/run_sdedit.sh`, scores `ctxrun/sdedit_scores.txt`;
+tracking = `sketch_track.py`, active phase only — the pin's flights read 0.06-0.08 m under it).
+Route-clean / clearance-clean / tracking median, 5 trials:
+
+  hand-drawn L->C   pin xswap s42  5/5  5/5  0.059     SDEdit t0=0.3  5/5  5/5  0.054
+                    pin xswap s7   5/5  5/5  0.068     SDEdit t0=0.5  5/5  0/5  0.134
+                    pin-noise->scratch 0/5 0/5 5.9     SDEdit t0=0.7  4/5  2/5  0.190
+                                                       SDEdit t0=0.9  3/5  1/5  0.180
+  orbit (judge n/a) pin xswap      --   5/5  0.038  1.28-1.35 loops, radial err 0.13-0.18
+                    SDEdit t0=0.3  --   5/5  0.028  1.30-1.38 loops, radial err 0.11-0.15
+                    SDEdit t0=0.5  --   4/5  0.046  1.28-1.41 loops
+                    SDEdit t0=0.7  --   0/5  0.281  (post contacts 0.001-0.063 m)
+
+READS: (1) At t0=0.3 SDEdit on a policy that never saw a command subspace matches the pin on
+both headline sketch results (compound clean 5/5, orbit clean 5/5) at equal tracking. The
+mechanism claim "commands must be structural / in the source at training time" does NOT
+survive against this baseline in sim for well-drawn sketches; the pin-noise-into-scratch
+control (0/5) was the wrong training-free baseline. (2) What SDEdit is: 3 of 10 Euler steps
+from a state that is 70% the sketch's own kinematics — near-verbatim replay with light
+denoising; the vision residual contributes little, and it degrades monotonically with t0
+(0.5 grazes, 0.7-0.9 loses the route). (3) What SDEdit lacks, and what the paper must now
+lean on: no autonomous command source (needs a full trajectory guide; the pin's head emits
+c from perception and flies the atomics 80/80 with no sketch), no trust dial with a middle
+(sigma 0.5 on the pin bought clearance without losing the route; SDEdit's t0 sweep jumps from
+replay to grazing), and the real-frame contract (the head's commands, rotation verb 0.89, the
+xswap real-frame gains) has no SDEdit analogue. Untested discriminators: disturbance
+rejection (carrot/kick test), sketches drawn with poor kinematics (SDEdit replays them;
+the pin was claimed to supply dynamics), real observations.
+
+**SDEDIT vs PIN DISCRIMINATORS (2026-09-03; chain `scripts/run_sdedit2.sh`, scores
+`ctxrun/sdedit2_scores.txt`, probe `sdedit_real_probe.py`). Route-clean / clearance-clean /
+tracking (active phase), 5 trials; pin = xswap s42, SDEdit = scratch3 s42.**
+
+  A. 0.4 m lateral kick @ step 100, hand-drawn L->C          route clean  track  post-kick
+     pin carrot 0                                             4/5   0/5   0.073  0.125
+     pin carrot 20                                            5/5   0/5   0.049  0.123
+     SDEdit 0.3 carrot 0                                      4/5   0/5   0.062  0.127
+     SDEdit 0.3 carrot 20                                     5/5   0/5   0.035  0.072
+     SDEdit 0.5 carrot 20                                     4/5   0/5   0.068  0.183
+     -> no separation: both rejoin (SDEdit tighter), both graze after the kick (the kicked
+        corridor runs the drone past the left-gate post; the earlier gmsig3 kick result
+        0/5-2/5 clean replicates on xswap).
+  B. badly drawn lines (SDEdit replays them; pin reacts to the scene and loses the route)
+     4-click L->C original (sketch clr 0.07): pin 10/10 2/10 | SDEdit 0.3 4/5 0/5 0.027 | 0.5 1/5 0/5
+     4-click R->C original (sketch clr 0.04): pin  0/5  0/5 | SDEdit 0.3 3/5 0/5 0.024 | 0.5 1/5 0/5
+     hand-drawn L->C @2.5x pace (0.0625 m/step): pin 5/5 5/5, realized 0.051 (gain 0.82)
+                                                 SDEdit 0.3 5/5 4/5, realized 0.060 (gain 0.96)
+     -> the pin pulls off-distribution pace toward demo pace and refuses a line that shaves a
+        post (and then fails the task); SDEdit replays whatever is drawn to ~2-3 cm. Sim is
+        kinematic, so pace/feasibility is not penalized — this is 'reshapes the command',
+        not 'survives dynamics'.
+  C. real-frame probe (60 real / 60 synth frames, guide = the frame's own demo chunk):
+     t0    follow/cstd real synth   dev-from-guide real synth   push honored (err/push) real synth
+     0.3        0.043  0.041            0.400  0.219                 0.119  0.287
+     0.5        0.087  0.088            0.679  0.459                 0.284  0.456
+     0.7        0.145  0.160            1.023  0.810                 0.556  0.596
+     1.0(plain) 0.349  0.506            2.211  2.606                   --     --
+     pin (2026-08-26 probe): follow 0.070 / 0.068; push honored ~0.30 / ~0.36.
+     -> SDEdit's follow error is domain-flat like the pin's (tighter at 0.3 because it is 70%
+        guide); its departure from the guide is LARGER on real frames at every t0 — the
+        unpinned policy disagrees with the demo more on real perception — so SDEdit is not
+        blind to the domain, it is pulled off the guide harder there. Contradictory pushes
+        are honored better than by the pin at t0 <= 0.5 (replay again).
+
+VERDICT: SDEdit at small t0 is a faithful sketch replayer with light denoising. It matches or
+beats the pin on every SKETCH-FOLLOWING number in sim, including under a kick. It loses only
+where the pin does something other than follow: pulling pace toward the demo distribution,
+refusing a post-shaving line (at the cost of the task), and everything sketch-free — the
+learned head that flies the atomics 80/80, sigma as a trust dial with a middle (SDEdit's
+t0 jumps from replay to grazing), the rotation verb, and the real-frame command contract.
+The paper's mechanism section cannot claim that commands must live in the source at
+training time on the basis of sketch execution; it can claim a LEARNED, perception-driven
+command interface whose sketch mode is one author among several, with SDEdit reported as
+the training-free sketch baseline it ties with.
+
+**MINIMAL COMMAND-SPACE ADVICE FOR THE COMPOUND (2026-09-03; Denis: "you are going through the
+first gate but not the second — a more automatic correction than a hand-drawn thing").
+`experiments/rung3/advice_prompt.py` (+ SNMVP_PIN_ADVICE in serve_gate_pin_joint, --advice in
+serve_gate_sdedit), chain `scripts/run_advice.sh`, scores `ctxrun/advice_scores.txt`.
+Advice = ONE TARGET POINT (center-gate exit (2.756,-0.65,1.5)); trigger = gate-1 plane crossing
+inside the aperture (observational; stands in for the human's "now"); each replan: straight-line
+pursuit at demo pace -> U, overriding ONLY the named coordinates of the head's c; prompt swaps to
+the remaining task; handback at the target. xswap s42, L->C compound, 5 trials:**
+
+  variant                               words overridden   route  clean  center-gate crossing
+  language only (prompt swap after g1)   0/16               3/5    4/5
+  coarse_xy (bands 12-25, 25-50; x,y)    4/16               5/5    4/5   all 5 clean (min 0.22-0.29 at the LEFT gate, pre-advice)
+  h50_xy (band 25-50; x,y)               2/16               5/5    4/5   all 5 clean (same single left-gate graze, trial 2 @step 62)
+  two targets (staging+exit), coarse_xy  4/16               5/5    4/5   same
+  all 16 (= 2-click pursuit sketch)     16/16               4/5    0/5   center grazes 0.03-0.12 m at (2.2,-0.37)
+  SDEdit t0=0.3, same pursuit chunk     (guide)             4/5    0/5   grazes 0.10-0.12 (left gate AND center)
+
+READS: (1) Two displacement words — net x,y over the last 25 steps toward a target point — are
+enough to turn 0/5 (unguided) / 3/5 (language) into 5/5 route-clean with clean center crossings.
+(2) Dictating ALL 16 words from the same straight line (which pierces the aperture off-center)
+drags the flight into the west post: 0/5 clean — same policy, same target, same trigger. The
+fine-horizon/z/yaw words are where the flow's own crossing lives; leaving them to the policy is
+what buys the clearance. This is the factorization claim in one table: coarse words are the
+command, the residual is the competence. (3) SDEdit with the identical pursuit chunk: 4/5, 0/5 —
+it can only take the advice as a trajectory, so it inherits the straight line's grazes; it has
+no way to accept 'go that way' without also being told how. Interface + factorization =
+the differentiation over SDEdit (which ties the pin on sketch REPLAY, 2026-09-02).
+Caveats: single training seed, 5 trials (screen tier); the trigger uses published aperture
+geometry (a human/sketchpad stand-in — replace with a perception or human trigger for claims);
+the remaining graze in every pin cell is the left-gate east post before the advice starts.
+NEXT: seed 7 + rollout-seed rep; R->C compound (target = center exit from the right); a
+human-triggered variant through the intent cockpit; the 'nudge' vocabulary as Table-3 rows.
+
+**TRIGGER-FREE NUDGES (2026-09-03, Denis: "avoid any use of a trigger or anything"). The gate-1
+plane trigger removed (advice_prompt.py `trigger: none`, default); targets consumed by proximity
+from the first replan; task prompt untouched unless swap_prompt. Chain `scripts/run_nudge.sh`,
+scores `ctxrun/nudge_scores.txt`. xswap s42, L->C compound, 5 trials:**
+
+  2 targets (g1 exit, center exit), coarse_xy        4/5  3/5   (center crossings at x 2.42-2.51: the diagonal)
+  2 targets, coarse_xy, prompt swap at last target   5/5  2/5
+  2 targets, h50_xy (2 words)                        0/5  4/5   (passes g1, then drifts: 2 words lose to 14 "park" words)
+  2 targets, all 16 words                            0/5  0/5   (west-post brush 0.08-0.12 on every flight)
+  1 target (center exit) from the start, coarse      0/5  0/5   (skips gate 1, as expected)
+  1 target, idle-gated (override only when the head's h50 word < 0.3 x pursuit)   0/5  0/5
+  SDEdit t0=0.3, 2-target pursuit chunk as guide     0/5  0/5
+
+READS: (1) coarse-only > any row that dictates the fine words, again; SDEdit = the all-words row.
+(2) Without the prompt swap, 2 words are not enough (the head's remaining 14 words say "park");
+4 are. (3) The idle gate WORKED as a signal: the head's h50 x,y magnitude runs 5-8 while flying
+and settles at ~1.7 when parked — 1.7 is the normalized-zero (hover) word, a fixed vocabulary
+signature, so 'the model is stopping' is readable from c alone (M1's transition criterion).
+It failed on target semantics: the drone parks at the goal (y=-0.6), already on the far side of
+the center plane (y=-0.33), so an exit-point target is reached without crossing and the return
+brushes the post. 'Through the gate' has an approach side; it cannot be a point.
+(4) The ceiling of this family is the hand-coded pursuit's diagonal approach. Design note
+(2026-09-03, sent to Denis): M1 = language-chained sub-tasks with the hover word as the
+transition; M2 = goal-conditioned command head by hindsight relabeling on the existing demos
+(features + relative future position -> c), served with its own checkpoint. Both are
+trigger-free in the scene sense and have no SDEdit analogue. Awaiting Denis's call.
+
+**VLM MOVEMENT REASONER, SMALLEST OPEN MODEL (2026-09-03; Denis: "better reasoning in the
+prediction for c" -> "test the smallest one on our basic task"). Qwen2.5-VL-3B-Instruct
+(`vlm_reason_server.py`, layered venv ~/code/vlmenv over openpi's torch 2.6) answers per replan
+with a description + movement words (forward/right/up m, turn deg) from the front image; the
+pin server (`SNMVP_PIN_REASON`, `reason_prompt.py`) rotates them into the world frame by the
+state heading and overrides the coarse xyz words {8,9,10,12,13,14}; head keeps the rest.
+Traces in `ctxrun/reason_rs_coarse_xyz_left.jsonl`. GPU: 7.5 GB VLM + 10 GB pin = 22/24 GB.
+Offline probe (`reason_offline_probe.py`, demo frames from all 4 atomics): single-stage prompt
+copied the format placeholder as its "seen" and emitted the cap (fwd +1.2, right 0) on 14/18
+frames; two-stage describe-then-decide prompt: hallucinated "two gates, left third and right
+third" on nearly every frame (the gates are single thin yellow taped posts in a splat render
+with heavy ceiling artifacts), right_m == 0 on 64/70 replans, "next: hover" from replan 0.
+Closed loop, left gate, xswap s42, 5 trials: 0/5 success (4/5 TRANSIT via the flow's own
+routing, goal never reached because the constant "forward 0.6 m" word blocks parking),
+2/5 clearance-clean. VLM latency 1.7 s/replan (two calls).
+READ: a 3B zero-shot VLM does not perceive these renders; it outputs a constant. The design
+(reasoning in the movement vocabulary) is not tested by this — the command source must either
+be a stronger perceiver (7B needs ~6 GB disk; box has 4 GB free, uv cache holds 12 GB) or,
+per the plan, be TRAINED on these frames (distillation step). Not a negative for the idea;
+a negative for zero-shot 3B on splat renders.
+
+**COMMAND ATTRIBUTION (2026-09-03, Denis: "maybe that we have better task performance?" -> "try
+that"). Two ablations on the atomics, 10 trials each, xswap s42 head/flow, scratch3 s42 flow.
+Chains `scripts/run_ablate_cmd.sh` (A) and `run_ablate_cmd_B3.sh` (B; head service
+`serve_head_only.py` on CPU after two GPU JAX processes + renderer OOM'd), scores
+`ctxrun/ablate_cmd_scores.txt`, `ablate_cmd_B{,3}_scores.txt`. Route-clean / clearance-clean:**
+
+  A. xswap served with PLAIN noise, sigma_serve=1.5 (SNMVP_PIN_OFF):
+       left 8/10 6/10 | right 10/10 10/10 | CFL 6/10 10/10 | CFR 0/10 (every flight parks at the
+       goal, gate never approached; 8/10 "clean" = never near it)
+     Denis's read (correct): U^T v = 0 is the target, so the flow never learned to denoise the
+     command subspace at sigma 0; at the 1.5 cap it did learn to move toward its own belief
+     (pin-noise training), which flies the real-demonstrated left/right and NOT the sim-only
+     precision cell. A is the carry identity in closed loop and the factorization by removal,
+     not a fair "flow without command" (that is the scratch arm of Table 1).
+  B. SDEdit on the UNPINNED scratch3 guided by OUR head's decoded command U c (min-norm chunk):
+       t0   left      right      CFL        CFR
+       0.3  8/8 8/8   10/10 10/10  10/10 10/10  10/10  3/10  (contacts AFTER transit, gate base z~0.9)
+       0.5  --        --         --         10/10  8/10
+       0.7  --        --         --          9/10  6/10
+       0.9  --        --         --          8/10  2/10
+       pin  10/10 10/10 x4 (Table 1);  scratch alone CFR 7/10 route, 3/10 clean (s42)
+     (left: 2 of 10 trials lost to an inference-server error in the OOM-era run; 8/8 kept.)
+READS: (1) the head's command is the routing: delivered training-free it takes scratch's CFR from
+3/10 to 10/10 route-clean at every t0 <= 0.5. (2) The pin-trained flow turns the same command
+into clean execution 10/10; the best SDEdit setting (t0=0.5) reaches 8/10 clean and the sweep
+falls on both sides (3/10 at 0.3: the min-norm chunk carries no endgame; 2/10 at 0.9: the
+unpinned flow's own CFR belief takes over). With n=10 the 10/10 vs 8/10 gap is inside protocol
+noise; the shape of the sweep (no t0 that is clean AND routes on every trial) is the claim, and
+it needs seed 7 + 20 trials to be claim-tier. (3) On the three easier atomics SDEdit-with-head
+ties the pin: the differentiation on task performance is confined to the precision cell, as
+in Table 1. Paper framing: contribution = the learned coarse command source (head + vocabulary);
+the pin realizes it without a t0 dial and without the endgame failure; SDEdit is the
+training-free alternative that needs tuning per task and still trails on the hardest cell.
+
+**COMMAND WITHOUT DENOISING (2026-09-04; Denis: "what do trajectories look like if we just inject
+the pin and nothing else"). Two no-flow executions of the same command (SNMVP_PIN_DECODE_ONLY=1/2
+in serve_gate_pin_joint; chains `scripts/run_decode_only.sh`, `run_decode_src.sh`; scores
+`ctxrun/decode_only_scores.txt`, `decode_src_scores.txt`; page build_decode_page.py):
+  (1) decoded min-norm chunk U c executed verbatim — deterministic (head argmax, no noise, fixed
+      start): 5 identical paths per cell.  CFR 5/5 5/5 (clr 0.315), left 5/5 5/5, sketch CMPL 5/5 5/5.
+  (2) the pinned SOURCE SAMPLE z = g - UU^T g + U c executed verbatim, fresh g per replan:
+      CFR 5/5 4/5 (one contact 0.038), sketch CMPL 5/5 4/5 (one 0.138).
+Realizability at 25 Hz, CFR (speed p95 / accel p95 / path length):
+      z executed 1.30 m/s / 36 m/s^2 / 17.8 m ; U c executed 1.04 / 5 / 9.1 ; pin flight 1.01 / 2 / 7.7 ;
+      synth demo 0.78 / 1.1 ; real demo 1.47 / 7.1.
+READS: the ROUTE is in the command (both no-flow executions thread the gate and reach the goal —
+in a kinematic sim that executes displacements exactly, the coarse plan alone is a clean polyline
+through the aperture); REALIZABILITY is in the flow (band-boundary velocity steps in U c, 1.6 cm/step
+jitter in z, both removed by denoising while the band sums stay exactly c). Denis: "the denoising
+does in fact do something — it makes the flight pattern more realistic." Consequences: success
+rate in this simulator cannot reward the residual (decode-only ties the pin); the paper needs a
+realizability column (accel p95, path-length ratio) where pin / SDEdit / raw command separate,
+and hardware is where the residual's value is decided.
+
+**HARDWARE CLIENT + RUNBOOK (2026-09-04).** Audit of github.com/jatucker4/dronevla2.0 (branch endor; the
+drone-side stack: VOXL2 onboard control.py, workstation policy nodes, VRPN mocap) against the gate-drone
+server contract found the protocol, frames and yaw sign already matching and two silent fatal image
+mismatches (bgr8 sent verbatim where training was RGB; letterbox resize where training squashes 256 -> 224)
+plus a third-person-camera readiness gate, gripper in state[6], 50/25 steps per replan vs 8, no per-trial
+key, no inference timeout. Fixed on branch **gate-pin** (pushed): policy_nodes/gate_obs.py (ROS-free
+contract), policy_nodes/policy_node_gate.py (`run_policy.py gate --task ...`), gate_client.py (receive
+timeout, stop-and-hand-back), tools/gate_dry_client.py (replays a data_gate_real episode against a server),
+tests. GPU side: scripts/hw_serve.sh <baseline|ours|noswap> [--sketch], scripts/hw_score.sh, serve_gate_plain
+--host, docs/HARDWARE_RUNBOOK.md; real_experiments.tsv 'How to run' now names these commands.
+LATENCY: dry client vs xswap server 2.3 s/replan -> profiled: flow 80 ms, joint_head.head_c 2.4 s (eager
+JAX). Compiled the GMM-head forward (module_jit, `_gmm_forward`): head 55 ms, dry-client round trip 133 ms
+median (first call ~8 s compile). Equivalence on 6 real frames: same argmax component 6/6, served c within
+0.1-0.2% of cstd, max|dw| 0.008 (bf16 accumulation). Sim results are unaffected in kind (same numerics to
+bf16 noise) but every sim server from here on runs the compiled head. Open before flying: mocap-to-scene
+registration (R0 wand walk), Wi-Fi round trip from the workstation, and the fisheye convention (training
+frames are raw fisheye; the client applies none — consistent; do not add rectification).
