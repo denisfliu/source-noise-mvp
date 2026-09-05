@@ -5,7 +5,7 @@ Two machines are involved:
 
 | Machine | What runs | Repo / branch |
 |---|---|---|
-| GPU box (this one) | the policy server, one process per arm | `source-noise-mvp` (this repo), `scripts/hw_serve.sh` |
+| **manaan** (this box, `SOE-50TJK74.stanford.edu`, 171.64.160.64) | the policy server, one process per arm | `source-noise-mvp` (this repo), `scripts/hw_serve.sh` |
 | Drone workstation (ROS 2, mocap, cameras) | the flight node that talks to the server and publishes setpoints | `dronevla2.0`, branch **`gate-pin`**, `python run_policy.py gate ...` |
 
 The VOXL2 onboard stack (`drone_scripts/control.sh`), the RC pilot, arming, takeoff, landing and the
@@ -16,10 +16,10 @@ OFFBOARD returns the aircraft to the pilot instantly. Nothing on the server side
 
 1. Mocap registration: wand-walk the gate posts and confirm they land on the scene cloud
    (`experiments/rung3/viz/scene_cloud_*.npz`) — the judge geometry is only meaningful if this holds.
-2. Network: from the workstation, `nc -zv <gpu box> 8900` after starting a server (or set up an ssh tunnel:
-   `ssh -N -L 8900:127.0.0.1:8900 <gpu box>` and use `--policy_host 127.0.0.1`).
+2. Network: from the workstation, `nc -zv manaan 8900` after starting a server (or set up an ssh tunnel:
+   `ssh -N -L 8900:127.0.0.1:8900 manaan` and use `--policy_host 127.0.0.1`).
 3. Dry run WITHOUT the drone: on the workstation, in the `dronevla2.0` root,
-   `python tools/gate_dry_client.py --host <gpu box> --port 8900 --task left --episode <a data_gate_real ep_XXXX.npz>`
+   `python tools/gate_dry_client.py --host manaan --port 8900 --task left --episode <a data_gate_real ep_XXXX.npz>`
    must print six replans with `chunk (50, 7)` and a latency line. This exercises the exact observation
    code the flight node uses (256 bilinear -> RGB -> 224 bicubic, 7-float state, exact prompt).
 4. Latency: the flight budget is a **< 400 ms** round trip sustained. See "Latency" below.
@@ -49,7 +49,7 @@ RESEARCH_LOG 2026-09-02), `cmpr_denis_r2` (hand-drawn R->C, redrawn), `tempo06` 
 
 ```bash
 cd ~/dronevla2.0 && git checkout gate-pin
-python run_policy.py gate --task left --policy_host <gpu box> --policy_port 8900 --trial ours_left_01
+python run_policy.py gate --task left --policy_host manaan --policy_port 8900 --trial ours_left_01
 ```
 `--task` is one of `left | right | center_from_left | center_from_right | compound_left | compound_right`
 (the exact training strings live in `policy_nodes/gate_obs.py`). Give every trial a unique `--trial`: it keys

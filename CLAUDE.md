@@ -92,6 +92,13 @@ and it is the SIMPLEST system tried: **NO clock, no VLM in the command loop**:
   rule that holds either way: choose U from action statistics -> train the flow with oracle
   c = U^T a -> only then extract features and fit the prior.
 
+## Hardware ops (this box is **manaan**, `SOE-50TJK74.stanford.edu`)
+
+Policies for the real drone are served from here. Start/verify/stop with `scripts/hw_serve.sh`,
+`scripts/hw_status.sh`; procedure in `docs/HARDWARE_RUNBOOK.md`; everything an agent needs to diagnose a
+server (paths, arms, env variables, contract, troubleshooting table) in `docs/HARDWARE_AGENT_GUIDE.md`.
+The flight client is `dronevla2.0` branch `gate-pin` (`docs/GATE_FLIGHT.md` there).
+
 ## Operating rules
 
 1. **Orient against the record board before continuing any line** — the newest log entries

@@ -45,7 +45,7 @@ fi
 echo "== hw_serve: arm=$ARM ckpt=$CK sketch=${SKETCH:-none} bind=$BIND:$PORT tag=$TAG"
 echo "== client (drone workstation, dronevla2.0 repo root, branch gate-pin):"
 echo "     python run_policy.py gate --task <left|right|center_from_left|center_from_right|compound_left|compound_right> \\"
-echo "         --policy_host <this box> --policy_port $PORT --trial ${TAG}_t1"
+echo "         --policy_host manaan --policy_port $PORT --trial ${TAG}_t1"
 echo "== command log: $LOGDIR/clog_$TAG.npy"
 cd "$RD"
 if [ "$ARM" = baseline ]; then
