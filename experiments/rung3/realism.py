@@ -152,11 +152,20 @@ def box_runs(P):
     return list(zip(edges[::2], edges[1::2]))
 
 
+SEGMENT = "goal"     # "goal" (arrival at the judge box), "speed" (last motion), or "sketch" (sketch-active window)
+SKETCH = None        # (points, enter_radius) when SEGMENT == "sketch"
+
+
 def split_segment(P):
     """(active, hover): active = start -> arrival + 1 s, arrival = first goal-box dwell of >= MIN_DWELL s
-    (else the longest dwell); if the box is never entered, up to the last step with smoothed speed > 5 cm/s
-    + 1 s. hover = everything after arrival."""
-    runs = box_runs(P)
+    (else the longest dwell); if the box is never entered (or SEGMENT == "speed"), up to the last step with
+    smoothed speed > 5 cm/s + 1 s. hover = everything after arrival."""
+    if SEGMENT == "sketch":
+        from sketch_track import active_window
+        w = active_window(P, SKETCH[0], SKETCH[1])
+        if w is not None:
+            return P[w[0]:w[1]], P[w[1]:] if w[1] < len(P) else None
+    runs = box_runs(P) if SEGMENT == "goal" else []
     long = [r for r in runs if (r[1] - r[0]) * DT >= MIN_DWELL]
     idx = [long[0][0]] if long else ([max(runs, key=lambda r: r[1] - r[0])[0]] if runs else [])
     if len(idx):
@@ -383,7 +392,14 @@ def main():
     ap.add_argument("--arms", default="")
     ap.add_argument("--out", default=f"{RD}/realism_results.json")
     ap.add_argument("--no-auc", action="store_true")
+    ap.add_argument("--adhoc", action="append", default=[], help="label=tag; scored as one extra cell 'adhoc'")
+    ap.add_argument("--segment", choices=["goal", "speed", "sketch"], default="goal")
+    ap.add_argument("--sketch", help="sketch json; with --segment sketch, the active segment is the sketch-active window")
     args = ap.parse_args()
+    global SEGMENT, SKETCH
+    SEGMENT = args.segment
+    if args.sketch:
+        d = json.load(open(args.sketch)); SKETCH = (np.asarray(d["points"], np.float64)[:, :3], float(d.get("enter_radius", 0.5)))
     demos = load_demos()
     real_all = [P for ps in demos["real"].values() for P in ps]
     synth_all = [P for ps in demos["synth"].values() for P in ps]
@@ -409,6 +425,9 @@ def main():
         print(f"calibration AUC: real-vs-real {res['demos']['auc_real_vs_real']:.3f} (shape {res['demos']['auc_real_vs_real_shape']:.3f}), "
               f"synth-vs-real {res['demos']['auc_synth_vs_real']:.3f} (shape {res['demos']['auc_synth_vs_real_shape']:.3f})")
     want = set(a for a in args.arms.split(",") if a)
+    if args.adhoc:
+        CELLS["adhoc"] = ("ad-hoc arms", "right", None, [(f"a{i}", l, t) for i, (l, t) in enumerate(x.rsplit("=", 1) for x in args.adhoc)])
+        args.cells = "adhoc"
     for cell in args.cells.split(","):
         title, scene, task, arms = CELLS[cell]
         res["cells"][cell] = {"title": title, "scene": scene, "task": task, "arms": {}}

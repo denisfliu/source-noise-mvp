@@ -13,6 +13,30 @@ import os
 import numpy as np
 
 
+def densify(P):
+    return np.concatenate([np.linspace(P[i], P[i + 1], max(2, int(np.linalg.norm(P[i + 1] - P[i]) / 0.01) + 1))
+                           for i in range(len(P) - 1)])
+
+
+def active_window(T, P, enter=0.5, dense=None, end_margin=0.1, lookahead_m=1.5):
+    """(start, stop) step indices of the sketch-active phase of flight T against sketch points P. start =
+    first step within `enter` of the polyline. From there a monotone nearest-point tracker follows progress
+    along the polyline (search window `lookahead_m` ahead of the previous match, so loops of an orbit or a
+    figure-8 are not short-circuited); stop = first step whose match lies within `end_margin` of the end
+    (+1), or len(T) if the flight never gets there. None if never within enter_radius."""
+    dense = densify(P) if dense is None else dense
+    d0 = np.sqrt(((T[:, None, :] - dense[None, :, :]) ** 2).sum(-1))
+    on = np.where(d0.min(1) < enter)[0]
+    if len(on) == 0:
+        return None
+    start = int(on[0]); k = int(d0[start].argmin()); la = int(lookahead_m / 0.01); n_end = len(dense) - int(end_margin / 0.01)
+    for i in range(start, len(T)):
+        k = k + int(d0[i, k:min(k + la, len(dense))].argmin())
+        if k >= n_end:
+            return start, i + 1
+    return start, len(T)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sketch", required=True)

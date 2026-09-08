@@ -6847,3 +6847,31 @@ behavior-gap course-tuning item (ITERATION_QUEUE 3) with a concrete target.
 (4) What validates realism from here: this ledger for every sim run (distributional, real-demo reference), and
 on hardware the plant itself -- log mocap alongside the setpoint stream and score tracking error + the same
 ledger on the FLOWN trajectory; the residual's value is decided there.
+
+**MOTION-PROGRAM REALISM + FIGURE-8 THROUGH THE UNPINNED FLOW (2026-09-07; Denis: "check the OOD figure-8 /
+orbital maneuver realism, and see if injecting that sketch into the scratch policy produces the same
+maneuvers"). New: figure-8 sketch through scratch3's sketch pipeline (`scripts/run_scrsk_fig8.sh`, 5 trials,
+right scene, scores `ctxrun/scrsk_fig8_scores.txt`); realism.py gains --adhoc arms and --segment sketch (the
+sketch-active window, now a MONOTONE nearest-point tracker in sketch_track.active_window so loops are not
+short-circuited by the end point); generic page builder `viz/build_traj_page.py`. Artifact 400697f0 (orbit +
+figure-8 clouds, three flows), 041d4513 (the Table-3 4-click L->C v2 flights, 8/10 clean).
+Realism on the sketch-active window (median over 5 flights; zero-accel / jerk p95 / tilt p99 / body-rate p99 /
+PX4-cascade tracking RMSE / AUC vs real demos; sketch tracking median from sketch_track.py):
+  orbit   pin xswap                 0.60 / 2.7 /  3.4 deg /  26 deg/s / 0.054 m / 0.84   track 0.038 m, path 9.1-9.5 m of a 10.1 m sketch
+          SDEdit t0 0.3 / 0.5 / 0.7  0.92 0.91 0.94 / 1.1 2.2 2.8 / 2.3 3.2 4.4 / 12 26 32 / 0.05 / 0.96 0.95 0.94
+          scratch3 + sketch injected 0.14 / 14.8 / 43.6 deg / 243 deg/s / 0.768 m / 1.00   track 0.388 m, path 21-34 m, max dev 3.8-4.4 m
+  fig-8   pin xswap                 0.54 / 3.0 /  4.0 deg /  35 deg/s / 0.066 m / 0.84   track 0.034 m, path 8.2-8.5 m of a 9.1 m sketch
+          scratch3 + sketch injected 0.15 / 32.8 / 33.0 deg / 215 deg/s / 0.704 m / 1.00   track 0.487 m, path 25-28 m, max dev 3.4-3.8 m
+          scratch3 + injected judge: 1/5 route (wrong-direction re-crossings on 4/5), 0/5 clearance (contacts 0.003-0.027 m)
+READS: (1) The pin's orbit and figure-8 are as realistic as its gate flights: tilt < 4 deg, body rate 26-35 deg/s,
+jerk 2.7-3.0 (real demos 2.7), no step beyond the real-demo envelope, PX4-cascade tracking ~6 cm; and they are the
+sources CLOSEST to the real demos of anything in the ledger (AUC 0.84 vs real) while being maximally far from the
+synth planner demos (AUC 1.00) -- sustained curvature is exactly what the staircase demos never contain, and the
+flow supplies it with real-flight kinematics. (2) SDEdit's orbits are as smooth as the pin's (tilt 2-4 deg) but
+retain the staircase (zero-accel 0.91-0.94 vs 0.60), same pattern as CFR/CMPL. (3) Injecting the sketch into the
+unpinned flow does NOT produce the maneuver, and the failure is not "ignored": the flight becomes physically
+implausible -- 2.3 m/s p95 (3x the real demos), tilt 33-44 deg (PX4 limit 45), body rate 215-243 deg/s, 11-12% of
+steps beyond the real accel envelope, 2.5-3x the sketch's path length wandering up to 4 m off the line, gate
+contacts on every figure-8 flight. The 4-6 sigma out-of-distribution source drives the unpinned flow off its data
+manifold. So the training-time constraint is what makes source injection safe as well as effective; the
+realism column separates the three flows far more sharply than any success rate.
