@@ -6899,3 +6899,22 @@ holds 8.6 GB and the renderer + a second server do not fit beside it; run `run_s
 (10 trials) once 8900 is down; expected identical to the 10/10 record given the offline equivalence.
 Remaining latency: the prefix pass itself (47 ms, the VLM on two images + language) and the wire (301 kB per
 request: ~2.5 ms wired, ~50 ms on 50 Mbps Wi-Fi — measure from the workstation before deciding on PNG).
+
+**REAL DESCENT DIAGNOSIS (2026-09-11; Denis: "pi0.5 and ours kept going down in real before the fix; do ours
+and scratch look functionally the same on real frames?"). `real_vertical_probe.py` (run per arm: scratch | pin;
+report), 76 real anchors, open-loop chunk from each policy vs the pilot's own continuation:**
+  first 8 steps (what one replan executes): dz  real -0.003 m / scratch -0.002 / pin +0.002 (p10..p90 within
+  +/-0.03 for all); descending-step fraction 0.32 / 0.29 / 0.11; |dxy| 0.054 / 0.069 / 0.109 m.
+  50 steps: dz -0.003 / -0.001 / -0.003. Same with BGR-swapped images (the pre-fix client, EMU=bgr) and with
+  the flow's trust forced to sigma 1.1 or 0 (FORCE_SIGMA): pin dz/8 +0.001 / +0.006.
+  READ: neither policy predicts descent from real frames, with or without the image bug, at any trust level;
+  the pin is ~2x the pilot's lateral pace over the first 8 steps (scratch 1.3x), otherwise the same motion.
+Today's hardware clogs (~/gate_flights/clog_ours.npy, clog_noswap.npy, decoded U c in metres): on EVERY replan
+the commanded dz over 8 steps was 0 to +0.013 m (ours) / -0.006 to +0.010 (noswap) while the live mocap z fell
+0.15-0.20 m per replan from ~1.4 m to the floor (0.15-0.18) within ~8-15 replans, and x advanced ~0.13 m in 15
+replans against ~1.5 m commanded. The setpoint stream was not being followed in either axis. The baseline flights
+earlier the same day (traj_baseline_left_01: z 1.40-1.55 for the whole flight) held altitude. So the descent is
+downstream of the policy reply: publish path, frame, or the flight controller's altitude estimate, and whatever
+changed between the 14:51-15:47 baseline session and the 16:38-16:47 pin sessions. Check on the workstation
+jsonl: published setpoint z vs mocap z per replan. Secondary: the xswap sigma map served sigma 0.5-1.2 on live
+frames (head sigma* high; noswap 0.22-0.3) -- the known non-transfer of the synth-fit calibration to real frames.
