@@ -9,3 +9,9 @@ snmvp_sigma=, snmvp_t_start=)`, the `pi0_gate` config, data loader, checkpoint a
     git checkout 15a9616 && git apply <this repo>/patches/openpi_snmvp_working_tree_2026-09-04.patch
 
 The 2026-09-04 snapshot adds `snmvp_t_start` (SDEdit-style partial denoising start time) to the sampler.
+
+The 2026-09-11 snapshot adds the fused serve path: `Pi0.snmvp_prefix` (one prefix pass returning the
+LLM hidden states and the KV cache), `Pi0.sample_actions_cached` (denoise on a supplied cache), and
+`Policy.infer(..., cache=)`. The joint pin server runs the command head and the flow from one prefix pass
+(SNMVP_FUSED=1, default): 133 -> 88 ms per replan on the dry client, outputs equal to the two-pass path to
+bf16 noise (|dc| <= 0.12% of cstd, chunks within 1 mm over 8 steps).

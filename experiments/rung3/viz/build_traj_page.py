@@ -17,7 +17,7 @@ import sys
 import numpy as np
 import yaml
 
-SP = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, SP)
+SP = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, SP); sys.path.insert(0, os.path.dirname(SP))
 import cloudviewer  # noqa: E402
 from catalogue import AUTO, trial_files  # noqa: E402
 
@@ -48,9 +48,9 @@ def verdict(fname):
     return route, ("CLEAN=True" in k), clr
 
 
-def section(scene, specs, sketch, elem, judge=True):
+def section(scene, specs, sketch, elem, judge=True, extra=()):
     """One viewer + table for a list of 'label=tag' specs. judge=False colours by clearance only."""
-    groups, rows = [], []
+    groups, rows = list(extra), []
     for gi, spec in enumerate(specs):
         label, tag = spec.split("=", 1)
         ok, gz, bad = [], [], []
@@ -89,10 +89,18 @@ def main():
     ap.add_argument("--group", action="append", default=[], help="label=tag (single-section page)")
     ap.add_argument("--section", action="append", default=[], help="title|scene|sketch-or-empty|label=tag,label=tag")
     ap.add_argument("--sketch"); ap.add_argument("--note", default=""); ap.add_argument("--no-judge", action="store_true")
+    ap.add_argument("--demo-task", type=int, help="also draw the synth demonstrations of this gate_nav3 task index (faint)")
+    ap.add_argument("--demo-n", type=int, default=10)
     a = ap.parse_args()
     secs = []
     if a.group:
-        secs.append(("", section(a.scene, a.group, a.sketch, "v0", not a.no_judge)))
+        extra = []
+        if a.demo_task is not None:
+            import realism as R
+            ps = R.load_demos()["synth"].get(a.demo_task, [])[:a.demo_n]
+            extra.append({"label": f"synth demonstrations, task {a.demo_task} ({len(ps)} of 50)", "color": [150, 150, 160],
+                          "trajs": [p.astype(np.float32) for p in ps]})
+        secs.append(("", section(a.scene, a.group, a.sketch, "v0", not a.no_judge, extra)))
     for i, spec in enumerate(a.section):
         t, sc, sk, gs = spec.split("|")
         secs.append((t, section(sc, gs.split(","), sk or None, f"v{i + 1}", not a.no_judge)))

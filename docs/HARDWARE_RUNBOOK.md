@@ -100,6 +100,7 @@ order R1 -> R5 and stop the campaign on any contact.
 | Server | Per replan, median | First call |
 |---|---|---|
 | xswap pin server, after the head-forward jit fix | 133 ms | about 8 s (compile) |
+| xswap pin server, fused head + flow (one prefix pass; 2026-09-11, default) | 88 ms | about 9 s (compile) |
 | xswap pin server, before the fix | 2.3 s | 10.6 s |
 
 The fix (a compiled GMM-head forward in `experiments/rung3/joint_head.py`) was checked against the eager path

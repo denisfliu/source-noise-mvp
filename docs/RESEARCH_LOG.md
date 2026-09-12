@@ -6875,3 +6875,27 @@ steps beyond the real accel envelope, 2.5-3x the sketch's path length wandering 
 contacts on every figure-8 flight. The 4-6 sigma out-of-distribution source drives the unpinned flow off its data
 manifold. So the training-time constraint is what makes source injection safe as well as effective; the
 realism column separates the three flows far more sharply than any success rate.
+
+**FUSED SERVE: ONE VLM PREFIX PASS FOR HEAD AND FLOW, 133 -> 88 ms PER REPLAN (2026-09-11; Denis: "are there
+inefficiencies with the pin in terms of inference speed? diagnose the hardware server; build it and test that it
+decreases latency and performs the same").** Profile of the joint pin server's replan (`profile_serve.py`, xswap
+checkpoint, one real frame): head 52 ms = VLM prefix pass ~47 ms + MDN; flow 81 ms = the SAME prefix pass ~47 ms +
+10 Euler steps at 2.8 ms each; everything else (input transform, noise construction, sigma map, CLOG save,
+msgpack) < 0.1 ms; request payload 301 kB (two raw 224x224 images); first call 4-9 s compile. The prefix was
+computed twice per replan (35% of the time). Fix: `Pi0.snmvp_prefix` returns (prefix_out, prefix_mask, kv_cache)
+from one pass; `joint_head._gmm_forward_cached` feeds prefix_out to the MDN and hands the cache back;
+`Pi0.sample_actions_cached` / `Policy.infer(cache=)` denoise on it. The server (`SNMVP_FUSED=1` default; 0 = old
+two-pass) uses it whenever head and flow read the same observation (not in dual-obs, decode-only or pin-off
+modes). Snapshot `patches/openpi_snmvp_working_tree_2026-09-11.patch`.
+Tests: (a) `test_fused_serve.py`, 16 frames (8 real, 8 synth, four tasks), same noise and sigma: head
+components, pi, mu, sigma and the flow's actions BIT-IDENTICAL between the paths within one process; latency
+two-pass 132.7 ms vs fused 85.8 ms (head+prefix 52.4, cached denoise 33.4). (b) `scripts/run_fused_ab.sh`: the
+real server + the dry flight client replaying real episode 61 (right gate, 8 replans, seed 0 noise): median round
+trip 134 -> 88 ms; per-replan chunk stats agree to the last printed digit or differ by 1 mm net displacement /
+0.1 deg on 5 of 8 replans; the head's served c differs by at most 0.12% of cstd (median 0.02%), i.e. the bf16
+kernel-selection noise already accepted for the compiled head on 2026-09-04 (a fused server run twice is
+identical). NOT done: a closed-loop sim cell through the fused server — the no-swap hardware server on port 8900
+holds 8.6 GB and the renderer + a second server do not fit beside it; run `run_sixcell_eval_local.sh`-style CFR
+(10 trials) once 8900 is down; expected identical to the 10/10 record given the offline equivalence.
+Remaining latency: the prefix pass itself (47 ms, the VLM on two images + language) and the wire (301 kB per
+request: ~2.5 ms wired, ~50 ms on 50 Mbps Wi-Fi — measure from the workstation before deciding on PNG).

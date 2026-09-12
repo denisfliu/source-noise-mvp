@@ -94,6 +94,7 @@ class JointPinPolicy:
         self.pin_off_sigma = float(os.environ.get("SNMVP_PIN_OFF_SIGMA", "1.5"))
         if self.pin_off:
             print(f"[joint] PIN OFF: plain noise, sigma_serve={self.pin_off_sigma}", flush=True)
+        self.fused = os.environ.get("SNMVP_FUSED", "1") == "1"
         self.CLOG = os.environ.get("CLOG", "")
         self._log = []
         # MDN serve state: per-trial latched component for pi-hysteresis. Keyed by the client's
@@ -178,7 +179,14 @@ class JointPinPolicy:
             # sigma tracks the head's own command error at rho=0.82 on demo frames
             # (sigma_phase_probe 2026-08-20), so the closed-loop sigma trace is the direct test
             # of whether the thrash rows are confident-wrong or known-uncertain.
-            c, w, mu, sig = joint_head.head_c(self.policy, [cmd_obs or obs], return_gmm=True)
+            # fused serve (2026-09-11): when the head and the flow read the same observation, the
+            # head's prefix pass is returned as the flow's KV cache (SNMVP_FUSED=0 restores two passes)
+            fuse = self.fused and cmd_obs is None and not self.decode_only and not self.pin_off
+            if fuse:
+                c, w, mu, sig, cache = joint_head.head_c(self.policy, [obs], return_gmm=True, return_cache=True)
+            else:
+                c, w, mu, sig = joint_head.head_c(self.policy, [cmd_obs or obs], return_gmm=True)
+                cache = None
             w, mu, sig = w[0], mu[0], sig[0]
             j = int(w.argmax())
             jprev = self._latch.get(trial)
@@ -200,7 +208,7 @@ class JointPinPolicy:
                                         sk_phase]]).astype(np.float32)
         else:
             c, alpha, sig_serve = joint_head.head_c(self.policy, [cmd_obs or obs])[0], 1.0, None
-            extra = np.asarray([sk_phase], np.float32)
+            extra = np.asarray([sk_phase], np.float32); cache = None
         if sk_c is not None:
             c, sig_serve, alpha = sk_c.astype(np.float32), sk_sig, 1.0
         if adv_ch is not None:
@@ -248,7 +256,7 @@ class JointPinPolicy:
             return out
         c_eff = alpha * c + (1.0 - alpha) * (g @ self.U)
         noise = (g - (g @ self.U) @ self.U.T + (c_eff @ self.U.T)).reshape(H, AD).astype(np.float32)
-        out = self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve)
+        out = self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve, cache=cache)
         if self.bridge is not None:
             acts = np.asarray(out["actions"], np.float32)[:H, :3]
             pos_b = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]

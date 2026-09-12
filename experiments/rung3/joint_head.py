@@ -52,15 +52,10 @@ _GEN_RNG = __import__("numpy").random.default_rng(0)
 _GMM_FWD = {}
 
 
-def _gmm_forward(m, o, state, lang_zero):
-    """Pure-JAX GMM head forward on a preprocessed Observation batch (module method form so it can
-    be frozen + jitted with nnx_utils.module_jit; 2026-09-04 hardware latency fix: 2.4 s -> ~0.1 s)."""
+def _gmm_from_prefix(m, prefix_out, mask, o, state, lang_zero):
+    """MDN head on an already-computed prefix pass (prefix_out, mask from the LLM prefix call)."""
     import jax
     import jax.numpy as jnp
-    from openpi.models.pi0 import make_attn_mask
-    tok, mask, ar = m.embed_prefix(o)
-    (prefix_out, _), _ = m.PaliGemma.llm([tok, None], mask=make_attn_mask(mask, ar),
-                                         positions=jnp.cumsum(mask, axis=1) - 1)
     pm = mask.astype(jnp.float32)
     keys, vals = m.snmvp_k(prefix_out), m.snmvp_v(prefix_out)
     sc = jnp.einsum("qd,btd->bqt", m.snmvp_q.value, keys) / jnp.sqrt(256.0)
@@ -81,20 +76,41 @@ def _gmm_forward(m, o, state, lang_zero):
     return m.snmvp_gmm_out(h)
 
 
-def _gmm_fwd_jitted(m):
-    if id(m) not in _GMM_FWD:
+def _gmm_forward(m, o, state, lang_zero):
+    """Pure-JAX GMM head forward on a preprocessed Observation batch (module method form so it can
+    be frozen + jitted with nnx_utils.module_jit; 2026-09-04 hardware latency fix: 2.4 s -> ~0.1 s)."""
+    import jax.numpy as jnp
+    from openpi.models.pi0 import make_attn_mask
+    tok, mask, ar = m.embed_prefix(o)
+    (prefix_out, _), _ = m.PaliGemma.llm([tok, None], mask=make_attn_mask(mask, ar),
+                                         positions=jnp.cumsum(mask, axis=1) - 1)
+    return _gmm_from_prefix(m, prefix_out, mask, o, state, lang_zero)
+
+
+def _gmm_forward_cached(m, o, state, lang_zero):
+    """Fused serve (2026-09-11): ONE prefix pass feeds the head and is returned as the flow's KV
+    cache, so the flow does not repeat it. Returns (gmm_out, prefix_mask, kv_cache)."""
+    prefix_out, mask, kv_cache = m.snmvp_prefix(o, preprocessed=True)
+    return _gmm_from_prefix(m, prefix_out, mask, o, state, lang_zero), mask, kv_cache
+
+
+def _gmm_fwd_jitted(m, cached=False):
+    key = (id(m), cached)
+    if key not in _GMM_FWD:
         import types
         from openpi.shared import nnx_utils
-        bound = types.MethodType(_gmm_forward, m)
-        _GMM_FWD[id(m)] = nnx_utils.module_jit(bound, static_argnames=("lang_zero",))
-    return _GMM_FWD[id(m)]
+        bound = types.MethodType(_gmm_forward_cached if cached else _gmm_forward, m)
+        _GMM_FWD[key] = nnx_utils.module_jit(bound, static_argnames=("lang_zero",))
+    return _GMM_FWD[key]
 
 
-def head_c(policy, raws, return_gmm=False):
+def head_c(policy, raws, return_gmm=False, return_cache=False):
     """Commanded c for a batch of raw observation dicts, from the checkpoint's own head.
 
     return_gmm=True (MDN checkpoints only) additionally returns (pi, mu) so the caller can do
-    component selection itself (the server's pi-hysteresis latch) and log pi per replan."""
+    component selection itself (the server's pi-hysteresis latch) and log pi per replan.
+    return_cache=True (MDN, batch of one) appends the prefix KV cache, (prefix_mask, kv_cache),
+    for policy.infer(..., cache=...) so the flow reuses this call's prefix pass."""
     import jax
     import jax.numpy as jnp
     from openpi.models import model as _model
@@ -112,15 +128,19 @@ def head_c(policy, raws, return_gmm=False):
         # MDN head served through the compiled forward (see _gmm_forward); numerics identical to the
         # eager path below, which is kept for the non-GMM heads.
         state = jnp.stack([jnp.asarray(t["state"]) for t in tds], 0)
-        fwd = _gmm_fwd_jitted(m)
-        out = np.asarray(fwd(o, state, lang_zero=False), np.float32)
+        fwd = _gmm_fwd_jitted(m, cached=return_cache)
+        if return_cache:
+            out, pmask, kv = fwd(o, state, lang_zero=False)
+            out = np.asarray(out, np.float32); cache = (pmask, kv)
+        else:
+            out = np.asarray(fwd(o, state, lang_zero=False), np.float32)
         K = m.snmvp_head_out.kernel.value.shape[1]
         M = out.shape[1] // (1 + 2 * K)
         logit = out[:, :M]
         mu = out[:, M:M * (1 + K)].reshape(-1, M, K)
         _w = float(os.environ.get("SNMVP_GMM_LANG_CFG", "1"))
         if _w != 1.0:
-            out0 = np.asarray(fwd(o, state, lang_zero=True), np.float32)
+            out0 = np.asarray(_gmm_fwd_jitted(m)(o, state, lang_zero=True), np.float32)
             mu0 = out0[:, M:M * (1 + K)].reshape(-1, M, K)
             mu = mu + (_w - 1.0) * (mu - mu0)
         sig = np.exp(np.clip(out[:, M * (1 + K):].reshape(-1, M, K), -5.0, 2.0))
@@ -130,6 +150,8 @@ def head_c(policy, raws, return_gmm=False):
             c = (w[..., None] * mu).sum(1)
         else:
             c = mu[np.arange(len(mu)), w.argmax(-1)]
+        if return_cache:
+            return ((c, w, mu, sig) if return_gmm else (c,)) + (cache,)
         return (c, w, mu, sig) if return_gmm else c
     tok, mask, ar = m.embed_prefix(o)
     # llm returns ((prefix_out, suffix_out), kv_cache); with no suffix the second output is None,

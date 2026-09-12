@@ -2,7 +2,7 @@
 
 For a person or an agent who has to start, check, or fix the policy server during a flight session.
 Read `docs/HARDWARE_RUNBOOK.md` for the flight procedure; this file is the reference behind it.
-Everything here was verified on 2026-09-04 (dry client end to end, 133 ms per replan).
+Everything here was verified on 2026-09-04 (dry client end to end, 133 ms per replan) and re-verified 2026-09-11 with the fused serve path (88 ms per replan).
 
 ## Machines
 
@@ -89,7 +89,7 @@ bash scripts/hw_status.sh --kill 8900                           # stop the serve
 ```
 "Ready" is the log line `[serve_gate_pin_joint] ready on ws://0.0.0.0:8900` (or `[serve_gate_plain] ready`).
 The first request compiles (about 8 s); run the `--test` once before the pilot lifts off. After that a replan is
-about 135 ms on this box (flow 80 ms, command head 55 ms) plus the network.
+about 88 ms on this box (one VLM prefix pass shared by the command head and the flow, 52 ms, plus 10 Euler steps on the cached prefix, 33 ms) plus the network. `SNMVP_FUSED=0` restores the older two-pass path (133 ms) for A/B; outputs agree to bf16 noise.
 
 ## The wire contract (what the client must send, what the server returns)
 
