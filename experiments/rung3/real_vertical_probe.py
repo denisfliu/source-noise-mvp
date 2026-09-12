@@ -34,7 +34,7 @@ def ep(e):
 if ARM != "report":
     cfg = _cfg.get_config("pi0_gate"); ns = dict(_nz.load("/home/dfliu/hf_bundle/gate-drone-pi0/assets/gate_nav"))
 U = np.load(f"{RD}/pin_U_mh16.npy").astype(np.float32); H, AD = 50, 32
-sigmap = json.load(open(f"{RD}/sigma_map_xswap.json")); xs, ys, cap = np.asarray(sigmap["sig_star"], np.float32), np.asarray(sigmap["sig_serve"], np.float32), float(sigmap["cap"])
+sigmap = json.load(open(os.environ.get("SIGMAP", f"{RD}/sigma_map_xswap.json"))); xs, ys, cap = np.asarray(sigmap["sig_star"], np.float32), np.asarray(sigmap["sig_serve"], np.float32), float(sigmap["cap"])
 rng = np.random.default_rng(0)
 out = {"real": [], "scratch": [], "pin": [], "frac": [], "side": []}
 for side, e, t, frac in anchors:
@@ -45,18 +45,18 @@ def obs_at(e, t, side):
     d = ep(e)
     return {"observation/image": r224(d["image"][t]), "observation/wrist_image": r224(d["wrist"][t]),
             "observation/state": d["state"].astype(np.float32)[t], "prompt": PROMPT[side]}
-OUTF = "/home/dfliu/ctxrun/realism/real_vertical_%s" + (("_" + EMU) if EMU else "") + (("_sig" + os.environ["FORCE_SIGMA"]) if os.environ.get("FORCE_SIGMA") else "") + ".npz"
+OUTF = "/home/dfliu/ctxrun/realism/real_vertical_%s" + (("_" + EMU) if EMU else "") + (("_" + os.environ["PIN_TAG"]) if os.environ.get("PIN_TAG") else "") + (("_sig" + os.environ["FORCE_SIGMA"]) if os.environ.get("FORCE_SIGMA") else "") + ".npz"
 if ARM == "scratch":
     policy = _pc.create_trained_policy(cfg, "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_scratch3/4999", norm_stats=ns)
-    rows = []
+    rows, chunks = [], []
     for side, e, t, frac in anchors:
         a = np.asarray(policy.infer(obs_at(e, t, side))["actions"], np.float32)[:H, :3]
-        rows.append(np.stack([a[:8].sum(0), a.sum(0)]))
-    np.savez(OUTF % "scratch", rows=np.asarray(rows)); print("saved scratch"); sys.exit(0)
+        rows.append(np.stack([a[:8].sum(0), a.sum(0)])); chunks.append(a)
+    np.savez(OUTF % "scratch", rows=np.asarray(rows), chunks=np.asarray(chunks)); print("saved scratch"); sys.exit(0)
 sig_serves = []
 if ARM == "pin":
-  policy = _pc.create_trained_policy(cfg, "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_xswap/4999", norm_stats=ns)
-  rows = []
+  policy = _pc.create_trained_policy(cfg, os.environ.get("PIN_CK", "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_xswap/4999"), norm_stats=ns)
+  rows, chunks = [], []
   for side, e, t, frac in anchors:
     obs = obs_at(e, t, side)
     c, w, mu, sig, cache = joint_head.head_c(policy, [obs], return_gmm=True, return_cache=True)
@@ -66,8 +66,8 @@ if ARM == "pin":
     g = rng.standard_normal((H, AD)).astype(np.float32).reshape(-1)
     noise = (g - (g @ U) @ U.T + (cc @ U.T)).reshape(H, AD).astype(np.float32)
     a = np.asarray(policy.infer(obs, noise=noise, snmvp_sigma=ss, cache=cache)["actions"], np.float32)[:H, :3]
-    rows.append(np.stack([a[:8].sum(0), a.sum(0)]))
-  np.savez(OUTF % "pin", rows=np.asarray(rows), sig_serve=np.asarray(sig_serves)); print("saved pin"); sys.exit(0)
+    rows.append(np.stack([a[:8].sum(0), a.sum(0)])); chunks.append(a)
+  np.savez(OUTF % "pin", rows=np.asarray(rows), chunks=np.asarray(chunks), sig_serve=np.asarray(sig_serves)); print("saved pin"); sys.exit(0)
 sc = np.load(OUTF % "scratch")["rows"]; pn = np.load(OUTF % "pin")["rows"]
 out["scratch"] = [(r[0], r[1]) for r in sc]; out["pin"] = [(r[0], r[1]) for r in pn]
 frac = np.asarray(out["frac"]); side = np.asarray(out["side"])

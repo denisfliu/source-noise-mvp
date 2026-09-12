@@ -6918,3 +6918,25 @@ downstream of the policy reply: publish path, frame, or the flight controller's 
 changed between the 14:51-15:47 baseline session and the 16:38-16:47 pin sessions. Check on the workstation
 jsonl: published setpoint z vs mocap z per replan. Secondary: the xswap sigma map served sigma 0.5-1.2 on live
 frames (head sigma* high; noswap 0.22-0.3) -- the known non-transfer of the synth-fit calibration to real frames.
+
+**TRAJECTORY PHYSICS ON REAL FRAMES: THE SWAP MAKES THE PIN FLY LIKE THE PLANNER UNDER REAL IMAGES
+(2026-09-11; Denis: "besides displacement, are the trajectory physics reasonable, do they match real drone
+behaviour?"). Realism ledger on the full 50-step open-loop chunks at the 76 real anchors (real_vertical_probe.py
+now saves chunks; PIN_CK/SIGMAP/PIN_TAG select the checkpoint) vs the pilot's own next 5 s; medians:**
+  source                     v95    acc95  jerk95  zero-acc  tilt99  rate99   AUC vs real demos (shape)
+  pilot, next 50 steps       0.43   0.57   2.04    0.41      3.6     15       0.51
+  pi0 scratch                0.45   0.55   1.70    0.47      3.7     11       0.66
+  pin w/o swap (gmsig3)      0.25   0.38   1.50    0.61      2.7     11       0.78
+  pin with swap (xswap)      0.21   0.21   0.68    0.92      1.5      6       0.92
+  synth planner demos, 5 s   0.30   0.15   0.17    1.00      0.8      1       1.00
+READS: (1) scratch's chunks from real frames are kinematically the pilot's (same speed, accel, jerk, staircase
+fraction; AUC 0.66). (2) The xswap pin's chunks from real frames are the PLANNER's: half the pilot's speed,
+staircase velocity (zero-accel 0.92 vs 0.41), a third of the jerk and body rate, AUC 0.92 -- exactly what
+Section 4.5 trains for ("simulator-style coarse trajectories are valid continuations under real observations"),
+now visible in the kinematics and not only in the route. The no-swap pin sits between (0.61, AUC 0.78): pin
+training alone already shifts real-frame chunks toward the synth majority; the swap finishes the job. (3) All of
+it is feasible (tilt < 4 deg, PX4-cascade RMSE <= 0.07 m) -- the difference is realism, not realizability,
+the same distinction as the sim ledger. Consequence for hardware: under real images the xswap pin flies slower
+and more stepwise than the pilots; this is the behaviour gap by construction and is fixable on the data side
+(smooth-timing regeneration of the synth courses) rather than in the model. It is also why the pin's real-frame
+first-8-step displacement (0.109 m) exceeds the pilot's (0.054): constant-velocity from step 0, no ramp.
