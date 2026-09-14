@@ -47,12 +47,12 @@ def obs_at(e, t, side):
             "observation/state": d["state"].astype(np.float32)[t], "prompt": PROMPT[side]}
 OUTF = "/home/dfliu/ctxrun/realism/real_vertical_%s" + (("_" + EMU) if EMU else "") + (("_" + os.environ["PIN_TAG"]) if os.environ.get("PIN_TAG") else "") + (("_sig" + os.environ["FORCE_SIGMA"]) if os.environ.get("FORCE_SIGMA") else "") + ".npz"
 if ARM == "scratch":
-    policy = _pc.create_trained_policy(cfg, "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_scratch3/4999", norm_stats=ns)
+    policy = _pc.create_trained_policy(cfg, os.environ.get("SCR_CK", "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_scratch3/4999"), norm_stats=ns)
     rows, chunks = [], []
     for side, e, t, frac in anchors:
         a = np.asarray(policy.infer(obs_at(e, t, side))["actions"], np.float32)[:H, :3]
         rows.append(np.stack([a[:8].sum(0), a.sum(0)])); chunks.append(a)
-    np.savez(OUTF % "scratch", rows=np.asarray(rows), chunks=np.asarray(chunks)); print("saved scratch"); sys.exit(0)
+    np.savez(OUTF % os.environ.get("SCR_TAG", "scratch"), rows=np.asarray(rows), chunks=np.asarray(chunks)); print("saved scratch"); sys.exit(0)
 sig_serves = []
 if ARM == "pin":
   policy = _pc.create_trained_policy(cfg, os.environ.get("PIN_CK", "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_xswap/4999"), norm_stats=ns)
