@@ -6965,3 +6965,27 @@ gmsig4, four unrelated conda envs, dronevla_v7, los_tts + chatterbox, pip/uv/con
 The idle 8900 hardware server (no-swap arm, 2 days idle) was stopped to free the GPU; restart with
 `bash scripts/hw_serve.sh noswap`. Also: killed my own shell once via `pgrep -f` matching its own command
 line -- the bracket trick (`joint.p[y]`) is mandatory, as the memory note says.
+
+**COARSE-ONLY SWAP RESULT (2026-09-14, xswapc seed 42, 5000 steps): THE PILOT'S SHAPE COMES BACK, THE PLANNER'S
+PLAN STAYS, SIM HOLDS.** Post pipeline `run_xswapc_post.sh` + real-anchor suite + real-frame ledger
+(real_vertical_probe.py PIN_TAG=xswapc). Artifact (six cells beside xswap) below.
+  sim, route-clean / clearance-clean: left 9/10 8/10 (one wrong-direction re-cross; two 0.145 m grazes at the
+    left post), right 10/10 10/10, CFL 10/10 10/10, CFR 10/10 10/10 -> 38/40 strict (xswap s42: 40/40);
+    compounds 0/5 unguided as every arm. Readout gate FAIL (c-R2 0.33), the known artifact.
+  real anchors, own head, right gate: head-chunk gate crossings 17/55 (xswap 15, gmsig3 8), chunk length
+    0.89 m (xswap 0.79, gmsig3 0.60).
+  real-frame ledger, 50-step chunks from the 76 real anchors (median; pilot / scratch / gmsig3 / xswap / xswapc):
+    speed p95      0.43 / 0.45 / 0.25 / 0.21 / 0.29
+    accel p95      0.57 / 0.55 / 0.38 / 0.21 / 0.41
+    jerk p95       2.04 / 1.70 / 1.50 / 0.68 / 1.72
+    zero-accel     0.41 / 0.47 / 0.61 / 0.92 / 0.52
+    body rate p99  15   / 11   / 11   / 6    / 14
+    AUC vs real    0.51 / 0.66 / 0.78 / 0.92 / 0.78
+READS: (1) The staircase is gone from real-frame output (zero-accel 0.92 -> 0.52 vs the pilot's 0.41); jerk
+and body rate are at the pilot's level; the chunk is a smooth velocity profile again. (2) The command side
+kept what the swap was for: more real-frame gate crossings than xswap (17 vs 15) with longer chunks. (3) Speed
+p95 is 0.29 vs the pilot's 0.43: the head commands the planner's pace, as predicted from the matched pairs
+(pilot ~2x the planner's 5-s displacement) -- tempo is a data/command choice now, not a kinematics flaw.
+(4) Sim 38/40 on one seed vs xswap's 40/40: a 2-trial gap inside protocol noise; the left grazes are at
+the same post the pilots pass closest to. Seed 7 needed before this replaces xswap as "ours" at claim
+tier; on the evidence so far it is the better arm for hardware (pilot-shaped chunks, more crossings).
