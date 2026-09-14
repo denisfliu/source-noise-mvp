@@ -6940,3 +6940,28 @@ the same distinction as the sim ledger. Consequence for hardware: under real ima
 and more stepwise than the pilots; this is the behaviour gap by construction and is fixable on the data side
 (smooth-timing regeneration of the synth courses) rather than in the model. It is also why the pin's real-frame
 first-8-step displacement (0.109 m) exceeds the pilot's (0.054): constant-velocity from step 0, no ramp.
+
+**COARSE-ONLY SWAP LAUNCHED: "PLAN LIKE THE SIMULATOR, FLY LIKE THE PILOT" (2026-09-13; Denis, after the
+real-frame physics ledger: "we should train such that we fly more like real than sim ... start a training
+run, this is what we want as ours").** Diagnosis: the xswap swap replaces the WHOLE real chunk with the
+matched sim chunk, so the residual (kinematics) is swapped along with the command; on real frames the flow
+then reproduces the planner's staircase at half the pilot's speed. Fix (data_loader._XDomSwap mode=coarse,
+patch snapshot 2026-09-13): for a real frame with a matched sim chunk, keep the pilot's residual and replace
+only the 16 pinned coordinates: a_mix = a_real + S (U^T a_sim - U^T a_real), in normalized action space,
+where S dc is the minimum-acceleration chunk with band sums dc (argmin ||D a||^2 s.t. U^T a = dc, D = second
+difference in time; closed form, computed once) instead of the min-norm U dc, which would add band-boundary
+velocity steps to every swapped target. Pad flags are kept (the loss masks the real chunk's padded tail;
+the in-graph pin carries c_sim exactly). Unit checks on table rows: |c_mix - c_sim| ~1e-6, residual
+identical to the pilot's to 1e-6, accel p95 of a_mix 0.4-0.8 m/s^2 = the pilot's (min-norm decode gave 2.2);
+the plans differ a lot at matched poses (pilot ~2x the planner's 5-s displacement), so the head will learn
+the planner's pace with the pilot's shape -- Denis: "pilot-like but slower is fine; a tempo word sets pace."
+Run: `scripts/run_xswapc.sh` (xswap recipe, seed 42, p=0.5, exp gate_pin_joint_xswapc, 5000 steps, ~5.4 h
+from 21:27), post `scripts/run_xswapc_post.sh` (readout gate, sigma map, six cells, real-anchor suite) gated
+on the checkpoint. Judge against xswap on: real-frame ledger (zero-accel fraction 0.92 -> toward 0.41, speed
+p95 0.21 -> toward 0.43), right-anchor head crossings (must hold ~15/55), sim six-cell (must hold 80/80).
+Ops: the first launch tripped the disk guard (root at 100%, 3.5 GB free); freed ~165 GB with Denis
+(old gate_nav lerobot dataset, HF datasets cache, EC2-era falsify checkpoints, the unpacked-zip duplicate,
+gmsig4, four unrelated conda envs, dronevla_v7, los_tts + chatterbox, pip/uv/conda caches, the Qwen-3B VLM).
+The idle 8900 hardware server (no-swap arm, 2 days idle) was stopped to free the GPU; restart with
+`bash scripts/hw_serve.sh noswap`. Also: killed my own shell once via `pgrep -f` matching its own command
+line -- the bracket trick (`joint.p[y]`) is mandatory, as the memory note says.

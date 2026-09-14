@@ -15,3 +15,7 @@ LLM hidden states and the KV cache), `Pi0.sample_actions_cached` (denoise on a s
 `Policy.infer(..., cache=)`. The joint pin server runs the command head and the flow from one prefix pass
 (SNMVP_FUSED=1, default): 133 -> 88 ms per replan on the dry client, outputs equal to the two-pass path to
 bf16 noise (|dc| <= 0.12% of cstd, chunks within 1 mm over 8 steps).
+
+The 2026-09-13 snapshot adds the coarse-only cross-domain swap (`_XDomSwap` mode=coarse: only the pinned
+coordinates of a real chunk are replaced by the matched sim chunk's, via the minimum-acceleration chunk with
+those band sums; env SNMVP_XDOM_SWAP_MODE=coarse, SNMVP_XDOM_NORM=<norm_stats.json>).
