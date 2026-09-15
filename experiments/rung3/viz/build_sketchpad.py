@@ -26,7 +26,14 @@ APERTURE = {
 SCENES = {"left_and_center": (["left", "center"], "traj_gmsig3_cmpl_*.npy",
                               "go through the center gate from the left and hover over the stuffed animal"),
           "right_and_center": (["right", "center"], "traj_gmsig3_cmpr_*.npy",
-                               "go through the center gate from the right and hover over the stuffed animal")}
+                               "go through the center gate from the right and hover over the stuffed animal"),
+          # motion programs (2026-09-15): the right scene with the flown figure-8 as reference and the
+          # existing figure-8 sketch drawn as a mark, so a new figure-eight can be drawn against it
+          "right": (["right"], "traj_app_fig8_*.npy",
+                    "go through the gate on the right and hover over the stuffed animal")}
+EXTRA_MARKS = {"right": [np.asarray(json.load(open(f"{os.path.dirname(SP)}/sketch_fig8.json"))["points"], np.float32)[:, :3],
+                         np.asarray(json.load(open(f"{os.path.dirname(SP)}/sketch_orbit.json"))["points"], np.float32)[:, :3]]}
+AXES = [np.array([[0, 0, 0], [0.5, 0, 0]], np.float32), np.array([[0, 0, 0], [0, 0.5, 0]], np.float32), np.array([[0, 0, 0], [0, 0, 0.5]], np.float32)]
 
 
 def b64(a):
@@ -49,7 +56,7 @@ for scene, (aps, pat, prompt) in SCENES.items():
         k = np.random.default_rng(0).permutation(len(pts))[:40000]
         pts, rgb = pts[k], rgb[k]
     refs = [np.load(f)[:, :3].astype(np.float32) for f in sorted(glob.glob(f"{RUN}/{pat}"))]
-    marks = [np.array(APERTURE[a] + [APERTURE[a][0]], np.float32) for a in aps] + box_edges(GOAL_C, GOAL_H)
+    marks = [np.array(APERTURE[a] + [APERTURE[a][0]], np.float32) for a in aps] + box_edges(GOAL_C, GOAL_H) + AXES + EXTRA_MARKS.get(scene, [])
     payload[scene] = {"n": int(len(pts)), "pts": b64(pts), "rgb": b64(rgb.astype(np.uint8)),
                       "refs": [b64(t) for t in refs], "marks": [b64(m) for m in marks],
                       "prompt": prompt}
@@ -101,6 +108,7 @@ geometry. Copy the JSON into <code>experiments/rung3/sketch_&lt;name&gt;.json</c
   <div class="ui">
    <label><input type="radio" name="sc" value="left_and_center" checked> left_and_center</label>
    <label><input type="radio" name="sc" value="right_and_center"> right_and_center</label>
+   <label><input type="radio" name="sc" value="right"> right (motion programs: figure-8 / orbit references)</label>
    <label><input type="checkbox" id="sketchmode"> <b style="color:var(--warn)">sketch mode</b></label>
    <label>z <input type="range" id="zsl" min="0.2" max="2.0" step="0.05" value="1.5">
     <span class="zval" id="zv">1.50</span> m</label>
@@ -156,7 +164,7 @@ for(const k in D){
     prompt:D[k].prompt};
 }
 let scene="left_and_center";
-let yaw=-0.6,pitch=0.45,dist=9,panx=0,pany=0;
+let yaw=-0.6,pitch=1.52,dist=7.5,panx=0,pany=0;   // starts in the top (bird's-eye) view; the "top view" button restores it
 let zsel=1.5, sketching=false, showRefs=true;
 let W=[];   // waypoints, world coords [x,y,z]
 function cam(){
@@ -245,7 +253,7 @@ function exportJson(){
     enter_radius:+document.getElementById("er").value,
     step_m:+document.getElementById("sm").value,
     sigma_serve:+document.getElementById("ss").value,
-    end_margin_m:0.1};
+    end_margin_m:0.1,carrot:20};
   document.getElementById("json").value=JSON.stringify(o,null,1);
   document.getElementById("np").textContent=W.length;
 }

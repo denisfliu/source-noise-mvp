@@ -30,6 +30,14 @@ GROUP_COLS = [[96, 235, 160], [90, 170, 240], [180, 140, 255], [240, 210, 90]]
 GRAZE, FAIL = [255, 140, 40], [240, 80, 80]
 
 
+def axes(length=0.5):
+    """Mocap-frame origin with x (red), y (green), z (blue) axes of `length` metres, as three viewer groups."""
+    o = np.zeros(3, np.float32)
+    return [{"label": "origin: +x axis (0.5 m)", "color": [240, 80, 80], "trajs": [np.stack([o, o + np.array([length, 0, 0], np.float32)])]},
+            {"label": "origin: +y axis (0.5 m)", "color": [80, 220, 80], "trajs": [np.stack([o, o + np.array([0, length, 0], np.float32)])]},
+            {"label": "origin: +z axis (0.5 m)", "color": [90, 140, 255], "trajs": [np.stack([o, o + np.array([0, 0, length], np.float32)])]}]
+
+
 def marks(scene):
     saf = yaml.safe_load(open(f"{FALSIFY}/configs/safety/{SAFETY[scene]}.yaml"))
     gates = [np.asarray(g["corners"], np.float32) for g in saf["ordered_miss_gate"]["gates"]] if "ordered_miss_gate" in saf \
@@ -70,7 +78,7 @@ def section(scene, specs, sketch, elem, judge=True, extra=()):
     if sketch:
         groups.append({"label": "the sketch (drawn command)", "color": [255, 200, 90],
                        "trajs": [np.asarray(json.load(open(sketch))["points"], np.float32)[:, :3]]})
-    groups += marks(scene)
+    groups += marks(scene) + axes()
     rc = "<th>route-clean</th>" if judge else ""
     tab = f"<table class='rt'><tr><th>arm</th><th>trial</th>{rc}<th>clearance-clean</th><th>min clearance</th></tr>" + "".join(
         f"<tr class='{'ok' if r and c else 'gz' if r else 'bad'}'><td>{html.escape(l)}</td><td>{t}</td>"
