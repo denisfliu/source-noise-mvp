@@ -8,7 +8,9 @@
 #   ours       source-noise pin        gate_pin_joint_xswapc serve_gate_pin_joint.py + pin env + sigma_map_xswapc.json (coarse-only swap)
 #   ours_xswap source-noise pin        gate_pin_joint_xswap  (whole-chunk swap; the checkpoint behind the paper's sim tables)
 #   noswap     w/o sim-real swap       gate_pin_joint_gmsig3                          + sigma_map_gmsig3.json
-# sketch (ours/noswap only): cmpl_denis | cmpl_min4 | cmpl_min4s | tempo06 | tempo10 | tempo15 | orbit | fig8
+# sketch (pin arms only): cmpl_denis | cmpl_min4v2 | cmpl_min4sv2 | tempo06 | tempo10 | tempo15 | orbit | fig8
+#   | fig8_denis3 | fig8_denis3_mirror   (Denis's 33-point figure-eight through the left and center gates, and its
+#   x-mirror behind the start; both hand back to the left-gate prompt; e.g. `hw_serve.sh realonly --sketch fig8_denis3`)
 #   -> SNMVP_PIN_PROMPT=experiments/rung3/sketch_<name>.json (the server carries the sketch; the drone
 #      client just flies the matching --task, e.g. compound_left for cmpl_*, right for tempo/orbit/fig8).
 #
@@ -40,7 +42,10 @@ case $ARM in
   nosig)       CK=$CKROOT/gate_pin_joint_nosig/4999;     SIG="";;
   ours_s7)     CK=$CKROOT/gate_pin_joint_xswaps7/4999;   SIG=$RD/sigma_map_xswaps7.json;;
   baseline_s7) CK=$CKROOT/gate_scratch3s7/4999;          SIG="";;
-  *) echo "arm must be baseline | ours | ours_xswap | noswap | synthonly | nosig | ours_s7 | baseline_s7"; exit 2;;
+  realonly)    CK=$CKROOT/gate_pin_joint_realonly/4999;  SIG=$RD/sigma_map_realonly.json;;   # pin trained on the 100 real demos only (2026-09-14)
+  realonly)    CK=$CKROOT/gate_pin_joint_realonly/4999;  SIG=$RD/sigma_map_realonly.json;;  # pin, real episodes 0-99 only
+  baseline_real) CK=$CKROOT/gate_scratch_real/4999;      SIG="";;                            # scratch, real only
+  *) echo "arm must be baseline | ours | ours_xswap | noswap | synthonly | nosig | ours_s7 | baseline_s7 | realonly | baseline_real"; exit 2;;
 esac
 [ -d "$CK" ] || { echo "checkpoint missing: $CK"; exit 1; }
 if [ -n "$SKETCH" ]; then

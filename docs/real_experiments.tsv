@@ -30,3 +30,5 @@ Ours seed 2	gate_pin_joint_xswaps7	Right gate	10	as Ours but --ckpt xswaps7 + SN
 Ours seed 2	gate_pin_joint_xswaps7	Center gate from right	10	same server; task "center_from_right"
 pi0 seed 2	gate_scratch3s7	Right gate	10	serve_gate_plain.py --ckpt scratch3s7; task "right"
 pi0 seed 2	gate_scratch3s7	Center gate from right	10	same server; task "center_from_right"
+real-only pin	gate_pin_joint_realonly	Figure-eight through left + center gates, Denis sketch	5	GPU: bash scripts/hw_serve.sh realonly --sketch fig8_denis3   | workstation: run_policy.py gate --task left --apc 50
+real-only pin	gate_pin_joint_realonly	Same figure-eight mirrored behind the start	5	GPU: bash scripts/hw_serve.sh realonly --sketch fig8_denis3_mirror   | workstation: run_policy.py gate --task left --apc 50
