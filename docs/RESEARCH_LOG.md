@@ -6989,3 +6989,29 @@ p95 is 0.29 vs the pilot's 0.43: the head commands the planner's pace, as predic
 (4) Sim 38/40 on one seed vs xswap's 40/40: a 2-trial gap inside protocol noise; the left grazes are at
 the same post the pilots pass closest to. Seed 7 needed before this replaces xswap as "ours" at claim
 tier; on the evidence so far it is the better arm for hardware (pilot-shaped chunks, more crossings).
+
+**REAL-ONLY ARMS (2026-09-15; Denis: "try training with real only, scratch and ours, and see what happens").
+`scripts/run_realonly.sh`: gate_scratch_real and gate_pin_joint_realonly, episodes 0-99 (100 real left/right
+demos), seed 42, 5000 steps, no swap; six cells, real-anchor suite, real-frame ledger. Page below.**
+  sim (rendered frames these policies never saw), route-clean / clearance-clean:
+    scratch real-only: left 2/10 6/10, right 7/10 4/10, CFL 0/10, CFR 0/10, compounds 0/5
+    pin real-only:     left 0/10 0/10, right 1/10 5/10, CFL 0/10, CFR 0/10, compounds 0/5; readout gate c-R2 -0.41
+  real anchors, right gate, head-chunk crossings: pin real-only 9/55 (gmsig3 8, xswap 15, xswapc 17)
+  real-frame ledger (50-step chunks from the 76 real anchors, medians):
+    source                      v95   acc95 jerk95 zero-acc rate99  AUC vs real
+    pilot                       0.43  0.57  2.04   0.41     15      0.51
+    scratch, mixed data         0.45  0.55  1.70   0.47     11      0.66
+    scratch, REAL ONLY          0.36  0.45  1.40   0.56      9      0.74
+    pin, coarse-only swap       0.29  0.41  1.72   0.52     14      0.78
+    pin, REAL ONLY              0.28  0.42  1.30   0.56      9      0.74
+READS: (1) Real-only does NOT make the flow more pilot-like on real frames: the real-only scratch is slower and
+smoother than the pilot (v95 0.36, zero-acc 0.56, AUC 0.74) where the mixed-data scratch matches the pilot
+(0.45, 0.47, 0.66). With 100 demos the flow underfits toward a slow mean; the 200 planner demos, planner-style
+as they are, make the real-frame output MORE realistic, not less. (2) The real-only pin's head gets no more
+real-frame gate crossings than the mixed no-swap pin (9 vs 8): the swap, not the data mix, is what buys the
+crossings. (3) Neither real-only arm flies the simulator: the rendered frames are out of domain (scratch
+left 2/10, pin 0/10), and the center tasks are 0/10 as expected with no demonstrations; the mixed arms fly
+both domains. (4) For the paper this is the missing row of the data ablation: 100 real demonstrations
+alone are not enough for this policy class in either domain; simulated data is load-bearing even for
+real-frame behaviour. Caveat: the pin arm's sigma map was fitted on simulated frames (off-distribution for
+this head); the ledger at sigma 0 gives the same kinematic picture.
