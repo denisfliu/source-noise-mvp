@@ -7015,3 +7015,26 @@ both domains. (4) For the paper this is the missing row of the data ablation: 10
 alone are not enough for this policy class in either domain; simulated data is load-bearing even for
 real-frame behaviour. Caveat: the pin arm's sigma map was fitted on simulated frames (off-distribution for
 this head); the ledger at sigma 0 gives the same kinematic picture.
+
+**ARBITRARY MANEUVERS ON THE REAL-ONLY PIN (2026-09-15; Denis: "conduct the arbitrary maneuver test using the
+real-only pin"). `scripts/run_realonly_apps.sh`: orbit and figure-8 sketches through gate_pin_joint_realonly
+(100 real demos, never a rendered frame), right scene, sigma 0, carrot 20, 5 trials each; xswap rows for
+comparison. Page below.**
+  orbit   real-only: 5/5 arrived, path 9.8-10.6 m of the 10.1 m sketch (full 1.5 loops), tracking median
+          0.045-0.056 m (xswap 0.039-0.056), max dev 0.19-0.26; clearance 0/5 -- every contact is at the
+          END of the flight (steps 684-700, ~69 s, at (1.0,-0.8,1.2)): the post-handback hover drifts into
+          the right-gate structure, not the orbit itself (xswap 5/5 clean).
+  fig-8   real-only: 5/5 arrived, path 7.4-7.9 m of 9.1 (cuts the lobes slightly; max dev 0.30-0.37 vs
+          xswap 0.18-0.26), tracking 0.046-0.070 m (xswap 0.032-0.043); clearance 5/5.
+  realism on the sketch window (real-only vs xswap): orbit zero-accel 0.20 vs 0.60 (pilot 0.41), v95 0.37
+          vs 0.29, jerk 4.0 vs 2.7 (pilot 2.7), body rate 36 vs 26 deg/s (pilot 22); figure-8 zero-accel
+          0.26 vs 0.54, jerk 4.3 vs 3.0, body rate 45 vs 35. No PX4 or real-envelope violations.
+READS: (1) A residual learned from 100 real flights of two straight gate passes realizes orbits and
+figure-eights it never saw, under rendered images it never saw, at sketch-tracking fidelity equal to the
+mixed-data pin. The command carries the maneuver and the image domain barely touches the residual -- the
+strongest portability statement so far, and it comes from the arm that FAILS the ordinary sim cells
+(left 0/10): those cells need the head to plan from out-of-domain frames, the sketch cells do not.
+(2) The real-only residual is pilot-shaped (no staircase, zero-accel 0.20-0.26) and slightly more
+jerky than the pilot; the mixed-data residual is smoother and half-staircase. (3) Its one defect is
+the endgame: after handback it drifts into the gate on the orbit (0/5 clean at ~69 s), the same
+"where do I park" weakness as the sim cells; the maneuver itself is clean.
