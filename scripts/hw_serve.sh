@@ -5,7 +5,8 @@
 #
 # arms (rows of docs/real_experiments.tsv):
 #   baseline   pi0 baseline            gate_scratch3        serve_gate_plain.py
-#   ours       source-noise pin        gate_pin_joint_xswap serve_gate_pin_joint.py + pin env + sigma_map_xswap.json
+#   ours       source-noise pin        gate_pin_joint_xswapc serve_gate_pin_joint.py + pin env + sigma_map_xswapc.json (coarse-only swap)
+#   ours_xswap source-noise pin        gate_pin_joint_xswap  (whole-chunk swap; the checkpoint behind the paper's sim tables)
 #   noswap     w/o sim-real swap       gate_pin_joint_gmsig3                          + sigma_map_gmsig3.json
 # sketch (ours/noswap only): cmpl_denis | cmpl_min4 | cmpl_min4s | tempo06 | tempo10 | tempo15 | orbit | fig8
 #   -> SNMVP_PIN_PROMPT=experiments/rung3/sketch_<name>.json (the server carries the sketch; the drone
@@ -31,10 +32,15 @@ EV=(env -u VIRTUAL_ENV PYTHONPATH=/home/dfliu/code/openpi-snmvp/src XLA_PYTHON_C
 PINENV=(SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1
         SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 CLOG=$LOGDIR/clog_$TAG.npy)
 case $ARM in
-  baseline) CK=$CKROOT/gate_scratch3/4999; SIG="";;
-  ours)     CK=$CKROOT/gate_pin_joint_xswap/4999;  SIG=$RD/sigma_map_xswap.json;;
-  noswap)   CK=$CKROOT/gate_pin_joint_gmsig3/4999; SIG=$RD/sigma_map_gmsig3.json;;
-  *) echo "arm must be baseline | ours | noswap"; exit 2;;
+  baseline)    CK=$CKROOT/gate_scratch3/4999;            SIG="";;
+  ours)        CK=$CKROOT/gate_pin_joint_xswapc/4999;    SIG=$RD/sigma_map_xswapc.json;;   # coarse-only swap (2026-09-14)
+  ours_xswap)  CK=$CKROOT/gate_pin_joint_xswap/4999;     SIG=$RD/sigma_map_xswap.json;;    # whole-chunk swap (paper sim tables)
+  noswap)      CK=$CKROOT/gate_pin_joint_gmsig3/4999;    SIG=$RD/sigma_map_gmsig3.json;;
+  synthonly)   CK=$CKROOT/gate_pin_joint_synthonly/4999; SIG=$RD/sigma_map_synthonly.json;;
+  nosig)       CK=$CKROOT/gate_pin_joint_nosig/4999;     SIG="";;
+  ours_s7)     CK=$CKROOT/gate_pin_joint_xswaps7/4999;   SIG=$RD/sigma_map_xswaps7.json;;
+  baseline_s7) CK=$CKROOT/gate_scratch3s7/4999;          SIG="";;
+  *) echo "arm must be baseline | ours | ours_xswap | noswap | synthonly | nosig | ours_s7 | baseline_s7"; exit 2;;
 esac
 [ -d "$CK" ] || { echo "checkpoint missing: $CK"; exit 1; }
 if [ -n "$SKETCH" ]; then
@@ -45,10 +51,17 @@ fi
 echo "== hw_serve: arm=$ARM ckpt=$CK sketch=${SKETCH:-none} bind=$BIND:$PORT tag=$TAG"
 echo "== client (drone workstation, dronevla2.0 repo root, branch gate-pin):"
 echo "     python run_policy.py gate --task <left|right|center_from_left|center_from_right|compound_left|compound_right> \\"
-echo "         --policy_host manaan --policy_port $PORT --trial ${TAG}_t1"
+echo "         --policy_host manaan --policy_port $PORT --trial ${TAG}_t1 --apc 50   # 50 = the evaluated sim protocol (RESEARCH_LOG 2026-08-11); the client default 8 executes 16% of each command"
 echo "== command log: $LOGDIR/clog_$TAG.npy"
 cd "$RD"
-if [ "$ARM" = baseline ]; then
+# nosig = "w/o uncertainty input": pin head, but no sigma-conditioning flags and no sigma map
+if [ "$ARM" = nosig ]; then
+  PINENV=(SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1
+          CLOG=$LOGDIR/clog_$TAG.npy)
+  exec "${EV[@]}" "${PINENV[@]}" "$VENVPY" serve_gate_pin_joint.py --ckpt "$CK" --config pi0_gate \
+       --norm "$HFB/assets/gate_nav" --pin-u "$U" --host "$BIND" --port "$PORT"
+fi
+if [ "$ARM" = baseline ] || [ "$ARM" = baseline_s7 ]; then
   exec "${EV[@]}" "$VENVPY" serve_gate_plain.py --ckpt "$CK" --config pi0_gate --norm "$HFB/assets/gate_nav" --host "$BIND" --port "$PORT"
 else
   exec "${EV[@]}" "${PINENV[@]}" SNMVP_SIGMA_MAP="$SIG" "$VENVPY" serve_gate_pin_joint.py --ckpt "$CK" --config pi0_gate \

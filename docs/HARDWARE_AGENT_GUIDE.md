@@ -97,7 +97,7 @@ Request keys: `observation/image`, `observation/wrist_image` (uint8 224x224x3 **
 cv2 256 bilinear -> BGR-to-RGB -> PIL 224 bicubic, no undistortion, no overlay), `observation/state`
 (float32[7] = x, y, z mocap metres, mocap yaw radians, 0, 0, 0), `prompt` (an exact training string),
 `snmvp_trial` (unique per flight), `reset` (first replan), `progress` (ignored). Reply: `actions` float32
-(50, 32); columns 0..6 are per-step mocap deltas dx, dy, dz, dyaw and zeros; execute 8 steps at 10 Hz, then
+(50, 32); columns 0..6 are per-step mocap deltas dx, dy, dz, dyaw and zeros; execute **50** steps at 10 Hz (`--apc 50`, the evaluated sim protocol; APC=8 executes 16% of each command and failed to arrive in the 2026-08-11 sweep, 25 is the measured middle), then
 replan. The client integrates `pose + cumsum(deltas)` and publishes absolute mocap setpoints.
 
 ## Troubleshooting

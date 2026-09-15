@@ -56,7 +56,7 @@ python run_policy.py gate --task left --policy_host manaan --policy_port 8900 --
 the server's per-flight state and names the log files. Useful flags: `--fence XMIN XMAX YMIN YMAX` (lateral
 mocap fence, the node stops publishing outside it), `--infer_timeout 3 --max_timeouts 3` (after three
 consecutive server timeouts the node stops publishing and prints PILOT: TAKE OVER), `--dry_run` (everything
-except publishing), `--apc 8` (steps per replan, the sim protocol).
+except publishing), `--apc 50` (steps per replan; 50 is the sim protocol every reported number uses -- the client default 8 executes a sixth of each command, see RESEARCH_LOG 2026-08-11; 25 is the measured middle if 5 s open-loop is too long on hardware).
 
 Sequence: server up and warmed -> node started, it waits for pose + both cameras -> pilot takes off in
 MANUAL/POSITION -> pilot flips to OFFBOARD -> node's setpoints take effect -> flip back to abort or when done
