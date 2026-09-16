@@ -32,3 +32,4 @@ pi0 seed 2	gate_scratch3s7	Right gate	10	serve_gate_plain.py --ckpt scratch3s7; 
 pi0 seed 2	gate_scratch3s7	Center gate from right	10	same server; task "center_from_right"
 real-only pin	gate_pin_joint_realonly	Figure-eight through left + center gates, Denis sketch	5	GPU: bash scripts/hw_serve.sh realonly --sketch fig8_denis3   | workstation: run_policy.py gate --task left --apc 50
 real-only pin	gate_pin_joint_realonly	Same figure-eight mirrored behind the start	5	GPU: bash scripts/hw_serve.sh realonly --sketch fig8_denis3_mirror   | workstation: run_policy.py gate --task left --apc 50
+real-only pin	gate_pin_joint_realonly	Orbit around the right gate, radius 1.3 m (1.5 loops)	5	GPU: bash scripts/hw_serve.sh realonly --sketch orbit_wide   | workstation: run_policy.py gate --task right --apc 50

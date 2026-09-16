@@ -11,6 +11,8 @@
 # sketch (pin arms only): cmpl_denis | cmpl_min4v2 | cmpl_min4sv2 | tempo06 | tempo10 | tempo15 | orbit | fig8
 #   | fig8_denis3 | fig8_denis3_mirror   (Denis's 33-point figure-eight through the left and center gates, and its
 #   x-mirror behind the start; both hand back to the left-gate prompt; e.g. `hw_serve.sh realonly --sketch fig8_denis3`)
+#   | orbit_wide | orbit2x   (the orbit around the right gate at radius 1.3 m, the widest that clears the left gate by
+#   0.3 m, and at 1.8 m = twice the original, which CLIPS the left and center gates (0.11 / 0.15 m): sim only)
 #   -> SNMVP_PIN_PROMPT=experiments/rung3/sketch_<name>.json (the server carries the sketch; the drone
 #      client just flies the matching --task, e.g. compound_left for cmpl_*, right for tempo/orbit/fig8).
 #
