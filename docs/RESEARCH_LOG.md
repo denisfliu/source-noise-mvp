@@ -7038,3 +7038,38 @@ strongest portability statement so far, and it comes from the arm that FAILS the
 jerky than the pilot; the mixed-data residual is smoother and half-staircase. (3) Its one defect is
 the endgame: after handback it drifts into the gate on the orbit (0/5 clean at ~69 s), the same
 "where do I park" weakness as the sim cells; the maneuver itself is clean.
+
+**FIRST HARDWARE FLIGHTS OF THE REAL-ONLY PIN (2026-09-15 afternoon; flown by the collaborator, scored here;
+Denis: "there should be hardware evals now, what are our results"). Server `hw_serve.sh realonly` (tag
+realonly_left, one server for both tasks), client `--apc 50`; five left and five right flights in
+~/gate_flights/traj_realonly_{left,right}_0{1..5}.npy. Page: experiments/rung3/viz/hw_flights.html.**
+  RECORD CAVEAT FOUND WHILE SCORING: every traj_ file jumps 0.35-2.5 m at exactly the replan boundaries
+  (indices 49, 99, 149 ... at apc 50; 7 mod 8 at apc 8 for the 2026-09-11 files). policy_node_gate.py
+  appended the INTEGRATED TARGET per step (`self._traj.append(tgt)`), and publish_movement sleeps without
+  spinning, so the record is the setpoint stream and only every apc-th row is a measured mocap pose.
+  Fixed in dronevla2.0 gate-pin c933466 (mocap per step in traj_, setpoints in setp_); the workstation
+  must pull it. All flights below are judged on the measured poses joined by straight chords (5 s
+  apart), which settles transit/route but NOT clearance: the path between two poses 2 m apart is unknown.
+  left, real-only pin:   5/5 route-clean transit; goal box 3/5; chord clearance 0.27-0.37 m
+  right, real-only pin:  3/5 route-clean transit (01, 03, 04); 02 approached to (0.0,-0.9) and was next
+                         seen at (-0.7,-0.2) without crossing; 05 was next seen ON THE FLOOR at
+                         (-0.7,-2.6, z 0.14) 2.5 m from the previous pose, i.e. it went down west of
+                         the west post (crash or pilot landing: video needed). Goal box 1/5.
+  The goal box is a simulator criterion here: centre (1.525,-0.615,1.0) +-(0.3,0.3,0.5); the pilot's own
+  demos end at (1.4,-0.4,1.4-1.5) and enter it only 33/50 (left) and 25/50 (right). Our transits end
+  where the pilot ends (left (1.2-1.5,-0.3..-0.6,1.5); right 01/03 (1.2-1.4,-0.1..-0.3,1.6)).
+  Pace: the drone trails the setpoint stream by 0.10-0.16 m median, 0.35-0.6 m at chunk ends (about
+  85-90% of the commanded pace); gate crossing at ~17 s left / 22-30 s right vs the pilot's 11.6 / 12.9 s
+  median; flights 37-46 s vs the pilot's 22.5 s (the slow real-frame chunks of the real-only ledger).
+  Head uncertainty on live frames sigma_serve 0.36-1.1 (synth-fit map, as expected).
+  Context, re-judged on measured poses: 2026-09-11 baseline left 0/5 (4 transits with wrong-direction
+  passes on the setpoint record; on the 0.8-s poses 4 transits, 2 collisions at 0.07/0.16 m, 0 in goal),
+  2026-09-11 xswap left 0/5 (the setpoints-not-followed session). Morning sessions today (xswapc,
+  realonly, fig8, orbit, fig8_denis3) left clogs whose live z again fell to 0.18 m repeatedly; no traj
+  files were copied for them; the afternoon flights held 1.45-1.65 m throughout, so whatever changed on
+  the workstation between 13:00 and 15:40 fixed the descent. A baseline right server (scratch3, tag
+  baseline_right) is running on 8900 since 16:24 with one connection; no baseline_right traj yet.
+READ: the first real flights of a pin policy that never saw a rendered frame: left 5/5 through the gate on
+the right route, right 3/5, all at pilot-like altitude and ending where the pilot ends, at ~60% of the
+pilot's pace; clearance and the right_05 ending need the mocap bag/video, and every future flight
+record must come from the fixed node.

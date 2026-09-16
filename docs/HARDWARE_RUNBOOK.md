@@ -64,12 +64,17 @@ MANUAL/POSITION -> pilot flips to OFFBOARD -> node's setpoints take effect -> fl
 
 ## 3. What each trial leaves behind
 
-Workstation `~/gate_flights/`: `traj_<trial>.npy` (N x 3 mocap positions at every executed step) and
+Workstation `~/gate_flights/`: `traj_<trial>.npy` (N x 3 mocap positions at every executed step), `setp_<trial>.npy`
+(the setpoint sent at each step) and
 `<trial>.jsonl` (per replan: pose, latency, net displacement, max speed). GPU box `~/gate_flights/`:
 `clog_<tag>.npy` (per replan: position, the 16-dim command, mixture weights, sigma). Also record the onboard
 video and the mocap bag as the plan requires.
 
 ## 4. Score
+
+**Files written before dronevla2.0 c933466 (2026-09-15) are the setpoint stream, not the drone**: only every
+`apc`-th row is a measured pose. Judge those on the measured poses (`viz/build_hw_page.py` does; `apc` from the
+run) and treat clearance as unmeasured; the mocap bag is the record of the flight.
 
 Copy the `traj_*.npy` files to the GPU box and run the same judge the sim rows use:
 ```bash
