@@ -44,24 +44,32 @@ def cell(tag, side, apc):
         meas.append({"label": f"{name} measured poses (chords)", "color": col, "trajs": [D]})
     return meas + setp, rows
 
-def section(scene, groups, elem, note):
+SCENE = {"left": "left", "right": "right", "center_from_left": "center", "center_from_right": "center"}
+def section(side, groups, elem, note):
+    scene = SCENE[side]
     return cloudviewer.viewer_html(scene, groups + marks(scene), elem_id=elem, max_pts=40000, note=note)
 
 demos = R.load_demos()
 f32 = lambda ps: [p[:, :3].astype(np.float32) for p in ps]
 ref_l = {"label": "pilot demonstrations, left (50)", "color": [70, 90, 120], "trajs": f32(demos["real"][0])}
 ref_r = {"label": "pilot demonstrations, right (50)", "color": [70, 90, 120], "trajs": f32(demos["real"][1])}
+ref_c = {"label": "simulated center demonstrations (100, planner; no real ones exist)", "color": [70, 90, 120],
+         "trajs": f32(demos["synth"][2] + demos["synth"][3])}
 LEG = "Green: route-clean transit and goal box. Amber: route-clean transit, goal box missed (the box sits at the simulator's z = 1.0; the pilot's own flights end at z 1.25-1.6 and hit it only 33/50 left, 25/50 right). Red: no transit. Grey: the setpoint stream the node published; the coloured chords join the measured poses, one per replan."
 secs = []
 for title, tag, side, apc, ref, elem in [
     ("Real-only pin, left gate, 2026-09-15 (5 flights, apc 50)", "realonly_left", "left", 50, ref_l, "v_rl"),
     ("Real-only pin, right gate, 2026-09-15 (5 flights, apc 50)", "realonly_right", "right", 50, ref_r, "v_rr"),
+    ("Real-only pin, center from left, 2026-09-16 (5 flights, apc 50)", "realonly_center_from_left", "center_from_left", 50, ref_c, "v_rc"),
+    ("pi0 baseline, right gate, 2026-09-16 (5 flights, apc 50)", "baseline_right", "right", 50, ref_r, "v_br"),
+    ("pi0 baseline, center from left, 2026-09-16 (5 flights, apc 50)", "baseline_center_from_left", "center_from_left", 50, ref_c, "v_bcl"),
+    ("pi0 baseline, center from right, 2026-09-16 (5 flights, apc 50)", "baseline_center_from_right", "center_from_right", 50, ref_c, "v_bcr"),
     ("pi0 baseline, left gate, 2026-09-11 (5 flights, apc 8: poses every 0.8 s)", "baseline_left", "left", 8, ref_l, "v_bl"),
     ("Pin with swap (xswap), left gate, 2026-09-11 (5 flights, apc 8; the session whose setpoints were not followed)", "ours_left", "left", 8, ref_l, "v_ol")]:
     groups, rows = cell(tag, side, apc)
     secs.append((title, section(side, [ref] + groups, elem, LEG), rows))
 body = "".join(f"<h2>{t}</h2><div class='vc'>{h}</div><ul class='rows'>" + "".join(f"<li>{r}</li>" for r in rows) + "</ul>" for t, h, rows in secs)
-page = f"""<title>Hardware Flights, Real-Only Pin</title>
+page = f"""<title>Hardware Flights</title>
 <style>
 :root{{--bg:#0f1216;--card:#151a21;--line:#28303c;--ink:#e4e9f1;--mut:#8b94a5;--acc:#7cd0f0}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,sans-serif;padding:28px 18px 70px}}

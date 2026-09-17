@@ -7073,3 +7073,21 @@ READ: the first real flights of a pin policy that never saw a rendered frame: le
 the right route, right 3/5, all at pilot-like altitude and ending where the pilot ends, at ~60% of the
 pilot's pace; clearance and the right_05 ending need the mocap bag/video, and every future flight
 record must come from the fixed node.
+
+**HARDWARE, 2026-09-16 CELLS AND THE AGGREGATE (logged 2026-09-17; Denis: "aggregate all the real world
+experiments that have been reported so far"). New flights: pi0 baseline right, center-from-left and
+center-from-right (5 each), real-only pin center-from-left (5); sketch sessions fig8_denis3 and orbit_wide on
+the real-only pin left command logs only. Aggregate: docs/HARDWARE_RESULTS.md and viz/hw_results.html;
+all scored flights on the clouds: viz/hw_flights.html.**
+  judged on measured poses (chords between replans) with the pilot's eyewitness notes:
+    baseline right      1/5 through (05); 01 02 03 hit the left post, 04 crashed inside the gate
+    baseline CFL / CFR  0/5 each: straight to the goal or the left-gate route, never the center gate
+    real-only pin CFL   0/5: approaches from the left and never reaches the gate (no center demos)
+  totals so far: real-only pin left 5/5, right 3/5 (2 crashes by eye), CFL 0/5; baseline left 4/5 through
+  with 2 contacts, right 1/5 with 4 contacts, CFL/CFR 0/5; ours (xswap) no valid cell (descent session).
+  sketch logs: fig8_denis3 two attempts tracked the sketch at 0.10 m median at the replan instants to the
+  handback; orbit_wide two of ~5 attempts tracked the loop (0.06-0.15 m) to handback, the rest parked/floor.
+READ: the real-only pin is the only pin arm with valid hardware atomics and it beats the baseline on both
+gates it has demonstrations for (left 5/5 vs 4/5 with contacts; right 3/5 vs 1/5) and, like the baseline,
+does nothing on the center tasks. The paper's ours arm still needs its hardware session, and clearance
+needs records from the fixed node.

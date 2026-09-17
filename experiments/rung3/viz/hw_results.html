@@ -1,0 +1,57 @@
+<title>Hardware Results Ledger</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fffdf8;--line:#d9d3c4;--ink:#1f2328;--mut:#6b6f76;--acc:#0b5d8a;--ok:#1d7a4a;--bad:#a8322a;--mid:#9a6b00}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14171b;--card:#1b1f25;--line:#2e343c;--ink:#e6e9ee;--mut:#98a0ab;--acc:#7cc4ee;--ok:#5fd08d;--bad:#ff8a80;--mid:#f0c04a}}
+:root[data-theme="dark"]{--bg:#14171b;--card:#1b1f25;--line:#2e343c;--ink:#e6e9ee;--mut:#98a0ab;--acc:#7cc4ee;--ok:#5fd08d;--bad:#ff8a80;--mid:#f0c04a}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Georgia,"Iowan Old Style",serif;padding:32px 20px 70px}
+main{max-width:1080px;margin:0 auto} h1{font-size:26px;margin:0 0 4px;text-wrap:balance} h2{font-size:18px;margin:30px 0 8px;color:var(--acc)}
+p{max-width:78ch} .sub{color:var(--mut);margin:0 0 18px}
+.tw{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+table{border-collapse:collapse;width:100%;font:13.5px/1.4 ui-monospace,Menlo,Consolas,monospace} th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.06em} td.n{text-align:right;font-variant-numeric:tabular-nums}
+.ok{color:var(--ok);font-weight:700} .bad{color:var(--bad);font-weight:700} .mid{color:var(--mid);font-weight:700}
+ul{max-width:80ch} li{margin:6px 0} .k{font-weight:700}
+</style>
+<main>
+<h1>Hardware results, aggregated</h1>
+<p class="sub">Every real-drone experiment reported through 2026-09-17. Three-gate mocap room; policies served from manaan, flown by the collaborator with the gate node, safety pilot on the transmitter.</p>
+
+<h2>Closed-loop atomics</h2>
+<div class="tw"><table>
+<tr><th>Arm</th><th>Task</th><th>Date</th><th>n</th><th>Through the gate (eyewitness)</th><th>Contact (eyewitness)</th><th>Judge transit, route-clean</th><th>Goal box</th></tr>
+<tr><td>pi0 baseline</td><td>left</td><td>09-11, apc 8</td><td class="n">5</td><td class="mid">4</td><td class="bad">2</td><td class="n">4</td><td class="n">0</td></tr>
+<tr><td>pi0 baseline</td><td>right</td><td>09-16</td><td class="n">5</td><td class="bad">1</td><td class="bad">4</td><td class="n">1</td><td class="n">1</td></tr>
+<tr><td>pi0 baseline</td><td>center from left</td><td>09-16</td><td class="n">5</td><td class="bad">0</td><td>0</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>pi0 baseline</td><td>center from right</td><td>09-16</td><td class="n">5</td><td class="bad">0</td><td>0</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>real-only pin</td><td>left</td><td>09-15</td><td class="n">5</td><td class="ok">5</td><td class="ok">0</td><td class="n">5</td><td class="n">3</td></tr>
+<tr><td>real-only pin</td><td>right</td><td>09-15</td><td class="n">5</td><td class="mid">3</td><td class="bad">2</td><td class="n">3</td><td class="n">1</td></tr>
+<tr><td>real-only pin</td><td>center from left</td><td>09-16</td><td class="n">5</td><td class="bad">0</td><td>0</td><td class="n">0</td><td class="n">0</td></tr>
+<tr><td>ours (xswap)</td><td>left</td><td>09-11, apc 8</td><td class="n">5</td><td class="bad">0</td><td>0</td><td class="n">0</td><td class="n">0</td></tr>
+</table></div>
+<p>Eyewitness: the pilot's note after each flight, the only record of contact. Judge: the transit judge on the drone's measured position at each replan (every 5 s at apc 50) joined by chords. Goal box: the simulator's box, which the pilot's own demonstrations enter only about half the time; reported, not used as success. Clearance is unmeasured for every flight: the node's trajectory files were the setpoint stream (fixed 2026-09-15, workstation must pull).</p>
+
+<h2>Per cell</h2>
+<ul>
+<li><span class="k">Baseline left.</span> Four of five traversed by eye, two touching the right post; long wandering flights at ~1 m/s.</li>
+<li><span class="k">Baseline right.</span> Three hit the left post, one crashed inside the gate, one clean transit.</li>
+<li><span class="k">Baseline center tasks.</span> Never attempts the center gate: straight to the goal, or the left-gate route. The simulator's baseline CFR failure family.</li>
+<li><span class="k">Real-only pin left.</span> Five of five through and hovering over the penguin, no contact, altitude 1.45-1.65 m. Crossing at ~17 s vs the pilot's 11.6 s; flights 37-46 s vs 22.5 s.</li>
+<li><span class="k">Real-only pin right.</span> Three through. Flight 02 "through" by eye but no crossing in the record; 03 "crash" by eye but a normal transit in the record; 05's record ends on the floor 2.5 m from the previous pose. Video needed; the 03/05 notes may be swapped.</li>
+<li><span class="k">Real-only pin center from left.</span> Approaches and never reaches the gate, as expected without center demonstrations.</li>
+<li><span class="k">Ours (xswap) left, 09-11.</span> Setpoints not followed (altitude fell 0.15-0.2 m per replan against a level command): execution-side. <b>The paper's "ours" arm has no valid closed-loop hardware cell yet.</b></li>
+</ul>
+
+<h2>Sketch sessions (command logs only)</h2>
+<div class="tw"><table>
+<tr><th>Arm</th><th>Sketch</th><th>Date</th><th>Attempts</th><th>What the replan poses show</th></tr>
+<tr><td>real-only pin</td><td>fig8_denis3, 10.5 m</td><td>09-16</td><td class="n">2</td><td>both tracked the sketch at 0.10 m median (max 0.29 / 0.69 m) out to the handback; flight 2 dipped to z 0.83</td></tr>
+<tr><td>real-only pin</td><td>orbit_wide, 1.3 m radius, 14.0 m</td><td>09-16</td><td class="n">~5</td><td>two tracked the loop at 0.06-0.15 m median to handback; the rest show the log in the handback state with the pose parked or on the floor (restarts or aborts; video needed)</td></tr>
+<tr><td>real-only pin</td><td>orbit 0.9 m, fig8</td><td>09-15 am</td><td class="n">1 each</td><td>descent problem, no result</td></tr>
+</table></div>
+
+<h2>Sessions with no result</h2>
+<p>2026-09-11 afternoon (xswap, no-swap) and 2026-09-15 morning (xswapc, real-only, orbit, fig8): the measured altitude fell 0.15-0.2 m per replan to the floor while every replan commanded level flight. Baseline flights around those sessions held altitude, and everything from 2026-09-15 15:40 on held 1.45-1.65 m. Cause not identified on the GPU box.</p>
+
+<h2>Not flown yet</h2>
+<p>Rotation dose-response, tempo 0.6 / 1.0 / 1.5, hand-drawn and 4-click compounds, the no-uncertainty arm, and the ours / no-swap atomics (run sheet docs/real_experiments.tsv).</p>
+</main>
