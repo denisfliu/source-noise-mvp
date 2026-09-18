@@ -34,6 +34,7 @@ H, AD = 50, 32
 from sketch_prompt import SketchPrompt  # noqa: E402  (extracted 2026-08-30)
 from advice_prompt import AdvicePrompt  # noqa: E402  (2026-09-03)
 from reason_prompt import ReasonPrompt  # noqa: E402  (2026-09-03)
+from agent_prompt import AgentMove  # noqa: E402  (2026-09-18: one agent move -> one pinned chunk)
 
 
 class JointPinPolicy:
@@ -85,6 +86,16 @@ class JointPinPolicy:
         # =1: execute the decoded minimum-norm chunk U c (deterministic). =2: execute the PINNED SOURCE SAMPLE
         # itself, z = g - U U^T g + U c (Gaussian in the orthogonal complement, exactly c along U), no denoising.
         self.decode_only = int(os.environ.get("SNMVP_PIN_DECODE_ONLY", "0") or 0)
+        # agent mode (2026-09-18): a request may carry obs["snmvp_agent"] = {"move": {...}} from the
+        # closed-loop agent; that replan's command is the move's projection (head and sketch bypassed),
+        # sigma = move["sigma"]. SNMVP_AGENT_LOG=<dir> dumps every replan's frames, pose, prompt,
+        # command and executed chunk there (one directory per snmvp_trial) for replay.
+        self.agent = None
+        if act_norm is not None:
+            self.agent = AgentMove(np.asarray(act_norm.mean[:7], np.float32),
+                                   np.asarray(act_norm.std[:7], np.float32), self.U)
+        self.agent_log = os.environ.get("SNMVP_AGENT_LOG", "")
+        self._agent_k = {}
         self._amean7 = None if act_norm is None else np.asarray(act_norm.mean[:7], np.float32)
         self._astd7 = None if act_norm is None else np.asarray(act_norm.std[:7], np.float32)
         if self.decode_only:
@@ -155,8 +166,17 @@ class JointPinPolicy:
             cmd_obs["observation/wrist_image"] = obs.pop("snmvp_cmd_wrist")
             for k in ("snmvp_cmd_image", "snmvp_cmd_wrist"):
                 cmd_obs.pop(k, None)
+        ag_c, ag_sig, ag_info = None, None, None
+        ag = obs.pop("snmvp_agent", None)
+        if ag is not None and ag.get("move") is not None:
+            if self.agent is None:
+                raise ValueError("agent move needs action norm stats")
+            pose4 = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:4]
+            ag_c, mv, notes = self.agent.command(dict(ag["move"]), pose4)
+            ag_sig = float(mv.get("sigma", 0.0))
+            ag_info = {"move": mv, "notes": notes}
         sk_c, sk_sig, sk_phase = None, None, 0
-        if self.sketch is not None:
+        if self.sketch is not None and ag_c is None:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
             sk_c, sk_sig, sk_prompt, sk_phase = self.sketch.step(trial, pos)
             if sk_prompt is not None:
@@ -211,6 +231,8 @@ class JointPinPolicy:
             extra = np.asarray([sk_phase], np.float32); cache = None
         if sk_c is not None:
             c, sig_serve, alpha = sk_c.astype(np.float32), sk_sig, 1.0
+        if ag_c is not None:
+            c, sig_serve, alpha = ag_c, ag_sig, 1.0
         if adv_ch is not None:
             c, sig_serve, alpha = self.advice.compose(c, adv_ch), 0.0, 1.0
         if self.reason is not None:
@@ -257,12 +279,39 @@ class JointPinPolicy:
         c_eff = alpha * c + (1.0 - alpha) * (g @ self.U)
         noise = (g - (g @ self.U) @ self.U.T + (c_eff @ self.U.T)).reshape(H, AD).astype(np.float32)
         out = self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve, cache=cache)
+        if self.agent_log and (ag is not None):
+            self._dump_agent(trial, obs, ag, ag_info, c, sig_serve, out)
         if self.bridge is not None:
             acts = np.asarray(out["actions"], np.float32)[:H, :3]
             pos_b = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
             self.bridge.executed({"chunk": np.concatenate(
                 [pos_b[None], pos_b + np.cumsum(acts, axis=0)]).tolist()})
         return out
+
+
+def _agent_dump(self, trial, obs, ag, ag_info, c, sig_serve, out):
+    """One replan of the agent loop -> <log>/<trial>/k.json + front/down PNGs (the flow's input frames)."""
+    import json as _json
+    from PIL import Image
+    d = os.path.join(self.agent_log, str(trial)); os.makedirs(d, exist_ok=True)
+    k = self._agent_k.get(trial, 0); self._agent_k[trial] = k + 1
+    for key, name in (("observation/image", "front"), ("observation/wrist_image", "down")):
+        im = np.asarray(obs[key]);
+        if im.dtype != np.uint8:
+            im = (np.clip(im, 0, 1) * 255).astype(np.uint8) if im.max() <= 1.0 else im.astype(np.uint8)
+        Image.fromarray(im).save(os.path.join(d, f"{k:04d}_{name}.png"))
+    acts = np.asarray(out["actions"], np.float32)[:H, :4]
+    row = {"k": k, "trial": str(trial), "prompt": obs.get("prompt", ""),
+           "pose": np.asarray(obs["observation/state"], np.float32).reshape(-1)[:4].tolist(),
+           "agent": {kk: vv for kk, vv in ag.items() if kk != "move"} | {"move_requested": ag.get("move")},
+           "move_executed": ag_info, "command": np.asarray(c, np.float32).tolist(),
+           "sigma_serve": sig_serve, "chunk_net_xyz_yaw": acts.sum(0).tolist(),
+           "chunk": acts.tolist()}
+    with open(os.path.join(d, f"{k:04d}.json"), "w") as fh:
+        _json.dump(row, fh)
+
+
+JointPinPolicy._dump_agent = _agent_dump
 
 
 def _pad(ns, dim):

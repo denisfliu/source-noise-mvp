@@ -20,9 +20,10 @@
 # network; use 127.0.0.1 + an ssh tunnel if you prefer). Per-replan command log: ~/gate_flights/clog_<tag>.npy.
 # Runs in the foreground; Ctrl-C stops it. One server per terminal; change --port to run two.
 set -euo pipefail
-ARM=${1:?usage: hw_serve.sh <baseline|ours|noswap> [--sketch name] [--port N] [--bind addr] [--tag t]}; shift
+ARM=${1:?usage: hw_serve.sh <baseline|ours|noswap|realonly|...> [--sketch name] [--agent] [--port N] [--bind addr] [--tag t]}; shift
 SKETCH=""; PORT=8900; BIND=0.0.0.0; TAG=""
 while [ $# -gt 0 ]; do case $1 in
+  --agent) AGENT=1; shift;;
   --sketch) SKETCH=$2; shift 2;; --port) PORT=$2; shift 2;; --bind) BIND=$2; shift 2;; --tag) TAG=$2; shift 2;;
   *) echo "unknown arg $1"; exit 2;; esac; done
 RD=$(cd "$(dirname "$0")/../experiments/rung3" && pwd)
@@ -30,6 +31,7 @@ VENVPY=/home/dfliu/code/openpi/.venv/bin/python
 HFB=/home/dfliu/hf_bundle/gate-drone-pi0
 CKROOT=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3
 LOGDIR=$HOME/gate_flights; mkdir -p "$LOGDIR"
+if [ "${AGENT:-0}" = 1 ]; then export SNMVP_AGENT_LOG=$LOGDIR/agent_log; mkdir -p "$SNMVP_AGENT_LOG"; echo "== agent mode: per-replan frames/commands -> $SNMVP_AGENT_LOG/<trial>/ (docs/AGENT_FLIGHT.md)"; fi
 TAG=${TAG:-${ARM}${SKETCH:+_$SKETCH}_$(date +%Y%m%d_%H%M%S)}
 U=$RD/pin_U_mh16.npy
 EV=(env -u VIRTUAL_ENV PYTHONPATH=/home/dfliu/code/openpi-snmvp/src XLA_PYTHON_CLIENT_PREALLOCATE=false CUDA_VISIBLE_DEVICES=0)
@@ -45,7 +47,6 @@ case $ARM in
   ours_s7)     CK=$CKROOT/gate_pin_joint_xswaps7/4999;   SIG=$RD/sigma_map_xswaps7.json;;
   baseline_s7) CK=$CKROOT/gate_scratch3s7/4999;          SIG="";;
   realonly)    CK=$CKROOT/gate_pin_joint_realonly/4999;  SIG=$RD/sigma_map_realonly.json;;   # pin trained on the 100 real demos only (2026-09-14)
-  realonly)    CK=$CKROOT/gate_pin_joint_realonly/4999;  SIG=$RD/sigma_map_realonly.json;;  # pin, real episodes 0-99 only
   baseline_real) CK=$CKROOT/gate_scratch_real/4999;      SIG="";;                            # scratch, real only
   *) echo "arm must be baseline | ours | ours_xswap | noswap | synthonly | nosig | ours_s7 | baseline_s7 | realonly | baseline_real"; exit 2;;
 esac
@@ -68,7 +69,7 @@ if [ "$ARM" = nosig ]; then
   exec "${EV[@]}" "${PINENV[@]}" "$VENVPY" serve_gate_pin_joint.py --ckpt "$CK" --config pi0_gate \
        --norm "$HFB/assets/gate_nav" --pin-u "$U" --host "$BIND" --port "$PORT"
 fi
-if [ "$ARM" = baseline ] || [ "$ARM" = baseline_s7 ]; then
+if [ "$ARM" = baseline ] || [ "$ARM" = baseline_s7 ] || [ "$ARM" = baseline_real ]; then
   exec "${EV[@]}" "$VENVPY" serve_gate_plain.py --ckpt "$CK" --config pi0_gate --norm "$HFB/assets/gate_nav" --host "$BIND" --port "$PORT"
 else
   exec "${EV[@]}" "${PINENV[@]}" SNMVP_SIGMA_MAP="$SIG" "$VENVPY" serve_gate_pin_joint.py --ckpt "$CK" --config pi0_gate \
