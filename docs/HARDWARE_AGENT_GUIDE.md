@@ -132,3 +132,7 @@ it to the sketch table. Keep `prompt_after` an exact training string.
 Change the image chain on either side. Enable fisheye rectification. Fly with the intent cockpit in gate
 mode unattended. Serve a pin checkpoint without its own sigma map. Run two servers on one port. Kill servers
 by process-name pattern from a shell whose command line contains that name (kill by pid via `hw_status.sh`).
+
+## Agent flights (2026-09-18)
+
+`bash scripts/hw_serve.sh <arm> --agent` serves with the agent mode on (per-replan frames/commands under `~/gate_flights/agent_log/<trial>/`). The workstation runs the node with `--agent DIR` and the agent session drives `tools/agent_cli.py`; see `dronevla2.0/docs/AGENT_FLIGHT.md`. Primitive compliance per arm: `experiments/rung3/agent_probe/`.

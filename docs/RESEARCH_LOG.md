@@ -7091,3 +7091,39 @@ READ: the real-only pin is the only pin arm with valid hardware atomics and it b
 gates it has demonstrations for (left 5/5 vs 4/5 with contacts; right 3/5 vs 1/5) and, like the baseline,
 does nothing on the center tasks. The paper's ours arm still needs its hardware session, and clearance
 needs records from the fixed node.
+
+**CLOSED-LOOP AGENT HARNESS: ONE CHUNK PER DECISION (2026-09-18; Denis: Claude Code on the workstation sees
+the drone's frames, decides a movement primitive, the policy executes ONE chunk, then defers back).
+Built and exercised end to end against the real-only pin server with a dry mailbox node.**
+  pieces: experiments/rung3/agent_prompt.py (move {forward,left,up,yaw_deg,sigma} in the drone's frame ->
+  50-step cosine-profile track -> normalized chunk -> c = U^T a; clamps 2 m / 1 m / 45 deg / sigma 1.5 per
+  chunk, reported not refused); serve_gate_pin_joint.py agent mode (obs["snmvp_agent"] bypasses head and
+  sketch for that replan; SNMVP_AGENT_LOG dumps frames+pose+prompt+command+chunk per replan); hw_serve
+  --agent; dronevla2.0 8db9834: policy_node_gate.py --agent DIR (snapshot, hold at the captured pose
+  while waiting, fly one chunk on cmd.json, archive decisions), tools/agent_cli.py (wait/look/act/stop/log;
+  act refused unless k matches the observation), tools/agent_dry_node.py, .claude/skills/fly/SKILL.md,
+  docs/AGENT_FLIGHT.md. Heading vs mocap yaw on the pilot's demos: median -0.5 deg, so "forward" = along yaw.
+  dry loop (real-only pin, ep_0000 frames): 5 decisions incl. a refused stale k, an --auto chunk (head,
+  sigma 0.49) and a clamped request; 117 ms per replan after warm-up; both logs complete.
+  PRIMITIVE COMPLIANCE (tools/agent_primitive_probe.py: 12 moves x 3 frames x 2 prompts, sigma 0, executed
+  net motion of the chunk / requested; experiments/rung3/agent_probe/*.json):
+    move            realonly      noswap (gmsig3)   ours (xswapc)
+    forward 1 m     0.88          0.82              0.95
+    forward 2 m     0.89          0.92              1.00
+    back 1 m        0.68          0.89              0.97
+    left 0.5 m      0.48          0.68              0.86
+    right 0.5 m     0.86          0.78              0.86
+    up / down 0.3   0.93 / 0.87   0.83 / 0.67       0.93 / 0.80
+    yaw +30 / -30   0.50 / 0.78   0.47 / 0.47       0.58 / 0.64
+    hold drift      -0.08 m left, -3 deg   ~0.01 m, +1.2 deg   ~0.03 m, -0.7 deg
+  prompt text (trained vs free) changes nothing beyond noise.
+READS: (1) The agent interface works as designed: a decision is one chunk, the drone holds between
+decisions, nothing is sent without a fresh observation. (2) At sigma 0 the flow does NOT execute an
+arbitrary primitive exactly: translations come out at 70-100 % of the request (the mixed-data pin
+closest to exact), sideways moves and yaw at about half on the real-only pin, yaw at half to two thirds
+on every arm. The head-predicted commands the 0.08-sigma compliance number was measured on are
+in-distribution; pure sidesteps and turns in place are not. (3) Consequence for the agent: it must
+close the loop on the pose it is told after each chunk (the skill says so), and the decode-only arm
+(SNMVP_PIN_DECODE_ONLY=1) is the exact-execution comparison. (4) For the paper: the mixed-data pin is
+the better executor of authored primitives; if the real-only regime is the story, its primitive
+compliance is a limitation to state, or the residual needs training on more varied real motion.

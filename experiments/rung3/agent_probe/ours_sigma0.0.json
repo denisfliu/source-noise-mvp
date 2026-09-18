@@ -1,0 +1,391 @@
+{
+ "tag": "ours",
+ "sigma": 0.0,
+ "episode": "/home/dfliu/code/source-noise-mvp/experiments/rung3/data_gate_real/ep_0000.npz",
+ "rows": [
+  {
+   "prompt": "trained",
+   "move": "forward 1 m",
+   "requested": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.948,
+    -0.009,
+    0.021,
+    -2.767
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "forward 2 m",
+   "requested": [
+    2.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    1.987,
+    -0.008,
+    0.017,
+    -1.87
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "back 1 m",
+   "requested": [
+    -1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    -0.966,
+    0.075,
+    0.019,
+    -2.436
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "left 0.5 m",
+   "requested": [
+    0.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.015,
+    0.431,
+    0.025,
+    -1.173
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "right 0.5 m",
+   "requested": [
+    0.0,
+    -0.5,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.016,
+    -0.432,
+    0.019,
+    -0.258
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "up 0.3 m",
+   "requested": [
+    0.0,
+    0.0,
+    0.3,
+    0.0
+   ],
+   "executed": [
+    0.032,
+    0.028,
+    0.283,
+    0.859
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "down 0.3 m",
+   "requested": [
+    0.0,
+    0.0,
+    -0.3,
+    0.0
+   ],
+   "executed": [
+    -0.018,
+    0.022,
+    -0.244,
+    -0.545
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "yaw +30",
+   "requested": [
+    0.0,
+    0.0,
+    0.0,
+    30.0
+   ],
+   "executed": [
+    0.021,
+    0.036,
+    0.016,
+    17.324
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "yaw -30",
+   "requested": [
+    0.0,
+    0.0,
+    0.0,
+    -30.0
+   ],
+   "executed": [
+    0.012,
+    0.029,
+    0.019,
+    -19.239
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "fwd 1 + left 0.5",
+   "requested": [
+    1.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.946,
+    0.474,
+    0.024,
+    -2.509
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "fwd 1 + up 0.3 + yaw 20",
+   "requested": [
+    1.0,
+    0.0,
+    0.3,
+    20.0
+   ],
+   "executed": [
+    0.971,
+    0.011,
+    0.294,
+    11.651
+   ]
+  },
+  {
+   "prompt": "trained",
+   "move": "hold",
+   "requested": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.02,
+    0.034,
+    0.013,
+    -0.721
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "forward 1 m",
+   "requested": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.933,
+    -0.01,
+    0.022,
+    -2.864
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "forward 2 m",
+   "requested": [
+    2.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    2.025,
+    -0.036,
+    0.026,
+    -2.387
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "back 1 m",
+   "requested": [
+    -1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    -0.962,
+    0.058,
+    0.028,
+    -0.007
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "left 0.5 m",
+   "requested": [
+    0.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.0,
+    0.425,
+    0.023,
+    -2.234
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "right 0.5 m",
+   "requested": [
+    0.0,
+    -0.5,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.006,
+    -0.458,
+    0.014,
+    -0.033
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "up 0.3 m",
+   "requested": [
+    0.0,
+    0.0,
+    0.3,
+    0.0
+   ],
+   "executed": [
+    0.025,
+    0.01,
+    0.285,
+    -0.772
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "down 0.3 m",
+   "requested": [
+    0.0,
+    0.0,
+    -0.3,
+    0.0
+   ],
+   "executed": [
+    -0.037,
+    0.014,
+    -0.235,
+    -2.583
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "yaw +30",
+   "requested": [
+    0.0,
+    0.0,
+    0.0,
+    30.0
+   ],
+   "executed": [
+    -0.003,
+    0.008,
+    0.021,
+    17.558
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "yaw -30",
+   "requested": [
+    0.0,
+    0.0,
+    0.0,
+    -30.0
+   ],
+   "executed": [
+    -0.023,
+    0.025,
+    0.011,
+    -21.026
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "fwd 1 + left 0.5",
+   "requested": [
+    1.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.927,
+    0.438,
+    0.027,
+    -1.738
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "fwd 1 + up 0.3 + yaw 20",
+   "requested": [
+    1.0,
+    0.0,
+    0.3,
+    20.0
+   ],
+   "executed": [
+    0.982,
+    -0.021,
+    0.294,
+    12.428
+   ]
+  },
+  {
+   "prompt": "free",
+   "move": "hold",
+   "requested": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "executed": [
+    0.016,
+    0.009,
+    0.016,
+    -1.392
+   ]
+  }
+ ]
+}
