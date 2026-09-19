@@ -7127,3 +7127,27 @@ close the loop on the pose it is told after each chunk (the skill says so), and 
 (SNMVP_PIN_DECODE_ONLY=1) is the exact-execution comparison. (4) For the paper: the mixed-data pin is
 the better executor of authored primitives; if the real-only regime is the story, its primitive
 compliance is a limitation to state, or the residual needs training on more varied real motion.
+
+**gmsig3 ON THE DRONE vs IN SIM (2026-09-18; Denis: "we're finding that it's just flying to the goal").
+Sim: gmsig3 40/40 route-clean + 40/40 clearance-clean on seed 42 (transit at 6 s left, 9 s right, 18 s CFL,
+15 s CFR), s7 40/40 judge / 37/40 clean. Drone today (collaborator): left 5 flights, ALL crashed by eye
+(02, 04 before the gate; 01, 03, 05 after it); CFL flown, command log only.** Decoded command logs
+(~/gate_flights/clog_gmsig3_{left,cfl}.npy, U c in metres, angle of the commanded 5-s displacement to the
+gate and to the goal):
+  CFL: every replan from the start commands 0.6-0.9 m toward +x with the goal 0-6 deg off the commanded
+  heading; the drone reaches x ~ 1.0-1.1 (the goal's x), the mixture flips to the hover component
+  (pi[1] 0.5-0.8, sigma* 2-3, command 0.2 m backward) and it parks. The center gate (x 2.75) is never
+  the target. The head's real-frame plan for a task with zero real demonstrations is "fly to the goal".
+  left: approach commands aim at the gate (0-16 deg off) and the drone crosses at (1.0-1.5, 0.7-0.9);
+  right after the crossing the head turns toward the goal (angle to goal 1-40 deg, -y) and the path cuts
+  back along the gate's east post: flight 03 min clearance 0.015 m at (1.19, 0.37), the post at (1.18, 0.45).
+  sigma_serve on live frames 0.18-0.44 (confident), so the slack does not open.
+READS: (1) The sim result does not transfer for this arm because the HEAD's plan changes under real
+frames, not the residual: in sim it flies the demonstrated CFL detour; on real frames it takes the
+real-data prior (all 100 real demos end at the goal) and goes there directly. This is exactly the
+gap the cross-domain swap closed (real-anchor head crossings 8/55 -> 15-17/55; xswap CFL/CFR were
+the paper's headline sim-to-real rows). Without the swap, the mixed pin has no route to the center
+gate from real images. (2) The left crashes are post-gate: the head's turn toward the goal starts
+too early on real frames (the same turn in sim happens 0.5 m later). (3) The real-only pi0
+(baseline_real) also flew today: left 4/5, right 4/5 through by eye, one crash each; the real-only
+pin's 5/5 and 3/5 are not separated from it at n = 5. Aggregate updated: docs/HARDWARE_RESULTS.md.

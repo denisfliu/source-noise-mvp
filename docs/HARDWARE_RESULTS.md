@@ -32,6 +32,9 @@ are the commanded path's clearance. Flight records after the workstation pulls t
 | real-only pin | right | 09-15 | 5 | 3 (01 02 04) | 2 (03, 05 "crash") | 3 (01 03 04) | 1 |
 | real-only pin | center from left | 09-16 | 5 | 0 | 0 | 0 | 0 |
 | ours (xswap) | left | 09-11 (apc 8) | 5 | 0 | 0 | 0 | 0 |
+| pi0 real-only (baseline_real) | left | 09-18 | 5 | 4 | 1 (05 crashed into the gate before traversal) | 4 | 3 |
+| pi0 real-only (baseline_real) | right | 09-18 | 5 | 4 | 1 (05 crashed before traversal; 02 graze on the setpoint record) | 4 | 4 |
+| mixed pin, no swap (gmsig3) | left | 09-18 | 5 | 3 | 5 (2 crashed before the gate, 3 after it) | 3 | 0 |
 
 Notes per cell:
 
@@ -51,6 +54,8 @@ Notes per cell:
   pose. The 03/05 notes may be on the wrong flights; video needed.
 - **Real-only pin center from left.** Approaches from the left and never reaches the gate, five of five, as
   expected: this arm has no center demonstrations (its sim CFL is 0/10 as well).
+- **pi0 real-only, left and right (09-18).** The matched baseline for the real-only pin: four of five through on each gate, one crash before the gate on each. On these numbers the real-only pin (5/5, 3/5) and the real-only pi0 (4/5, 4/5) are not separated at n = 5.
+- **Mixed pin without swap (gmsig3), left (09-18).** Sim 40/40 on both seeds; on the drone all five crashed. The command log shows the head aiming at the gate on the approach, then turning toward the goal right after the crossing and cutting back into the east post (min 0.015 m at (1.19, 0.37) in flight 03). Its center-from-left session (log only) shows the head commanding straight toward the goal and hovering at x ~ 1.0, never the center gate: the goal-first plan on real frames that the swap was introduced to fix (open-loop right-gate crossings 8/55 without it, 15-17/55 with it).
 - **Ours (xswap) left, 09-11.** Setpoints were not followed (live z fell 0.15-0.2 m per replan while the
   commanded dz was ~0; x advanced 0.13 m against 1.5 m commanded): an execution-side failure, not a policy
   result. The no-swap arm the same afternoon (clog only) showed the same. **The paper's "ours" arm has no
