@@ -60,7 +60,7 @@ def section(scene, specs, sketch, elem, judge=True, extra=()):
     """One viewer + table for a list of 'label=tag' specs. judge=False colours by clearance only."""
     groups, rows = list(extra), []
     for gi, spec in enumerate(specs):
-        label, tag = spec.split("=", 1)
+        label, tag = spec.rsplit("=", 1)   # tags never contain "="; labels may
         ok, gz, bad = [], [], []
         for f in trial_files(tag):
             P = np.load(f)[:, :3].astype(np.float32); name = os.path.basename(f)[:-4]
