@@ -7190,3 +7190,28 @@ at training time; that it works this well on a flow that never saw a command sub
 the training, is what buys exact execution -- and the training buys the residual's freedom to bend
 (the pin's sigma slack), which the projection does not have. Caveats: single seed, 5 trials, rendered
 frames are out of domain for both real-only checkpoints; SDEdit at one t0.
+
+**PARTIAL VELOCITY PROJECTION SWEEP (2026-09-20, same day; Denis: "add that sigma term to the velocity
+projection"). SNMVP_VPROJ_SIGMA=s: v <- (I - U U^T) v + s U U^T v on gate_scratch_real with the sketch in the
+source; s = 0 is the exact carry, s = 1 naive injection. Cells orbit / fig8 / compound, 5 trials.
+scripts/run_vproj_sigma.sh (+_post); numbers experiments/rung3/vproj/; page viz/vproj_compare.html.**
+  tracking median (m) / clearance-clean:      s=0            s=0.1          s=0.3          s=0.5          s=1
+    orbit                                     0.011 / 5/5    0.010 / 5/5    0.024 / 5/5    0.039 / 2/5    0.12 / 1/5
+    fig8                                      0.012 / 5/5    0.020 / 5/5    0.048 / 0/5    0.092 / 0/5    0.15 / 0/5
+    compound (goal reached)                   0.013 / 5/5 (5/5)  0.043 / 5/5 (1/5)  0.106 / 5/5 (0/5)  1.28 / 5/5 (0/5)  2.8 (0/5)
+  realism, AUC vs real (v95 / tilt99 / rate99):
+    orbit   0.80 (0.35/4.7/35)  0.82 (0.40/5.1/36)  0.82 (0.62/9.6/59)  0.83 (0.90/15.5/117)  0.95
+    fig8    0.78 (0.41/5.4/35)  0.74 (0.47/6.3/41)  0.81 (0.60/8.7/51)  0.82 (0.95/13.7/79)   0.96
+    cmpl    0.78 (0.47/6.3/47)  0.81 (0.46/5.4/34)  0.86 (0.54/9.5/70)  0.90 (0.66/9.8/74)    0.95
+READS: (1) The slack is monotone in the wrong direction on an unpinned flow: every increment of s lets the
+flow's own velocity move the command, and what it moves it toward is the flow's own behaviour (faster,
+the demonstrated routes, the goal), not a safer version of the sketch. Tracking loosens 1 cm -> 4 -> 10 cm
+-> metres, the fig-8 clips the right gate from s = 0.3 (0.09-0.14 m), the compound stops reaching the goal
+at s = 0.1 and drifts 1.3 m at s = 0.5. (2) Realism does not improve with s: the zero-accel fraction is
+already at the pilot's 0.40 at s = 0, and s only adds speed, tilt and body rate (s = 0.5: tilt 14-16 deg,
+rate 80-120 deg/s vs the pilot's 6 / 22). s = 0.1 on the fig-8 is the one cell where AUC dips (0.74),
+inside noise. (3) So on a flow that never trained with a command subspace, the velocity component along U is
+not "how the flow would bend the command for safety"; it is the flow's disagreement with the command, and
+the right amount to keep is zero. The pin's sigma is different in kind: it is trained on corrupted commands
+with the clean chunk as the target, so its slack is a learned correction, not a leak. This is the cleanest
+statement so far of what the training buys over the projection.

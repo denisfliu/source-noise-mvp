@@ -1,0 +1,180 @@
+== vproj sigma 0.1: vps01_orbit (sketch=sketch_orbit.json scene=right)
+traj_vps01_orbit_1.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_orbit_2.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_orbit_3.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_orbit_4.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_orbit_5.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (right)
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+traj_vps01_orbit_1.npy       min-clearance 0.356 m @step 284 [ 1.33 -0.82  1.47]  steps<0.18:  0  CLEAN=True
+traj_vps01_orbit_2.npy       min-clearance 0.317 m @step 283 [ 1.28 -0.81  1.45]  steps<0.18:  0  CLEAN=True
+traj_vps01_orbit_3.npy       min-clearance 0.311 m @step 285 [ 1.27 -0.8   1.46]  steps<0.18:  0  CLEAN=True
+traj_vps01_orbit_4.npy       min-clearance 0.331 m @step 345 [ 1.2  -1.19  1.35]  steps<0.18:  0  CLEAN=True
+traj_vps01_orbit_5.npy       min-clearance 0.335 m @step 283 [ 1.31 -0.82  1.47]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (right)
+traj_vps01_orbit_1.npy           track median 0.011 m  p90 0.040  max 0.081  (steps 0-66)
+traj_vps01_orbit_2.npy           track median 0.008 m  p90 0.076  max 0.096  (steps 0-68)
+traj_vps01_orbit_3.npy           track median 0.016 m  p90 0.061  max 0.086  (steps 0-68)
+traj_vps01_orbit_4.npy           track median 0.010 m  p90 0.097  max 0.139  (steps 0-69)
+traj_vps01_orbit_5.npy           track median 0.010 m  p90 0.051  max 0.088  (steps 0-67)
+== tracking median over flights 0.010 m (range 0.008-0.016)
+== vproj sigma 0.1: vps01_fig8 (sketch=sketch_fig8.json scene=right)
+traj_vps01_fig8_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_fig8_2.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_fig8_3.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_fig8_4.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_fig8_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (right)
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+traj_vps01_fig8_1.npy        min-clearance 0.186 m @step 198 [ 1.16 -0.91  1.46]  steps<0.18:  0  CLEAN=True
+traj_vps01_fig8_2.npy        min-clearance 0.180 m @step 199 [ 1.16 -0.91  1.46]  steps<0.18:  0  CLEAN=True
+traj_vps01_fig8_3.npy        min-clearance 0.187 m @step 198 [ 1.17 -0.91  1.45]  steps<0.18:  0  CLEAN=True
+traj_vps01_fig8_4.npy        min-clearance 0.186 m @step 198 [ 1.16 -0.92  1.45]  steps<0.18:  0  CLEAN=True
+traj_vps01_fig8_5.npy        min-clearance 0.185 m @step 198 [ 1.16 -0.9   1.45]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (right)
+traj_vps01_fig8_1.npy            track median 0.020 m  p90 0.077  max 0.094  (steps 0-128)
+traj_vps01_fig8_2.npy            track median 0.021 m  p90 0.105  max 0.171  (steps 0-130)
+traj_vps01_fig8_3.npy            track median 0.018 m  p90 0.077  max 0.140  (steps 0-128)
+traj_vps01_fig8_4.npy            track median 0.015 m  p90 0.099  max 0.150  (steps 0-128)
+traj_vps01_fig8_5.npy            track median 0.022 m  p90 0.061  max 0.154  (steps 0-127)
+== tracking median over flights 0.020 m (range 0.015-0.022)
+== vproj sigma 0.1: vps01_cmpl (sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vps01_cmpl_1.npy        transit=True@40 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_cmpl_2.npy        transit=True@33 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_cmpl_3.npy        transit=True@42 wrong_dir=0 goal=True  SUCCESS=True
+traj_vps01_cmpl_4.npy        transit=True@30 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps01_cmpl_5.npy        transit=True@44 wrong_dir=0 goal=False  SUCCESS=False
+== 1/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vps01_cmpl_1.npy        min-clearance 0.256 m @step 129 [ 2.56 -0.24  1.51]  steps<0.18:  0  CLEAN=True
+traj_vps01_cmpl_2.npy        min-clearance 0.250 m @step 132 [ 2.55 -0.25  1.52]  steps<0.18:  0  CLEAN=True
+traj_vps01_cmpl_3.npy        min-clearance 0.292 m @step 128 [ 2.58 -0.18  1.51]  steps<0.18:  0  CLEAN=True
+traj_vps01_cmpl_4.npy        min-clearance 0.279 m @step 129 [ 2.57 -0.21  1.51]  steps<0.18:  0  CLEAN=True
+traj_vps01_cmpl_5.npy        min-clearance 0.295 m @step 125 [ 2.54 -0.1   1.52]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)
+traj_vps01_cmpl_1.npy            track median 0.048 m  p90 0.084  max 0.157  (steps 0-180)
+traj_vps01_cmpl_2.npy            track median 0.041 m  p90 0.093  max 0.147  (steps 0-181)
+traj_vps01_cmpl_3.npy            track median 0.034 m  p90 0.067  max 0.087  (steps 0-183)
+traj_vps01_cmpl_4.npy            track median 0.043 m  p90 0.083  max 0.104  (steps 0-182)
+traj_vps01_cmpl_5.npy            track median 0.049 m  p90 0.096  max 0.135  (steps 0-184)
+== tracking median over flights 0.043 m (range 0.034-0.049)
+== vproj sigma 0.3: vps03_orbit (sketch=sketch_orbit.json scene=right)
+traj_vps03_orbit_1.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_orbit_2.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_orbit_3.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_orbit_4.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_orbit_5.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (right)
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+traj_vps03_orbit_1.npy       min-clearance 0.349 m @step  77 [ 1.31 -0.79  1.46]  steps<0.18:  0  CLEAN=True
+traj_vps03_orbit_2.npy       min-clearance 0.313 m @step 235 [ 0.98 -0.59  1.45]  steps<0.18:  0  CLEAN=True
+traj_vps03_orbit_3.npy       min-clearance 0.333 m @step 320 [ 1.31 -1.    1.3 ]  steps<0.18:  0  CLEAN=True
+traj_vps03_orbit_4.npy       min-clearance 0.351 m @step  84 [ 1.33 -0.83  1.48]  steps<0.18:  0  CLEAN=True
+traj_vps03_orbit_5.npy       min-clearance 0.380 m @step  80 [ 1.34 -0.78  1.46]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (right)
+traj_vps03_orbit_1.npy           track median 0.020 m  p90 0.076  max 0.122  (steps 0-63)
+traj_vps03_orbit_2.npy           track median 0.016 m  p90 0.119  max 0.140  (steps 0-65)
+traj_vps03_orbit_3.npy           track median 0.028 m  p90 0.117  max 0.149  (steps 0-67)
+traj_vps03_orbit_4.npy           track median 0.029 m  p90 0.085  max 0.116  (steps 0-65)
+traj_vps03_orbit_5.npy           track median 0.024 m  p90 0.149  max 0.173  (steps 0-65)
+== tracking median over flights 0.024 m (range 0.016-0.029)
+== vproj sigma 0.3: vps03_fig8 (sketch=sketch_fig8.json scene=right)
+traj_vps03_fig8_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_fig8_2.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_fig8_3.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_fig8_4.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_fig8_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (right)
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+traj_vps03_fig8_1.npy        min-clearance 0.127 m @step 303 [ 0.9  -0.8   1.36]  steps<0.18:  9  CLEAN=False
+traj_vps03_fig8_2.npy        min-clearance 0.091 m @step 302 [ 0.86 -0.85  1.39]  steps<0.18: 11  CLEAN=False
+traj_vps03_fig8_3.npy        min-clearance 0.122 m @step 302 [ 0.86 -0.81  1.39]  steps<0.18: 13  CLEAN=False
+traj_vps03_fig8_4.npy        min-clearance 0.144 m @step 303 [ 0.93 -0.77  1.36]  steps<0.18: 10  CLEAN=False
+traj_vps03_fig8_5.npy        min-clearance 0.132 m @step 303 [ 0.91 -0.79  1.36]  steps<0.18:  9  CLEAN=False
+== 0/5 clearance-clean (right)
+traj_vps03_fig8_1.npy            track median 0.048 m  p90 0.194  max 0.252  (steps 0-108)
+traj_vps03_fig8_2.npy            track median 0.051 m  p90 0.213  max 0.229  (steps 0-109)
+traj_vps03_fig8_3.npy            track median 0.043 m  p90 0.188  max 0.249  (steps 0-108)
+traj_vps03_fig8_4.npy            track median 0.040 m  p90 0.195  max 0.252  (steps 0-108)
+traj_vps03_fig8_5.npy            track median 0.054 m  p90 0.173  max 0.233  (steps 0-109)
+== tracking median over flights 0.048 m (range 0.040-0.054)
+== vproj sigma 0.3: vps03_cmpl (sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vps03_cmpl_1.npy        transit=True@33 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_cmpl_2.npy        transit=True@30 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_cmpl_3.npy        transit=True@35 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_cmpl_4.npy        transit=True@30 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps03_cmpl_5.npy        transit=True@29 wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vps03_cmpl_1.npy        min-clearance 0.261 m @step 114 [ 2.62 -0.3   1.57]  steps<0.18:  0  CLEAN=True
+traj_vps03_cmpl_2.npy        min-clearance 0.250 m @step 114 [ 2.69 -0.32  1.58]  steps<0.18:  0  CLEAN=True
+traj_vps03_cmpl_3.npy        min-clearance 0.244 m @step 115 [ 2.67 -0.34  1.59]  steps<0.18:  0  CLEAN=True
+traj_vps03_cmpl_4.npy        min-clearance 0.258 m @step 114 [ 2.65 -0.28  1.57]  steps<0.18:  0  CLEAN=True
+traj_vps03_cmpl_5.npy        min-clearance 0.247 m @step 114 [ 2.66 -0.29  1.58]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)
+traj_vps03_cmpl_1.npy            track median 0.098 m  p90 0.375  max 0.406  (steps 0-168)
+traj_vps03_cmpl_2.npy            track median 0.102 m  p90 0.405  max 0.423  (steps 0-170)
+traj_vps03_cmpl_3.npy            track median 0.106 m  p90 0.371  max 0.414  (steps 0-169)
+traj_vps03_cmpl_4.npy            track median 0.112 m  p90 0.409  max 0.446  (steps 0-172)
+traj_vps03_cmpl_5.npy            track median 0.130 m  p90 0.380  max 0.418  (steps 0-170)
+== tracking median over flights 0.106 m (range 0.098-0.130)
+== vproj sigma 0.5: vps05_orbit (sketch=sketch_orbit.json scene=right)
+traj_vps05_orbit_1.npy       transit=True@224 wrong_dir=0 goal=True  SUCCESS=True
+traj_vps05_orbit_2.npy       transit=True@224 wrong_dir=0 goal=True  SUCCESS=True
+traj_vps05_orbit_3.npy       transit=True@225 wrong_dir=0 goal=True  SUCCESS=True
+traj_vps05_orbit_4.npy       transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_orbit_5.npy       transit=True@224 wrong_dir=0 goal=True  SUCCESS=True
+== 4/5 success (right)
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+traj_vps05_orbit_1.npy       min-clearance 0.155 m @step 224 [ 0.77 -1.02  1.45]  steps<0.18:  6  CLEAN=False
+traj_vps05_orbit_2.npy       min-clearance 0.070 m @step 302 [ 0.99 -1.03  1.35]  steps<0.18: 33  CLEAN=False
+traj_vps05_orbit_3.npy       min-clearance 0.186 m @step 165 [ 0.07 -1.16  1.46]  steps<0.18:  0  CLEAN=True
+traj_vps05_orbit_4.npy       min-clearance 0.097 m @step 167 [ 0.09 -1.25  1.48]  steps<0.18: 15  CLEAN=False
+traj_vps05_orbit_5.npy       min-clearance 0.220 m @step 304 [ 1.01 -1.19  1.36]  steps<0.18:  0  CLEAN=True
+== 2/5 clearance-clean (right)
+traj_vps05_orbit_1.npy           track median 0.037 m  p90 0.120  max 0.167  (steps 0-60)
+traj_vps05_orbit_2.npy           track median 0.028 m  p90 0.125  max 0.154  (steps 0-61)
+traj_vps05_orbit_3.npy           track median 0.039 m  p90 0.182  max 0.205  (steps 0-63)
+traj_vps05_orbit_4.npy           track median 0.045 m  p90 0.132  max 0.173  (steps 0-56)
+traj_vps05_orbit_5.npy           track median 0.065 m  p90 0.146  max 0.171  (steps 0-63)
+== tracking median over flights 0.039 m (range 0.028-0.065)
+== vproj sigma 0.5: vps05_fig8 (sketch=sketch_fig8.json scene=right)
+traj_vps05_fig8_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_fig8_2.npy        transit=True@272 wrong_dir=0 goal=True  SUCCESS=True
+traj_vps05_fig8_3.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_fig8_4.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_fig8_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 1/5 success (right)
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+traj_vps05_fig8_1.npy        min-clearance 0.011 m @step 270 [ 0.93 -0.98  1.52]  steps<0.18:  4  CLEAN=False
+traj_vps05_fig8_2.npy        min-clearance 0.056 m @step 270 [ 0.9  -0.86  1.5 ]  steps<0.18:  8  CLEAN=False
+traj_vps05_fig8_3.npy        min-clearance 0.035 m @step 270 [ 1.   -0.97  1.49]  steps<0.18:  5  CLEAN=False
+traj_vps05_fig8_4.npy        min-clearance 0.011 m @step 270 [ 0.95 -0.99  1.49]  steps<0.18:  7  CLEAN=False
+traj_vps05_fig8_5.npy        min-clearance 0.024 m @step 271 [ 0.97 -1.    1.49]  steps<0.18:  7  CLEAN=False
+== 0/5 clearance-clean (right)
+traj_vps05_fig8_1.npy            track median 0.069 m  p90 0.260  max 0.374  (steps 0-100)
+traj_vps05_fig8_2.npy            track median 0.073 m  p90 0.248  max 0.362  (steps 0-98)
+traj_vps05_fig8_3.npy            track median 0.096 m  p90 0.290  max 0.346  (steps 0-99)
+traj_vps05_fig8_4.npy            track median 0.094 m  p90 0.236  max 0.375  (steps 0-96)
+traj_vps05_fig8_5.npy            track median 0.092 m  p90 0.198  max 0.292  (steps 0-98)
+== tracking median over flights 0.092 m (range 0.069-0.096)
+== vproj sigma 0.5: vps05_cmpl (sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vps05_cmpl_1.npy        transit=True@26 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_cmpl_2.npy        transit=True@25 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_cmpl_3.npy        transit=True@26 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_cmpl_4.npy        transit=True@25 wrong_dir=0 goal=False  SUCCESS=False
+traj_vps05_cmpl_5.npy        transit=True@25 wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vps05_cmpl_1.npy        min-clearance 0.232 m @step 110 [ 2.87 -0.29  1.59]  steps<0.18:  0  CLEAN=True
+traj_vps05_cmpl_2.npy        min-clearance 0.209 m @step 109 [ 2.99 -0.27  1.59]  steps<0.18:  0  CLEAN=True
+traj_vps05_cmpl_3.npy        min-clearance 0.217 m @step 110 [ 2.9  -0.27  1.6 ]  steps<0.18:  0  CLEAN=True
+traj_vps05_cmpl_4.npy        min-clearance 0.216 m @step 110 [ 2.95 -0.28  1.6 ]  steps<0.18:  0  CLEAN=True
+traj_vps05_cmpl_5.npy        min-clearance 0.207 m @step 110 [ 2.96 -0.3   1.61]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)
+traj_vps05_cmpl_1.npy            track median 1.250 m  p90 2.900  max 3.383  (steps 0-701, never arrived)
+traj_vps05_cmpl_2.npy            track median 1.277 m  p90 2.796  max 3.188  (steps 0-701, never arrived)
+traj_vps05_cmpl_3.npy            track median 1.284 m  p90 2.840  max 3.382  (steps 0-701, never arrived)
+traj_vps05_cmpl_4.npy            track median 1.148 m  p90 2.440  max 2.832  (steps 0-701, never arrived)
+traj_vps05_cmpl_5.npy            track median 1.326 m  p90 2.726  max 3.181  (steps 0-701, never arrived)
+== tracking median over flights 1.277 m (range 1.148-1.326)

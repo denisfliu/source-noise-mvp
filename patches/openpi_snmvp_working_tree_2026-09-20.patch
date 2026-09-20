@@ -67,10 +67,10 @@ index c7ddd2b..dcc3c60 100644
              if isinstance(losses, list | tuple):
                  losses = torch.stack(losses)
 diff --git a/src/openpi/models/pi0.py b/src/openpi/models/pi0.py
-index ae7c459..a69f16e 100644
+index ae7c459..e6b94cc 100644
 --- a/src/openpi/models/pi0.py
 +++ b/src/openpi/models/pi0.py
-@@ -15,6 +15,141 @@ from openpi.shared import array_typing as at
+@@ -15,6 +15,145 @@ from openpi.shared import array_typing as at
  
  logger = logging.getLogger("openpi")
  
@@ -83,6 +83,10 @@ index ae7c459..a69f16e 100644
 +# is carried through an UNPINNED flow too (the training-free counterpart of the pin objective
 +# U^T v = 0). Needs SNMVP_PIN_U. Used with serve_gate_plain_sketch.py on a scratch checkpoint.
 +_VPROJ = _os.environ.get("SNMVP_VPROJ", "") == "1"
++# SNMVP_VPROJ_SIGMA=s (2026-09-20): partial projection v <- (I - U U^T) v + s U U^T v; s = 0 carries the
++# command exactly (default), s = 1 is naive injection; in between the flow may move the command by a
++# fraction s of what it would have done -- the training-free counterpart of the pin's sigma slack.
++_VPROJ_SIGMA = float(_os.environ.get("SNMVP_VPROJ_SIGMA", "0") or 0.0)
 +_pin_path = _os.environ.get("SNMVP_PIN_U")
 +if _pin_path:
 +    _PIN_U = _np.load(_pin_path).astype("float32")  # numpy constant (baked into jit), (D=ah*ad, K)
@@ -212,7 +216,7 @@ index ae7c459..a69f16e 100644
  
  def make_attn_mask(input_mask, mask_ar):
      """Adapted from big_vision.
-@@ -98,6 +233,46 @@ class Pi0(_model.BaseModel):
+@@ -98,6 +237,46 @@ class Pi0(_model.BaseModel):
              self.action_time_mlp_in = nnx.Linear(2 * action_expert_config.width, action_expert_config.width, rngs=rngs)
              self.action_time_mlp_out = nnx.Linear(action_expert_config.width, action_expert_config.width, rngs=rngs)
          self.action_out_proj = nnx.Linear(action_expert_config.width, config.action_dim, rngs=rngs)
@@ -259,7 +263,7 @@ index ae7c459..a69f16e 100644
  
          # This attribute gets automatically set by model.train() and model.eval().
          self.deterministic = True
-@@ -138,7 +313,8 @@ class Pi0(_model.BaseModel):
+@@ -138,7 +317,8 @@ class Pi0(_model.BaseModel):
  
      @at.typecheck
      def embed_suffix(
@@ -269,7 +273,7 @@ index ae7c459..a69f16e 100644
      ) -> tuple[
          at.Float[at.Array, "b s emb"],
          at.Bool[at.Array, "b s"],
-@@ -159,6 +335,12 @@ class Pi0(_model.BaseModel):
+@@ -159,6 +339,12 @@ class Pi0(_model.BaseModel):
          action_tokens = self.action_in_proj(noisy_actions)
          # embed timestep using sine-cosine positional encoding with sensitivity in the range [0, 1]
          time_emb = posemb_sincos(timestep, self.action_in_proj.out_features, min_period=4e-3, max_period=4.0)
@@ -282,7 +286,7 @@ index ae7c459..a69f16e 100644
          if self.pi05:
              # time MLP (for adaRMS)
              time_emb = self.time_mlp_in(time_emb)
-@@ -194,24 +376,195 @@ class Pi0(_model.BaseModel):
+@@ -194,24 +380,195 @@ class Pi0(_model.BaseModel):
  
          batch_shape = actions.shape[:-2]
          noise = jax.random.normal(noise_rng, actions.shape)
@@ -488,7 +492,7 @@ index ae7c459..a69f16e 100644
  
      @override
      def sample_actions(
-@@ -221,6 +574,8 @@ class Pi0(_model.BaseModel):
+@@ -221,6 +578,8 @@ class Pi0(_model.BaseModel):
          *,
          num_steps: int | at.Int[at.Array, ""] = 10,
          noise: at.Float[at.Array, "b ah ad"] | None = None,
@@ -497,7 +501,7 @@ index ae7c459..a69f16e 100644
      ) -> _model.Actions:
          observation = _model.preprocess_observation(None, observation, train=False)
          # note that we use the convention more common in diffusion literature, where t=1 is noise and t=0 is the target
-@@ -231,15 +586,51 @@ class Pi0(_model.BaseModel):
+@@ -231,15 +590,51 @@ class Pi0(_model.BaseModel):
              noise = jax.random.normal(rng, (batch_size, self.action_horizon, self.action_dim))
  
          # first fill KV cache with a forward pass of the prefix
@@ -551,7 +555,7 @@ index ae7c459..a69f16e 100644
              )
              # `suffix_attn_mask` is shape (b, suffix_len, suffix_len) indicating how the suffix tokens can attend to each
              # other
-@@ -253,7 +644,7 @@ class Pi0(_model.BaseModel):
+@@ -253,7 +648,7 @@ class Pi0(_model.BaseModel):
              assert full_attn_mask.shape == (
                  batch_size,
                  suffix_tokens.shape[1],
@@ -560,7 +564,7 @@ index ae7c459..a69f16e 100644
              )
              # `positions` is shape (b, suffix_len) indicating the positions of the suffix tokens
              positions = jnp.sum(prefix_mask, axis=-1)[:, None] + jnp.cumsum(suffix_mask, axis=-1) - 1
-@@ -267,6 +658,13 @@ class Pi0(_model.BaseModel):
+@@ -267,6 +662,13 @@ class Pi0(_model.BaseModel):
              )
              assert prefix_out is None
              v_t = self.action_out_proj(suffix_out[:, -self.action_horizon :])
@@ -569,12 +573,12 @@ index ae7c459..a69f16e 100644
 +                    raise ValueError("SNMVP_VPROJ=1 needs SNMVP_PIN_U")
 +                _U = jnp.asarray(_PIN_U)
 +                _vf = v_t.reshape(batch_size, -1)
-+                _vf = _vf - (_vf @ _U) @ _U.T
++                _vf = _vf - (1.0 - _VPROJ_SIGMA) * ((_vf @ _U) @ _U.T)
 +                v_t = _vf.reshape(v_t.shape)
  
              return x_t + dt * v_t, time + dt
  
-@@ -275,5 +673,10 @@ class Pi0(_model.BaseModel):
+@@ -275,5 +677,10 @@ class Pi0(_model.BaseModel):
              # robust to floating-point error
              return time >= -dt / 2
  
