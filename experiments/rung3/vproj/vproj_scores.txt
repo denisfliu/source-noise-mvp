@@ -1,0 +1,248 @@
+== vproj: vp_sde05_orbit (mode=sde:0.5 sketch=sketch_orbit.json scene=right)
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 148, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 136, in main
+    P = np.load(t)[:, :3]
+        ^^^^^^^^^^
+  File "/home/dfliu/code/openpi/.venv/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 455, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_sde05_orbit_*.npy'
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 139, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 128, in main
+    P = torch.tensor(np.load(f)[:, :3], dtype=torch.float32)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_sde05_orbit_*.npy'
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 71, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 53, in main
+    T = np.load(f)[:, :3].astype(np.float64)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_sde05_orbit_*.npy'
+== vproj: vp_sde05_fig8 (mode=sde:0.5 sketch=sketch_fig8.json scene=right)
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 148, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 136, in main
+    P = np.load(t)[:, :3]
+        ^^^^^^^^^^
+  File "/home/dfliu/code/openpi/.venv/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 455, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_sde05_fig8_*.npy'
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 139, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 128, in main
+    P = torch.tensor(np.load(f)[:, :3], dtype=torch.float32)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_sde05_fig8_*.npy'
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 71, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 53, in main
+    T = np.load(f)[:, :3].astype(np.float64)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_sde05_fig8_*.npy'
+== vproj: vp_inject_orbit (mode=inject sketch=sketch_orbit.json scene=right)
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 148, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 136, in main
+    P = np.load(t)[:, :3]
+        ^^^^^^^^^^
+  File "/home/dfliu/code/openpi/.venv/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 455, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_inject_orbit_*.npy'
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 139, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 128, in main
+    P = torch.tensor(np.load(f)[:, :3], dtype=torch.float32)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_inject_orbit_*.npy'
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 71, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 53, in main
+    T = np.load(f)[:, :3].astype(np.float64)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_inject_orbit_*.npy'
+== vproj: vp_inject_fig8 (mode=inject sketch=sketch_fig8.json scene=right)
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 148, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 136, in main
+    P = np.load(t)[:, :3]
+        ^^^^^^^^^^
+  File "/home/dfliu/code/openpi/.venv/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 455, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_inject_fig8_*.npy'
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 139, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 128, in main
+    P = torch.tensor(np.load(f)[:, :3], dtype=torch.float32)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_inject_fig8_*.npy'
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 71, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 53, in main
+    T = np.load(f)[:, :3].astype(np.float64)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_inject_fig8_*.npy'
+== vproj: vp_vproj_orbit (mode=vproj sketch=sketch_orbit.json scene=right)
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 148, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 136, in main
+    P = np.load(t)[:, :3]
+        ^^^^^^^^^^
+  File "/home/dfliu/code/openpi/.venv/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 455, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_vproj_orbit_*.npy'
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 139, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 128, in main
+    P = torch.tensor(np.load(f)[:, :3], dtype=torch.float32)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_vproj_orbit_*.npy'
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 71, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 53, in main
+    T = np.load(f)[:, :3].astype(np.float64)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_vproj_orbit_*.npy'
+== vproj: vp_vproj_fig8 (mode=vproj sketch=sketch_fig8.json scene=right)
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 148, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_success.py", line 136, in main
+    P = np.load(t)[:, :3]
+        ^^^^^^^^^^
+  File "/home/dfliu/code/openpi/.venv/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 455, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_vproj_fig8_*.npy'
+scene=right gate cloud 29532 pts; body-contact threshold ~0.18 m
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 139, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/gate_clearance.py", line 128, in main
+    P = torch.tensor(np.load(f)[:, :3], dtype=torch.float32)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_vproj_fig8_*.npy'
+Traceback (most recent call last):
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 71, in <module>
+    main()
+  File "/home/dfliu/code/source-noise-mvp/experiments/rung3/sketch_track.py", line 53, in main
+    T = np.load(f)[:, :3].astype(np.float64)
+  File "/home/dfliu/code/tv/lib/python3.10/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/dfliu/ctxrun/traj_vp_vproj_fig8_*.npy'
+== vproj: vp_ours_cmpl (mode=ours sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vp_ours_cmpl_1.npy      transit=True@62 wrong_dir=0 goal=False  SUCCESS=False
+traj_vp_ours_cmpl_2.npy      transit=True@62 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_ours_cmpl_3.npy      transit=True@63 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_ours_cmpl_4.npy      transit=True@65 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_ours_cmpl_5.npy      transit=True@62 wrong_dir=0 goal=False  SUCCESS=False
+== 3/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vp_ours_cmpl_1.npy      min-clearance 0.012 m @step 147 [ 2.25 -0.29  1.51]  steps<0.18: 15  CLEAN=False
+traj_vp_ours_cmpl_2.npy      min-clearance 0.202 m @step 155 [ 2.43 -0.1   1.51]  steps<0.18:  0  CLEAN=True
+traj_vp_ours_cmpl_3.npy      min-clearance 0.173 m @step 149 [ 2.41 -0.12  1.5 ]  steps<0.18:  2  CLEAN=False
+traj_vp_ours_cmpl_4.npy      min-clearance 0.141 m @step 154 [ 2.35 -0.12  1.48]  steps<0.18: 12  CLEAN=False
+traj_vp_ours_cmpl_5.npy      min-clearance 0.022 m @step 148 [ 2.29 -0.22  1.51]  steps<0.18: 12  CLEAN=False
+== 1/5 clearance-clean (left_and_center)
+traj_vp_ours_cmpl_1.npy          track median 0.177 m  p90 0.377  max 0.432  (steps 0-209)
+traj_vp_ours_cmpl_2.npy          track median 0.114 m  p90 0.172  max 0.214  (steps 0-211)
+traj_vp_ours_cmpl_3.npy          track median 0.116 m  p90 0.176  max 0.219  (steps 0-211)
+traj_vp_ours_cmpl_4.npy          track median 0.111 m  p90 0.194  max 0.214  (steps 0-212)
+traj_vp_ours_cmpl_5.npy          track median 0.143 m  p90 0.301  max 0.326  (steps 0-207)
+== tracking median over flights 0.116 m (range 0.111-0.177)
+== vproj: vp_sde05_cmpl (mode=sde:0.5 sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vp_sde05_cmpl_1.npy     transit=True@75 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_sde05_cmpl_2.npy     transit=True@60 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_sde05_cmpl_3.npy     transit=True@80 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_sde05_cmpl_4.npy     transit=True@70 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_sde05_cmpl_5.npy     transit=True@66 wrong_dir=0 goal=True  SUCCESS=True
+== 5/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vp_sde05_cmpl_1.npy     min-clearance 0.058 m @step 172 [ 2.35 -0.23  1.43]  steps<0.18: 14  CLEAN=False
+traj_vp_sde05_cmpl_2.npy     min-clearance 0.018 m @step 174 [ 2.24 -0.29  1.39]  steps<0.18: 15  CLEAN=False
+traj_vp_sde05_cmpl_3.npy     min-clearance 0.092 m @step 169 [ 2.17 -0.33  1.5 ]  steps<0.18: 12  CLEAN=False
+traj_vp_sde05_cmpl_4.npy     min-clearance 0.011 m @step 179 [ 2.29 -0.24  1.4 ]  steps<0.18: 14  CLEAN=False
+traj_vp_sde05_cmpl_5.npy     min-clearance 0.044 m @step 156 [ 2.23 -0.33  1.52]  steps<0.18: 20  CLEAN=False
+== 0/5 clearance-clean (left_and_center)
+traj_vp_sde05_cmpl_1.npy         track median 0.057 m  p90 0.284  max 0.346  (steps 0-192)
+traj_vp_sde05_cmpl_2.npy         track median 0.077 m  p90 0.344  max 0.444  (steps 0-185)
+traj_vp_sde05_cmpl_3.npy         track median 0.076 m  p90 0.425  max 0.492  (steps 0-172)
+traj_vp_sde05_cmpl_4.npy         track median 0.078 m  p90 0.324  max 0.371  (steps 0-196)
+traj_vp_sde05_cmpl_5.npy         track median 0.097 m  p90 0.395  max 0.443  (steps 0-172)
+== tracking median over flights 0.077 m (range 0.057-0.097)
+== vproj: vp_inject_cmpl (mode=inject sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vp_inject_cmpl_1.npy    transit=True@18 wrong_dir=0 goal=False  SUCCESS=False
+traj_vp_inject_cmpl_2.npy    transit=True@17 wrong_dir=0 goal=False  SUCCESS=False
+traj_vp_inject_cmpl_3.npy    transit=True@18 wrong_dir=0 goal=False  SUCCESS=False
+traj_vp_inject_cmpl_4.npy    transit=True@18 wrong_dir=0 goal=False  SUCCESS=False
+traj_vp_inject_cmpl_5.npy    transit=True@18 wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vp_inject_cmpl_1.npy    min-clearance 0.355 m @step  18 [0.92 0.74 1.55]  steps<0.18:  0  CLEAN=True
+traj_vp_inject_cmpl_2.npy    min-clearance 0.368 m @step  18 [0.94 0.75 1.54]  steps<0.18:  0  CLEAN=True
+traj_vp_inject_cmpl_3.npy    min-clearance 0.367 m @step  18 [0.9  0.73 1.54]  steps<0.18:  0  CLEAN=True
+traj_vp_inject_cmpl_4.npy    min-clearance 0.368 m @step  18 [0.88 0.73 1.53]  steps<0.18:  0  CLEAN=True
+traj_vp_inject_cmpl_5.npy    min-clearance 0.367 m @step  18 [0.9  0.74 1.54]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)
+traj_vp_inject_cmpl_1.npy        track median 2.779 m  p90 6.689  max 7.337  (steps 0-701, never arrived)
+traj_vp_inject_cmpl_2.npy        track median 2.839 m  p90 6.226  max 6.941  (steps 0-701, never arrived)
+traj_vp_inject_cmpl_3.npy        track median 3.106 m  p90 7.792  max 8.835  (steps 0-701, never arrived)
+traj_vp_inject_cmpl_4.npy        track median 2.753 m  p90 6.820  max 7.647  (steps 0-701, never arrived)
+traj_vp_inject_cmpl_5.npy        track median 3.138 m  p90 6.807  max 7.712  (steps 0-701, never arrived)
+== tracking median over flights 2.839 m (range 2.753-3.138)
+== vproj: vp_vproj_cmpl (mode=vproj sketch=sketch_cmpl_denis.json scene=left_and_center)
+traj_vp_vproj_cmpl_1.npy     transit=True@45 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_vproj_cmpl_2.npy     transit=True@40 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_vproj_cmpl_3.npy     transit=True@40 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_vproj_cmpl_4.npy     transit=True@35 wrong_dir=0 goal=True  SUCCESS=True
+traj_vp_vproj_cmpl_5.npy     transit=True@48 wrong_dir=0 goal=True  SUCCESS=True
+== 5/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_vp_vproj_cmpl_1.npy     min-clearance 0.287 m @step 137 [ 2.57 -0.17  1.49]  steps<0.18:  0  CLEAN=True
+traj_vp_vproj_cmpl_2.npy     min-clearance 0.284 m @step 136 [ 2.55 -0.14  1.5 ]  steps<0.18:  0  CLEAN=True
+traj_vp_vproj_cmpl_3.npy     min-clearance 0.315 m @step 141 [ 2.58 -0.12  1.47]  steps<0.18:  0  CLEAN=True
+traj_vp_vproj_cmpl_4.npy     min-clearance 0.316 m @step 141 [ 2.68 -0.28  1.51]  steps<0.18:  0  CLEAN=True
+traj_vp_vproj_cmpl_5.npy     min-clearance 0.303 m @step 135 [ 2.58 -0.15  1.5 ]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)
+traj_vp_vproj_cmpl_1.npy         track median 0.013 m  p90 0.044  max 0.102  (steps 0-189)
+traj_vp_vproj_cmpl_2.npy         track median 0.016 m  p90 0.065  max 0.124  (steps 0-193)
+traj_vp_vproj_cmpl_3.npy         track median 0.013 m  p90 0.043  max 0.068  (steps 0-192)
+traj_vp_vproj_cmpl_4.npy         track median 0.013 m  p90 0.040  max 0.091  (steps 0-200)
+traj_vp_vproj_cmpl_5.npy         track median 0.015 m  p90 0.061  max 0.137  (steps 0-193)
+== tracking median over flights 0.013 m (range 0.013-0.016)

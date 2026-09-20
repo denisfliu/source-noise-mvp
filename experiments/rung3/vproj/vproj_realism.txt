@@ -1,0 +1,33 @@
+== orbit (right scene): realism on the sketch-active window
+real-demo envelope (smoothed p99): |a| 1.24 m/s^2, |j| 9.4 m/s^3
+  demo real              n=100 T  24.5s path  5.6 v95 0.68 | acc95 raw 0.94 sm 0.76 jerk95 sm  2.7 dj 7.10 hf 0.00 zero 0.39 seam nan/nan tilt99  5.8 rate99  22.7 envA 0.000 envJ 0.000 track 0.110/0.269 hover nan
+  demo synth             n=200 T  26.4s path  6.0 v95 0.39 | acc95 raw 0.21 sm 0.21 jerk95 sm  0.2 dj 5.10 hf 0.00 zero 0.92 seam nan/nan tilt99  1.7 rate99   1.4 envA 0.000 envJ 0.000 track 0.056/0.116 hover nan
+calibration AUC: real-vs-real 0.560 (shape 0.563), synth-vs-real 0.999 (shape 0.999)
+  [adhoc] a0             n=  5 T  45.8s path 10.1 v95 0.37 | acc95 raw 0.91 sm 0.62 jerk95 sm  4.0 dj 8.56 hf 0.03 zero 0.20 seam 2.05/0.35 tilt99  5.1 rate99  36.1 envA 0.000 envJ 0.002 track 0.068/0.168 hover 0.054 | auc real 0.89 (0.88) synth 1.00 (1.00)
+  [adhoc] a1             n=  5 T  46.2s path  9.5 v95 0.30 | acc95 raw 0.45 sm 0.40 jerk95 sm  2.4 dj 8.21 hf 0.02 zero 0.64 seam 1.37/0.15 tilt99  3.9 rate99  28.9 envA 0.000 envJ 0.000 track 0.053/0.159 hover 0.112 | auc real 0.78 (0.83) synth 1.00 (1.00)
+  [adhoc] a2             n=  5 T  28.5s path 31.0 v95 2.06 | acc95 raw 1.91 sm 3.66 jerk95 sm 23.3 dj 7.74 hf 0.03 zero 0.14 seam 21.96/0.43 tilt99 37.0 rate99 217.6 envA 0.143 envJ 0.093 track 0.698/1.961 hover 0.450 | auc real 0.95 (0.89) synth 1.00 (1.00)
+  [adhoc] a3             n=  5 T  40.2s path 10.1 v95 0.35 | acc95 raw 0.71 sm 0.57 jerk95 sm  3.2 dj 8.02 hf 0.01 zero 0.47 seam 1.41/0.21 tilt99  4.7 rate99  35.0 envA 0.000 envJ 0.000 track 0.067/0.197 hover 0.110 | auc real 0.80 (0.84) synth 1.00 (1.00)
+wrote /home/dfliu/ctxrun/vproj_realism_orbit.json
+
+== fig8 (right scene)
+real-demo envelope (smoothed p99): |a| 1.25 m/s^2, |j| 9.5 m/s^3
+  demo real              n=100 T  24.5s path  5.5 v95 0.68 | acc95 raw 0.94 sm 0.76 jerk95 sm  2.7 dj 7.08 hf 0.00 zero 0.39 seam nan/nan tilt99  5.8 rate99  22.7 envA 0.000 envJ 0.000 track 0.110/0.269 hover 0.144
+  demo synth             n=200 T  24.0s path  6.0 v95 0.39 | acc95 raw 0.21 sm 0.21 jerk95 sm  0.2 dj 5.10 hf 0.00 zero 0.92 seam nan/nan tilt99  1.7 rate99   1.4 envA 0.000 envJ 0.000 track 0.056/0.116 hover 0.190
+calibration AUC: real-vs-real 0.560 (shape 0.564), synth-vs-real 0.999 (shape 0.999)
+  [adhoc] a0             n=  5 T  37.6s path  7.7 v95 0.38 | acc95 raw 0.92 sm 0.65 jerk95 sm  4.3 dj 8.29 hf 0.03 zero 0.26 seam 2.43/0.31 tilt99  5.2 rate99  45.1 envA 0.000 envJ 0.000 track 0.073/0.181 hover 0.032 | auc real 0.84 (0.83) synth 1.00 (1.00)
+  [adhoc] a1             n=  5 T  40.1s path  7.8 v95 0.31 | acc95 raw 0.60 sm 0.46 jerk95 sm  3.0 dj 8.01 hf 0.01 zero 0.57 seam 1.65/0.17 tilt99  4.1 rate99  24.8 envA 0.000 envJ 0.000 track 0.068/0.158 hover 0.080 | auc real 0.74 (0.79) synth 1.00 (1.00)
+  [adhoc] a2             n=  5 T  21.8s path 20.2 v95 1.93 | acc95 raw 1.63 sm 3.01 jerk95 sm 21.6 dj 7.33 hf 0.04 zero 0.19 seam 17.89/0.38 tilt99 33.5 rate99 198.8 envA 0.123 envJ 0.073 track 0.534/1.522 hover 0.783 | auc real 0.96 (0.91) synth 1.00 (1.00)
+  [adhoc] a3             n=  5 T  36.0s path  9.0 v95 0.41 | acc95 raw 0.89 sm 0.72 jerk95 sm  3.6 dj 7.93 hf 0.02 zero 0.41 seam 2.02/0.24 tilt99  5.4 rate99  35.1 envA 0.000 envJ 0.000 track 0.083/0.215 hover 0.116 | auc real 0.78 (0.80) synth 1.00 (1.00)
+wrote /home/dfliu/ctxrun/vproj_realism_fig8.json
+
+== hand-drawn compound (left+center)
+real-demo envelope (smoothed p99): |a| 1.26 m/s^2, |j| 9.3 m/s^3
+  demo real              n=100 T  21.0s path  5.0 v95 0.69 | acc95 raw 0.94 sm 0.75 jerk95 sm  2.6 dj 6.76 hf 0.01 zero 0.40 seam nan/nan tilt99  5.7 rate99  21.6 envA 0.000 envJ 0.000 track 0.111/0.262 hover 0.251
+  demo synth             n=200 T  23.5s path  5.5 v95 0.40 | acc95 raw 0.22 sm 0.22 jerk95 sm  0.2 dj 4.84 hf 0.00 zero 0.93 seam nan/nan tilt99  1.6 rate99   1.4 envA 0.000 envJ 0.000 track 0.054/0.116 hover 0.131
+calibration AUC: real-vs-real 0.548 (shape 0.559), synth-vs-real 0.999 (shape 0.999)
+  [adhoc] a0             n=  5 T  25.2s path  5.0 v95 0.37 | acc95 raw 0.87 sm 0.55 jerk95 sm  4.2 dj 7.51 hf 0.06 zero 0.27 seam 2.58/0.31 tilt99  6.1 rate99  46.2 envA 0.008 envJ 0.009 track 0.058/0.132 hover 0.149 | auc real 0.88 (0.86) synth 1.00 (1.00)
+  [adhoc] a1             n=  5 T  22.4s path  4.3 v95 0.30 | acc95 raw 0.45 sm 0.40 jerk95 sm  2.1 dj 6.98 hf 0.02 zero 0.71 seam 1.47/0.14 tilt99  4.0 rate99  30.1 envA 0.000 envJ 0.000 track 0.048/0.135 hover 0.141 | auc real 0.84 (0.90) synth 1.00 (1.00)
+  [adhoc] a2             n=  5 T  17.8s path 14.1 v95 1.24 | acc95 raw 0.99 sm 0.93 jerk95 sm  5.7 dj 6.50 hf 0.02 zero 0.26 seam 5.67/0.31 tilt99 20.1 rate99 130.4 envA 0.044 envJ 0.039 track 0.231/0.652 hover 0.333 | auc real 0.95 (0.90) synth 1.00 (1.00)
+  [adhoc] a3             n=  5 T  21.7s path  5.7 v95 0.47 | acc95 raw 0.88 sm 0.76 jerk95 sm  4.2 dj 7.12 hf 0.03 zero 0.40 seam 2.67/0.25 tilt99  6.3 rate99  47.4 envA 0.000 envJ 0.009 track 0.073/0.215 hover 0.114 | auc real 0.78 (0.81) synth 1.00 (1.00)
+wrote /home/dfliu/ctxrun/vproj_realism_cmpl.json
+wrote vproj_compare.html (1.9 MB)

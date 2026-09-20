@@ -7151,3 +7151,42 @@ gate from real images. (2) The left crashes are post-gate: the head's turn towar
 too early on real frames (the same turn in sim happens 0.5 m later). (3) The real-only pi0
 (baseline_real) also flew today: left 4/5, right 4/5 through by eye, one crash each; the real-only
 pin's 5/5 and 3/5 are not separated from it at n = 5. Aggregate updated: docs/HARDWARE_RESULTS.md.
+
+**SKETCH INJECTION THREE WAYS ON THE REAL-ONLY CHECKPOINTS (2026-09-20; Denis: "inject the pin, but also zero
+out the velocity component along the command; compare SDEdit, this, and ours; which acts most like a real
+trajectory"). New sampler option SNMVP_VPROJ=1 (openpi pi0.py, patches/openpi_snmvp_working_tree_2026-09-20):
+v <- (I - U U^T) v at every Euler step, so a command written into the source noise is carried through an
+UNPINNED flow (the training-free counterpart of the pin objective U^T v = 0). Arms, all real-only data:
+ours = gate_pin_joint_realonly at sigma 0; SDEdit t0 0.5, naive injection, and injection + v-projection on
+gate_scratch_real (the real-only pi0). Cells: orbit, fig8 (right scene), hand-drawn compound L->C. 5 trials,
+NCH 14, APC 50. scripts/run_vproj_compare.sh (+_rf, +_post); page viz/vproj_compare.html; numbers in
+experiments/rung3/vproj/.**
+  execution (tracking median m / clearance-clean / judge):
+    cell    ours              SDEdit 0.5          inject                inject + v-proj
+    orbit   0.05 / 0/5*       0.06 / 1/5          0.12 / 1/5 (runaway)  0.011 / 5/5
+    fig8    0.06 / 5/5        0.05 / 1/5          0.15 / 0/5            0.012 / 5/5
+    cmpl    0.12 / 1/5, 3/5   0.08 / 0/5, 5/5     2.8 / never arrives   0.013 / 5/5, 5/5
+    (*ours orbit contacts are all post-handback hover drift, 2026-09-15)
+  realism on the sketch window (AUC vs real demos, plain / shape; pilot's own real-vs-real 0.55):
+    orbit   0.89 / 0.88       0.78 / 0.83         0.95 / 0.89           0.80 / 0.84
+    fig8    0.84 / 0.83       0.74 / 0.79         0.96 / 0.91           0.78 / 0.80
+    cmpl    0.88 / 0.86       0.84 / 0.90         0.95 / 0.90           0.78 / 0.81
+  kinematics (v95 / zero-accel fraction / jerk95 / tilt99 / rate99; pilot 0.68 / 0.40 / 2.7 / 5.7 / 22):
+    ours    0.37 / 0.20-0.27 / 4.0-4.3 / 5-6 / 36-46
+    SDEdit  0.30 / 0.57-0.71 / 2.1-3.0 / 4 / 25-30      (keeps the sketch's velocity staircase)
+    inject  1.2-2.1 / 0.14-0.26 / 6-23 / 20-37 / 130-218 (runaway: the unpinned flow amplifies the command)
+    v-proj  0.35-0.47 / 0.40-0.47 / 3.2-4.2 / 5-6 / 35-47
+READS: (1) Naive injection into an unpinned flow is not a method: the flow's velocity has a large component
+along U and drives the command away (2 m/s, 35 deg tilt, never arrives on the compound). (2) Projecting that
+component off at inference fixes it completely with no training: the command is carried exactly (tracking
+1 cm, every flight clearance-clean, 5/5 goal on the compound), and the scratch flow's residual in the
+complement shapes the speed profile so the zero-accel fraction lands on the pilot's 0.40 -- the closest
+arm to the real demos on every cell (AUC 0.78-0.80 vs SDEdit 0.74-0.84 and the pin's 0.84-0.89). (3) The
+real-only pin at sigma 0 tracks at 5-12 cm, its residual is jerkier and more yaw-active than the pilot's
+(rate 36-46 vs 22), and it cut the center gate on the hand-drawn compound (1/5 clean; the mixed pin was 9/10).
+(4) SDEdit tracks well but keeps the staircase (zero-accel 0.6-0.7) and clips the center gate on every
+compound flight. (5) The v-projection arm is the pin's carry identity imposed at sampling time instead of
+at training time; that it works this well on a flow that never saw a command subspace says the carry, not
+the training, is what buys exact execution -- and the training buys the residual's freedom to bend
+(the pin's sigma slack), which the projection does not have. Caveats: single seed, 5 trials, rendered
+frames are out of domain for both real-only checkpoints; SDEdit at one t0.
