@@ -33,9 +33,9 @@ GRAZE, FAIL = [255, 140, 40], [240, 80, 80]
 def axes(length=0.5):
     """Mocap-frame origin with x (red), y (green), z (blue) axes of `length` metres, as three viewer groups."""
     o = np.zeros(3, np.float32)
-    return [{"label": "origin: +x axis (0.5 m)", "color": [240, 80, 80], "trajs": [np.stack([o, o + np.array([length, 0, 0], np.float32)])]},
-            {"label": "origin: +y axis (0.5 m)", "color": [80, 220, 80], "trajs": [np.stack([o, o + np.array([0, length, 0], np.float32)])]},
-            {"label": "origin: +z axis (0.5 m)", "color": [90, 140, 255], "trajs": [np.stack([o, o + np.array([0, 0, length], np.float32)])]}]
+    return [{"label": "origin: +x axis (0.5 m)", "fixed": True, "color": [240, 80, 80], "trajs": [np.stack([o, o + np.array([length, 0, 0], np.float32)])]},
+            {"label": "origin: +y axis (0.5 m)", "fixed": True, "color": [80, 220, 80], "trajs": [np.stack([o, o + np.array([0, length, 0], np.float32)])]},
+            {"label": "origin: +z axis (0.5 m)", "fixed": True, "color": [90, 140, 255], "trajs": [np.stack([o, o + np.array([0, 0, length], np.float32)])]}]
 
 
 def marks(scene):
@@ -45,8 +45,8 @@ def marks(scene):
     co = np.array([[GOAL_C[0] + sx * GOAL_H[0], GOAL_C[1] + sy * GOAL_H[1], GOAL_C[2] + sz * GOAL_H[2]]
                    for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)], np.float32)
     E = [(0, 1), (2, 3), (4, 5), (6, 7), (0, 2), (1, 3), (4, 6), (5, 7), (0, 4), (1, 5), (2, 6), (3, 7)]
-    return [{"label": "gate apertures (judge)", "color": [124, 208, 240], "trajs": [np.concatenate([g, g[:1]]) for g in gates]},
-            {"label": "goal box (judge)", "color": [248, 210, 90], "trajs": [co[[a, b]] for a, b in E]}]
+    return [{"label": "gate apertures (judge)", "fixed": True, "color": [124, 208, 240], "trajs": [np.concatenate([g, g[:1]]) for g in gates]},
+            {"label": "goal box (judge)", "fixed": True, "color": [248, 210, 90], "trajs": [co[[a, b]] for a, b in E]}]
 
 
 def verdict(fname):
@@ -76,7 +76,7 @@ def section(scene, specs, sketch, elem, judge=True, extra=()):
         if gz: groups.append({"label": f"{label}: {gzl} ({len(gz)})", "color": GRAZE if judge else col, "trajs": gz})
         if bad: groups.append({"label": f"{label}: route failure ({len(bad)})", "color": FAIL, "trajs": bad})
     if sketch:
-        groups.append({"label": "the sketch (drawn command)", "color": [255, 200, 90],
+        groups.append({"label": "the sketch (drawn command)", "fixed": True, "color": [255, 200, 90],
                        "trajs": [np.asarray(json.load(open(sketch))["points"], np.float32)[:, :3]]})
     groups += marks(scene) + axes()
     rc = "<th>route-clean</th>" if judge else ""

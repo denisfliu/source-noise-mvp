@@ -18,7 +18,10 @@ def _b64(a):
     return base64.b64encode(np.ascontiguousarray(a).tobytes()).decode()
 
 
-def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None):
+def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None, default_on=False):
+    """groups: [{label, color, trajs, fixed?}]. A group with "fixed": True is always drawn and gets no
+    checkbox (scene marks, the sketch, the axes); the scene cloud is always drawn. Every other group starts
+    unchecked unless default_on (Denis, 2026-09-20: pick what to see on opening)."""
     z = np.load(f"{SP}/scene_cloud_{scene}.npz")
     pts, rgb = z["pts"].astype(np.float32), z["rgb"]
     if max_pts and len(pts) > max_pts:   # keep the viewer payload small
@@ -30,22 +33,22 @@ def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None)
         "pts": _b64((pts - centre).astype(np.float32)),
         "rgb": _b64(rgb.astype(np.uint8)),
         "centre": centre.tolist(),
-        "groups": [{"label": g["label"], "color": g["color"],
+        "groups": [{"label": g["label"], "color": g["color"], "fixed": bool(g.get("fixed", False)),
                     "trajs": [_b64((np.asarray(t, np.float32)[:, :3] - centre).astype(np.float32))
                               for t in g["trajs"]]}
                    for g in groups],
+        "default_on": bool(default_on),
     }
     j = json.dumps(payload)
     legend = "".join(
-        f'<label class="lg"><input type="checkbox" checked data-g="{i}">'
+        f'<label class="lg"><input type="checkbox"{" checked" if default_on else ""} data-g="{i}">'
         f'<span class="sw" style="background:rgb({g["color"][0]},{g["color"][1]},{g["color"][2]})"></span>'
         f'{g["label"]} <span class="ct">({len(g["trajs"])})</span></label>'
-        for i, g in enumerate(groups))
+        for i, g in enumerate(groups) if not g.get("fixed", False))
     return f"""
 <div class="v3dwrap">
  <canvas id="{elem_id}" height="{height}"></canvas>
  <div class="v3dui">{legend}
-  <label class="lg"><input type="checkbox" checked id="{elem_id}_cloud"> scene cloud</label>
   <span class="hint">drag to orbit · wheel to zoom · shift-drag to pan</span></div>
  {f'<p class="v3dnote">{note}</p>' if note else ''}
 </div>
@@ -74,7 +77,7 @@ const bP=buf(pts), bC=buf(rgbf);
 const groups = D.groups.map(g=>({{label:g.label,color:g.color.map(v=>v/255),
  trajs:g.trajs.map(t=>{{const a=new Float32Array(dec(t).buffer);
    const col=new Float32Array(a.length); for(let i=0;i<a.length;i+=3){{col[i]=g.color[0]/255;col[i+1]=g.color[1]/255;col[i+2]=g.color[2]/255;}}
-   return {{n:a.length/3, bp:buf(a), bc:buf(col)}};}}), on:true}}));
+   return {{n:a.length/3, bp:buf(a), bc:buf(col)}};}}), on:(g.fixed||D.default_on)}}));
 let yaw=-0.6, pitch=0.45, dist=9, panx=0, pany=0, cloudOn=true;
 function mat(){{
   const cy=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
@@ -127,7 +130,6 @@ window.addEventListener("mousemove",e=>{{ if(!drag) return;
 cv.addEventListener("wheel",e=>{{e.preventDefault(); dist*=Math.exp(e.deltaY*0.0012); dist=Math.max(1.5,Math.min(60,dist)); draw();}},{{passive:false}});
 document.querySelectorAll('.v3dui input[data-g]').forEach(cb=>cb.addEventListener("change",()=>{{
   groups[+cb.dataset.g].on=cb.checked; draw();}}));
-document.getElementById("{elem_id}_cloud").addEventListener("change",e=>{{cloudOn=e.target.checked;draw();}});
 window.addEventListener("resize",draw); draw();
 }})();
 </script>"""
