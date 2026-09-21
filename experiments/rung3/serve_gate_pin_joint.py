@@ -226,6 +226,12 @@ class JointPinPolicy:
             extra = np.concatenate([w, [sstar, alpha,
                                         sig_serve if sig_serve is not None else -1.0,
                                         sk_phase]]).astype(np.float32)
+            # SNMVP_CLOG_FULL=1 (2026-09-20): append every mixture mode's mean command and its
+            # uncertainty after the base row, so the modes the head was choosing between can be
+            # decoded offline. Row becomes [...base..., mu(M*K), |sigma_j|(M)].
+            if os.environ.get("SNMVP_CLOG_FULL", "") == "1":
+                extra = np.concatenate([extra, np.asarray(mu, np.float32).reshape(-1),
+                                        np.linalg.norm(np.asarray(sig, np.float32), axis=-1)]).astype(np.float32)
         else:
             c, alpha, sig_serve = joint_head.head_c(self.policy, [cmd_obs or obs])[0], 1.0, None
             extra = np.asarray([sk_phase], np.float32); cache = None

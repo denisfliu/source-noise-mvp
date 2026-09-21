@@ -11,6 +11,7 @@ GPU="XLA_PYTHON_CLIENT_PREALLOCATE=true XLA_PYTHON_CLIENT_MEM_FRACTION=0.30 CUDA
 U=$RD/pin_U_mh16.npy; CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_gmsig3/4999
 PINENV="SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 SNMVP_SIGMA_MAP=$RD/sigma_map_gmsig3.json"
 L_PROMPT="go through the gate on the left and hover over the stuffed animal"
+F_PROMPT="go through the center gate from the left and hover over the stuffed animal"
 C_PROMPT="go through the gate on the left, then through the center gate and hover over the stuffed animal"
 PORT=${PORT:-9160}; NCH=${NCH:-14}; TRIALS=${TRIALS:-5}
 OUT=$RUN/uncert_scores.txt; rm -f $RUN/uncert.done $OUT
@@ -19,7 +20,7 @@ killport () { for p in $(ss -ltnp | grep ":$PORT " | grep -o "pid=[0-9]*" | cut 
 cell () { # tag side scene prompt
   local TAG=$1 SIDE=$2 SCENE=$3 PROMPT=$4
   killport
-  setsid $EV $PINENV CLOG=$RUN/clog_${TAG}.npy $GPU $VENVPY $RD/serve_gate_pin_joint.py --ckpt $CK \
+  setsid $EV $PINENV SNMVP_CLOG_FULL=1 CLOG=$RUN/clog_${TAG}.npy $GPU $VENVPY $RD/serve_gate_pin_joint.py --ckpt $CK \
     --config pi0_gate --norm $HFB/assets/gate_nav --pin-u $U --port $PORT >> $RUN/sv_${TAG}.log 2>&1 </dev/null & disown
   for k in $(seq 1 200); do ss -ltn | grep -q ":$PORT " && break; sleep 3; done
   ss -ltn | grep -q ":$PORT " || { echo "SERVER_TIMEOUT $TAG" >> $OUT; return 1; }
@@ -31,6 +32,7 @@ cell () { # tag side scene prompt
     $TV $RD/gate_clearance.py --scene $SCENE --traj $RUN/traj_${TAG}_*.npy
   } >> $OUT 2>&1
 }
-cell unc_left left left        "$L_PROMPT"
-cell unc_cmpl left left_and_center "$C_PROMPT"
+cell unc_left left left             "$L_PROMPT"
+cell unc_cfl  center_from_left center "$F_PROMPT"
+cell unc_cmpl left left_and_center  "$C_PROMPT"
 echo DONE > $RUN/uncert.done

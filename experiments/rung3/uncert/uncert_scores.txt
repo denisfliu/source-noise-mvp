@@ -3,15 +3,27 @@ traj_unc_left_1.npy          transit=True@61 wrong_dir=0 goal=True  SUCCESS=True
 traj_unc_left_2.npy          transit=True@56 wrong_dir=0 goal=True  SUCCESS=True
 traj_unc_left_3.npy          transit=True@65 wrong_dir=0 goal=True  SUCCESS=True
 traj_unc_left_4.npy          transit=True@62 wrong_dir=0 goal=True  SUCCESS=True
-traj_unc_left_5.npy          transit=True@54 wrong_dir=0 goal=True  SUCCESS=True
+traj_unc_left_5.npy          transit=True@55 wrong_dir=0 goal=True  SUCCESS=True
 == 5/5 success (left)
 scene=left gate cloud 27909 pts; body-contact threshold ~0.18 m
-traj_unc_left_1.npy          min-clearance 0.357 m @step  62 [0.93 0.73 1.55]  steps<0.18:  0  CLEAN=True
-traj_unc_left_2.npy          min-clearance 0.259 m @step  44 [0.91 0.39 1.54]  steps<0.18:  0  CLEAN=True
-traj_unc_left_3.npy          min-clearance 0.369 m @step  65 [0.9  0.76 1.53]  steps<0.18:  0  CLEAN=True
-traj_unc_left_4.npy          min-clearance 0.338 m @step  62 [0.93 0.71 1.56]  steps<0.18:  0  CLEAN=True
+traj_unc_left_1.npy          min-clearance 0.358 m @step  62 [0.93 0.73 1.54]  steps<0.18:  0  CLEAN=True
+traj_unc_left_2.npy          min-clearance 0.259 m @step  44 [0.91 0.39 1.55]  steps<0.18:  0  CLEAN=True
+traj_unc_left_3.npy          min-clearance 0.368 m @step  65 [0.89 0.76 1.53]  steps<0.18:  0  CLEAN=True
+traj_unc_left_4.npy          min-clearance 0.336 m @step  62 [0.93 0.71 1.56]  steps<0.18:  0  CLEAN=True
 traj_unc_left_5.npy          min-clearance 0.301 m @step  43 [0.89 0.48 1.54]  steps<0.18:  0  CLEAN=True
 == 5/5 clearance-clean (left)
+== uncert: unc_cfl (scene=center, head-authored, NCH=14 x APC=50)
+usage: gate_success.py [-h] --traj TRAJ [TRAJ ...] --side
+                       {left,right,center_from_left,center_from_right,left_and_center,right_and_center}
+                       [--json]
+gate_success.py: error: argument --side: invalid choice: 'center' (choose from 'left', 'right', 'center_from_left', 'center_from_right', 'left_and_center', 'right_and_center')
+scene=center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_unc_cfl_1.npy           min-clearance 0.276 m @step 182 [ 2.7  -0.33  1.55]  steps<0.18:  0  CLEAN=True
+traj_unc_cfl_2.npy           min-clearance 0.319 m @step 187 [ 2.77 -0.28  1.5 ]  steps<0.18:  0  CLEAN=True
+traj_unc_cfl_3.npy           min-clearance 0.313 m @step 185 [ 2.75 -0.33  1.51]  steps<0.18:  0  CLEAN=True
+traj_unc_cfl_4.npy           min-clearance 0.305 m @step 188 [ 2.76 -0.25  1.52]  steps<0.18:  0  CLEAN=True
+traj_unc_cfl_5.npy           min-clearance 0.303 m @step 179 [ 2.73 -0.35  1.53]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (center)
 == uncert: unc_cmpl (scene=left_and_center, head-authored, NCH=14 x APC=50)
 traj_unc_cmpl_1.npy          gates=1/2 steps=[60] dwell=None  SUCCESS=False
 traj_unc_cmpl_2.npy          gates=1/2 steps=[58] dwell=None  SUCCESS=False
@@ -20,9 +32,9 @@ traj_unc_cmpl_4.npy          gates=1/2 steps=[62] dwell=None  SUCCESS=False
 traj_unc_cmpl_5.npy          gates=1/2 steps=[55] dwell=None  SUCCESS=False
 == 0/5 success (left_and_center, ordered 2-gate + dwell)
 scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
-traj_unc_cmpl_1.npy          min-clearance 0.130 m @step  58 [1.08 0.46 1.55]  steps<0.18: 12  CLEAN=False
-traj_unc_cmpl_2.npy          min-clearance 0.106 m @step  56 [1.1  0.45 1.57]  steps<0.18: 16  CLEAN=False
-traj_unc_cmpl_3.npy          min-clearance 0.193 m @step  61 [1.03 0.5  1.55]  steps<0.18:  0  CLEAN=True
-traj_unc_cmpl_4.npy          min-clearance 0.128 m @step  60 [1.08 0.46 1.58]  steps<0.18: 12  CLEAN=False
+traj_unc_cmpl_1.npy          min-clearance 0.129 m @step  58 [1.08 0.46 1.55]  steps<0.18: 12  CLEAN=False
+traj_unc_cmpl_2.npy          min-clearance 0.105 m @step  56 [1.1  0.45 1.57]  steps<0.18: 16  CLEAN=False
+traj_unc_cmpl_3.npy          min-clearance 0.195 m @step  61 [1.03 0.51 1.55]  steps<0.18:  0  CLEAN=True
+traj_unc_cmpl_4.npy          min-clearance 0.125 m @step  60 [1.08 0.46 1.58]  steps<0.18: 13  CLEAN=False
 traj_unc_cmpl_5.npy          min-clearance 0.142 m @step  54 [1.08 0.48 1.55]  steps<0.18: 13  CLEAN=False
 == 1/5 clearance-clean (left_and_center)

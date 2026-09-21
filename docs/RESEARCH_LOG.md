@@ -7348,3 +7348,28 @@ measurable and detectable (appendix E), but the head being wrong about the TASK 
 uncertainty. sigma tracks command noise within known behaviour, not task novelty. State it that way, and do
 not claim sigma as an out-of-distribution or fault detector. (4) This is the cleanest demonstration of why
 the compositional task needs an external author: the policy's own confidence gives no warning.
+
+**THE COMPOUND PROMPT IS OUT OF DISTRIBUTION, AND THE MIXTURE IS UNIMODAL WHERE IT MATTERS (2026-09-20,
+same day; Denis: "are we using the right prompt for compound? our gmm might be predicting multiple modes --
+visualize what each mode predicts after passing the gate"). PROMPT AUDIT: gate_nav3 contains exactly four
+task sentences (meta/tasks.jsonl) -- left, right, center-from-left, center-from-right. The compound sentence
+"go through the gate on the left, then through the center gate and hover over the stuffed animal" is in NO
+training example; the sketch compound cells only ever use it while the SKETCH is driving and hand back to
+the TRAINED sentence "go through the center gate from the left...". So yesterday's head-only compound cell
+tested an unseen sentence AND an undemonstrated composite at once. Re-ran with a third arm, the trained
+center-from-left sentence, and with SNMVP_CLOG_FULL=1 logging every mode's mean command.**
+  head-authored, 5 trials, same origin start: left 5/5 route-clean + 5/5 clean; center-from-left (trained
+  sentence) 5/5 route-clean + 5/5 clean, transit at step 177-191; compound sentence 0/5 (left gate then park
+  at the goal). The head CAN fly the second leg -- what it cannot do is the unseen sentence.
+  MODES at the replans around the left gate (decoded mu_j -> the 5 s path each mode asks for):
+    every prompt, replans 2-4: ONE mode carries weight 1.00. The compound's single mode at replan 3 already
+    proposes a command ending 0.13 m from the GOAL; there is no competing "go to the center gate" mode.
+    Multiple modes appear only in the final hover (replan 5+): weights 0.69/0.29 (compound), 0.79/0.20
+    (left), both modes ending within 0.08 m of the goal -- a hover-vs-drift split, not a route split.
+READS: (1) The mixture is not carrying route alternatives at the decision point; it is unimodal and
+confident. The multimodality the GMM was introduced for shows up only in the endgame. (2) With an unseen
+sentence the head maps to the nearest trained behaviour (left gate, then hover at the goal) and commits.
+(3) Correct framing for the paper: composition is NOT a language-generalization result and must not be
+presented as one -- the sketch supplies the route and the prompt is swapped to a trained sentence at
+handback. Every compound number in the paper is an authored-command result. (4) The uncertainty conclusion
+from earlier today stands and is sharper: neither sigma* nor the mixture weights flag the failure.
