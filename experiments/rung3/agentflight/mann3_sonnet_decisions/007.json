@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Gate now fully in view but still left of center; final centering turn before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

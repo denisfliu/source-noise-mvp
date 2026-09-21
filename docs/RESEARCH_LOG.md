@@ -7848,3 +7848,22 @@ new, prefer openings, keep a list of vantage points.**
   Two attempts, two complementary failures: attempt 1 swept without moving, attempt 2 moved without
   sweeping. Neither is the strategy a person would use, which is a quick sweep FIRST (pure turns cost 8 s
   a decision) to see where the structure is, then commit to that direction.
+
+**MANNEQUIN, ATTEMPT 3: SWEEP THEN COMMIT -- FOUND IT, RAN OUT OF DECISIONS (2026-09-21). Brief with three
+budgeted phases: sweep at most 4 decisions to find the OPENINGS (not the target), commit through the best
+opening in 1.5-2 m moves, then approach and hold. Same 14 decisions, 180-degree start.**
+  RESULT (mann3, Sonnet, 14 decisions, 5.2 min, median 19 s per decision): sweep found the gate by
+  decision 4; decisions 5-8 lined up on it; 9-10 tangled with a post and recovered; at decision 11 it
+  reported "a standing figure visible past the post, to the left" and spent 12-13 on the approach. Final
+  pose (3.94, 1.38), 5.3 m from the mannequin at (8.7, -0.9); closest approach 5.3 m. Found, not reached.
+  Its side call ("left of centre") disagrees with the triangulated position, which would put the figure
+  ~40 deg to the RIGHT of its heading at that pose; either the sighting was at the frame edge or the
+  triangulation is off by a metre or two -- the video decides.
+  Three attempts: spin (never saw it), wander (wrong half), sweep-then-commit (saw it at decision 11 of
+  14). The strategy is now right and the budget is the constraint: 8.7 m of travel plus a gate takes more
+  than the ~6 productive decisions left after a 4-decision sweep and a 4-decision line-up.
+READS: (1) The infrastructure does what Denis asked: arbitrary start heading, arbitrary instruction, an
+agent finding an object the policy has never been asked about. (2) Fourteen decisions is the honest
+budget for the gate task, not for a search-and-approach across the room; this task needs either a few
+more decisions or cheaper line-ups (the gap-bearing detector, again). (3) The policy contributed the
+flying and nothing else here, which is the point: intent came entirely from the reviewer.

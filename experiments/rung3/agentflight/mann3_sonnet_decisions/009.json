@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "Too close to one post, only one visible; backing off and turning to find the gap", "move": {"forward": -0.7999516004880314, "left": -0.008799822534407004, "up": 0.0, "yaw_deg": 10.0, "sigma": 0.0}}

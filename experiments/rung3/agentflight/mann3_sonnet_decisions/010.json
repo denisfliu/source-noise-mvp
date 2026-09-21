@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "Both posts visible, near post to my left is too close; shifting right to center the gap before passing through", "move": {"forward": 0.928420076364253, "left": -0.5104274304970242, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}
