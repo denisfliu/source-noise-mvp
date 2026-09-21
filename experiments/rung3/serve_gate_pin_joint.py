@@ -9,6 +9,7 @@ closed-loop at an offline c-R2 of 0.94.
       --norm <assets> --pin-u <U> --port 8900
 """
 import argparse
+import json
 import os
 import sys
 
@@ -90,6 +91,32 @@ class JointPinPolicy:
         # closed-loop agent; that replan's command is the move's projection (head and sketch bypassed),
         # sigma = move["sigma"]. SNMVP_AGENT_LOG=<dir> dumps every replan's frames, pose, prompt,
         # command and executed chunk there (one directory per snmvp_trial) for replay.
+        # prompt program (2026-09-20): SNMVP_PROMPT_PROGRAM is a json list of TRAINED sentences to run in
+        # order. The head keeps authoring; the server advances to the next sentence when the command the
+        # head itself produced says it intends to stay put -- ||net displacement of U c|| < SNMVP_PROG_TAU
+        # metres over the chunk, for SNMVP_PROG_HOLD consecutive replans. No sketch, no geometry, no clock:
+        # the trigger is the policy's own declared intent, which is readable precisely because the command
+        # is a decodable coarse trajectory. Lets an out-of-distribution instruction be executed as a
+        # sequence of in-distribution ones without touching a weight.
+        self.program = None
+        pg = os.environ.get("SNMVP_PROMPT_PROGRAM", "")
+        if pg:
+            self.program = json.loads(pg)
+            self.prog_tau = float(os.environ.get("SNMVP_PROG_TAU", "0.25"))
+            self.prog_hold = int(os.environ.get("SNMVP_PROG_HOLD", "2"))
+            self._prog = {}
+            # DIAGNOSTIC trigger (2026-09-20, sim only): SNMVP_PROG_GATE=<side> advances the program the
+            # moment the drone crosses that gate's aperture, using the published scene geometry. This is a
+            # probe of whether the SECOND leg can be started mid-flight at all -- NOT a deployable trigger
+            # (scene ground truth); the deployable one is the policy's own declared-intent rule above.
+            self.prog_gate = os.environ.get("SNMVP_PROG_GATE", "")
+            if self.prog_gate:
+                import yaml as _yaml
+                _c = _yaml.safe_load(open(f"/home/dfliu/code/falsify/configs/safety/{self.prog_gate}_gate.yaml"))["miss_gate"]["corners"]
+                self._gcorn = np.asarray(_c, np.float32)
+                print(f"[program] DIAGNOSTIC gate trigger on the {self.prog_gate} aperture", flush=True)
+            print(f"[program] {len(self.program)} steps, advance when |net displacement| < {self.prog_tau} m "
+                  f"for {self.prog_hold} replans: {self.program}", flush=True)
         self.agent = None
         if act_norm is not None:
             self.agent = AgentMove(np.asarray(act_norm.mean[:7], np.float32),
@@ -175,6 +202,11 @@ class JointPinPolicy:
             ag_c, mv, notes = self.agent.command(dict(ag["move"]), pose4)
             ag_sig = float(mv.get("sigma", 0.0))
             ag_info = {"move": mv, "notes": notes}
+        prog_i = 0
+        if self.program is not None:
+            st = self._prog.setdefault(trial, {"i": 0, "n": 0, "prev": None})
+            prog_i = st["i"]
+            obs["prompt"] = self.program[min(prog_i, len(self.program) - 1)]
         sk_c, sk_sig, sk_phase = None, None, 0
         if self.sketch is not None and ag_c is None:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
@@ -244,6 +276,32 @@ class JointPinPolicy:
         if self.reason is not None:
             rs_ch, _trace = self.reason.window(trial, obs, obs.get("prompt", ""))
             c, sig_serve, alpha = self.reason.compose(c, rs_ch), 0.0, 1.0
+        if self.program is not None:
+            st = self._prog[trial]
+            pos_now = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
+            if self.prog_gate and st["i"] < len(self.program) - 1 and st["prev"] is not None:
+                C = self._gcorn
+                e1 = C[1] - C[0]; e1 = e1 / np.linalg.norm(e1)
+                nrm = np.cross(e1, np.array([0, 0, 1.0], np.float32))
+                d0 = float(np.dot(st["prev"] - C[0], nrm)); d1 = float(np.dot(pos_now - C[0], nrm))
+                if d0 * d1 < 0:
+                    t = d0 / (d0 - d1 + 1e-9); pt = st["prev"] + t * (pos_now - st["prev"])
+                    u = float(np.dot(pt - C[0], e1))
+                    if 0 <= u <= float(np.linalg.norm(C[1] - C[0])) and C[:, 2].min() <= pt[2] <= C[:, 2].max():
+                        st["i"] += 1; st["n"] = 0
+                        print(f"[program] {trial}: crossed the {self.prog_gate} aperture -> step {st['i']}: "
+                              f"{self.program[st['i']]!r}", flush=True)
+            st["prev"] = pos_now
+            _ch = (self.U @ np.asarray(c, np.float32)).reshape(H, AD)[:, :3]
+            net = float(np.linalg.norm((_ch * self._astd7[:3] + self._amean7[:3]).sum(axis=0)))
+            if (not self.prog_gate) and net < self.prog_tau and st["i"] < len(self.program) - 1:
+                st["n"] += 1
+                if st["n"] >= self.prog_hold:
+                    st["i"] += 1; st["n"] = 0
+                    print(f"[program] {trial}: step {st['i']} -> {self.program[st['i']]!r}", flush=True)
+            else:
+                st["n"] = 0
+            sk_phase = float(prog_i)
         if self.CLOG:
             pos = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:3]
             self._log.append(np.concatenate([pos, c, extra]).astype(np.float32))

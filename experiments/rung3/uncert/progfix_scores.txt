@@ -1,0 +1,28 @@
+== progfix: pf_prog
+traj_pf_prog_1.npy           gates=1/2 steps=[61] dwell=None  SUCCESS=False
+traj_pf_prog_2.npy           gates=1/2 steps=[59] dwell=None  SUCCESS=False
+traj_pf_prog_3.npy           gates=1/2 steps=[58] dwell=None  SUCCESS=False
+traj_pf_prog_4.npy           gates=1/2 steps=[64] dwell=None  SUCCESS=False
+traj_pf_prog_5.npy           gates=1/2 steps=[64] dwell=None  SUCCESS=False
+== 0/5 success (left_and_center, ordered 2-gate + dwell)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_pf_prog_1.npy           min-clearance 0.355 m @step  61 [0.93 0.71 1.55]  steps<0.18:  0  CLEAN=True
+traj_pf_prog_2.npy           min-clearance 0.181 m @step  45 [0.97 0.32 1.52]  steps<0.18:  0  CLEAN=True
+traj_pf_prog_3.npy           min-clearance 0.278 m @step  43 [0.88 0.38 1.54]  steps<0.18:  0  CLEAN=True
+traj_pf_prog_4.npy           min-clearance 0.332 m @step 187 [ 1.92 -0.11  1.13]  steps<0.18:  0  CLEAN=True
+traj_pf_prog_5.npy           min-clearance 0.356 m @step  65 [0.91 0.76 1.55]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)
+== progfix: pf_proggate
+traj_pf_proggate_1.npy       gates=1/2 steps=[61] dwell=None  SUCCESS=False
+traj_pf_proggate_2.npy       gates=1/2 steps=[59] dwell=None  SUCCESS=False
+traj_pf_proggate_3.npy       gates=1/2 steps=[59] dwell=None  SUCCESS=False
+traj_pf_proggate_4.npy       gates=1/2 steps=[64] dwell=None  SUCCESS=False
+traj_pf_proggate_5.npy       gates=1/2 steps=[64] dwell=None  SUCCESS=False
+== 0/5 success (left_and_center, ordered 2-gate + dwell)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_pf_proggate_1.npy       min-clearance 0.355 m @step  61 [0.94 0.72 1.55]  steps<0.18:  0  CLEAN=True
+traj_pf_proggate_2.npy       min-clearance 0.185 m @step  45 [0.97 0.32 1.52]  steps<0.18:  0  CLEAN=True
+traj_pf_proggate_3.npy       min-clearance 0.281 m @step  43 [0.88 0.38 1.54]  steps<0.18:  0  CLEAN=True
+traj_pf_proggate_4.npy       min-clearance 0.260 m @step 193 [ 2.01 -0.1   1.19]  steps<0.18:  0  CLEAN=True
+traj_pf_proggate_5.npy       min-clearance 0.356 m @step  65 [0.91 0.76 1.55]  steps<0.18:  0  CLEAN=True
+== 5/5 clearance-clean (left_and_center)

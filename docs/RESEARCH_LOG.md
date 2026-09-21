@@ -7373,3 +7373,36 @@ sentence the head maps to the nearest trained behaviour (left gate, then hover a
 presented as one -- the sketch supplies the route and the prompt is swapped to a trained sentence at
 handback. Every compound number in the paper is an authored-command result. (4) The uncertainty conclusion
 from earlier today stands and is sharper: neither sigma* nor the mixture weights flag the failure.
+
+**CAN THE HEAD BE FIXED AFTER TRAINING? PROMPT PROGRAMS, AND WHY THEY DO NOT COMPOSE (2026-09-20; Denis:
+"the compound sentence is supposed to be OOD -- this is an issue with the GMM training. Is it possible to
+modify the GMM post training? that might be an advantage: we can easily modify the thing. right now
+language seems to be ignored"). New serve-time mechanism, NO weights touched: SNMVP_PROMPT_PROGRAM is a
+json list of TRAINED sentences; the server advances to the next one when the head's own command declares it
+intends to stop (|net displacement of U c| < SNMVP_PROG_TAU over the chunk, SNMVP_PROG_HOLD replans) --
+readable only because the command decodes to a coarse trajectory. Plus a clearly-labelled DIAGNOSTIC
+trigger SNMVP_PROG_GATE=<side> that advances the instant the drone crosses that aperture (scene geometry,
+sim only). scripts/run_progfix.sh; all cells on ONE scene (left_and_center) and one start, 5 trials, 18
+replans, so only the sentence differs.**
+  cell                                   max x   min dist to center gate   gates latched
+  "left gate" (trained)                   2.06          0.90 m             1/2
+  "center gate from the left" (trained)   2.85          0.04 m             center only (skips left, correct)
+  compound sentence (OOD), head only      2.06          0.90 m             1/2
+  program, advance on declared intent     2.04          0.90 m             1/2   (switched in 5/5 trials)
+  program, advance AT the gate crossing   2.05          0.89 m             1/2   (switched in 5/5 trials)
+READS: (1) LANGUAGE IS NOT IGNORED. On the SAME scene with both gates visible, the trained center-gate
+sentence flies to the center gate (0.04 m) and the trained left sentence stops at x 2.06. The head reads
+the sentence. (2) But the sentence only matters where the tasks' demonstrations OVERLAP IN STATE. Switching
+to the center-gate sentence after the left gate -- even at the exact crossing -- changes nothing (max x
+2.05, identical path within the seed-to-seed spread of 0.11 m): past the left gate no center-gate
+demonstration exists, so the state alone determines the behaviour and the prompt is inert. The first leg's
+ending (descend to the goal and hover) is an absorbing state for every sentence. (3) So a prompt program
+cannot compose these two legs, and the failure is not the GMM's confidence or its modes -- it is that the
+command head is state-dominated outside the demonstrated state distribution. (4) What the experiment DOES
+show is the modification story Denis wants: the command source is a 30-line serve-time object that can be
+re-programmed, sequenced and triggered off the policy's own declared intent without touching a weight --
+and the reason that is possible at all is that the command decodes to a readable coarse trajectory. The
+route-level fix inside that interface is to AUTHOR the command (the sketch: 9/10 on this task), which is
+what the paper already claims. (5) For a head that composes, the training has to change: the sentence must
+be the only signal that distinguishes two behaviours from the SAME state (e.g. compound demonstrations, or
+prompt-conditioned data covering post-gate states), or the head must lose the image (state+language only).
