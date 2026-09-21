@@ -7922,3 +7922,9 @@ distance scale produced monotone, plausible estimates decision after decision, a
 the right range on its own. (4) The policy contributed the flying and nothing else on this task; every
 decision was authored. That is the demonstration Denis asked for: a task the policy was never trained on,
 an arbitrary start heading, and the agent gets there through the movement vocabulary alone.
+  REVIEWER'S OWN REPORT (mann4, received after scoring): first sighting at decision 8 from (2.04, -1.57)
+  heading -16 deg "nearer the L mark, about a third of panel height (~3 m)"; its estimate of the figure's
+  room position was (7.3, -0.7), 0.5 m from the true (7.4, -0.2); it judged itself "roughly 1 m in front,
+  facing it, not perfectly squared up" -- which is the scored outcome (1.02 m, 14 deg). An accurate
+  self-report, unlike center6 and center18. Its --then-wait on the last decision hung until killed by pid,
+  because no decision 14 exists; the CLI should return on BATCH_DONE (small fix, queued).
