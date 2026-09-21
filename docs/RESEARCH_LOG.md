@@ -7564,3 +7564,23 @@ The brief should say that; "use 0 unless you have a specific obstacle in mind" i
 remaining bottleneck is perception, not the interface or the policy: one good look at the whole gate is
 worth more than any number of cautious corrections, which argues for giving the reviewer a way to get that
 look (a deliberate back-off-and-scan primitive, or a wider field of view) rather than more prompt rules.
+
+**CORRECTED SLACK RULE + "GET ONE GOOD LOOK FIRST" (2026-09-20, seventh attempt). Brief changes: sigma
+defaults to 0 with the explicit warning that a bent version of a guess is still a guess, use it only when
+you can name the obstacle; and resolving the whole gate in one frame promoted to rule 1, with a note to
+check that the sign of a commanded turn matches the heading change.**
+  RESULT (center9): gates 0/2 -> FAIL; closest approach to the goal 0.16 m, ended at (1.90, -0.72).
+  The agent followed the new rules well -- it backed up three separate times (k=1, 3, 5) to resolve the
+  gate, got two clean full-gate views (k=2, k=6), and drove at the opening from the second one. It
+  believed it passed the left gate at k=7 on exactly the evidence rule 5 asks for: a 1.73 m advance in the
+  commanded direction and the room visible beyond the post. The judge says no crossing occurred.
+  Tally over valid attempts: 1 success in 6.
+READS: (1) The rules are being followed and the reasoning is sound -- back up, resolve the gate, drive at
+the middle, do not claim a pass you did not see. The flight still fails, so the gap is not in the
+reviewer's policy but in its ability to convert a camera view into a heading that reaches the opening: it
+loses ~1 m of lateral accuracy between seeing the gap centred at 2 m and arriving at it. (2) Both of the
+last two flights ended within 0.16 m of the goal while failing the gates, which is the opposite balance
+from the successful flight; the target has an unambiguous downward-camera signature and the gates do not.
+(3) This is now an argument for changing what the reviewer is GIVEN rather than what it is told: a scan
+primitive that guarantees both posts in one frame, a wider field of view, or a cheap estimate of the
+opening's bearing from the image. More prompt rules are hitting diminishing returns at 1 in 6.
