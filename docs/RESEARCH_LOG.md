@@ -7539,3 +7539,28 @@ is the deliberation, and the reflex wins by default. Six approvals did the routi
 left-gate transit; the four overrides were spent where the agent could point at something. (3) What the
 agent still does not deliver is clearance -- the same weakness as the human-reviewed flights, and the thing
 the trained slack exists for. Next: let the reviewer use sigma > 0 on approved legs.
+
+**HOVER-AWARE BRIEF AND SLACK: THE HOVER RULE WORKS, THE GATES REMAIN THE BOTTLENECK (2026-09-20; Denis:
+"decision 6 was a bad override -- sonnet should have realised it had already gone through both gates and
+the end of the task is to hover over the penguin, which it overrode the correct command to leave. feel
+free to also try using non-zero sigma"). The cost of that one override, measured on center7: the drone was
+0.25 m from the penguin at the start of k=6 and 1.10 m away at the end of it; two decisions went on
+recovering and it finished 0.58 m out. Three rules added: a small or near-zero proposed move is the policy
+HOLDING STATION, so check the downward camera before overriding it; once both gates are behind you stop
+adding distance and judge every decision by whether the target gets closer; and slack offered explicitly
+(sigma 0.3-0.5 near structure, 0 for an exact line).**
+  RESULT (center8): gates 0/2 -> FAIL, but the closest approach to the goal was 0.07 m, the best of any
+  flight including the successful one, and it never overrode a hover. It spent six of ten decisions trying
+  to resolve the FIRST gate: it saw both posts and the crossbar together exactly once (k=4), oscillated
+  either side of the opening, and by its own report made a yaw sign error at k=3. It used slack on every
+  override it made (0.2-0.4) and never sigma 0, saying it was never confident enough in the geometry to
+  demand an exact path -- and the gates were exactly where an exact path was needed.
+  Tally over valid attempts: 1 success in 5 (center7). Every failure is now the same failure: resolving
+  which pair of posts is a gate, and getting lined up with the opening rather than beside a post.
+READS: (1) The hover rule fixed the thing it was written for -- best goal distance of any run, no hover
+overridden. (2) Slack is the wrong default for a planner that is unsure: it is a tool for bending a route
+you are confident about around obstacles you cannot see, not a hedge against not knowing where you are.
+The brief should say that; "use 0 unless you have a specific obstacle in mind" is closer to right. (3) The
+remaining bottleneck is perception, not the interface or the policy: one good look at the whole gate is
+worth more than any number of cautious corrections, which argues for giving the reviewer a way to get that
+look (a deliberate back-off-and-scan primitive, or a wider field of view) rather than more prompt rules.
