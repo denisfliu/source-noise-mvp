@@ -7246,3 +7246,28 @@ about a third gate. (4) SDEdit is the worst of the four on both routes (contact 
 Consequence for the paper: on real-only data the honest ranking on authored routes is projection > pin >
 SDEdit for execution, and the pin's differentiator has to be demonstrated where the residual has scene
 knowledge (mixed data), or reframed as noise tolerance rather than obstacle avoidance.
+
+**BAD SKETCHES ON THE MIXED-DATA CHECKPOINTS (2026-09-20, same day; Denis: "use gmsig3 to test instead for
+all three"). Same two 4-click sketches (own clearance 0.07 m L->C, 0.04 m R->C); pin = gmsig3 at sigma 0 /
+0.5, projection and SDEdit on gate_scratch3. 5 trials. scripts/run_badsketch_mixed.sh; page viz/badsketch.html
+(both regimes); scores experiments/rung3/vproj/badsketch_mixed_scores.txt.**
+  L->C (0.07 m)      both gates   clearance-clean   min clearance (m)                tracking
+    pin sigma 0        5/5          0/5             0.035-0.15 at the center post    0.06
+    pin sigma 0.5      4/5          4/5             0.19-0.26 (one flight left the sketch)  0.13
+    v-proj s=0         5/5          0/5             0.066 x5 (the sketch's own)      0.014
+    SDEdit 0.5         1/5          0/5             0.002-0.14 at the center post    0.07
+  R->C (0.04 m)
+    pin sigma 0        0/5 (1/2)    0/5             0.003-0.008 at the center post   0.04
+    pin sigma 0.5      0/5 (1/2)    0/5             0.004-0.12 at the center post    0.15
+    v-proj s=0         5/5          0/5             0.003-0.03 at the RIGHT gate's east post  0.017
+    SDEdit 0.5         2/5          0/5             0.002-0.05                       0.07
+READS: (1) With scene knowledge in the residual, the slack works: on the 0.07 m sketch the mixed pin at
+sigma 0.5 clears the center post in 4/5 flights (0.19-0.26 m) while still latching both gates, where the
+exact carry (projection) grazes at the sketch's own 0.066 m every time and SDEdit contacts. Reproduces the
+2026-09-02 xswap/gmsig3 result (4-5/5) on this checkpoint. (2) The 0.04 m sketch is beyond everyone: the pin
+contacts the center post at both sigmas and stalls before the second gate; the projection latches both gates
+but its straight second leg brushes the right gate's east post (0.003-0.03 m) -- that sketch is bad in two
+places, not one. (3) Against the real-only run earlier today, this is the clean statement of what the
+trained slack is: a learned correction that spends the residual's scene knowledge; useful exactly where the
+residual has such knowledge (mixed data, center route seen in sim) and harmful where it has none (real-only,
+the residual leaves the sketch). The projection is the same in both regimes: the sketch, verbatim.
