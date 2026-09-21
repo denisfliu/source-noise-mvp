@@ -224,16 +224,28 @@ if AGENT_DIR:
     def _decode(c):
         ch=(_U@np.asarray(c,np.float32)).reshape(50,32)[:,:4]*( _AS+1e-6)+_AM
         return np.cumsum(ch[:,:3],0), float(np.degrees(ch[:,3].sum()))
+    _agent_hist=[]
     def _ask(k,trial,pos,yaw,imf,imw,c,sig):
         d=np.asarray(c,np.float32); path,dyaw=_decode(d); net=path[-1]
-        big=Image.new("RGB",(464,232),(18,20,26))
-        big.paste(Image.fromarray(imf).resize((224,224)),(4,4)); big.paste(Image.fromarray(imw).resize((224,224)),(236,4))
+        # Two panels at 320 px, forward on the left and downward on the right. No drawn labels: the
+        # reviewer is told which is which in words (Denis, 2026-09-20), and the pixels are better spent
+        # on the views. The 224 px thumbnails this replaced were too small to judge an opening.
+        V=320; W=6+V+8+V+6; H=6+V+6
+        big=Image.new("RGB",(W,H),(18,20,26))
+        big.paste(Image.fromarray(imf).resize((V,V)),(6,6)); big.paste(Image.fromarray(imw).resize((V,V)),(6+V+8,6))
         fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=92)
-        row={"k":k,"trial":trial,"status":"waiting","pose":[round(float(x),3) for x in (*pos,yaw)],
+        _agent_hist.append({"k":k,"x":round(float(pos[0]),2),"y":round(float(pos[1]),2),
+                            "z":round(float(pos[2]),2),"heading_deg":round(float(np.degrees(-yaw)),0)})
+        # the reviewer is shown the SAME yaw convention the move primitives act in (2026-09-20): the
+        # rollout's internal yaw is negated into the state the policy and agent_prompt.move_track use, so
+        # a positive --yaw command now increases the heading it is shown. Before this, the two disagreed
+        # in sign and a reviewer asking to turn right watched the number go left.
+        row={"k":k,"trial":trial,"status":"waiting","pose":[round(float(x),3) for x in (*pos,-yaw)],
              "view":fp,"proposal":{"net_xyz":[round(float(x),3) for x in net],"net_yaw_deg":round(dyaw,1),
              "path_end":[round(float(pos[i]+net[i]),3) for i in range(3)],
              "speed_max_mps":round(float(np.abs(np.diff(path,axis=0)).max()*10),2),"sigma_serve":round(float(sig),2)},
-             "seconds_per_decision":round(apc*0.1,1),"t_asked":_time.time()}
+             "seconds_per_decision":round(apc*0.1,1),"t_asked":_time.time(),
+             "history":_agent_hist[-8:]}
         tmp=os.path.join(AGENT_DIR,"latest.json.tmp"); _json.dump(row,open(tmp,"w")); os.replace(tmp,os.path.join(AGENT_DIR,"latest.json"))
         cp=os.path.join(AGENT_DIR,"cmd.json"); t0=_time.time()
         while _time.time()-t0<AGENT_TIMEOUT:

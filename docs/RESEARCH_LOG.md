@@ -7476,3 +7476,33 @@ APPROVED leg, not an authored one -- the reviewer's job includes the legs it is 
 (3) Ops note: a stale auto-answer loop from an earlier replay silently answered a fresh flight's decisions
 (pkill -f matched nothing because the process command line is just "python -"). Kill background helpers by
 pid; the auto-approve loop now exits on BATCH_DONE in the rollout log.
+
+**CAN A SONNET AGENT WITH NO TASK KNOWLEDGE FLY IT? FOUR ATTEMPTS, NONE SUCCEEDED (2026-09-20; Denis:
+"see if a claude agent without knowledge of the task, only the inputs it is given, can succeed"). Same
+interface as the reviewed flights: camera views, pose, the policy's proposed command, approve/override,
+10 decisions. The agent was told the instruction and the interface and nothing else; it was forbidden to
+read scene files or repo scripts. Decisions archived per flight in experiments/rung3/agentflight/.**
+  center3  gates 2/2 (steps 60, 371) but dwell 0 -> FAIL. Approved 2, overrode 8 with 0.2-0.6 m moves.
+           It crossed both apertures without realising and never reached the goal.
+  center4  INVALID: two reviewers on one mailbox (below).
+  center5  gates 0/2 -> FAIL. Closest approach to the left aperture centre 0.09 m without crossing the
+           plane; found the stuffed animal in the DOWNWARD view and ended 0.29 m from the goal.
+  center6  gates 0/2 -> FAIL, with the map-keeping prompt: more decisive, wrong direction; ended at
+           (4.4, -3.7), 4 m outside the gate area.
+  For comparison, the same task reviewed by this session's model: 2/2 gates + goal dwell, clearance-clean,
+  with three overrides (2026-09-20 "SECOND AGENT-REVIEWED FLIGHT").
+INFRASTRUCTURE FIXED ALONG THE WAY, all of it my own defects: (1) the pose shown to the reviewer used the
+rollout's internal yaw while the move primitive acts in the negated state convention, so a reviewer asking
+to turn right watched the number go left -- the first agent diagnosed this correctly and it cost it the
+flight; now aligned. (2) All flights shared one mailbox directory, so a previous agent's lingering `wait`
+processes answered a later flight's decisions (its calls came back "stale"); the mailbox is now per flight.
+(3) The camera views were two unlabelled 224 px thumbnails; now 320 px each, forward left and downward
+right, with the mapping stated in the prompt rather than drawn on the image (Denis). (4) The readout now
+prints the pose track so the reviewer can place what it has seen.
+READS: (1) The interface is usable by a smaller model -- every agent drove the loop, read the views, and
+wrote sensible reasons -- but none of them solved the SPATIAL problem: they repeatedly mistook being beside
+a post for being lined up with an opening, lost the gate when it left the frame, and spent most of a
+10-decision budget on search and recovery. (2) The one part they did well is the part with an unambiguous
+visual signature: two of the four identified the stuffed animal in the downward view. (3) So the authored-
+command result is not "any agent can do this": it is a claim about the interface, and the planner's spatial
+competence is a separate variable that this experiment now isolates.
