@@ -7584,3 +7584,29 @@ from the successful flight; the target has an unambiguous downward-camera signat
 (3) This is now an argument for changing what the reviewer is GIVEN rather than what it is told: a scan
 primitive that guarantees both posts in one frame, a wider field of view, or a cheap estimate of the
 opening's bearing from the image. More prompt rules are hitting diminishing returns at 1 in 6.
+
+**THE BLIND INTERVAL: GIVING THE REVIEWER FRAMES FROM INSIDE ITS OWN MOVE (2026-09-20; Denis: "sonnet only
+sees one out of every 50 of the actions we take because of the chunking"). Exactly right, and it explains
+every previous failure: at APC 50 the drone travels 1-2 m between decision frames, so a gate transit
+happens entirely inside an interval the reviewer never observes. gate_rollout_batch.py now renders five
+forward views spaced through the chunk just executed and hands them to the next decision as a filmstrip
+(<k>_during.jpg); the brief tells the reviewer to use it as the only reliable evidence of a transit: a
+gate that grows, splits to both edges and disappears behind is a pass, one that slides off a side without
+growing is not.**
+  RESULT (center10): gates 1/2 (left gate at step 60) -> FAIL on the compound judge, but closest approach
+  to the goal 0.07 m, and the reviewer's own account is now ACCURATE where it matters: it read the k=0->1
+  filmstrip as a transit (true, step 60), read k=3->4 as ambiguous and refused to credit it (true, no
+  crossing), then confirmed from the k=4->5 strip that the gate was still ahead and overrode a stalled
+  policy (trust 0.14) to drive through it. It also correctly identified a lone decor pole as not a gate
+  after backing up. What it called the "center gate" transit at k=5->6 was the same left-gate structure
+  from the other side; it never reached the real centre aperture (closest 0.17 m).
+  Tally over valid attempts: 1 success in 7. But the QUALITY of the reviewer's evidence changed: for the
+  first time its transit calls match the judge on the gate it did cross, and its one false positive is a
+  case of two gates looking alike rather than a heuristic misfire.
+READS: (1) The filmstrip fixes the observability problem it was built for. The remaining error is
+identity, not transit: with one structure in view the reviewer cannot tell WHICH gate it is looking at.
+(2) That points at the same fix as before from a new angle -- the reviewer needs to place what it sees in
+the room, not just recognise it. (3) On chunk size (Denis: "is 50 frames too much? maybe 5 is enough"):
+APC 5 needs ~100 decisions for this flight at ~40 s of agent time each, and truncates every authored
+5-second command to a tenth of itself. APC 10-25 is the usable range; next run is APC 25 with 16
+decisions, same task, to separate the observation rate from the filmstrip.

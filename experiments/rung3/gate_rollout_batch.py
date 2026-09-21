@@ -224,7 +224,7 @@ if AGENT_DIR:
     def _decode(c):
         ch=(_U@np.asarray(c,np.float32)).reshape(50,32)[:,:4]*( _AS+1e-6)+_AM
         return np.cumsum(ch[:,:3],0), float(np.degrees(ch[:,3].sum()))
-    _agent_hist=[]
+    _agent_hist=[]; _last_strip=[None]
     def _ask(k,trial,pos,yaw,imf,imw,c,sig):
         d=np.asarray(c,np.float32); path,dyaw=_decode(d); net=path[-1]
         # Two panels at 320 px, forward on the left and downward on the right. No drawn labels: the
@@ -245,7 +245,7 @@ if AGENT_DIR:
              "path_end":[round(float(pos[i]+net[i]),3) for i in range(3)],
              "speed_max_mps":round(float(np.abs(np.diff(path,axis=0)).max()*10),2),"sigma_serve":round(float(sig),2)},
              "seconds_per_decision":round(apc*0.1,1),"t_asked":_time.time(),
-             "history":_agent_hist[-8:]}
+             "history":_agent_hist[-8:],"during_last_move":_last_strip[0]}
         tmp=os.path.join(AGENT_DIR,"latest.json.tmp"); _json.dump(row,open(tmp,"w")); os.replace(tmp,os.path.join(AGENT_DIR,"latest.json"))
         cp=os.path.join(AGENT_DIR,"cmd.json"); t0=_time.time()
         while _time.time()-t0<AGENT_TIMEOUT:
@@ -344,6 +344,19 @@ def run_trial(t):
                     frame=draw_inset(frame,pos,_a,_b)
                     frame=_banner(frame,ci,_think,_verd)
                 fr.append(frame)
+        if AGENT_DIR:
+            # The reviewer sees one frame per 5-second chunk, so everything that happens DURING a move --
+            # including the gate transit itself -- is invisible to it (Denis, 2026-09-20). Five forward
+            # views spaced through the chunk just executed are handed to it with the next decision.
+            _idx=[int(round(f*(n-1))) for f in (0.0,0.25,0.5,0.75,1.0)]
+            _sf=[]
+            for _i in _idx:
+                _wp=pos+cs[_i]; _wy=yaw-float(act[:_i+1,3].sum())
+                _sf.append(Image.fromarray(obs_fwd(_wp,_wy)).resize((200,200)))
+            _strip=Image.new("RGB",(5*200+6*4,200+8),(18,20,26))
+            for _j,_im in enumerate(_sf): _strip.paste(_im,(4+_j*204,4))
+            _sp=os.path.join(AGENT_DIR,"obs",f"{ci:03d}_during.jpg"); _strip.save(_sp,quality=90)
+            _last_strip[0]=_sp
         for i in range(n): traj.append(pos+cs[i])
         pos=pos+cs[-1]; yaw=yaw-float(act[:n,3].sum()); executed+=n
         if abs(pos[0])>60 or abs(pos[1])>60: break
