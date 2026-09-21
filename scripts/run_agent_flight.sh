@@ -4,6 +4,7 @@
 # reasons are burned into the video.  bash scripts/run_agent_flight.sh <tag> <scene> <side> <prompt> [NCH]
 set -u
 TAG=${1:?tag}; SCENE=${2:?scene}; SIDE=${3:?side}; PROMPT=${4:?prompt}; NCH=${5:-10}; APC=${6:-50}
+# START="x,y,z" and STARTYAW=<rad> (rollout yaw convention; the reviewer sees -STARTYAW as its heading) pass through
 RUN=/home/dfliu/ctxrun; RD=/home/dfliu/code/source-noise-mvp/experiments/rung3
 VENVPY=/home/dfliu/code/openpi/.venv/bin/python; TV=/home/dfliu/code/tv/bin/python; HFB=/home/dfliu/hf_bundle/gate-drone-pi0
 EV="env -u VIRTUAL_ENV PYTHONPATH=/home/dfliu/code/openpi-snmvp/src"
@@ -18,7 +19,7 @@ setsid $EV $PINENV CLOG=$RUN/clog_${TAG}.npy $GPU $VENVPY $RD/serve_gate_pin_joi
   --config pi0_gate --norm $HFB/assets/gate_nav --pin-u $U --port $PORT >> $RUN/sv_${TAG}.log 2>&1 </dev/null & disown
 for k in $(seq 1 200); do ss -ltn | grep -q ":$PORT " && break; sleep 3; done
 ss -ltn | grep -q ":$PORT " || { echo SERVER_TIMEOUT; exit 1; }
-setsid env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=$SIDE SCENE=$SCENE NCH=$NCH APC=$APC TRIALS=1 VIDEO=1 \
+setsid env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=$SIDE SCENE=$SCENE NCH=$NCH APC=$APC TRIALS=1 VIDEO=1 ${START:+START=$START} ${STARTYAW:+STARTYAW=$STARTYAW} \
   VIDFRAME_STRIDE=4 FPS=9 PROMPT="$PROMPT" AGENT_DIR=$AD SNMVP_PIN_U=$U \
   OUT=$RUN/agent_${TAG}.mp4 TRAJ=$RUN/traj_${TAG}.npy $TV $RD/gate_rollout_batch.py \
   > $RUN/roll_${TAG}.log 2>&1 </dev/null & disown

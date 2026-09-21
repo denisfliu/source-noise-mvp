@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Gate ahead but not the target; continuing rotation to cover unseen +y side", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

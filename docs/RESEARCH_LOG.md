@@ -7815,3 +7815,24 @@ hard leg. Sonnet with the calibration sheet is the working point; below it the r
 (4) For hardware, this settles the architecture question rather than the model question: a reviewer
 that can be trusted takes 30 s per decision, so the policy must fly by default and the reviewer must be
 advisory, with its override landing only if it arrives in time.
+
+**NEW TASK, NEW START HEADING: "FIND THE MANNEQUIN" FROM 180 DEGREES (2026-09-21; Denis: "make sure the
+infrastructure is good enough to start the drone 180 degrees yawed and see if it can find the mannequin
+using the policy"). Infra: START="x,y,z" and STARTYAW=<rad> pass through scripts/run_agent_flight.sh into
+the rollout (the reviewer sees -STARTYAW as its heading; confirmed -180 deg at decision 0). Any prompt is
+accepted. No judge exists for this task, so the target was located by rendering diagnostic views from the
+scene (gate_rollout_batch's renderer with the policy client stubbed; PORT must not be a live server or
+the import blocks) and triangulating the figure's pixel column from two poses: MANNEQUIN at about
+(8.7, -0.9), 1.8 m tall, behind the long wooden table in the office bay beyond the centre gate (views in
+experiments/rung3/agentflight/mannequin/). It is NOT visible from the origin.**
+  RESULT (mann1, Sonnet, 14 decisions): never found it. Swept a full 360 deg in 45-degree turns from the
+  origin (12 decisions, 8-14 s each -- pure turns are fast), correctly reported only gates, office wall
+  and window wall, moved once 2.4 m toward the office wall, and stopped at (0.33, -2.44) to avoid guessing.
+  Honest self-report; wrong strategy for a target that cannot be seen from the start.
+READS: (1) The infrastructure holds for arbitrary start pose and arbitrary instruction. (2) The brief's
+search rule ("turn in 45-degree steps before flying") is right for a visible target and wrong for this
+one: after a full sweep the agent needs a second vantage point, and the natural one in this room is
+through an opening. Next: 24 decisions and an exploration rule -- if a full sweep finds nothing, fly to
+the nearest opening, pass through the middle of it, and sweep again. (3) Scoring for this task: distance
+of the final pose from a point 1.2 m in front of the figure, (7.5, -0.9), and whether the heading faces
++x within 30 deg; by video for the hover.
