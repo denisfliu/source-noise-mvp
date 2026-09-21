@@ -7324,3 +7324,27 @@ sketch is (0.222/0.228/0.258/0.273 as the line moves into and past the post); th
 (0.35/0.31/0.32/0.32) because it is a fixed fraction of the flow's disagreement, not a response to the
 scene. (3) pin sigma 0 is 0.118-0.129, not zero: a trained flow follows closely but not exactly, the price
 of a residual free to shape the motion; the projection's zero is exact by construction.
+
+**HEAD UNCERTAINTY, ATOMIC vs COMPOSITIONAL (2026-09-20; Denis: "run the compositional task with gmsig3 and
+observe the uncertainty that is predicting the command throughout; compare to the left-gate task"). gmsig3,
+head-authored commands, NO sketch; 5 trials each, 14 replans x 50 steps. scripts/run_uncert.sh; page
+viz/uncert.html; logs experiments/rung3/uncert/.**
+  outcome: left 5/5 route-clean + 5/5 clearance-clean. Compound 0/5: ALL FIVE latch the left gate (step
+  55-63) and then park at (1.67, -0.62, 1.0) -- the goal box -- with max x 2.06; the center gate at x 2.75
+  is never approached. Same failure as on hardware (2026-09-18 clog: goal-first under real frames).
+  sigma* (served component's own predicted std), median per replan:
+    left      17.0 15.6 13.8  6.1  4.1  3.5  3.0  7.1  5.9  6.1  6.1  6.4  6.7  6.1
+    compound  16.6 16.3 13.5 11.4  5.3  5.2  4.5  4.0  4.0  5.3  5.1  4.7  4.8  4.7
+  top mixture weight, late phase: left 0.60-0.78, compound 0.53-0.60. Served trust (sigma map): left
+  0.11-0.24 after the start, compound 0.14-0.18.
+READS: (1) The uncertainty does NOT flag the compositional failure. The only signal is a one-replan bump
+right after the left-gate crossing (11.4 vs 6.1 at replan 3) -- exactly where the compound plan should
+diverge toward the center gate -- after which sigma* settles BELOW the atomic task's (4-5 vs 6-7). The head
+is confidently parking at the goal. (2) The mixture is slightly more ambivalent on the compound (top weight
+0.53-0.60 vs 0.60-0.78) and switches components more often, so the weights carry a little more signal than
+sigma*, but neither crosses any threshold the served trust map reacts to (0.14-0.18, i.e. near-full trust).
+(3) Consequence for the paper's interpretability claim: deviation of the EXECUTED chunk from the COMMAND is
+measurable and detectable (appendix E), but the head being wrong about the TASK is not visible in its own
+uncertainty. sigma tracks command noise within known behaviour, not task novelty. State it that way, and do
+not claim sigma as an out-of-distribution or fault detector. (4) This is the cleanest demonstration of why
+the compositional task needs an external author: the policy's own confidence gives no warning.
