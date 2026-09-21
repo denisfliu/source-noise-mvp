@@ -95,3 +95,27 @@ this sketch; the trained slack buys a few centimetres more clearance. Larger s m
 route (s = 0.3: both gates but 42 cm off the sketch; s = 0.5: leaves). On the **real-only** flow no s helps:
 s = 0.1 lifts clearance only to 0.09-0.13 m, s ≥ 0.3 leaves the sketch. The 0.04 m sketch defeats every s in
 both regimes. In short: whatever slack mechanism is used, it can only spend knowledge the residual has.
+
+## D. Worse sketches (mixed regime): the line grazes, enters, or misses the post
+
+The 4-click L→C with its center waypoint slid west so the drawn line passes the center gate's west post at
+0.02 m (w2), goes through it (w3, 0.009 m), or passes on the wrong side of the post, outside the aperture (w4).
+Files `sketch_cmpl_min4_w{2,3,4}[s].json`; script `scripts/run_worsesketch.sh`; page `viz/worsesketch.html`.
+
+Both gates latched / clearance-clean / min clearance (m) / tracking (m):
+
+| Arm | w2 (0.02 m) | w3 (through the post) | w4 (wrong side) |
+|---|---|---|---|
+| pin σ=0 | 4/5 / 0/5 / 0.002-0.10 / 0.06 | 1/5 / 0/5 / 0.004-0.07 / 0.06 | 0/5 / 0/5 / 0.003-0.06 / 0.06 |
+| **pin σ=0.5** | 4/5 / 3/5 / 0.16-0.26 / **0.12** | 4/5 / 4/5 / 0.18-0.28 / **0.12** | 4/5 / 3/5 / 0.16-0.24 / **0.14** |
+| v-proj s=0 | 3/5 / 0/5 / 0.014-0.016 / 0.014 | 0/5 / 0/5 / 0.003-0.006 / 0.015 | 0/5 / 0/5 / 0.042 / 0.014 |
+| v-proj s=0.1 | 5/5 / 0/5 / 0.12-0.13 / 0.11 | 5/5 / 0/5 / 0.08-0.10 / 0.12 | 5/5 / 0/5 / 0.02-0.04 / 0.11 |
+| v-proj s=0.3 | 5/5 / 5/5 / 0.18-0.22 / **0.45** | 5/5 / 5/5 / 0.18-0.24 / **0.45** | 5/5 / 5/5 / 0.20-0.24 / **0.45** |
+| SDEdit 0.5 | 0/5 / 0/5 / 0.01-0.13 / 0.07 | 0/5 / 0/5 / 0.02-0.16 / 0.07 | 0/5 / 1/5 / 0.06-0.22 / 0.06 |
+
+Reading: this is where the trained slack and the leak separate. The pin at σ = 0.5 clears the post on all three
+sketches, including the one drawn through it and the one drawn around the wrong side, while staying 12-14 cm
+from the sketch: it makes the smallest correction that clears. The projection at s = 0.1 keeps the sketch
+(11 cm) but does not clear (0.02-0.13 m); at s = 0.3 it clears every time but is 45 cm off the sketch, which
+is the plain flow flying its own compound route with the sketch as a loose suggestion. There is no s that
+gives both. SDEdit never latches both gates. Exact carry (s = 0) does what it is told: into the post.

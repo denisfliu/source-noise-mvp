@@ -7289,3 +7289,17 @@ somewhat larger and comes with a calibrated dial (sigma from the head's uncertai
 leak. (3) For the appendix: each failure has one cause -- inject: runaway along U; SDEdit: the staircase
 and gate contact; v-proj s=0: the sketch verbatim, flaw included; v-proj s>0: the flow's own route leaking in;
 pin sigma>0 on real-only: a residual with nothing better to offer leaves the sketch.
+
+**WORSE SKETCHES (2026-09-20; Denis: "let's make the sketch worse"). The 4-click L->C with the center waypoint
+slid west: line at 0.02 m from the center west post (w2), through it (w3, 0.009 m), and on the wrong side of
+the post, outside the aperture (w4). Mixed checkpoints, 6 arms, 5 trials. scripts/run_worsesketch.sh; page
+viz/worsesketch.html; appendix D in docs/APPENDIX_INJECTION.md.**
+  clean / tracking:   pin s0.5: 3/5 0.12 | 4/5 0.12 | 3/5 0.14     v-proj s0.1: 0/5 0.11 | 0/5 0.12 | 0/5 0.11
+                      v-proj s0.3: 5/5 0.45 | 5/5 0.45 | 5/5 0.45  s0 / pin s0 / SDEdit: 0 clean everywhere
+READS: (1) The separation the 0.07 m sketch could not show appears once the sketch is worse than the post:
+the pin's trained slack clears with a 12-14 cm correction on all three, including the sketch drawn around
+the wrong side of the post (it moves the path ~0.4 m to go through the aperture and returns). (2) The
+projection has no setting that both keeps the sketch and clears: s=0.1 keeps it and hits, s=0.3 clears and
+is 45 cm off (the plain flow's own route). The trained slack is a minimal correction; the leak is a
+mixture with the flow's own plan. (3) SDEdit never latches both gates on any of them. This is the appendix's
+main figure.
