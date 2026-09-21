@@ -7822,8 +7822,9 @@ using the policy"). Infra: START="x,y,z" and STARTYAW=<rad> pass through scripts
 the rollout (the reviewer sees -STARTYAW as its heading; confirmed -180 deg at decision 0). Any prompt is
 accepted. No judge exists for this task, so the target was located by rendering diagnostic views from the
 scene (gate_rollout_batch's renderer with the policy client stubbed; PORT must not be a live server or
-the import blocks) and triangulating the figure's pixel column from two poses: MANNEQUIN at about
-(8.7, -0.9), 1.8 m tall, behind the long wooden table in the office bay beyond the centre gate (views in
+the import blocks) and triangulating the figure's pixel column from two poses: MANNEQUIN first placed at about
+(8.7, -0.9) -- CORRECTED 2026-09-21 to (7.4, -0.2), see the correction entry below -- 1.7 m tall, standing
+against the BACK WALL (x ~ 7.7-8.2) behind the long wooden table, beyond the centre gate (views in
 experiments/rung3/agentflight/mannequin/). It is NOT visible from the origin.**
   RESULT (mann1, Sonnet, 14 decisions): never found it. Swept a full 360 deg in 45-degree turns from the
   origin (12 decisions, 8-14 s each -- pure turns are fast), correctly reported only gates, office wall
@@ -7843,7 +7844,7 @@ says the target is not visible from the start, take one look and at most one tur
 new, prefer openings, keep a list of vantage points.**
   RESULT (mann2, Sonnet): it did explore -- but straight along the direction it happened to face at the
   start (-x): 6 m to the far wall by decision 5, then eight decisions searching that dead-end bay for a
-  door that is not there. Final pose (-5.6, 1.7), 14.5 m from the mannequin; closest approach 8.9 m. It
+  door that is not there. Final pose (-5.6, 1.7), 13.3 m from the mannequin; closest approach 7.5 m (corrected position). It
   never turned to look at the +x half of the room, where both gates, the bays and the target are.
   Two attempts, two complementary failures: attempt 1 swept without moving, attempt 2 moved without
   sweeping. Neither is the strategy a person would use, which is a quick sweep FIRST (pure turns cost 8 s
@@ -7855,12 +7856,13 @@ opening in 1.5-2 m moves, then approach and hold. Same 14 decisions, 180-degree 
   RESULT (mann3, Sonnet, 14 decisions, 5.2 min, median 19 s per decision): sweep found the gate by
   decision 4; decisions 5-8 lined up on it; 9-10 tangled with a post and recovered; at decision 11 it
   reported "a standing figure visible past the post, to the left" and spent 12-13 on the approach. Final
-  pose (3.94, 1.38), 5.3 m from the mannequin at (8.7, -0.9); closest approach 5.3 m. Found, not reached.
+  pose (3.94, 1.38), 4.0 m from the mannequin at (7.4, -0.2) (corrected; 5.3 m under the first estimate).
+  Found, not reached.
   Its side call ("left of centre") disagrees with the triangulated position, which would put the figure
   ~40 deg to the RIGHT of its heading at that pose; either the sighting was at the frame edge or the
   triangulation is off by a metre or two -- the video decides.
   Three attempts: spin (never saw it), wander (wrong half), sweep-then-commit (saw it at decision 11 of
-  14). The strategy is now right and the budget is the constraint: 8.7 m of travel plus a gate takes more
+  14). The strategy is now right and the budget is the constraint: 7.4 m of travel plus a gate takes more
   than the ~6 productive decisions left after a 4-decision sweep and a 4-decision line-up.
 READS: (1) The infrastructure does what Denis asked: arbitrary start heading, arbitrary instruction, an
 agent finding an object the policy has never been asked about. (2) Fourteen decisions is the honest
@@ -7869,10 +7871,25 @@ more decisions or cheaper line-ups (the gap-bearing detector, again). (3) The po
 flying and nothing else here, which is the point: intent came entirely from the reviewer.
   POST-MORTEM of the mann3 sighting (rendered from its own poses, agentflight/mannequin/mann3_final_pose_views.png):
   from (3.07, 0.67) heading +0.26 the mannequin is plainly in frame at pixel column ~415 of 512, i.e. 33 deg
-  to the RIGHT of the optical axis, bearing about -18 deg -- exactly where the triangulated (8.7, -0.9)
-  puts it. The agent reported it "left of centre" at decisions 11 and 12, estimated it at (4.5-5.0,
+  to the RIGHT of the optical axis, bearing about -18 deg -- on the line of sight to the figure (the
+  first estimate (8.7, -0.9) and the corrected (7.4, -0.2) share that bearing to within 4 deg). The agent reported it "left of centre" at decisions 11 and 12, estimated it at (4.5-5.0,
   1.3-1.8), and flew its last move forward-and-LEFT with a left turn, i.e. away from it; from its final
-  pose the figure is out of frame to the right. The triangulation stands. The failure is a left/right
+  pose the figure is out of frame to the right. The bearing stands. The failure is a left/right
   mirror error in reading the image, the same class of spatial mistake that cost earlier gate approaches.
   A cheap mitigation to try: mark the decision image's edges "left" / "right" (or a centre line), since
   the words in the brief did not stop the mirror.
+
+**CORRECTION (2026-09-21, Denis: "the mannequin is actually at the back of the room against the wall pretty
+close to y=0"): the two-pose triangulation was 1.3 m long in range.** Both sighting poses lay nearly on
+the line of sight, so the pixel columns fixed the bearing well and the range badly. Checked two ways:
+(1) the left-scene gaussians in world frame (inv(Tw2g)) show a dense floor-to-ceiling band at
+x ~ 7.6-8.3 for |y| < 1.6 (the back wall) and a tall narrow cluster at x 7.2-7.6, y -0.4..0.0, centroid
+(7.44, -0.20, z 0.86), top at z 1.70; (2) marching the renderer down the y = -0.2 line
+(agentflight/mannequin/mannequin_march_views.png): the figure stands behind the wooden table at x 5-6.5,
+nearly fills the frame at x 7.0, and at x 8.0 the camera is inside the wall. MANNEQUIN = (7.4, -0.2),
+against the back wall, as Denis said. Corrected distances: mann1 closest 7.3 m; mann2 final 13.3 m,
+closest 7.5 m; mann3 final and closest 4.0 m (was reported 5.3). The mann3 post-mortem conclusion is
+unchanged: the bearing from (3.07, 0.67) heading +0.26 is 29 deg RIGHT of the optical axis for the
+corrected position (33 deg for the old one), the agent called it left and flew away. Lesson for the
+diagnostic method: a two-pose triangulation needs a baseline across the line of sight; when the poses
+are collinear with the target, read the range off the cloud instead.
