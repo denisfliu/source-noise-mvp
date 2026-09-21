@@ -7693,3 +7693,25 @@ for hardware: 116 s per 5 s chunk. The answer is not a faster reviewer but an ad
 the policy flies by default and an override lands only if it arrives in time -- plus the cheap reductions
 (one composite image per decision, now implemented; pipelined review; Sonnet in the loop escalating to
 Opus when it flags a hard decision).
+
+**ROOM-FRAME COMMANDS FOR THE REVIEWER (2026-09-21; Denis: "would it help to explain what positive x and y
+are plus how yaw affects them? forward/backward doesn't make much sense"). Rather than document the
+rotation, agent_sim_cli.py gained --dx/--dy/--dz: metres along the room's fixed axes, converted to the
+drone frame by the CLI using the heading and echoed back, so a move is now target-minus-pose with no
+trigonometry. Verified against agent_prompt.move_track (asked room dx 1.00 dy -0.50 at heading 0.6 rad,
+executed 1.000 / -0.500). The brief states the frame explicitly: axes never rotate, heading 0 faces +x,
++pi/2 faces +y, positive yaw turns left, and yaw does not change what dx/dy mean. Also shipped: ONE
+composite decision image (both camera views plus the filmstrip underneath) instead of two files.**
+  RESULT (center14, Sonnet): gates 1/2 (step 377), no dwell -> FAIL, ending at (3.56, -0.27), 0.78 m from
+  the goal. It brushed the left gate at 0.02 m. Seven of ten decisions were overrides and most were
+  retreats (negative forward), so it never built a clean approach; the last decision was a 1.8 m push that
+  carried it past everything.
+  Latency did NOT improve: median 55 s per decision against 27-43 s for the earlier Sonnet flights, despite
+  halving the number of Reads. The composite image is larger than either of the two it replaced, and the
+  agent spent the saved round trip on more reasoning.
+READS: (1) One sample, and the Sonnet spread on this task is enormous (0/2 to 2/2 across nine runs), so
+this is not evidence that room-frame commands hurt. It is evidence that they do not rescue Sonnet: the
+bottleneck stays where the Opus flight located it, which is resolving where the opening IS, not expressing
+a move once you know. (2) The frame change is still right on its own terms -- it removes a class of sign
+error that cost two earlier flights -- and it costs nothing. Keep it. (3) Latency needs the architectural
+fix (advisory override, pipelined review), not micro-optimisation of the image count.

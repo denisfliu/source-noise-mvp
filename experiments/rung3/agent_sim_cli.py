@@ -11,7 +11,7 @@ The reason is burned into the video.
   python agent_sim_cli.py override --k K --why "..." [--forward m] [--left m] [--up m] [--yaw deg] [--sigma s]
   python agent_sim_cli.py stop --k K --why "..."
 """
-import argparse, json, os, sys, time
+import argparse, json, math, os, sys, time
 
 DEF = os.path.expanduser("~/ctxrun/agent_sim")
 
@@ -57,6 +57,10 @@ def main():
     a.add_argument("--dir", default=DEF); a.add_argument("--k", type=int); a.add_argument("--why", default="")
     a.add_argument("--forward", type=float, default=0.0); a.add_argument("--left", type=float, default=0.0)
     a.add_argument("--up", type=float, default=0.0); a.add_argument("--yaw", type=float, default=0.0)
+    # Room-frame movement (2026-09-21, Denis): reviewers build their map in room coordinates, so let them
+    # command in room coordinates and do the rotation here. --dx/--dy are metres along the room axes,
+    # independent of where the drone is pointing; --dz is the same as --up.
+    a.add_argument("--dx", type=float); a.add_argument("--dy", type=float); a.add_argument("--dz", type=float)
     a.add_argument("--sigma", type=float, default=0.0); a.add_argument("--timeout", type=float, default=900.0)
     g = a.parse_args(); d = g.dir
     if g.cmd in ("wait", "look"):
@@ -82,8 +86,20 @@ def main():
     elif g.cmd == "approve":
         write(d, {"k": g.k, "verdict": "approve", "why": g.why})
     else:
+        fwd, lft, up = g.forward, g.left, g.up
+        if g.dx is not None or g.dy is not None or g.dz is not None:
+            if g.forward or g.left:
+                sys.exit("give either --forward/--left (drone frame) or --dx/--dy (room frame), not both")
+            dx, dy = (g.dx or 0.0), (g.dy or 0.0)
+            psi = float(o["pose"][3])
+            fwd = math.cos(psi) * dx + math.sin(psi) * dy
+            lft = -math.sin(psi) * dx + math.cos(psi) * dy
+            if g.dz is not None:
+                up = g.dz
+            print(f"room-frame dx {dx:+.2f} dy {dy:+.2f} at heading {psi:+.2f} rad "
+                  f"-> forward {fwd:+.2f}, left {lft:+.2f}")
         write(d, {"k": g.k, "verdict": "override", "why": g.why,
-                  "move": {"forward": g.forward, "left": g.left, "up": g.up, "yaw_deg": g.yaw, "sigma": g.sigma}})
+                  "move": {"forward": fwd, "left": lft, "up": up, "yaw_deg": g.yaw, "sigma": g.sigma}})
     print(f"k={g.k} {g.cmd}: {g.why}")
 
 
