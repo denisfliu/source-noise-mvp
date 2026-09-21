@@ -7836,3 +7836,15 @@ through an opening. Next: 24 decisions and an exploration rule -- if a full swee
 the nearest opening, pass through the middle of it, and sweep again. (3) Scoring for this task: distance
 of the final pose from a point 1.2 m in front of the figure, (7.5, -0.9), and whether the heading faces
 +x within 30 deg; by video for the hover.
+
+**MANNEQUIN, ATTEMPT 2: EXPLORED THE WRONG HALF (2026-09-21; Denis: "just tell the agent to explore the
+room, don't do a longer attempt -- there's only so much space"). Same 14 decisions, 180-degree start; brief
+says the target is not visible from the start, take one look and at most one turn, then move somewhere
+new, prefer openings, keep a list of vantage points.**
+  RESULT (mann2, Sonnet): it did explore -- but straight along the direction it happened to face at the
+  start (-x): 6 m to the far wall by decision 5, then eight decisions searching that dead-end bay for a
+  door that is not there. Final pose (-5.6, 1.7), 14.5 m from the mannequin; closest approach 8.9 m. It
+  never turned to look at the +x half of the room, where both gates, the bays and the target are.
+  Two attempts, two complementary failures: attempt 1 swept without moving, attempt 2 moved without
+  sweeping. Neither is the strategy a person would use, which is a quick sweep FIRST (pure turns cost 8 s
+  a decision) to see where the structure is, then commit to that direction.

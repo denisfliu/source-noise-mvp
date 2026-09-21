@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "Continue the leftward scan; a window into another space is visible, check what lies beyond it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.0}}

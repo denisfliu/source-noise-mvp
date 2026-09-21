@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "This fence is a dead end; move back toward the doorway we passed near x=-6.5,y=0.2, turning to face it", "move": {"forward": -1.208156668434633, "left": -0.7350901063930382, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.0}}
