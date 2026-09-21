@@ -249,6 +249,15 @@ if AGENT_DIR:
         H=6+V+6+((_ps.size[1]+8) if _ps is not None else 0)
         big=Image.new("RGB",(W,H),(18,20,26))
         big.paste(Image.fromarray(imf).resize((V,V)),(6,6)); big.paste(Image.fromarray(imw).resize((V,V)),(6+V+8,6))
+        if os.environ.get("AGENT_LR_MARKS","1")=="1":
+            # Side marks ON the forward panel (2026-09-21): the mann3 reviewer read a figure 30 deg to
+            # the right as "left of centre" and flew away from it, after a brief that spelled the
+            # convention out in words. "L"/"R" at the panel's bottom corners and a centre tick put the
+            # convention in the pixels the reviewer is actually reading.
+            _dr=ImageDraw.Draw(big); _yb=6+V-13
+            for _t,_x in (("L",10),("R",6+V-14)):
+                _dr.text((_x,_yb),_t,fill=(0,0,0)); _dr.text((_x-1,_yb-1),_t,fill=(255,230,0))
+            _dr.line([(6+V//2,6),(6+V//2,14)],fill=(255,230,0),width=1); _dr.line([(6+V//2,6+V-8),(6+V//2,6+V)],fill=(255,230,0),width=1)
         if _ps is not None: big.paste(_ps,(6,6+V+6))
         fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=85)
         _agent_hist.append({"k":k,"x":round(float(pos[0]),2),"y":round(float(pos[1]),2),
