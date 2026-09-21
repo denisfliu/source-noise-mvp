@@ -7488,7 +7488,14 @@ read scene files or repo scripts. Decisions archived per flight in experiments/r
   center5  gates 0/2 -> FAIL. Closest approach to the left aperture centre 0.09 m without crossing the
            plane; found the stuffed animal in the DOWNWARD view and ended 0.29 m from the goal.
   center6  gates 0/2 -> FAIL, with the map-keeping prompt: more decisive, wrong direction; ended at
-           (4.4, -3.7), 4 m outside the gate area.
+           (4.4, -3.7), 4 m outside the gate area. ITS OWN REPORT CLAIMS BOTH GATES PASSED, with a
+           decision-by-decision map and moderate-to-high confidence. It used the heuristic MY prompt gave
+           it -- "when you pass through, the posts sweep out of the frame and vanish" -- and applied it
+           twice to gates it had merely turned away from. The narrative is coherent and wrong. Two lessons:
+           a heuristic handed to the planner becomes a source of false positives, and an LLM planner's
+           self-assessment cannot stand in for the external judge (this is the third of the four agents
+           whose self-report disagreed with the trajectory, in both directions: center3 believed it had
+           failed the gates it actually crossed).
   For comparison, the same task reviewed by this session's model: 2/2 gates + goal dwell, clearance-clean,
   with three overrides (2026-09-20 "SECOND AGENT-REVIEWED FLIGHT").
 INFRASTRUCTURE FIXED ALONG THE WAY, all of it my own defects: (1) the pose shown to the reviewer used the
