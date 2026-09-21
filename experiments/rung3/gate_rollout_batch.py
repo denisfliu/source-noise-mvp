@@ -359,7 +359,7 @@ def run_trial(t):
             _thumb=[im.reshape(28,8,28,8,3).mean(axis=(1,3)).mean(axis=2) for im in _ims]
             _keep=[0]; _last=_thumb[0]
             for _i in range(1,len(_ims)-1):
-                if float(np.abs(_thumb[_i]-_last).mean())>6.0 and len(_keep)<7:
+                if float(np.abs(_thumb[_i]-_last).mean())>14.0 and len(_keep)<7:
                     _keep.append(_i); _last=_thumb[_i]
             _keep.append(len(_ims)-1)
             if len(_keep)<4: _keep=[int(round(f*(len(_ims)-1))) for f in np.linspace(0,1,4)]

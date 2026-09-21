@@ -7635,3 +7635,30 @@ CAVEAT ON THE ADAPTIVITY: the keep-if-changed filter kept the maximum 8 frames o
 threshold (mean abs difference > 6/255 on a 28x28 thumbnail) is too low to discard anything at this chunk
 length -- the strip is effectively "8 evenly spaced" today. Raise it before claiming the selection does
 work, or drop the claim.
+
+**CENTRING RULES DO NOT CENTRE THE CROSSING (2026-09-20; Denis: "decision 2 looked like it hit the gate --
+tell sonnet we should be aiming for the middle and to be careful if there's an expected gate crossing").
+Confirmed from center11: per-decision closest approach to the structure was 0.178 m on decision 2 and
+0.114 m on decision 3, which contained the transit. Brief gained a section on the crossing: the opening is
+0.8 m wide and needs ~0.2 m of air each side, so aim within 0.2 m of the middle; check the forward view
+for symmetry and correct sideways first; never command yaw in the same move as a crossing; prefer one
+clean run from before the gate to past it. Filmstrip selection threshold also raised so static chunks
+collapse (it now keeps 7-8 instead of always 8).**
+  RESULT (center12): gates 2/2 in order at steps 60 and 399, but dwell 0 -> FAIL, ending 0.65 m from the
+  goal. Crossing margin did NOT improve: decision 7 held the second transit at 0.117 m, against 0.114 m
+  last flight. Worse, the two decisions after the crossing closed to 0.018 m and 0.006 m -- the drone
+  ended up against the centre-gate structure -- and both were APPROVALS of high-trust policy moves into
+  space the agent could not see.
+  The agent followed the new rules faithfully: it backed off twice for a full view, fought three
+  consecutive right-turn proposals to square up, and crossed with no yaw. It also flagged, correctly and
+  unprompted, that it could not prove the second structure was a different gate (it was).
+  Tally over valid attempts: 2 successes in 9.
+READS: (1) The centring instruction changed the agent's PROCESS, not the outcome: it squared up and went
+straight, and still crossed at 0.12 m. Judging lateral offset from a 224 px forward view at 2 m is beyond
+what this model does reliably, which is the same wall as before, now reached by a better route. (2) The
+failure has moved to the endgame. Decisions 2-6 went on a dead-end detour, leaving two decisions after the
+crossing, and the agent approved two large policy moves into unseen space rather than protecting the
+target. A rule worth adding: after the last gate, do not approve a large move into space you cannot see
+when only a decision or two remain. (3) What would actually fix the crossing is a lateral-offset estimate
+the agent does not have to eyeball -- the gap's bearing from the image, or a scan primitive that returns
+the opening's position -- rather than more instruction.
