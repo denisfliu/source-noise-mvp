@@ -145,11 +145,12 @@ def draw_plans(frame,V,proposed=None,commanded=None):
 
 def draw_inset(frame,pos,proposed=None,commanded=None,S=170,half=2.6):
     """Top-down inset of the two plans from the decision pose: always visible, even once the camera has
-    turned away from them. World +x right, +y up; the square is 2 x `half` metres across."""
+    turned away from them. Room frame drawn the way Denis reads it: +x UP, +y RIGHT (2026-09-20);
+    the square is 2 x `half` metres across."""
     im=Image.fromarray(frame).convert("RGB"); W=im.size[0]; dr=ImageDraw.Draw(im,"RGBA")
     x0,y0=W-S-8,8
     dr.rectangle([x0,y0,x0+S,y0+S],fill=(12,14,18,205),outline=(90,98,112,255))
-    P=lambda p:(x0+S/2+(p[0]-pos[0])/half*(S/2), y0+S/2-(p[1]-pos[1])/half*(S/2))
+    P=lambda p:(x0+S/2+(p[1]-pos[1])/half*(S/2), y0+S/2-(p[0]-pos[0])/half*(S/2))
     for g in range(1,3):
         r=g/3*(S/2); dr.ellipse([x0+S/2-r,y0+S/2-r,x0+S/2+r,y0+S/2+r],outline=(58,64,74,255))
     def poly(path,col):
@@ -161,6 +162,7 @@ def draw_inset(frame,pos,proposed=None,commanded=None,S=170,half=2.6):
     elif commanded is not None:
         poly(commanded,(120,235,160,240))
     dr.ellipse([x0+S/2-4,y0+S/2-4,x0+S/2+4,y0+S/2+4],fill=(255,255,255,255))
+    dr.text((x0+S/2-8,y0+4),"+x",fill=(190,198,210,235)); dr.text((x0+S-20,y0+S/2-7),"+y",fill=(190,198,210,235))
     dr.text((x0+7,y0+S-17),f"{half*2:.1f} m across, seen from above",fill=(190,198,210,235))
     return np.asarray(im,np.uint8)
 
