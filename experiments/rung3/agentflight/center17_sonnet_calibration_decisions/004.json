@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "Only one post visible now (beside the gate, opening not visible) - last sideways correction overshot. Nudging back the other way (camera-left) to bring both posts back into frame before crossing.", "move": {"forward": -0.002290580196536038, "left": 0.30804992004927256, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

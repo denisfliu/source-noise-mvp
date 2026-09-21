@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "Stuffed animal is now well-centered in the downward view (small offset only); holding position rather than the policy's 0.27 m forward push, which would carry us off target.", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

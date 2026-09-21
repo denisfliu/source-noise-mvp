@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Both posts visible, similar size, but the gate sits left of frame centre - correcting laterally (camera-left) to bring the gap to centre before advancing, rather than the policy's big forward+yaw move.", "move": {"forward": 0.3046158248229529, "left": 0.40013647580223427, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Center gate in view, left post nearer/bigger (off-centre toward it per calibration); correcting mostly sideways toward the far (right) post with modest forward advance before lining up to cross.", "move": {"forward": 0.4906903797453208, "left": -0.5515640953011652, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

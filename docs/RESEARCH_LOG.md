@@ -7767,3 +7767,25 @@ unlike center12 and center15. (3) The failure is unchanged and now very sharply 
 correctly said "only one post visible, I am beside the gate, backing away", and five times the next view
 was the same. Backing away is not enough to find the opening; the reviewer needs the gap's bearing, which
 is the fix that keeps being deferred.
+
+**CALIBRATION FRAMES: THIRD SONNET SUCCESS, BEST ENDGAME OF ANY FLIGHT (2026-09-21; Denis: "let's give
+calibration frames and see what happens"). experiments/rung3/agent_calibration.jpg: four forward-camera
+frames from the Opus flight labelled ONE POST ONLY / ONE POST, CLOSE / BOTH POSTS, OFF CENTRE / LINED UP,
+plus the real transit filmstrip labelled JUST CROSSED, each with a one-line instruction. No poses or
+coordinates on the sheet. The brief tells the agent to study it once and match every view against it
+before deciding, and adds sigma 0.5 on any override that passes through a gate (the trained slack).**
+  RESULT (center17, Sonnet, 14 decisions, 8.3 min): gates 2/2 in order at steps 60 and 223, dwell 159 ->
+  SUCCESS=True, ending 0.03 m from the goal -- the closest and longest hover of any flight, Opus included.
+  NOT clearance-clean: 0.136 m at step 58, on the left-gate pass inside the APPROVED first decision, the
+  policy's own line as in every flight. The centre-gate crossing was its one slack override (sigma 0.5)
+  and passed 0.25 m from the aperture centre with no clearance violation.
+  It approved 7 and overrode 7, and its reasons name the calibration panel each view matched ("left post
+  nearer/bigger, off-centre toward it", "one post very close, filling the frame", "close to LINED UP").
+  Its self-report matched the judge on all three parts.
+  Tally over valid Sonnet attempts: 3 successes in 12.
+READS: (1) Examples calibrate where adjectives did not: the same rules that failed as prose worked once
+the agent could match views against pictures of the four states. (2) The slack rule did its job on the
+one crossing it was used on (0.25 m from centre, clean); the remaining clearance failure is on the
+approved left-gate leg, which no reviewer has ever corrected because the policy's own approach looks
+fine from the decision frame. (3) This is the cheapest change of the whole series and it produced a
+success with the best endgame; it should stay in every brief from here.
