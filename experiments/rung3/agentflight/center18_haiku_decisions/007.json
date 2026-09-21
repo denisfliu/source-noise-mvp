@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Second gate now visible; override away-move to approach gate center instead.", "move": {"forward": 0.25138329988305896, "left": 0.4322111018239861, "up": -0.1, "yaw_deg": 0.0, "sigma": 0.5}}

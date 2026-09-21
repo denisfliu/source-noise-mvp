@@ -80,6 +80,9 @@ def main():
     # independent of where the drone is pointing; --dz is the same as --up.
     a.add_argument("--dx", type=float); a.add_argument("--dy", type=float); a.add_argument("--dz", type=float)
     a.add_argument("--sigma", type=float, default=0.0); a.add_argument("--timeout", type=float, default=900.0)
+    # --then-wait (2026-09-21): submit the verdict and block for the next decision in the same call, so a
+    # decision costs two round trips (this call + reading the image) instead of three.
+    a.add_argument("--then-wait", action="store_true", help="after answering, wait for and print the next decision")
     g = a.parse_args(); d = g.dir
     if g.cmd in ("wait", "look"):
         t0 = time.time()
@@ -119,6 +122,17 @@ def main():
         write(d, {"k": g.k, "verdict": "override", "why": g.why,
                   "move": {"forward": fwd, "left": lft, "up": up, "yaw_deg": g.yaw, "sigma": g.sigma}})
     print(f"k={g.k} {g.cmd}: {g.why}")
+    if g.then_wait and g.cmd != "stop":
+        t0 = time.time(); k_done = g.k
+        while time.time() - t0 < g.timeout:
+            o = latest(d)
+            if o and o["status"] == "stopped":
+                print("flight ended"); return
+            if o and o["status"] == "waiting" and o["k"] > k_done \
+                    and not os.path.exists(os.path.join(d, "cmds", f"{o['k']:03d}.json")):
+                print(); show(o, d); return
+            time.sleep(0.25)
+        sys.exit("timed out waiting for the next decision")
 
 
 if __name__ == "__main__":

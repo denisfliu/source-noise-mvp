@@ -7789,3 +7789,29 @@ one crossing it was used on (0.25 m from centre, clean); the remaining clearance
 approved left-gate leg, which no reviewer has ever corrected because the policy's own approach looks
 fine from the decision frame. (3) This is the cheapest change of the whole series and it produced a
 success with the best endgame; it should stay in every brief from here.
+
+**SPEED: HAIKU AS THE REVIEWER, AND A FOLDED ROUND TRIP (2026-09-21; Denis: "we need to make the sonnet
+inferences faster, can we lower the effort level?"). No per-agent effort setting exists in the subagent
+definition (model and tools only; checked against the docs), so the levers are the model and the number of
+round trips. agent_sim_cli.py gained --then-wait: approve/override submits the verdict and blocks for the
+next decision in the same call, so a decision costs two round trips (act+wait, read image) instead of
+three. Haiku 4.5 flew the calibration brief with it.**
+  RESULT (center18, Haiku, 14 decisions): median 14 s per decision, 4.7 min for the flight -- half of
+  Sonnet's 27-43 s and an eighth of Opus's 116 s. Score: gates 1/2 (left at step 60, inside the approved
+  first chunk), never approached the centre gate (closest 0.84 m), ended 0.18 m from the goal -> FAIL.
+  Its self-report claims all three parts completed, including a centre-gate transit "with the filmstrip
+  signature" that never happened.
+  Reviewer comparison on this task, same interface (calibration brief for Sonnet/Haiku):
+    reviewer   median s/decision   flight   result
+    Haiku      14                  4.7 min  1/2 gates, goal 0.18 m, false-positive self-report
+    Sonnet     27-43               6-8 min  3 successes in 12; best: 2/2, dwell 159, goal 0.03 m
+    Opus       116                 27 min   2/2, dwell 96, clearance-clean, crossings 0.05-0.06 m off
+READS: (1) Haiku gets the two parts the policy does on its own (the approved left-gate pass and the
+final hover) and fails the one part that needs the reviewer -- steering to the centre gate -- then
+reports it done. It is the fast reviewer for legs the policy already flies, and a liability on the leg
+that matters. (2) The folded round trip is worth keeping for every model. (3) The speed/competence curve
+across three models is now measured and it is steep: each step down halves the latency and loses the
+hard leg. Sonnet with the calibration sheet is the working point; below it the reviewer stops reviewing.
+(4) For hardware, this settles the architecture question rather than the model question: a reviewer
+that can be trusted takes 30 s per decision, so the policy must fly by default and the reviewer must be
+advisory, with its override landing only if it arrives in time.

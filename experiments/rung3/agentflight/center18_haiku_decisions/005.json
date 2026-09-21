@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "Move to center of target region without large turn; maintain hover altitude.", "move": {"forward": -0.07082461171720471, "left": -0.39367991360381493, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}
