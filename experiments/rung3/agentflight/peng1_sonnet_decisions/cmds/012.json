@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "Penguin visible in downward camera slightly behind and left of centre; correcting position and descending toward 1.0 m hover altitude", "move": {"forward": -0.30424938291131853, "left": 0.15110364985029942, "up": -0.24, "yaw_deg": 0.0, "sigma": 0.0}}

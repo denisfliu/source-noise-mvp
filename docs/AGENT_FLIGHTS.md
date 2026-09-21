@@ -57,4 +57,14 @@ closest approach to the figure from the trajectory. 14 decisions each.
 | mann3 | Sonnet | sweep-then-commit phases | found the gate by decision 4, sighted the figure at 11, mirrored its side and flew away | 4.0 m |
 | mann4 | Sonnet | + L/R marks on the image, approach-without-turning-away, distance scale | SUCCESS: sighted at decision 8, ended 1.02 m in front, 14 deg off axis | 1.0 m |
 
-Brief text: `experiments/rung3/agent_brief_mannequin.md`. Cloud page: `experiments/rung3/viz/mannequin.html`.
+
+## Search task: "find the penguin and hover over it"
+
+Same start. Target: the stuffed penguin on the compound task's goal table at (1.525, -0.615), 1.6 m behind the
+start. Scored by the judge's goal box (0.6 x 0.6 x 1.0 m about the penguin) and final xy offset.
+
+| tag | reviewer | brief | outcome | final xy offset | in goal box |
+|---|---|---|---|---|---|
+| peng1 | Sonnet | mannequin brief + downward-camera hover phase | SUCCESS: found in the downward camera at decision 10, centred, descended to 1.0 m, held | 0.11 m | last 30 steps |
+
+Briefs: `experiments/rung3/agent_brief_mannequin.md`, `experiments/rung3/agent_brief_penguin.md`. Cloud page: `experiments/rung3/viz/mannequin.html`.

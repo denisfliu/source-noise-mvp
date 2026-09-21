@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "The black table here looks empty, likely gate equipment not the penguin; turning 45 deg left to check the large unswept region of the room before committing further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

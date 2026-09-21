@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "A gate post is close and centered ahead with a low black table to its left; turning left to line up on the table while staying clear of the post, only a small forward step", "move": {"forward": 0.21812494204186272, "left": 0.12215363137964438, "up": 0.0, "yaw_deg": 20.0, "sigma": 0.0}}

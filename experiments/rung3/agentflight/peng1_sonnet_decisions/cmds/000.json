@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "No penguin visible in this empty corner; sweeping in place with a 45 deg left turn to scan the room before moving", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

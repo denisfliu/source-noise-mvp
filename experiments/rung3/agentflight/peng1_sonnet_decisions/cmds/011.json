@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "Downward camera clearly shows the black-and-white penguin, slightly ahead and right of centre on a purple tile; nudging forward-right to centre it and beginning descent", "move": {"forward": 0.4042654727859272, "left": -0.247122292626891, "up": -0.3, "yaw_deg": 0.0, "sigma": 0.0}}

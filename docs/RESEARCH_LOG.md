@@ -7928,3 +7928,28 @@ an arbitrary start heading, and the agent gets there through the movement vocabu
   facing it, not perfectly squared up" -- which is the scored outcome (1.02 m, 14 deg). An accurate
   self-report, unlike center6 and center18. Its --then-wait on the last decision hung until killed by pid,
   because no decision 14 exists; fixed: the rollout now writes AGENT_DIR/done at BATCH_DONE and both CLI wait loops return "flight ended" on it.
+
+**PENGUIN FOUND (2026-09-21, peng1, Sonnet, 14 decisions; Denis: "tell sonnet to find the penguin as well").
+Second search target: the stuffed penguin on the compound task's goal table at (1.525, -0.615), 1.6 m behind
+the 180-degree start, sitting on a low black wire table inside a blue-tape square on the mats. Same harness
+and budget as mann4; brief experiments/rung3/agent_brief_penguin.md adds the downward-camera hover phase
+(centre it in the downward panel with 0.2-0.5 m moves, descend to 1.0 m, never below 0.8 m, then zero
+movement) and the downward panel's orientation (image up = heading, image right = heading minus 90).
+Reference renders: agentflight/penguin/penguin_reference_views.png.**
+  RESULT: SUCCESS. Final pose (1.55, -0.50, 1.01): 0.11 m from the penguin in xy at the goal box's centre
+  height, inside the judge's goal box for the last 30 steps (the whole final hold), closest approach 0.05 m,
+  minimum altitude 1.00 m. Median 23 s per decision (48 s for the first). Sweep decisions 0-5 (six left
+  turns) saw the gates but no penguin; decisions 6-8 chased a "small dark object on a low black table between
+  the gate posts" that turned out to be the gate's own base ("likely gate equipment, not the penguin");
+  decision 9 was an empty corner. The find came from the DOWNWARD camera at decision 10 -- "a small
+  black-and-white blob on a mat tile, consistently behind-right of the drone across the last moves" -- and
+  decisions 11-13 centred it and descended, the last reason "clearly centred in the downward camera at
+  1.0 m altitude; holding". Its own report is honest about this: the forward camera never showed an
+  unambiguous silhouette, so it cannot say which mark the penguin was nearer.
+READS: (1) Two search targets, two successes in a row under the marked-image brief. (2) A 40 cm object on a
+low table is below the forward camera's useful resolution at 224 px past ~2 m; the reviewer found it by
+noticing a recurring blob across consecutive downward frames, which is exactly the decision-log replay and
+pose track doing their job. (3) The hover phase worked as written: three small corrections, one descent, a
+zero-movement hold, no altitude excursion below the floor of the goal box. (4) The false table at 6-8 cost
+three decisions; a second calibration frame of the penguin itself would remove that, at the price of telling
+the agent what it is looking for in pixels rather than words.

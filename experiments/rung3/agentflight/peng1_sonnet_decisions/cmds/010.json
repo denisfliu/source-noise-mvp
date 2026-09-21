@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "Downward camera shows a small black-and-white blob on a mat tile, consistently behind-right of the drone across the last two frames; shifting back and right to bring it toward the centre of the downward view", "move": {"forward": -0.49710620863495736, "left": -0.4023498693134847, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

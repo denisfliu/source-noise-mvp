@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "A gate post visible near the L mark but no penguin yet; continuing the rotation to cover the remaining unseen part of the room", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}
