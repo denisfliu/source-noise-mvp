@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "Mannequin now fills the panel nearly top to bottom and is almost centred (a touch nearer the L mark), consistent with holding about 1m in front; small centering turn only, no further translation", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 3.0, "sigma": 0.0}}

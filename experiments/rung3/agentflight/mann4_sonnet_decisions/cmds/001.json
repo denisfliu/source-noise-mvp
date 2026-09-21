@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "Still no gate visible, just a pillar and wall corner; continuing the sweep left toward heading 0 (+x) where gates should be", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

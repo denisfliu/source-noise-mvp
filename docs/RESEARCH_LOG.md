@@ -7893,3 +7893,32 @@ unchanged: the bearing from (3.07, 0.67) heading +0.26 is 29 deg RIGHT of the op
 corrected position (33 deg for the old one), the agent called it left and flew away. Lesson for the
 diagnostic method: a two-pose triangulation needs a baseline across the line of sight; when the poses
 are collinear with the target, read the range off the cloud instead.
+
+**MANNEQUIN FOUND (2026-09-21, mann4, Sonnet, 14 decisions; Denis: "let's try to get sonnet to find the
+mannequin actually this time"). Three changes from mann3, all aimed at the left/right mirror that lost that
+flight: (1) the side convention is drawn ON the decision image -- yellow "L" / "R" in the forward panel's
+bottom corners and a centre tick (gate_rollout_batch._ask, AGENT_LR_MARKS=1 by default), and the brief says
+to name the side by the nearer mark before acting; (2) the sighting phase says to turn toward the figure and
+move in the SAME decision, never to line up first, with the turn sign per side spelled out; (3) a distance
+scale from the figure's height in the panel (75-degree field of view: fills the panel at 1 m, half at 2 m,
+a quarter at 4.5 m). Brief tracked at experiments/rung3/agent_brief_mannequin.md; ledger of every
+agent-reviewed flight now at docs/AGENT_FLIGHTS.md.**
+  RESULT: SUCCESS. Final pose (6.64, -0.89, 1.54) heading 0.50 rad: 1.02 m from the figure at (7.4, -0.2),
+  14 deg off the line to it, and the last decision image shows the mannequin nearly full-height and almost
+  centred. Sweep took decisions 0-5 (six 45-degree left turns; the first gate post appeared at decision 4
+  "cropped at the L mark"), decisions 6-7 sidestepped to centre the gate and crossed it (downward camera
+  showed the crossbar overhead), decision 8 sighted "a grey humanoid figure nearer the L mark, standing by a
+  table", and decisions 9-13 were four straight approach moves, each reason naming the nearer mark and the
+  panel-height distance estimate (40%% -> 2.6 m, 45%% -> 2.2 m, 55%% -> 1.9 m, 80%% -> 1.3 m, then "nearly top to
+  bottom"). Fourteen overrides, no approvals -- the policy proposed its trained routes throughout. Median
+  19 s per decision, 76 s for the first (calibration image + first look). Closest approaches, all four
+  attempts: 7.3, 7.5, 4.0, 1.0 m. Cloud page: experiments/rung3/viz/mannequin.html (mann1-4 over the room,
+  figure and back wall marked). Decisions archived in agentflight/mann4_sonnet_decisions/.
+READS: (1) The mirror error was a READING error, not a reasoning error: the same reviewer that called a
+30-degree-right figure "left" with the convention written in words named the side correctly at every one
+of six sightings once the marks were in the pixels. Put conventions in the image the model reads, not in the
+brief. (2) "Turn and move in the same decision" spent zero decisions lining up; mann3 spent four. (3) The
+distance scale produced monotone, plausible estimates decision after decision, and the approach stopped at
+the right range on its own. (4) The policy contributed the flying and nothing else on this task; every
+decision was authored. That is the demonstration Denis asked for: a task the policy was never trained on,
+an arbitrary start heading, and the agent gets there through the movement vocabulary alone.

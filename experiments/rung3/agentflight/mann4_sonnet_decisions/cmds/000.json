@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "Sweeping to find gates; policy's forward move faces a plain wall with a door, so turning left to scan toward +x where the gates should be", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

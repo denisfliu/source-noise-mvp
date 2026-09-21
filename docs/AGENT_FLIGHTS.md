@@ -55,6 +55,6 @@ closest approach to the figure from the trajectory. 14 decisions each.
 | mann1 | Sonnet | gate brief + objective | swept 360 deg in place, never moved toward the gates | 7.3 m |
 | mann2 | Sonnet | + explore rule | explored the wrong half (-x bay), never turned | 7.5 m |
 | mann3 | Sonnet | sweep-then-commit phases | found the gate by decision 4, sighted the figure at 11, mirrored its side and flew away | 4.0 m |
-| mann4 | Sonnet | + L/R marks on the image, approach-without-turning-away, distance scale | running 2026-09-21 | |
+| mann4 | Sonnet | + L/R marks on the image, approach-without-turning-away, distance scale | SUCCESS: sighted at decision 8, ended 1.02 m in front, 14 deg off axis | 1.0 m |
 
-Brief text: `experiments/rung3/agent_brief_mannequin.md`.
+Brief text: `experiments/rung3/agent_brief_mannequin.md`. Cloud page: `experiments/rung3/viz/mannequin.html`.

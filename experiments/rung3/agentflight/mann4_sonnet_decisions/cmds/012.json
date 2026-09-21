@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "Mannequin fills about 80% of panel height (~1.3m away), nearly centred with a slight lean toward the L mark; closing the last ~0.3m and turning slightly left to square up before holding", "move": {"forward": 0.30327508853543617, "left": 0.022895865867518364, "up": 0.0, "yaw_deg": 4.0, "sigma": 0.0}}
