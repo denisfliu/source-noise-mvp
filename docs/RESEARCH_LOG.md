@@ -7215,3 +7215,34 @@ not "how the flow would bend the command for safety"; it is the flow's disagreem
 the right amount to keep is zero. The pin's sigma is different in kind: it is trained on corrupted commands
 with the clean chunk as the target, so its slack is a learned correction, not a leak. This is the cleanest
 statement so far of what the training buys over the projection.
+
+**BAD SKETCHES ON THE REAL-ONLY CHECKPOINTS (2026-09-20; Denis: "let's do the bad sketches test" -- the
+one property the projection cannot have is a learned slack; does the real-only pin's sigma buy clearance
+the way the mixed pin's did, 2/10 -> 9/10 on 2026-09-02?). Sketches: 4-click L->C (own clearance to the
+center west post 0.07 m) and R->C (0.04 m). Arms: real-only pin sigma 0 / 0.5; real-only pi0 with the
+command carried by velocity projection (s = 0); SDEdit t0 0.5. 5 trials. scripts/run_badsketch.sh;
+page viz/badsketch.html; scores experiments/rung3/vproj/badsketch_scores.txt.**
+  L->C                gates latched (of 2)   min clearance (m, where)               tracking
+    pin sigma 0        1,0,0,0,0              0.01-0.08 at the center west post      0.08
+    pin sigma 0.5      0,0,0,0,0              0.02-0.22 at the LEFT gate's east post 0.13 (leaves the sketch)
+    v-proj s=0         2,2,2,2,2              0.066 on all five (= the sketch's own) 0.013
+    SDEdit 0.5         0,0,1,1,0              0.001-0.08 at the left gate            0.13
+  R->C
+    pin sigma 0        1,2,2,1,2              0.005-0.05, right gate and center      0.04
+    pin sigma 0.5      0,0,0,0,0              0.04-0.08 at the right gate            0.06 (leaves the sketch)
+    v-proj s=0         2,2,2,2,2              0.008-0.020 at the center post         0.013
+    SDEdit 0.5         0,2,1,2,0              0.003-0.04                             0.09
+READS: (1) The projection reproduces the sketch exactly, flaw included: every flight latches both gates and
+grazes the center post at the sketch's own clearance (0.066 vs 0.07 drawn). It cannot dodge, as predicted.
+(2) The real-only pin does not dodge either. At sigma 0 it tracks worse than the projection (4-8 cm) and
+still grazes; at sigma 0.5 the residual abandons the sketch altogether (no gate latched on either route)
+and heads back toward the routes it knows. The mixed pin's 2/10 -> 9/10 on this exact sketch came from a
+residual that had seen the center route in the simulated demos: opening sigma let it blend the sketch with
+what it knew about the center gate. The real-only residual knows nothing about the center gate (zero demos
+in either domain), so opening sigma hands control to a residual with no better idea, and it leaves. (3) So
+in the real-only regime the slack claim is not supported: the trained slack is only useful where the
+residual has knowledge the command lacks, and on 100 real demos of two straight gate passes it has none
+about a third gate. (4) SDEdit is the worst of the four on both routes (contact at the first gate).
+Consequence for the paper: on real-only data the honest ranking on authored routes is projection > pin >
+SDEdit for execution, and the pin's differentiator has to be demonstrated where the residual has scene
+knowledge (mixed data), or reframed as noise tolerance rather than obstacle avoidance.

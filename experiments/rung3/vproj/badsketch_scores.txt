@@ -1,0 +1,160 @@
+== badsketch: bs_pin0_L (mode=pin sketch=sketch_cmpl_min4.json scene=left_and_center)
+traj_bs_pin0_L_1.npy         transit=True@64 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_pin0_L_2.npy         transit=False@None wrong_dir=1 goal=False  SUCCESS=False
+traj_bs_pin0_L_3.npy         transit=False@None wrong_dir=1 goal=False  SUCCESS=False
+traj_bs_pin0_L_4.npy         transit=False@None wrong_dir=1 goal=False  SUCCESS=False
+traj_bs_pin0_L_5.npy         transit=False@None wrong_dir=1 goal=False  SUCCESS=False
+== 1/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_bs_pin0_L_1.npy         min-clearance 0.084 m @step 151 [ 2.21 -0.37  1.5 ]  steps<0.18: 29  CLEAN=False
+traj_bs_pin0_L_2.npy         min-clearance 0.043 m @step 153 [ 2.24 -0.33  1.51]  steps<0.18: 22  CLEAN=False
+traj_bs_pin0_L_3.npy         min-clearance 0.012 m @step 149 [ 2.27 -0.3   1.5 ]  steps<0.18: 20  CLEAN=False
+traj_bs_pin0_L_4.npy         min-clearance 0.043 m @step 155 [ 2.24 -0.34  1.48]  steps<0.18: 37  CLEAN=False
+traj_bs_pin0_L_5.npy         min-clearance 0.035 m @step 149 [ 2.23 -0.32  1.5 ]  steps<0.18: 19  CLEAN=False
+== 0/5 clearance-clean (left_and_center)
+traj_bs_pin0_L_1.npy             track median 0.101 m  p90 0.219  max 0.275  (steps 0-141)
+traj_bs_pin0_L_2.npy             track median 0.069 m  p90 0.186  max 0.197  (steps 0-190)
+traj_bs_pin0_L_3.npy             track median 0.067 m  p90 0.129  max 0.157  (steps 0-184)
+traj_bs_pin0_L_4.npy             track median 0.084 m  p90 0.184  max 0.195  (steps 0-194)
+traj_bs_pin0_L_5.npy             track median 0.094 m  p90 0.164  max 0.211  (steps 0-189)
+== tracking median over flights 0.084 m (range 0.067-0.101)
+== badsketch: bs_pin05_L (mode=pin sketch=sketch_cmpl_min4s.json scene=left_and_center)
+traj_bs_pin05_L_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_L_2.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_L_3.npy        transit=False@None wrong_dir=2 goal=False  SUCCESS=False
+traj_bs_pin05_L_4.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_L_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_bs_pin05_L_1.npy        min-clearance 0.207 m @step  98 [0.96 0.25 1.5 ]  steps<0.18:  0  CLEAN=True
+traj_bs_pin05_L_2.npy        min-clearance 0.219 m @step  96 [0.94 0.29 1.49]  steps<0.18:  0  CLEAN=True
+traj_bs_pin05_L_3.npy        min-clearance 0.023 m @step  94 [1.14 0.34 1.5 ]  steps<0.18: 15  CLEAN=False
+traj_bs_pin05_L_4.npy        min-clearance 0.189 m @step  88 [0.99 0.23 1.5 ]  steps<0.18:  0  CLEAN=True
+traj_bs_pin05_L_5.npy        min-clearance 0.062 m @step  86 [1.13 0.28 1.48]  steps<0.18: 16  CLEAN=False
+== 3/5 clearance-clean (left_and_center)
+traj_bs_pin05_L_1.npy            track median 0.125 m  p90 0.682  max 0.764  (steps 0-146)
+traj_bs_pin05_L_2.npy            track median 0.127 m  p90 0.678  max 0.688  (steps 0-147)
+traj_bs_pin05_L_3.npy            track median 0.187 m  p90 0.568  max 0.595  (steps 0-143)
+traj_bs_pin05_L_4.npy            track median 0.113 m  p90 0.693  max 0.749  (steps 0-146)
+traj_bs_pin05_L_5.npy            track median 0.131 m  p90 0.590  max 0.613  (steps 0-144)
+== tracking median over flights 0.127 m (range 0.113-0.187)
+== badsketch: bs_vproj_L (mode=vproj sketch=sketch_cmpl_min4.json scene=left_and_center)
+traj_bs_vproj_L_1.npy        transit=True@45 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_L_2.npy        transit=True@40 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_L_3.npy        transit=True@47 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_L_4.npy        transit=True@36 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_L_5.npy        transit=True@47 wrong_dir=0 goal=True  SUCCESS=True
+== 5/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_bs_vproj_L_1.npy        min-clearance 0.066 m @step 124 [ 2.32 -0.18  1.5 ]  steps<0.18: 18  CLEAN=False
+traj_bs_vproj_L_2.npy        min-clearance 0.066 m @step 125 [ 2.33 -0.2   1.5 ]  steps<0.18: 21  CLEAN=False
+traj_bs_vproj_L_3.npy        min-clearance 0.066 m @step 125 [ 2.33 -0.2   1.5 ]  steps<0.18: 16  CLEAN=False
+traj_bs_vproj_L_4.npy        min-clearance 0.066 m @step 125 [ 2.33 -0.2   1.5 ]  steps<0.18: 13  CLEAN=False
+traj_bs_vproj_L_5.npy        min-clearance 0.066 m @step 125 [ 2.33 -0.2   1.5 ]  steps<0.18: 12  CLEAN=False
+== 0/5 clearance-clean (left_and_center)
+traj_bs_vproj_L_1.npy            track median 0.013 m  p90 0.033  max 0.070  (steps 0-165)
+traj_bs_vproj_L_2.npy            track median 0.013 m  p90 0.022  max 0.092  (steps 0-165)
+traj_bs_vproj_L_3.npy            track median 0.013 m  p90 0.025  max 0.056  (steps 0-164)
+traj_bs_vproj_L_4.npy            track median 0.016 m  p90 0.051  max 0.082  (steps 0-165)
+traj_bs_vproj_L_5.npy            track median 0.014 m  p90 0.085  max 0.127  (steps 0-165)
+== tracking median over flights 0.013 m (range 0.013-0.016)
+== badsketch: bs_sde05_L (mode=sde:0.5 sketch=sketch_cmpl_min4.json scene=left_and_center)
+traj_bs_sde05_L_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_sde05_L_2.npy        transit=False@None wrong_dir=2 goal=False  SUCCESS=False
+traj_bs_sde05_L_3.npy        transit=True@59 wrong_dir=2 goal=True  SUCCESS=False
+traj_bs_sde05_L_4.npy        transit=True@60 wrong_dir=1 goal=True  SUCCESS=False
+traj_bs_sde05_L_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (left)
+scene=left_and_center gate cloud 25393 pts; body-contact threshold ~0.18 m
+traj_bs_sde05_L_1.npy        min-clearance 0.081 m @step 103 [1.1  0.28 1.45]  steps<0.18: 21  CLEAN=False
+traj_bs_sde05_L_2.npy        min-clearance 0.001 m @step  99 [1.22 0.34 1.5 ]  steps<0.18: 18  CLEAN=False
+traj_bs_sde05_L_3.npy        min-clearance 0.059 m @step  83 [1.27 0.39 1.45]  steps<0.18: 17  CLEAN=False
+traj_bs_sde05_L_4.npy        min-clearance 0.045 m @step  97 [1.24 0.39 1.46]  steps<0.18: 33  CLEAN=False
+traj_bs_sde05_L_5.npy        min-clearance 0.005 m @step  88 [1.19 0.34 1.44]  steps<0.18: 16  CLEAN=False
+== 0/5 clearance-clean (left_and_center)
+traj_bs_sde05_L_1.npy            track median 0.140 m  p90 0.497  max 0.525  (steps 0-130)
+traj_bs_sde05_L_2.npy            track median 0.037 m  p90 0.397  max 0.447  (steps 0-138)
+traj_bs_sde05_L_3.npy            track median 0.125 m  p90 0.330  max 0.394  (steps 0-118)
+traj_bs_sde05_L_4.npy            track median 0.127 m  p90 0.293  max 0.318  (steps 0-135)
+traj_bs_sde05_L_5.npy            track median 0.064 m  p90 0.322  max 0.414  (steps 0-123)
+== tracking median over flights 0.125 m (range 0.037-0.140)
+== badsketch: bs_pin0_R (mode=pin sketch=sketch_cmpr_min4.json scene=right_and_center)
+traj_bs_pin0_R_1.npy         transit=True@69 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_pin0_R_2.npy         transit=True@72 wrong_dir=2 goal=True  SUCCESS=False
+traj_bs_pin0_R_3.npy         transit=True@71 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_pin0_R_4.npy         transit=True@73 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_pin0_R_5.npy         transit=True@70 wrong_dir=0 goal=True  SUCCESS=True
+== 4/5 success (right)
+scene=right_and_center gate cloud 26848 pts; body-contact threshold ~0.18 m
+traj_bs_pin0_R_1.npy         min-clearance 0.022 m @step 104 [ 0.96 -1.    1.49]  steps<0.18: 71  CLEAN=False
+traj_bs_pin0_R_2.npy         min-clearance 0.051 m @step 111 [ 0.97 -1.03  1.48]  steps<0.18: 63  CLEAN=False
+traj_bs_pin0_R_3.npy         min-clearance 0.012 m @step 245 [ 2.32 -0.34  1.48]  steps<0.18: 74  CLEAN=False
+traj_bs_pin0_R_4.npy         min-clearance 0.005 m @step 182 [ 2.3  -0.33  1.5 ]  steps<0.18: 77  CLEAN=False
+traj_bs_pin0_R_5.npy         min-clearance 0.022 m @step 110 [ 0.95 -1.01  1.48]  steps<0.18: 83  CLEAN=False
+== 0/5 clearance-clean (right_and_center)
+traj_bs_pin0_R_1.npy             track median 0.077 m  p90 0.123  max 0.147  (steps 0-116)
+traj_bs_pin0_R_2.npy             track median 0.038 m  p90 0.167  max 0.204  (steps 0-124)
+traj_bs_pin0_R_3.npy             track median 0.048 m  p90 0.129  max 0.144  (steps 0-120)
+traj_bs_pin0_R_4.npy             track median 0.028 m  p90 0.115  max 0.131  (steps 0-119)
+traj_bs_pin0_R_5.npy             track median 0.043 m  p90 0.118  max 0.143  (steps 0-117)
+== tracking median over flights 0.043 m (range 0.028-0.077)
+== badsketch: bs_pin05_R (mode=pin sketch=sketch_cmpr_min4s.json scene=right_and_center)
+traj_bs_pin05_R_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_R_2.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_R_3.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_R_4.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_pin05_R_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 0/5 success (right)
+scene=right_and_center gate cloud 26848 pts; body-contact threshold ~0.18 m
+traj_bs_pin05_R_1.npy        min-clearance 0.074 m @step 149 [ 0.91 -0.84  1.46]  steps<0.18: 40  CLEAN=False
+traj_bs_pin05_R_2.npy        min-clearance 0.035 m @step 248 [ 2.25 -0.33  1.4 ]  steps<0.18: 41  CLEAN=False
+traj_bs_pin05_R_3.npy        min-clearance 0.037 m @step 154 [ 0.95 -0.87  1.45]  steps<0.18: 44  CLEAN=False
+traj_bs_pin05_R_4.npy        min-clearance 0.059 m @step 153 [ 0.94 -0.84  1.43]  steps<0.18: 28  CLEAN=False
+traj_bs_pin05_R_5.npy        min-clearance 0.078 m @step 155 [ 0.94 -0.83  1.45]  steps<0.18: 31  CLEAN=False
+== 0/5 clearance-clean (right_and_center)
+traj_bs_pin05_R_1.npy            track median 0.059 m  p90 0.285  max 0.298  (steps 0-152)
+traj_bs_pin05_R_2.npy            track median 0.048 m  p90 0.254  max 0.269  (steps 0-156)
+traj_bs_pin05_R_3.npy            track median 0.134 m  p90 0.285  max 0.323  (steps 0-158)
+traj_bs_pin05_R_4.npy            track median 0.042 m  p90 0.321  max 0.325  (steps 0-157)
+traj_bs_pin05_R_5.npy            track median 0.056 m  p90 0.289  max 0.306  (steps 0-158)
+== tracking median over flights 0.056 m (range 0.042-0.134)
+== badsketch: bs_vproj_R (mode=vproj sketch=sketch_cmpr_min4.json scene=right_and_center)
+traj_bs_vproj_R_1.npy        transit=True@53 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_R_2.npy        transit=True@53 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_R_3.npy        transit=True@53 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_R_4.npy        transit=True@53 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_vproj_R_5.npy        transit=True@53 wrong_dir=0 goal=True  SUCCESS=True
+== 5/5 success (right)
+scene=right_and_center gate cloud 26848 pts; body-contact threshold ~0.18 m
+traj_bs_vproj_R_1.npy        min-clearance 0.020 m @step 187 [ 2.28 -0.25  1.54]  steps<0.18: 66  CLEAN=False
+traj_bs_vproj_R_2.npy        min-clearance 0.018 m @step 189 [ 2.31 -0.26  1.49]  steps<0.18: 55  CLEAN=False
+traj_bs_vproj_R_3.npy        min-clearance 0.008 m @step 185 [ 2.3  -0.3   1.48]  steps<0.18: 55  CLEAN=False
+traj_bs_vproj_R_4.npy        min-clearance 0.012 m @step 195 [ 2.32 -0.27  1.5 ]  steps<0.18: 59  CLEAN=False
+traj_bs_vproj_R_5.npy        min-clearance 0.013 m @step 358 [ 2.25 -0.31  1.27]  steps<0.18: 289  CLEAN=False
+== 0/5 clearance-clean (right_and_center)
+traj_bs_vproj_R_1.npy            track median 0.012 m  p90 0.034  max 0.049  (steps 0-108)
+traj_bs_vproj_R_2.npy            track median 0.013 m  p90 0.070  max 0.099  (steps 0-108)
+traj_bs_vproj_R_3.npy            track median 0.013 m  p90 0.044  max 0.053  (steps 0-108)
+traj_bs_vproj_R_4.npy            track median 0.013 m  p90 0.115  max 0.143  (steps 0-108)
+traj_bs_vproj_R_5.npy            track median 0.018 m  p90 0.061  max 0.080  (steps 0-108)
+== tracking median over flights 0.013 m (range 0.012-0.018)
+== badsketch: bs_sde05_R (mode=sde:0.5 sketch=sketch_cmpr_min4.json scene=right_and_center)
+traj_bs_sde05_R_1.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+traj_bs_sde05_R_2.npy        transit=True@57 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_sde05_R_3.npy        transit=True@60 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_sde05_R_4.npy        transit=True@52 wrong_dir=0 goal=True  SUCCESS=True
+traj_bs_sde05_R_5.npy        transit=False@None wrong_dir=0 goal=False  SUCCESS=False
+== 3/5 success (right)
+scene=right_and_center gate cloud 26848 pts; body-contact threshold ~0.18 m
+traj_bs_sde05_R_1.npy        min-clearance 0.041 m @step  61 [ 0.08 -1.35  1.49]  steps<0.18: 72  CLEAN=False
+traj_bs_sde05_R_2.npy        min-clearance 0.003 m @step 246 [ 2.32 -0.31  1.41]  steps<0.18: 68  CLEAN=False
+traj_bs_sde05_R_3.npy        min-clearance 0.003 m @step 181 [ 2.3  -0.3   1.49]  steps<0.18: 96  CLEAN=False
+traj_bs_sde05_R_4.npy        min-clearance 0.006 m @step 209 [ 2.32 -0.33  1.49]  steps<0.18: 57  CLEAN=False
+traj_bs_sde05_R_5.npy        min-clearance 0.009 m @step 113 [ 0.98 -0.96  1.53]  steps<0.18: 78  CLEAN=False
+== 0/5 clearance-clean (right_and_center)
+traj_bs_sde05_R_1.npy            track median 0.067 m  p90 0.140  max 0.175  (steps 0-130)
+traj_bs_sde05_R_2.npy            track median 0.089 m  p90 0.116  max 0.132  (steps 0-124)
+traj_bs_sde05_R_3.npy            track median 0.055 m  p90 0.072  max 0.074  (steps 0-119)
+traj_bs_sde05_R_4.npy            track median 0.112 m  p90 0.150  max 0.201  (steps 0-117)
+traj_bs_sde05_R_5.npy            track median 0.092 m  p90 0.172  max 0.185  (steps 0-119)
+== tracking median over flights 0.089 m (range 0.055-0.112)
