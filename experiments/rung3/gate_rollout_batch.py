@@ -224,7 +224,7 @@ if AGENT_DIR:
     def _decode(c):
         ch=(_U@np.asarray(c,np.float32)).reshape(50,32)[:,:4]*( _AS+1e-6)+_AM
         return np.cumsum(ch[:,:3],0), float(np.degrees(ch[:,3].sum()))
-    _agent_hist=[]; _last_strip=[None]
+    _agent_hist=[]; _last_strip=[None]; _exec_holder=[None]
     def _ask(k,trial,pos,yaw,imf,imw,c,sig):
         # The policy's command always describes 5 s of motion, but only the first `apc` steps execute
         # before the reviewer is asked again. Report the part that will actually happen (2026-09-21).
@@ -262,7 +262,8 @@ if AGENT_DIR:
              "path_end":[round(float(pos[i]+net[i]),3) for i in range(3)],
              "speed_max_mps":round(float(np.abs(np.diff(path,axis=0)).max()*10),2),"sigma_serve":round(float(sig),2)},
              "seconds_per_decision":round(apc*0.1,1),"t_asked":_time.time(),
-             "history":_agent_hist[-8:],"during_last_move":_last_strip[0]}
+             "history":_agent_hist[-8:],"during_last_move":_last_strip[0],
+             "last_execution":_exec_holder[0]}
         tmp=os.path.join(AGENT_DIR,"latest.json.tmp"); _json.dump(row,open(tmp,"w")); os.replace(tmp,os.path.join(AGENT_DIR,"latest.json"))
         cp=os.path.join(AGENT_DIR,"cmd.json"); t0=_time.time()
         while _time.time()-t0<AGENT_TIMEOUT:
@@ -335,13 +336,27 @@ def run_trial(t):
         if AGENT_DIR:
             _cmd=_ask(ci,o["snmvp_trial"],pos,yaw,imf,imw,_res.get("snmvp_c",np.zeros(16,np.float32)),
                       float(_res.get("snmvp_sigma_serve",-1.0)))
-            _think=_cmd.get("why","") or ""; _verd=_cmd.get("verdict","approve")
+            _think=_cmd.get("why","") or ""; _verd=_cmd.get("verdict","approve"); _exec_holder[0]=None
             if _cmd.get("stop"): break
             _cprop=np.asarray(_res.get("snmvp_c",np.zeros(16,np.float32)),np.float32)
             _plan_prop=pos+_decode(_cprop)[0]; _plan_cmd=None
             if _verd=="override" and _cmd.get("move"):
-                o2=dict(o); o2["snmvp_agent"]={"move":_cmd["move"],"say":_think,"k":ci,"apc":apc}
-                _res=pol.infer(o2); act=np.asarray(_res["actions"])[:,:7]; n=min(len(act),apc)
+                # Adaptive execution length (Denis, 2026-09-21): an authored move is shaped to complete at
+                # a natural pace (AGENT_SPEED m/s) and we run at most AGENT_MAXEXEC steps of it before
+                # asking again. A short correction finishes and returns control quickly; a long move is
+                # interrupted part way so the reviewer can look before the rest happens. An APPROVAL still
+                # runs the policy's whole 5-second chunk, so agreeing with the policy stays cheap.
+                _mv=_cmd["move"]
+                _d=float(np.hypot(_mv.get("forward",0.0) or 0.0,_mv.get("left",0.0) or 0.0))
+                _spd=float(os.environ.get("AGENT_SPEED","0.45")); _cap=int(os.environ.get("AGENT_MAXEXEC","25"))
+                _nfull=int(np.clip(round(_d/max(_spd,1e-3)*10),10,apc))
+                o2=dict(o); o2["snmvp_agent"]={"move":_mv,"say":_think,"k":ci,"apc":_nfull}
+                _res=pol.infer(o2); act=np.asarray(_res["actions"])[:,:7]
+                n=int(min(len(act),_nfull,_cap))
+                _exec_holder[0]=(f"your move needed {_nfull} steps ({_nfull*0.1:.1f} s); {n} of them ran "
+                                 f"({100*n/max(_nfull,1):.0f} % of the movement) before this decision"
+                                 if n<_nfull else
+                                 f"your move ran in full ({n} steps, {n*0.1:.1f} s)")
                 _plan_cmd=pos+_decode(np.asarray(_res.get("snmvp_c",_cprop),np.float32))[0]
             print(f"[agent] {ci}: {_verd} ({_cmd.get('wait_s','?')}s) :: {_think[:110]}",flush=True)
         if KICK and executed <= KICK_STEP < executed + n:

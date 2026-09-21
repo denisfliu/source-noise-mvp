@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "Left-gate posts have slid to the right edge of frame (only a sliver visible) and the proposed move drifts further +y, away from them; turning right and easing off +y should re-center the gate before advancing.", "move": {"forward": 0.09488411537461156, "left": -0.231294195019195, "up": 0.0, "yaw_deg": -25.0, "sigma": 0.0}}

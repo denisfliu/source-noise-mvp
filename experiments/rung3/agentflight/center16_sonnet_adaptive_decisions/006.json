@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Still only one post visible and now very close/filling the frame -- risk of clipping it. Backing away and easing the yaw back toward center to find the second post and crossbar before advancing further.", "move": {"forward": -0.3903132831068117, "left": -0.012471608973257775, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "Full center-gate frame (both posts + top/bottom bars) is finally in view, slightly left of center; heading straight at the opening instead of the policy's large rightward drift-and-turn, which would swing us off it again.", "move": {"forward": 0.8002476084017912, "left": 0.09799880227438162, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.0}}

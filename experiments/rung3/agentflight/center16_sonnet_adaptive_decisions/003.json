@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Both left-gate posts are now visible, slightly left of center; the proposed move angles further left than that, so I'm easing the lateral component to head at the middle of the opening.", "move": {"forward": 0.8147706767631392, "left": 0.14542607842796323, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.0}}

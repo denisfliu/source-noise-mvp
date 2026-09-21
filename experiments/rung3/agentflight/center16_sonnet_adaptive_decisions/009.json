@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "One post is filling the frame again -- we drifted too close to it after the last advance. Backing off to re-open the view of both posts and the opening before aiming again, same recovery that worked last cycle.", "move": {"forward": -0.5020855981743687, "left": 0.003170505619987718, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

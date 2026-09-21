@@ -11,7 +11,7 @@ The reason is burned into the video.
   python agent_sim_cli.py override --k K --why "..." [--forward m] [--left m] [--up m] [--yaw deg] [--sigma s]
   python agent_sim_cli.py stop --k K --why "..."
 """
-import argparse, json, math, os, sys, time
+import argparse, glob, json, math, os, sys, time
 
 DEF = os.path.expanduser("~/ctxrun/agent_sim")
 
@@ -29,7 +29,7 @@ def latest(d):
     return None
 
 
-def show(o):
+def show(o, d):
     p = o["proposal"]
     print(f"decision k={o['k']}  pose x={o['pose'][0]:.2f} y={o['pose'][1]:.2f} z={o['pose'][2]:.2f} "
           f"heading={o['pose'][3]:.2f} rad ({o['pose'][3]*57.3:+.0f} deg; --yaw is in this same sense, positive turns left)")
@@ -37,9 +37,26 @@ def show(o):
           f"actually execute before you are asked again):")
     print(f"  net move  dx {p['net_xyz'][0]:+.2f}  dy {p['net_xyz'][1]:+.2f}  dz {p['net_xyz'][2]:+.2f} m,  yaw {p['net_yaw_deg']:+.1f} deg")
     print(f"  ending at x {p['path_end'][0]:.2f}  y {p['path_end'][1]:.2f}  z {p['path_end'][2]:.2f}   (peak speed {p['speed_max_mps']:.2f} m/s, trust {p['sigma_serve']:.2f})")
+    if o.get("last_execution"):
+        print(f"  your last command: {o['last_execution']}")
     print(f"  view: {o['view']}")
     print("    top left = forward camera now, top right = downward camera now"
           + (", strip below = what happened during your last move, in time order" if o.get("during_last_move") else ""))
+    # The reviewer's own decision log, replayed to it every time (Denis, 2026-09-21): with two dozen
+    # decisions and an image each, its earliest reasoning is buried far up its context and it starts
+    # repeating itself. These are its own words, read back from what it wrote.
+    past = sorted(glob.glob(os.path.join(d, "cmds", "*.json")))[-8:]
+    if past:
+        print("what you have decided so far (your own words):")
+        for f in past:
+            try:
+                c = json.load(open(f))
+            except json.JSONDecodeError:
+                continue
+            mv = c.get("move") or {}
+            terse = " ".join(f"{k.replace('_deg','')} {v:+g}" for k, v in mv.items() if v)
+            why = (c.get("why") or "")[:160]
+            print(f"    k={c.get('k')} {c.get('verdict','?'):<8} {terse:<28} {why}")
     h=o.get("history") or []
     if len(h)>1:
         print("where you have been (room coordinates, one row per decision):")
@@ -71,7 +88,7 @@ def main():
             pend = os.path.exists(os.path.join(d, "cmd.json"))
             done = o and os.path.exists(os.path.join(d, "cmds", f"{o['k']:03d}.json"))
             if o and not pend and not done:
-                show(o); return
+                show(o, d); return
             if g.cmd == "look":
                 sys.exit("no pending decision")
             if time.time() - t0 > g.timeout:

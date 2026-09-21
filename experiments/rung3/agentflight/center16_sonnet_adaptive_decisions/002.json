@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "Only the right-side post is visible again, so I'm beside the gate, not centered on it; backing off and turning further right to bring both posts and the crossbar into frame before advancing.", "move": {"forward": -0.2984326866385656, "left": -0.2023312421394376, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.0}}

@@ -7742,3 +7742,28 @@ blended away) from behaviour alone. That is a strong argument for keeping the po
 the agent loop must keep those in step. (3) Speed now needs the architectural fix, not smaller images:
 26 decisions at 27 s is still 13 minutes. Advisory override (the policy flies by default, an override
 lands only if it arrives in time) and pipelining are the remaining levers.
+
+**ADAPTIVE EXECUTION LENGTH AND A DECISION LOG FOR THE REVIEWER (2026-09-21; Denis: "maybe we still do 50
+but tell sonnet if its override makes a large enough movement we will only execute part of it", and "is it
+the same sonnet agent each time? add its own explanations at the end of its context -- it seems to be
+forgetting"). Two changes. (a) APPROVALS run the policy's whole 5 s chunk, so agreeing stays cheap;
+OVERRIDES are flown at a natural pace (AGENT_SPEED 0.45 m/s) and interrupted after at most 2.5 s
+(AGENT_MAXEXEC 25 steps), and the readout tells the reviewer how much of its move ran ("your move needed
+30 steps; 25 of them ran, 83 % of the movement"). Decision count falls back to 14 while fine control is
+kept where it is needed. (b) agent_sim_cli.py replays the reviewer its OWN last eight decisions verbatim --
+number, verdict, the move, and the reason it wrote -- because with a dozen decisions and an image each,
+its early reasoning is buried far up its context.**
+  RESULT (center16, Sonnet, 14 decisions): gates 0/2 -> FAIL, ending at (2.94, -0.40), 0.80 m from the
+  goal, closest approach to the centre aperture 0.04 m. One approval, thirteen overrides. Its narration
+  is coherent and correct throughout -- it identified being beside a post five separate times and backed
+  away each time, read a transit off the filmstrip, and found the stuffed animal in the downward view at
+  the end -- but it never converted a centred view into a crossing.
+  Speed: median 27 s per decision, 8.2 min for the flight, the fastest full flight so far (center15 was
+  12.7 min for 26 decisions; the APC-50 flights were 5.7-7.0 min for 10 slower decisions).
+READS: (1) The interruption rule does what it was meant to: the reviewer used thirteen overrides without
+running out of budget, and each one returned control within 2.5 s. (2) The decision log removes the
+repetition that looked like forgetting -- this flight never re-tried an approach it had already abandoned,
+unlike center12 and center15. (3) The failure is unchanged and now very sharply located: FIVE times it
+correctly said "only one post visible, I am beside the gate, backing away", and five times the next view
+was the same. Backing away is not enough to find the opening; the reviewer needs the gap's bearing, which
+is the fix that keeps being deferred.
