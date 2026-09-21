@@ -7303,3 +7303,24 @@ projection has no setting that both keeps the sketch and clears: s=0.1 keeps it 
 is 45 cm off (the plain flow's own route). The trained slack is a minimal correction; the leak is a
 mixture with the flow's own plan. (3) SDEdit never latches both gates on any of them. This is the appendix's
 main figure.
+
+**COMPLIANCE OF THE SLACK ARMS (2026-09-20; Denis: "what is the compliance measurement of pin sigma 0.5 vs
+projection s=0.3"). New experiments/rung3/compliance.py: replays the sketch tracker per flight and scores
+E_comp = ||(U^T a_hat - c)/sigma_c||_rms at every sketch-active replan (positions only, so the 12
+translation coordinates of the 16; sigma_c from 50-step chunks of the whole training corpus).
+Appendix E in docs/APPENDIX_INJECTION.md.**
+  arm                 0.07m   w2     w3     w4
+  v-proj s=0          0.000   0.000  0.000  0.000     <- metric sanity check: the carry is exact
+  v-proj s=0.1        0.116   0.108  0.100  0.096
+  pin sigma 0         0.118   0.124  0.129  0.127
+  SDEdit t0 0.5       0.186   0.187  0.186  0.191
+  pin sigma 0.5       0.222   0.228  0.258  0.273
+  v-proj s=0.3        0.350   0.307  0.318  0.320
+READS: (1) Of the two arms that clear the worse sketches, the PIN makes the smaller deviation from the
+command (0.23-0.27 vs 0.31-0.32 sigma_c) while clearing as well and tracking 3x closer (0.12-0.14 m vs
+0.45 m). The paper's claim should be stated this way: the trained slack achieves the correction at lower
+command deviation than any inference-time leak that clears. (2) The pin's deviation GRADES with how bad the
+sketch is (0.222/0.228/0.258/0.273 as the line moves into and past the post); the leak's is flat
+(0.35/0.31/0.32/0.32) because it is a fixed fraction of the flow's disagreement, not a response to the
+scene. (3) pin sigma 0 is 0.118-0.129, not zero: a trained flow follows closely but not exactly, the price
+of a residual free to shape the motion; the projection's zero is exact by construction.

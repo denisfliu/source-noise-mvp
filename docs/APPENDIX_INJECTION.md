@@ -119,3 +119,32 @@ from the sketch: it makes the smallest correction that clears. The projection at
 (11 cm) but does not clear (0.02-0.13 m); at s = 0.3 it clears every time but is 45 cm off the sketch, which
 is the plain flow flying its own compound route with the sketch as a loose suggestion. There is no s that
 gives both. SDEdit never latches both gates. Exact carry (s = 0) does what it is told: into the post.
+
+## E. Compliance: how far each arm moved the command it was given
+
+`experiments/rung3/compliance.py` replays the sketch tracker exactly as the server ran it and, at every
+sketch-active replan, compares the command that was issued with the command realized by the 50 steps
+actually flown: E_comp = ‖(Uᵀâ − c)/σ_c‖_rms, in units of the training corpus's per-coordinate command
+standard deviation. The rollouts log positions only, so the yaw channel of each horizon band is zeroed on
+both sides and the score runs over the 12 translation coordinates of the 16. Median over 5 flights.
+
+| Arm | 0.07 m sketch | w2 (0.02 m) | w3 (through the post) | w4 (wrong side) |
+|---|---|---|---|---|
+| v-proj s=0 (exact carry) | 0.000 | 0.000 | 0.000 | 0.000 |
+| v-proj s=0.1 | 0.116 | 0.108 | 0.100 | 0.096 |
+| pin σ=0 | 0.118 | 0.124 | 0.129 | 0.127 |
+| SDEdit t0=0.5 | 0.186 | 0.187 | 0.186 | 0.191 |
+| **pin σ=0.5** | **0.222** | **0.228** | **0.258** | **0.273** |
+| **v-proj s=0.3** | **0.350** | **0.307** | **0.318** | **0.320** |
+
+(real-only regime, 0.07 m sketch: pin σ=0 0.193, pin σ=0.5 0.316, v-proj s=0 0.000.)
+
+Reading: s = 0 scores exactly zero, which is the metric's sanity check — the carry identity holds to
+floating point. The two arms that clear the worse sketches are the last two rows, and the pin's correction
+is the *smaller* one: 0.23-0.27 σ_c against the projection's 0.31-0.32 σ_c, with the same or better
+clearance (3-4/5 vs 5/5) at a third of the tracking error (0.12-0.14 m vs 0.45 m). The pin also *grades* its
+deviation with how bad the sketch is (0.222 → 0.228 → 0.258 → 0.273 as the line moves into and past the
+post) while the projection's leak is flat (0.35, 0.31, 0.32, 0.32): the leak is a fixed fraction of the
+flow's disagreement, the trained slack is a correction sized to the problem. Note also pin σ=0 is not zero
+(0.12): a trained flow follows the command closely but not exactly, which is the price of the residual
+being free to shape the motion.
