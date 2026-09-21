@@ -7867,3 +7867,12 @@ agent finding an object the policy has never been asked about. (2) Fourteen deci
 budget for the gate task, not for a search-and-approach across the room; this task needs either a few
 more decisions or cheaper line-ups (the gap-bearing detector, again). (3) The policy contributed the
 flying and nothing else here, which is the point: intent came entirely from the reviewer.
+  POST-MORTEM of the mann3 sighting (rendered from its own poses, agentflight/mannequin/mann3_final_pose_views.png):
+  from (3.07, 0.67) heading +0.26 the mannequin is plainly in frame at pixel column ~415 of 512, i.e. 33 deg
+  to the RIGHT of the optical axis, bearing about -18 deg -- exactly where the triangulated (8.7, -0.9)
+  puts it. The agent reported it "left of centre" at decisions 11 and 12, estimated it at (4.5-5.0,
+  1.3-1.8), and flew its last move forward-and-LEFT with a left turn, i.e. away from it; from its final
+  pose the figure is out of frame to the right. The triangulation stands. The failure is a left/right
+  mirror error in reading the image, the same class of spatial mistake that cost earlier gate approaches.
+  A cheap mitigation to try: mark the decision image's edges "left" / "right" (or a centre line), since
+  the words in the brief did not stop the mirror.
