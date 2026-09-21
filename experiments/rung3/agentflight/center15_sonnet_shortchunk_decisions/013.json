@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "Opening still slightly left of centre; proposed move has a strong rightward bias plus a large right turn that risks overshooting past it, easing both", "move": {"forward": 0.2942597216705373, "left": 0.04910413630620053, "up": 0.0, "yaw_deg": -10.0, "sigma": 0.0}}

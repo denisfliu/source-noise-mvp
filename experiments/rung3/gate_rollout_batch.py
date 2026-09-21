@@ -226,24 +226,31 @@ if AGENT_DIR:
         return np.cumsum(ch[:,:3],0), float(np.degrees(ch[:,3].sum()))
     _agent_hist=[]; _last_strip=[None]
     def _ask(k,trial,pos,yaw,imf,imw,c,sig):
-        d=np.asarray(c,np.float32); path,dyaw=_decode(d); net=path[-1]
+        # The policy's command always describes 5 s of motion, but only the first `apc` steps execute
+        # before the reviewer is asked again. Report the part that will actually happen (2026-09-21).
+        d=np.asarray(c,np.float32); path,dyaw=_decode(d)
+        _e=min(apc,len(path))-1; net=path[_e]; dyaw=dyaw*(_e+1)/len(path)
         # Two panels at 320 px, forward on the left and downward on the right. No drawn labels: the
         # reviewer is told which is which in words (Denis, 2026-09-20), and the pixels are better spent
         # on the views. The 224 px thumbnails this replaced were too small to judge an opening.
         # ONE image per decision (Denis, 2026-09-20): the current forward and downward views on top, the
         # filmstrip of the move just executed underneath. Two Reads per decision became one, which is the
         # cheapest latency saving available -- every round trip is serial in the reviewer's loop.
-        V=380
-        _prev=_last_strip[0]
-        _ps=Image.open(_prev) if (_prev and os.path.exists(_prev)) else None
-        if _ps is not None:
+        # Speed first (Denis, 2026-09-21): one SMALL image per decision -- the two current views at their
+        # native 224 px, ~30 kB. The filmstrip is appended only when the move just executed was long
+        # enough to hide something (AGENT_STRIP_M, default 0.6 m); with short chunks it is rarely needed,
+        # because consecutive decision frames already show the approach.
+        V=int(os.environ.get("AGENT_VIEW","224"))
+        _ps=None
+        if _last_strip[0] and os.path.exists(_last_strip[0]):
+            _ps=Image.open(_last_strip[0])
             _sc=min(1.0,(2*V+12)/_ps.size[0]); _ps=_ps.resize((int(_ps.size[0]*_sc),int(_ps.size[1]*_sc)))
         W=max(6+V+8+V+6,(_ps.size[0]+12) if _ps is not None else 0)
         H=6+V+6+((_ps.size[1]+8) if _ps is not None else 0)
         big=Image.new("RGB",(W,H),(18,20,26))
         big.paste(Image.fromarray(imf).resize((V,V)),(6,6)); big.paste(Image.fromarray(imw).resize((V,V)),(6+V+8,6))
         if _ps is not None: big.paste(_ps,(6,6+V+6))
-        fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=88)
+        fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=85)
         _agent_hist.append({"k":k,"x":round(float(pos[0]),2),"y":round(float(pos[1]),2),
                             "z":round(float(pos[2]),2),"heading_deg":round(float(np.degrees(-yaw)),0)})
         # the reviewer is shown the SAME yaw convention the move primitives act in (2026-09-20): the
@@ -333,7 +340,7 @@ def run_trial(t):
             _cprop=np.asarray(_res.get("snmvp_c",np.zeros(16,np.float32)),np.float32)
             _plan_prop=pos+_decode(_cprop)[0]; _plan_cmd=None
             if _verd=="override" and _cmd.get("move"):
-                o2=dict(o); o2["snmvp_agent"]={"move":_cmd["move"],"say":_think,"k":ci}
+                o2=dict(o); o2["snmvp_agent"]={"move":_cmd["move"],"say":_think,"k":ci,"apc":apc}
                 _res=pol.infer(o2); act=np.asarray(_res["actions"])[:,:7]; n=min(len(act),apc)
                 _plan_cmd=pos+_decode(np.asarray(_res.get("snmvp_c",_cprop),np.float32))[0]
             print(f"[agent] {ci}: {_verd} ({_cmd.get('wait_s','?')}s) :: {_think[:110]}",flush=True)
@@ -361,23 +368,26 @@ def run_trial(t):
             # Render a dozen views through the chunk and keep the ones that actually show something new
             # (Denis, 2026-09-20): near-duplicate frames waste the reviewer's attention, while a fast
             # stretch deserves more of them. First and last are always kept; up to 8 in time order.
-            _cand=[int(round(f*(n-1))) for f in np.linspace(0,1,12)]
+            _moved=float(np.linalg.norm(cs[n-1]))
+            _cand=[] if _moved<float(os.environ.get("AGENT_STRIP_M","0.6")) else [int(round(f*(n-1))) for f in np.linspace(0,1,8)]
             _ims=[]
+            if not _cand: _last_strip[0]=None
             for _i in _cand:
                 _wp=pos+cs[_i]; _wy=yaw-float(act[:_i+1,3].sum())
                 _ims.append(np.asarray(obs_fwd(_wp,_wy),np.float32))
-            _thumb=[im.reshape(28,8,28,8,3).mean(axis=(1,3)).mean(axis=2) for im in _ims]
-            _keep=[0]; _last=_thumb[0]
-            for _i in range(1,len(_ims)-1):
-                if float(np.abs(_thumb[_i]-_last).mean())>14.0 and len(_keep)<7:
-                    _keep.append(_i); _last=_thumb[_i]
-            _keep.append(len(_ims)-1)
-            if len(_keep)<4: _keep=[int(round(f*(len(_ims)-1))) for f in np.linspace(0,1,4)]
-            _sf=[Image.fromarray(_ims[_i].astype(np.uint8)).resize((160,160)) for _i in _keep]
-            _strip=Image.new("RGB",(len(_sf)*160+(len(_sf)+1)*4,168),(18,20,26))
-            for _j,_im in enumerate(_sf): _strip.paste(_im,(4+_j*164,4))
-            _sp=os.path.join(AGENT_DIR,"obs",f"{ci:03d}_during.jpg"); _strip.save(_sp,quality=90)
-            _last_strip[0]=_sp
+            _thumb=[im.reshape(28,8,28,8,3).mean(axis=(1,3)).mean(axis=2) for im in _ims] if _ims else []
+            if _ims:
+                _keep=[0]; _last=_thumb[0]
+                for _i in range(1,len(_ims)-1):
+                    if float(np.abs(_thumb[_i]-_last).mean())>14.0 and len(_keep)<4:
+                        _keep.append(_i); _last=_thumb[_i]
+                _keep.append(len(_ims)-1)
+                _F=112
+                _sf=[Image.fromarray(_ims[_i].astype(np.uint8)).resize((_F,_F)) for _i in _keep]
+                _strip=Image.new("RGB",(len(_sf)*_F+(len(_sf)+1)*4,_F+8),(18,20,26))
+                for _j,_im in enumerate(_sf): _strip.paste(_im,(4+_j*(_F+4),4))
+                _sp=os.path.join(AGENT_DIR,"obs",f"{ci:03d}_during.jpg"); _strip.save(_sp,quality=88)
+                _last_strip[0]=_sp
         for i in range(n): traj.append(pos+cs[i])
         pos=pos+cs[-1]; yaw=yaw-float(act[:n,3].sum()); executed+=n
         if abs(pos[0])>60 or abs(pos[1])>60: break

@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "Heading is back near straight (facing the wall square-on) but the opening is still left-of-centre in frame; holding heading and adding a leftward component instead of the proposed rightward drift", "move": {"forward": 0.3042782518103931, "left": 0.19978674999912036, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

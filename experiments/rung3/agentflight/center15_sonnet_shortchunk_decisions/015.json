@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "Overturned right - the doorway is now at the left frame edge; turning back left and drifting left to recentre it, holding forward progress", "move": {"forward": 0.10350635776509513, "left": 0.2964564620685542, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

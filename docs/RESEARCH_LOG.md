@@ -7715,3 +7715,30 @@ bottleneck stays where the Opus flight located it, which is resolving where the 
 a move once you know. (2) The frame change is still right on its own terms -- it removes a class of sign
 error that cost two earlier flights -- and it costs nothing. Keep it. (3) Latency needs the architectural
 fix (advisory override, pipelined review), not micro-optimisation of the image count.
+
+**SHORT CHUNKS EXPOSED A COMMAND-SCALING BUG THE REVIEWER DIAGNOSED (2026-09-21; Denis: "we need smaller
+atomic movements... we desperately need something to be fast"). Changes: APC 15 instead of 50 (1.5 s and
+~0.3 m per decision, 26 decisions per flight), the decision image back to one SMALL file (two 224 px views,
+30 kB, against 144 kB for the composite), the filmstrip sent only after a move longer than 0.6 m and then
+4-5 frames at 112 px, a one-sentence reason, and the readout corrected to report only the part of the
+policy's 5-second plan that will actually execute (0.33 m rather than 0.93 m at APC 15).**
+  THE BUG: agent_prompt.move_track spreads the requested displacement over the whole 50-step chunk with a
+  cosine profile. With only the first 15 steps executing, an authored 0.60 m move delivered 0.092 m and a
+  20 deg turn delivered 3.1 deg -- 15 % of what was asked. The Sonnet reviewer diagnosed this unprompted
+  from its own pose track ("overrides against a confident policy proposal reliably produced only a
+  fraction of the commanded displacement... yaw overrides in particular never visibly took effect") and
+  correctly estimated the fraction at 15-30 %. FIXED: the client now tells the server how many steps will
+  execute (snmvp_agent.apc) and the profile is shaped into that prefix; verified 0.600 m / 20.0 deg
+  delivered at n_exec 15, against 0.092 m / 3.1 deg before.
+  RESULT of the flight that found it (center15, Sonnet, 26 decisions): gates 1/2, no dwell -> FAIL, 4.5 m
+  of path in 39 s of flight, brushing the left gate at 0.02 m. Its overrides were all crippled, so the
+  flight is a measurement of the bug, not of the configuration.
+  SPEED: median 27 s per decision (the best of any Sonnet flight) but 26 decisions, so 12.7 min total.
+  Per-decision cost fell as intended; total wall clock rose because there are more decisions.
+READS: (1) A reviewer that keeps a pose track can audit the effect of its own commands, and this one did:
+it reported the right symptom, the right magnitude and the right suspicion (that its commands were being
+blended away) from behaviour alone. That is a strong argument for keeping the pose track in the readout.
+(2) Shortening the chunk needs the command to be re-scaled to the executed prefix; anyone changing APC in
+the agent loop must keep those in step. (3) Speed now needs the architectural fix, not smaller images:
+26 decisions at 27 s is still 13 minutes. Advisory override (the policy flies by default, an override
+lands only if it arrives in time) and pipelining are the remaining levers.

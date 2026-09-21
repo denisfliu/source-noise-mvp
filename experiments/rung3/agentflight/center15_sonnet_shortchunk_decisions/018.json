@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "Doorway bearing barely changing despite lateral moves - it's still far away; pushing hard forward to close distance before fine lateral centring matters", "move": {"forward": 0.5292413577771409, "left": 0.18000995866398184, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

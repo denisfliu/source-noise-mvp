@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Single post still fills frame with no second post/crossbar visible; pushing straight backward at max rate to gain standoff distance", "move": {"forward": -0.42230718939134165, "left": 0.42621196345056467, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

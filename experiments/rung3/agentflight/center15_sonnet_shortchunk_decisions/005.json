@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "Momentum is carrying us into the post; repeating backward+right command to bleed off forward/left velocity and open the view", "move": {"forward": -0.4988948817026643, "left": 0.03322494561146219, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

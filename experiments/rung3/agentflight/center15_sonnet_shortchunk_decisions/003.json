@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Only one post visible at frame edge - overshot past the gate line and over-rotated; moving right and unturning to recentre both posts", "move": {"forward": -0.24995892669107997, "left": -0.31228278045297875, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

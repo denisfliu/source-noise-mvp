@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Post still fills frame after backing off; sliding hard right (no yaw, no further backward) to find the opening beside it", "move": {"forward": -0.40279719058447067, "left": -0.4446958772658654, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

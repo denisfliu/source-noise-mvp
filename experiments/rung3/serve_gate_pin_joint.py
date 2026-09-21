@@ -199,7 +199,7 @@ class JointPinPolicy:
             if self.agent is None:
                 raise ValueError("agent move needs action norm stats")
             pose4 = np.asarray(obs["observation/state"], np.float32).reshape(-1)[:4]
-            ag_c, mv, notes = self.agent.command(dict(ag["move"]), pose4)
+            ag_c, mv, notes = self.agent.command(dict(ag["move"]), pose4, ag.get("apc"))
             ag_sig = float(mv.get("sigma", 0.0))
             ag_info = {"move": mv, "notes": notes}
         prog_i = 0

@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "Doorway still left-of-centre and distant; policy wants to retreat and turn further right which would lose it, continuing forward-left instead", "move": {"forward": 0.2983624287930071, "left": 0.2449078624396076, "up": 0.0, "yaw_deg": 10.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 23, "verdict": "override", "why": "Gate visible but pushed to the left edge and we're facing too far sideways; turning back left and driving toward the opening with two decisions left", "move": {"forward": 0.29703701526506915, "left": 0.3045800577227917, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

@@ -33,7 +33,8 @@ def show(o):
     p = o["proposal"]
     print(f"decision k={o['k']}  pose x={o['pose'][0]:.2f} y={o['pose'][1]:.2f} z={o['pose'][2]:.2f} "
           f"heading={o['pose'][3]:.2f} rad ({o['pose'][3]*57.3:+.0f} deg; --yaw is in this same sense, positive turns left)")
-    print(f"the policy intends, over the next {o['seconds_per_decision']} s:")
+    print(f"the policy intends, over the next {o['seconds_per_decision']} s (the part of its plan that will "
+          f"actually execute before you are asked again):")
     print(f"  net move  dx {p['net_xyz'][0]:+.2f}  dy {p['net_xyz'][1]:+.2f}  dz {p['net_xyz'][2]:+.2f} m,  yaw {p['net_yaw_deg']:+.1f} deg")
     print(f"  ending at x {p['path_end'][0]:.2f}  y {p['path_end'][1]:.2f}  z {p['path_end'][2]:.2f}   (peak speed {p['speed_max_mps']:.2f} m/s, trust {p['sigma_serve']:.2f})")
     print(f"  view: {o['view']}")
