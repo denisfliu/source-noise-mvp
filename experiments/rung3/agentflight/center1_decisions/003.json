@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Close, but this drifts west to x 2.2, which is outside the center gate opening and into its west post. The opening spans x 2.36 to 3.16 and we are lined up at x 2.72, so I am commanding a straight push through it while holding that x.", "move": {"forward": 0.75, "left": -0.95, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

@@ -343,6 +343,12 @@ class JointPinPolicy:
         c_eff = alpha * c + (1.0 - alpha) * (g @ self.U)
         noise = (g - (g @ self.U) @ self.U.T + (c_eff @ self.U.T)).reshape(H, AD).astype(np.float32)
         out = self.policy.infer(obs, noise=noise, snmvp_sigma=sig_serve, cache=cache)
+        # the served command travels back with the chunk (2026-09-20): a reviewer -- a person or an agent --
+        # can read the coarse plan the policy is about to execute before it executes, and answer with a
+        # different one. Cheap: 16 floats.
+        out = dict(out)
+        out["snmvp_c"] = np.asarray(c, np.float32)
+        out["snmvp_sigma_serve"] = np.float32(sig_serve if sig_serve is not None else -1.0)
         if self.agent_log and (ag is not None):
             self._dump_agent(trial, obs, ag, ag_info, c, sig_serve, out)
         if self.bridge is not None:

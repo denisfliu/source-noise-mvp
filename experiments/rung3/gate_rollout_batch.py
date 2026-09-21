@@ -165,6 +165,65 @@ BASE_PROMPT=os.environ.get("PROMPT") or "go through the gate on the %s and hover
 _st=[float(v) for v in os.environ.get("START","0,0,1.5").split(",")]
 pol=WebsocketClientPolicy(host="127.0.0.1",port=PORT)
 apc=int(os.environ.get("APC","8"))
+# --- agent in the loop (2026-09-20) -------------------------------------------------------------
+# AGENT_DIR turns each replan into a review: the policy's own command is decoded and written to
+# AGENT_DIR/latest.json with the frames, the client blocks until AGENT_DIR/cmd.json answers
+# {"verdict":"approve"|"override", "why": "...", "move": {...}}, and an override is re-queried through
+# the server's agent mode so the flow executes the reviewer's command instead. The reviewer's words are
+# burned into the video.
+AGENT_DIR=os.environ.get("AGENT_DIR","")
+AGENT_TIMEOUT=float(os.environ.get("AGENT_TIMEOUT","1800"))
+if AGENT_DIR:
+    import json as _json, time as _time
+    for _sub in ("obs","cmds"): os.makedirs(os.path.join(AGENT_DIR,_sub),exist_ok=True)
+    _U=np.load(os.environ.get("SNMVP_PIN_U",f"{os.path.dirname(os.path.abspath(__file__))}/pin_U_mh16.npy")).astype(np.float32)
+    _ns=_json.load(open("/home/dfliu/code/openpi-snmvp/assets/pi0_gate3/local/gate_nav3/norm_stats.json"))["norm_stats"]["actions"]
+    _AM=np.array(_ns["mean"][:4],np.float32); _AS=np.array(_ns["std"][:4],np.float32)
+    def _decode(c):
+        ch=(_U@np.asarray(c,np.float32)).reshape(50,32)[:,:4]*( _AS+1e-6)+_AM
+        return np.cumsum(ch[:,:3],0), float(np.degrees(ch[:,3].sum()))
+    def _ask(k,trial,pos,yaw,imf,imw,c,sig):
+        d=np.asarray(c,np.float32); path,dyaw=_decode(d); net=path[-1]
+        big=Image.new("RGB",(464,232),(18,20,26))
+        big.paste(Image.fromarray(imf).resize((224,224)),(4,4)); big.paste(Image.fromarray(imw).resize((224,224)),(236,4))
+        fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=92)
+        row={"k":k,"trial":trial,"status":"waiting","pose":[round(float(x),3) for x in (*pos,yaw)],
+             "view":fp,"proposal":{"net_xyz":[round(float(x),3) for x in net],"net_yaw_deg":round(dyaw,1),
+             "path_end":[round(float(pos[i]+net[i]),3) for i in range(3)],
+             "speed_max_mps":round(float(np.abs(np.diff(path,axis=0)).max()*10),2),"sigma_serve":round(float(sig),2)},
+             "seconds_per_decision":round(apc*0.1,1)}
+        tmp=os.path.join(AGENT_DIR,"latest.json.tmp"); _json.dump(row,open(tmp,"w")); os.replace(tmp,os.path.join(AGENT_DIR,"latest.json"))
+        cp=os.path.join(AGENT_DIR,"cmd.json"); t0=_time.time()
+        while _time.time()-t0<AGENT_TIMEOUT:
+            if os.path.exists(cp):
+                try: cmd=_json.load(open(cp))
+                except Exception: _time.sleep(0.05); continue
+                os.replace(cp,os.path.join(AGENT_DIR,"cmds",f"{k:03d}.json"))
+                if int(cmd.get("k",-1))!=k: continue
+                return cmd
+            _time.sleep(0.15)
+        return {"verdict":"approve","why":"(no answer; approved by timeout)"}
+    def _banner(frame,k,text,verdict):
+        im=Image.fromarray(frame); W,_=im.size; pad=Image.new("RGB",(W,150),(14,16,20)); im2=Image.new("RGB",(W,im.size[1]+150))
+        im2.paste(im,(0,0)); im2.paste(pad,(0,im.size[1])); d=ImageDraw.Draw(im2); y0=im.size[1]+7
+        try:
+            from PIL import ImageFont; f=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",15); fb=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",15)
+        except Exception: f=fb=None
+        col=(120,220,150) if verdict=="approve" else (250,180,90)
+        d.text((10,y0),f"decision {k}  ·  {verdict.upper()}",fill=col,font=fb)
+        wmax=W-20
+        def _wid(t):
+            try: return d.textlength(t,font=f)
+            except Exception: return 7.5*len(t)
+        words=text.split(); line=""; ly=y0+22
+        for w in words:
+            cand=(line+" "+w).strip()
+            if _wid(cand)>wmax and line:
+                d.text((10,ly),line,fill=(225,230,238),font=f); ly+=19; line=w
+                if ly>y0+118: line=""; break
+            else: line=cand
+        if line: d.text((10,ly),line,fill=(225,230,238),font=f)
+        return np.asarray(im2,np.uint8)
 
 def run_trial(t):
     PROMPT=BASE_PROMPT
@@ -200,7 +259,17 @@ def run_trial(t):
             o["snmvp_cmd_image"], o["snmvp_cmd_wrist"] = _cmd_f, _cmd_w
         o["snmvp_trial"]=f"{SCENE}_{SIDE}_{t}"  # per-trial key: the MDN server's pi-hysteresis latch must not leak across interleaved clients/trials
         if ci==0: o["reset"]=True
-        act=np.asarray(pol.infer(o)["actions"])[:,:7]; n=min(len(act),apc)
+        _res=pol.infer(o); act=np.asarray(_res["actions"])[:,:7]; n=min(len(act),apc)
+        _think=None; _verd="approve"
+        if AGENT_DIR:
+            _cmd=_ask(ci,o["snmvp_trial"],pos,yaw,imf,imw,_res.get("snmvp_c",np.zeros(16,np.float32)),
+                      float(_res.get("snmvp_sigma_serve",-1.0)))
+            _think=_cmd.get("why","") or ""; _verd=_cmd.get("verdict","approve")
+            if _cmd.get("stop"): break
+            if _verd=="override" and _cmd.get("move"):
+                o2=dict(o); o2["snmvp_agent"]={"move":_cmd["move"],"say":_think,"k":ci}
+                _res=pol.infer(o2); act=np.asarray(_res["actions"])[:,:7]; n=min(len(act),apc)
+            print(f"[agent] {ci}: {_verd} :: {_think[:110]}",flush=True)
         if KICK and executed <= KICK_STEP < executed + n:
             pos = pos + KICK_VEC
             print(f"[kick] applied {KICK_VEC.tolist()} at step {executed}",flush=True)
@@ -209,7 +278,8 @@ def run_trial(t):
             for i in range(0,n,VSTRIDE):
                 wp=pos+cs[i]; wy=yaw-float(act[:i+1,3].sum())
                 frame=rend(wp,wy,Tbc_f,Kv,Wv,Hv)
-                fr.append(draw_overlay(frame, pos+cs_all[i:], vm(wp,wy,Tbc_f)))
+                frame=draw_overlay(frame, pos+cs_all[i:], vm(wp,wy,Tbc_f))
+                fr.append(_banner(frame,ci,_think,_verd) if (AGENT_DIR and _think is not None) else frame)
         for i in range(n): traj.append(pos+cs[i])
         pos=pos+cs[-1]; yaw=yaw-float(act[:n,3].sum()); executed+=n
         if abs(pos[0])>60 or abs(pos[1])>60: break

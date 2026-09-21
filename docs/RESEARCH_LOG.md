@@ -7406,3 +7406,33 @@ route-level fix inside that interface is to AUTHOR the command (the sketch: 9/10
 what the paper already claims. (5) For a head that composes, the training has to change: the sentence must
 be the only signal that distinguishes two behaviours from the SAME state (e.g. compound demonstrations, or
 prompt-conditioned data covering post-gate states), or the head must lose the image (state+language only).
+
+**AGENT AS REVIEWER OF THE COMMAND, IN SIMULATION, WITH ITS REASONING IN THE VIDEO (2026-09-20; Denis:
+"we have claude code as the planner -- i want it to check the command that is generated, and if it
+disagrees say why and what it wants instead; do this on the center task; visualize by video with claude's
+thoughts"). Infrastructure: (a) serve_gate_pin_joint.py now returns the served command with the chunk
+(out["snmvp_c"], out["snmvp_sigma_serve"]) -- 16 floats, so a reviewer can read the coarse plan BEFORE it
+executes; (b) gate_rollout_batch.py gained AGENT_DIR: every replan decodes that command into metres of
+net motion, writes it with the two camera views, and blocks until a verdict arrives; an override is
+re-queried through the server's agent-move path so the flow executes the reviewer's command instead;
+the verdict and its reason are burned into the mp4 under each frame; (c) experiments/rung3/agent_sim_cli.py
+(wait / approve / override / stop, --why required); (d) scripts/run_agent_flight.sh. Decisions archived in
+experiments/rung3/agentflight/center1_decisions/.**
+  FLIGHT (gmsig3, scene left_and_center, compound sentence, 10 replans x 5 s, Claude reviewing live):
+  k0, k1 approved (the policy heads for and passes the left gate). k2 OVERRIDE -- the policy proposed a
+  111 deg turn and a drop back to the goal, abandoning the second leg; commanded a move to the center
+  gate's approach point instead (executed: (1.83,1.07) -> (2.73,0.36), the command was followed). k3
+  OVERRIDE -- the policy proposed drifting to x 2.21, west of the aperture (which spans x 2.36-3.16);
+  commanded a straight push holding x, which crossed at x 2.77. k4-k9 approved (the policy returns to the
+  goal and settles on its own).
+  RESULT: gates 2/2 in order at steps 60 and 181, goal dwell 257 -> SUCCESS=True. The same checkpoint with
+  the same sentence and no reviewer is 0/5 (crosses the left gate, parks at the goal). Clearance 0.126 m
+  at step 58 -- the LEFT gate pass, inside a stretch the reviewer approved -> not clearance-clean.
+READS: (1) Two five-second commands, authored at the two moments the policy was about to give up, convert
+a task the policy fails outright into a success. Composition here is a supervision problem, not a policy
+capability. (2) The reviewer needs only what the command interface already exposes: metres of intended
+motion and the two camera views. No access to weights, no trajectory optimisation, no geometry beyond what
+it can see and the one gate coordinate it reasoned about. (3) The failure that remains is execution, not
+intent: the graze is on the left-gate pass, at a moment the reviewer approved, which is the pin's own
+clearance behaviour at sigma 0 and is what the trained slack is for. Next: run the reviewer with
+sigma > 0 on the approved legs, and repeat on the real drone through the existing agent harness.
