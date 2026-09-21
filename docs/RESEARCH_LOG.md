@@ -7271,3 +7271,21 @@ places, not one. (3) Against the real-only run earlier today, this is the clean 
 trained slack is: a learned correction that spends the residual's scene knowledge; useful exactly where the
 residual has such knowledge (mixed data, center route seen in sim) and harmful where it has none (real-only,
 the residual leaves the sketch). The projection is the same in both regimes: the sketch, verbatim.
+
+**PARTIAL PROJECTION ON THE BAD SKETCHES + APPENDIX LEDGER (2026-09-20; Denis: "collect this data for the
+appendix explaining why these methods fail; try different sigmas for the v-proj"). scripts/
+run_badsketch_vproj_sigma.sh: s in {0.1, 0.3, 0.5} on scratch3 (mixed) and scratch_real; page viz/badsketch.html
+now carries every arm in both regimes; everything collected in docs/APPENDIX_INJECTION.md.**
+  mixed, L->C (0.07 m): s=0.1 both gates 5/5, clearance-clean 5/5 at 0.182-0.190 m (the threshold), tracking
+  0.09; s=0.3 5/5 gates, 4/5 clean, tracking 0.42 (its own route); s=0.5 leaves. Pin sigma 0.5: 4/5, 4/5,
+  0.19-0.26, tracking 0.13. R->C (0.04 m): every s contacts (0.002-0.04).
+  real-only: s=0.1 clearance 0.09-0.13 (better than the sketch's 0.066, not clean), s>=0.3 leaves the sketch.
+READS: (1) The training-free slack also dodges when the base flow knows the scene: a 10 % leak of the mixed
+plain flow's velocity clears the 0.07 m post at the clean threshold with both gates kept. The pin's trained
+slack clears by ~5 cm more and tracks 4 cm worse; at n = 5 that is a lead for the pin, not a separation.
+(2) So the honest differentiator is narrower than "the pin can dodge and the projection cannot": both can
+when the residual has scene knowledge, neither can when it does not (real-only), and the pin's dodge is
+somewhat larger and comes with a calibrated dial (sigma from the head's uncertainty) rather than a hand-set
+leak. (3) For the appendix: each failure has one cause -- inject: runaway along U; SDEdit: the staircase
+and gate contact; v-proj s=0: the sketch verbatim, flaw included; v-proj s>0: the flow's own route leaking in;
+pin sigma>0 on real-only: a residual with nothing better to offer leaves the sketch.
