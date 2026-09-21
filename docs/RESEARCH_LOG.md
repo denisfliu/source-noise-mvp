@@ -7452,3 +7452,27 @@ change you recommended").**
   reviewer put in its place (cyan) -- projected into the camera, plus a top-down inset (5.2 m across,
   centred on the decision pose) that stays visible after the camera turns away from them. On an approved
   replan a single green plan is drawn, labelled as approved.
+
+**SECOND AGENT-REVIEWED FLIGHT: FLYING BOTH GATES DOWN THE MIDDLE (2026-09-20; Denis, after watching the
+first: "going through the gate initially felt too close to the right side; and we nearly clipped the left
+side going through the centre gate"). Both apertures are 0.80 m wide, so a perfectly centred pass leaves
+0.22 m for a 0.18 m body -- centring is nearly the whole clearance budget. Decisions archived in
+experiments/rung3/agentflight/center2_decisions/.**
+  Reviewer took the approach itself this time: k0 OVERRIDE, one straight 1.9 m run along the line through
+  the left aperture's midpoint (0.915, 0.75) instead of the policy's own line, which last flight crossed
+  0.32 m off centre against the near post. k1 OVERRIDE, to a point squarely in front of the centre gate
+  (2.76, 0.55) rather than the policy's turn back toward the goal. k2 OVERRIDE, a straight run in -y
+  holding x = 2.76 (the policy again proposed sliding west to x 2.22, outside the 2.36-3.16 opening).
+  k3 onward approved: the policy returns to the goal and settles.
+  RESULT vs the first flight (same checkpoint, same sentence):
+                          crossing offset, left   crossing offset, centre   min clearance   verdict
+    flight 1 (4 overrides)      0.32 m                  0.08 m               0.126 m        success, NOT clean
+    flight 2 (3 overrides)      0.073 m                 0.082 m              0.257 m        success, CLEAN
+  Gates latched at steps 30 and 131 (vs 60 and 181): the authored line is also the shorter route.
+READS: (1) Route-level authorship fixes route-level problems: three five-second commands turn a task the
+policy fails outright into a clean two-gate success, and the margin doubles when the commands are aimed at
+the aperture centres rather than approved as proposed. (2) The clearance failure in flight 1 was on an
+APPROVED leg, not an authored one -- the reviewer's job includes the legs it is tempted to wave through.
+(3) Ops note: a stale auto-answer loop from an earlier replay silently answered a fresh flight's decisions
+(pkill -f matched nothing because the process command line is just "python -"). Kill background helpers by
+pid; the auto-approve loop now exits on BATCH_DONE in the rollout log.

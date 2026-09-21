@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "We are lined up at x 2.76, dead centre of the opening. This command would slide west to x 2.22, which is past the near post and into it, the same drift as last flight. I am commanding a straight descent in y that holds x, so we pass through the middle.", "move": {"forward": 0.624, "left": -1.528, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}
