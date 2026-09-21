@@ -7610,3 +7610,28 @@ the room, not just recognise it. (3) On chunk size (Denis: "is 50 frames too muc
 APC 5 needs ~100 decisions for this flight at ~40 s of agent time each, and truncates every authored
 5-second command to a tenth of itself. APC 10-25 is the usable range; next run is APC 25 with 16
 decisions, same task, to separate the observation rate from the filmstrip.
+
+**ADAPTIVE FILMSTRIP + "CHECK THE PROPOSAL AGAINST WHAT YOU SEE": SECOND SONNET SUCCESS (2026-09-20;
+Denis: "maybe we could actually just concatenate frames so we can have more than 5, keep important ones
+and discard useless ones", and "decision 3 in the video was a bad one -- the policy should know that
+trajectory is silly"). Twelve views are now rendered through each executed chunk and the ones showing real
+change are kept, up to 8, first and last always. Brief gains rule 1: compare the policy's proposed net
+motion against the opening you can see and override when it heads for the final target while a gate is
+still ahead; plus a warning that the two gate structures look alike, so a second transit must be in a
+different place.**
+  WHY DECISION 3 WAS A BAD APPROVAL (center10, measured from the command log): at pose (2.03, 0.70) with a
+  gate in view the policy proposed (-0.48, -1.40, -0.22), ending 0.37 m from the penguin and crossing the
+  gate line at x 1.8 where the opening spans 2.36-3.16. Its own uncertainty was unremarkable at that
+  replan (sigma* 11.8, against 16.6 at the start and 3.9 later), so nothing in the policy flagged it --
+  the same conclusion as the uncertainty experiment: trust tracks command noise, not being wrong about
+  the task. The reviewer is the only thing that can catch it, and this is now rule 1 of the brief.
+  RESULT (center11): gates 2/2 in order at steps 170 and 387, dwell 73 -> SUCCESS=True. Closest approach
+  to the goal 0.11 m. NOT clearance-clean. Four approvals, six overrides, every override citing the
+  filmstrip. Its self-assessment was UNDER-confident for the first time: it called both transits "likely,
+  imperfectly" and the hover "unconfirmed", where the judge scored all three.
+  Tally over valid attempts: 2 successes in 8, and both successes came after a brief change that gave the
+  reviewer better evidence rather than more rules.
+CAVEAT ON THE ADAPTIVITY: the keep-if-changed filter kept the maximum 8 frames on all 10 chunks, so the
+threshold (mean abs difference > 6/255 on a 28x28 thumbnail) is too low to discard anything at this chunk
+length -- the strip is effectively "8 evenly spaced" today. Raise it before claiming the selection does
+work, or drop the claim.

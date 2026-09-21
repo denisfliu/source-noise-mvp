@@ -348,13 +348,24 @@ def run_trial(t):
             # The reviewer sees one frame per 5-second chunk, so everything that happens DURING a move --
             # including the gate transit itself -- is invisible to it (Denis, 2026-09-20). Five forward
             # views spaced through the chunk just executed are handed to it with the next decision.
-            _idx=[int(round(f*(n-1))) for f in (0.0,0.25,0.5,0.75,1.0)]
-            _sf=[]
-            for _i in _idx:
+            # Render a dozen views through the chunk and keep the ones that actually show something new
+            # (Denis, 2026-09-20): near-duplicate frames waste the reviewer's attention, while a fast
+            # stretch deserves more of them. First and last are always kept; up to 8 in time order.
+            _cand=[int(round(f*(n-1))) for f in np.linspace(0,1,12)]
+            _ims=[]
+            for _i in _cand:
                 _wp=pos+cs[_i]; _wy=yaw-float(act[:_i+1,3].sum())
-                _sf.append(Image.fromarray(obs_fwd(_wp,_wy)).resize((200,200)))
-            _strip=Image.new("RGB",(5*200+6*4,200+8),(18,20,26))
-            for _j,_im in enumerate(_sf): _strip.paste(_im,(4+_j*204,4))
+                _ims.append(np.asarray(obs_fwd(_wp,_wy),np.float32))
+            _thumb=[im.reshape(28,8,28,8,3).mean(axis=(1,3)).mean(axis=2) for im in _ims]
+            _keep=[0]; _last=_thumb[0]
+            for _i in range(1,len(_ims)-1):
+                if float(np.abs(_thumb[_i]-_last).mean())>6.0 and len(_keep)<7:
+                    _keep.append(_i); _last=_thumb[_i]
+            _keep.append(len(_ims)-1)
+            if len(_keep)<4: _keep=[int(round(f*(len(_ims)-1))) for f in np.linspace(0,1,4)]
+            _sf=[Image.fromarray(_ims[_i].astype(np.uint8)).resize((160,160)) for _i in _keep]
+            _strip=Image.new("RGB",(len(_sf)*160+(len(_sf)+1)*4,168),(18,20,26))
+            for _j,_im in enumerate(_sf): _strip.paste(_im,(4+_j*164,4))
             _sp=os.path.join(AGENT_DIR,"obs",f"{ci:03d}_during.jpg"); _strip.save(_sp,quality=90)
             _last_strip[0]=_sp
         for i in range(n): traj.append(pos+cs[i])
