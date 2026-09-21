@@ -92,6 +92,8 @@ def main():
             done = o and os.path.exists(os.path.join(d, "cmds", f"{o['k']:03d}.json"))
             if o and not pend and not done:
                 show(o, d); return
+            if os.path.exists(os.path.join(d, "done")):
+                print("flight ended"); return
             if g.cmd == "look":
                 sys.exit("no pending decision")
             if time.time() - t0 > g.timeout:
@@ -126,7 +128,7 @@ def main():
         t0 = time.time(); k_done = g.k
         while time.time() - t0 < g.timeout:
             o = latest(d)
-            if o and o["status"] == "stopped":
+            if (o and o["status"] == "stopped") or os.path.exists(os.path.join(d, "done")):
                 print("flight ended"); return
             if o and o["status"] == "waiting" and o["k"] > k_done \
                     and not os.path.exists(os.path.join(d, "cmds", f"{o['k']:03d}.json")):

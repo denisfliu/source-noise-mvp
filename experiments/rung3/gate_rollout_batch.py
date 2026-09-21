@@ -428,6 +428,8 @@ def run_trial(t):
 for t in range(1,TRIALS+1):
     run_trial(t)
 print("BATCH_DONE",flush=True)
+if AGENT_DIR:   # tells a reviewer blocked in --then-wait after the last decision that no next decision is coming
+    open(os.path.join(AGENT_DIR,"done"),"w").write("BATCH_DONE\n")
 
 if REALOBS:
     import atexit

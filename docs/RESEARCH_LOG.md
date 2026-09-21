@@ -7927,4 +7927,4 @@ an arbitrary start heading, and the agent gets there through the movement vocabu
   room position was (7.3, -0.7), 0.5 m from the true (7.4, -0.2); it judged itself "roughly 1 m in front,
   facing it, not perfectly squared up" -- which is the scored outcome (1.02 m, 14 deg). An accurate
   self-report, unlike center6 and center18. Its --then-wait on the last decision hung until killed by pid,
-  because no decision 14 exists; the CLI should return on BATCH_DONE (small fix, queued).
+  because no decision 14 exists; fixed: the rollout now writes AGENT_DIR/done at BATCH_DONE and both CLI wait loops return "flight ended" on it.
