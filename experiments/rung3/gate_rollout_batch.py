@@ -230,10 +230,20 @@ if AGENT_DIR:
         # Two panels at 320 px, forward on the left and downward on the right. No drawn labels: the
         # reviewer is told which is which in words (Denis, 2026-09-20), and the pixels are better spent
         # on the views. The 224 px thumbnails this replaced were too small to judge an opening.
-        V=320; W=6+V+8+V+6; H=6+V+6
+        # ONE image per decision (Denis, 2026-09-20): the current forward and downward views on top, the
+        # filmstrip of the move just executed underneath. Two Reads per decision became one, which is the
+        # cheapest latency saving available -- every round trip is serial in the reviewer's loop.
+        V=380
+        _prev=_last_strip[0]
+        _ps=Image.open(_prev) if (_prev and os.path.exists(_prev)) else None
+        if _ps is not None:
+            _sc=min(1.0,(2*V+12)/_ps.size[0]); _ps=_ps.resize((int(_ps.size[0]*_sc),int(_ps.size[1]*_sc)))
+        W=max(6+V+8+V+6,(_ps.size[0]+12) if _ps is not None else 0)
+        H=6+V+6+((_ps.size[1]+8) if _ps is not None else 0)
         big=Image.new("RGB",(W,H),(18,20,26))
         big.paste(Image.fromarray(imf).resize((V,V)),(6,6)); big.paste(Image.fromarray(imw).resize((V,V)),(6+V+8,6))
-        fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=92)
+        if _ps is not None: big.paste(_ps,(6,6+V+6))
+        fp=os.path.join(AGENT_DIR,"obs",f"{k:03d}_view.jpg"); big.save(fp,quality=88)
         _agent_hist.append({"k":k,"x":round(float(pos[0]),2),"y":round(float(pos[1]),2),
                             "z":round(float(pos[2]),2),"heading_deg":round(float(np.degrees(-yaw)),0)})
         # the reviewer is shown the SAME yaw convention the move primitives act in (2026-09-20): the

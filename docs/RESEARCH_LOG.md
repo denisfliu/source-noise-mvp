@@ -7662,3 +7662,34 @@ target. A rule worth adding: after the last gate, do not approve a large move in
 when only a decision or two remain. (3) What would actually fix the crossing is a lateral-offset estimate
 the agent does not have to eyeball -- the gap's bearing from the image, or a scan primitive that returns
 the opening's position -- rather than more instruction.
+
+**OPUS AS THE REVIEWER: THE BEST FLIGHT OF THE EXPERIMENT, BETTER THAN MINE (2026-09-21; Denis: "let's see
+how opus does"). Identical brief to Sonnet's last run, identical task, 10 decisions, no task knowledge, no
+access to scene files. It overrode all ten proposals.**
+  RESULT (center13): gates 2/2 in order at steps 81 and 279, dwell 96 -> SUCCESS=True AND CLEARANCE-CLEAN,
+  minimum clearance 0.369 m over the whole flight. Crossings were 0.06 m and 0.05 m from the aperture
+  centres; it ended 0.11 m from the goal.
+  Comparison of every reviewed flight on this task:
+    reviewer            gates  dwell  min clearance   crossings off centre
+    me, flight 1        2/2    yes    0.126 m         0.32 / 0.08 m
+    me, flight 2        2/2    yes    0.257 m         0.073 / 0.082 m
+    Sonnet best (c11)   2/2    yes    0.113 m         ~0.3 / ~0.2 m
+    OPUS (c13)          2/2    yes    0.369 m         0.06 / 0.05 m
+  How it flew: it refused to commit to any crossing until it had resolved BOTH posts, computed the gate
+  axis and its centre in room coordinates from two viewpoints, then crossed with zero yaw. It caught that
+  the centre gate's axis runs along room x, so it must be crossed flying in +-y, from an edge-on view at
+  the origin. It calibrated the downward camera's orientation by checking that a pure sideways move slid
+  the ground the expected way, and used that to fix a fore/aft sign error in the policy's final approach.
+  It measured its own crossing offsets in pixels from the transit frames (posts at x 27 and 665 of 700 ->
+  midpoint 346 vs centre 350) and reported 0.05-0.10 m, which the trajectory confirms (0.06 / 0.05 m).
+  COST: median 116 s per decision against Sonnet's 27-43 s, 27 minutes of wall clock for the flight,
+  177k tokens and 82 tool calls (Sonnet: 76-92k, ~40).
+READS: (1) The ceiling in attempts 1-9 was the reviewer's spatial reasoning, not the interface, the brief
+or the policy. Given the same inputs a stronger reviewer resolves gate geometry from two viewpoints,
+tracks a frame convention it verified itself, and puts the drone through both apertures within 6 cm of
+centre. (2) It is the first reviewer whose self-report matched the judge on all three parts AND whose
+quantitative self-estimate (0.05-0.10 m off centre) matched the measurement. (3) The cost is the problem
+for hardware: 116 s per 5 s chunk. The answer is not a faster reviewer but an advisory architecture --
+the policy flies by default and an override lands only if it arrives in time -- plus the cheap reductions
+(one composite image per decision, now implemented; pipelined review; Sonnet in the loop escalating to
+Opus when it flags a hard decision).

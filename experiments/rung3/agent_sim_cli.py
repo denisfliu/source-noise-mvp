@@ -36,9 +36,9 @@ def show(o):
     print(f"the policy intends, over the next {o['seconds_per_decision']} s:")
     print(f"  net move  dx {p['net_xyz'][0]:+.2f}  dy {p['net_xyz'][1]:+.2f}  dz {p['net_xyz'][2]:+.2f} m,  yaw {p['net_yaw_deg']:+.1f} deg")
     print(f"  ending at x {p['path_end'][0]:.2f}  y {p['path_end'][1]:.2f}  z {p['path_end'][2]:.2f}   (peak speed {p['speed_max_mps']:.2f} m/s, trust {p['sigma_serve']:.2f})")
-    print(f"  view: {o['view']}   (left half = forward camera, right half = downward camera)")
-    if o.get("during_last_move"):
-        print(f"  what happened DURING your last move, five views in order: {o['during_last_move']}")
+    print(f"  view: {o['view']}")
+    print("    top left = forward camera now, top right = downward camera now"
+          + (", strip below = what happened during your last move, in time order" if o.get("during_last_move") else ""))
     h=o.get("history") or []
     if len(h)>1:
         print("where you have been (room coordinates, one row per decision):")
