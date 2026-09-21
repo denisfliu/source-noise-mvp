@@ -7436,3 +7436,19 @@ it can see and the one gate coordinate it reasoned about. (3) The failure that r
 intent: the graze is on the left-gate pass, at a moment the reviewer approved, which is the pin's own
 clearance behaviour at sigma 0 and is what the trained slack is for. Next: run the reviewer with
 sigma > 0 on the approved legs, and repeat on the real drone through the existing agent harness.
+
+**AGENT-FLIGHT TIMING AND THE PLAN COMPARISON IN THE VIDEO (2026-09-20, same day; Denis: "it seemed to take
+a really long time, how long did it actually take; and the video should show what the pin commanded vs the
+change you recommended").**
+  TIMING, measured: a fully automatic flight (server start -> scored mp4, 10 replans, video on) takes 32 s
+  wall clock. Machine time per replan is 0.40 s median (one policy call plus 13 splat renders for the
+  video). Server start is the rest: ~20 s with a warm page cache, 90-120 s cold. NOTHING about the loop is
+  slow. What made the live test long was (a) the reviewer -- each of my decisions took roughly a minute:
+  read the two views, reason, write the verdict -- and (b) a harness bug of mine: two polling loops waited
+  on the wrong condition and sat for the full 10-minute bash timeout AFTER the flight had finished. Fixed
+  by waiting on BATCH_DONE in the rollout log. The request row now carries t_asked and every verdict
+  records wait_s, so review latency is logged per decision from here on.
+  VIDEO: gate_rollout_batch.py draws both plans -- the command the policy proposed (amber) and the one the
+  reviewer put in its place (cyan) -- projected into the camera, plus a top-down inset (5.2 m across,
+  centred on the decision pose) that stays visible after the camera turns away from them. On an approved
+  replan a single green plan is drawn, labelled as approved.

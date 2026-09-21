@@ -125,6 +125,45 @@ def draw_overlay(frame,fut_world,V):
     dr.text((10,10),"pin intends -->",fill=(255,255,255,235))
     return np.asarray(im,np.uint8)
 
+def draw_plans(frame,V,proposed=None,commanded=None):
+    """Draw the coarse plan the POLICY proposed (amber) and the one the reviewer put in its place
+    (cyan), both from the pose the decision was made at, projected into the current camera."""
+    im=Image.fromarray(frame).convert("RGB"); dr=ImageDraw.Draw(im,"RGBA")
+    def poly(path,col,lab,ly):
+        pts=[proj(to_ns(p),V) for p in path]; vis=[q for q in pts if q]
+        for i in range(len(vis)-1):
+            (u0,v0,_),(u1,v1,_)=vis[i],vis[i+1]; dr.line([(u0,v0),(u1,v1)],fill=col,width=4)
+        if vis:
+            u,v,_=vis[-1]; dr.ellipse([u-5,v-5,u+5,v+5],fill=col)
+        dr.rectangle([10,ly,26,ly+6],fill=col); dr.text((32,ly-5),lab,fill=(255,255,255,240))
+    if proposed is not None and commanded is not None:
+        poly(proposed,(250,180,70,235),"the policy asked for this",30)
+        poly(commanded,(90,220,255,255),"the reviewer asked for this instead",48)
+    elif commanded is not None:
+        poly(commanded,(120,235,160,235),"approved as proposed",30)
+    return np.asarray(im,np.uint8)
+
+def draw_inset(frame,pos,proposed=None,commanded=None,S=170,half=2.6):
+    """Top-down inset of the two plans from the decision pose: always visible, even once the camera has
+    turned away from them. World +x right, +y up; the square is 2 x `half` metres across."""
+    im=Image.fromarray(frame).convert("RGB"); W=im.size[0]; dr=ImageDraw.Draw(im,"RGBA")
+    x0,y0=W-S-8,8
+    dr.rectangle([x0,y0,x0+S,y0+S],fill=(12,14,18,205),outline=(90,98,112,255))
+    P=lambda p:(x0+S/2+(p[0]-pos[0])/half*(S/2), y0+S/2-(p[1]-pos[1])/half*(S/2))
+    for g in range(1,3):
+        r=g/3*(S/2); dr.ellipse([x0+S/2-r,y0+S/2-r,x0+S/2+r,y0+S/2+r],outline=(58,64,74,255))
+    def poly(path,col):
+        pts=[P(p) for p in path]
+        for i in range(len(pts)-1): dr.line([pts[i],pts[i+1]],fill=col,width=3)
+        if pts: dr.ellipse([pts[-1][0]-4,pts[-1][1]-4,pts[-1][0]+4,pts[-1][1]+4],fill=col)
+    if proposed is not None and commanded is not None:
+        poly(proposed,(250,180,70,240)); poly(commanded,(90,220,255,255))
+    elif commanded is not None:
+        poly(commanded,(120,235,160,240))
+    dr.ellipse([x0+S/2-4,y0+S/2-4,x0+S/2+4,y0+S/2+4],fill=(255,255,255,255))
+    dr.text((x0+7,y0+S-17),f"{half*2:.1f} m across, seen from above",fill=(190,198,210,235))
+    return np.asarray(im,np.uint8)
+
 # wind-kick divergence test (2026-08-28): KICK="step:dx,dy,dz" displaces the drone once
 KICK = os.environ.get("KICK", "")
 if KICK:
@@ -191,7 +230,7 @@ if AGENT_DIR:
              "view":fp,"proposal":{"net_xyz":[round(float(x),3) for x in net],"net_yaw_deg":round(dyaw,1),
              "path_end":[round(float(pos[i]+net[i]),3) for i in range(3)],
              "speed_max_mps":round(float(np.abs(np.diff(path,axis=0)).max()*10),2),"sigma_serve":round(float(sig),2)},
-             "seconds_per_decision":round(apc*0.1,1)}
+             "seconds_per_decision":round(apc*0.1,1),"t_asked":_time.time()}
         tmp=os.path.join(AGENT_DIR,"latest.json.tmp"); _json.dump(row,open(tmp,"w")); os.replace(tmp,os.path.join(AGENT_DIR,"latest.json"))
         cp=os.path.join(AGENT_DIR,"cmd.json"); t0=_time.time()
         while _time.time()-t0<AGENT_TIMEOUT:
@@ -200,7 +239,7 @@ if AGENT_DIR:
                 except Exception: _time.sleep(0.05); continue
                 os.replace(cp,os.path.join(AGENT_DIR,"cmds",f"{k:03d}.json"))
                 if int(cmd.get("k",-1))!=k: continue
-                return cmd
+                cmd["wait_s"]=round(_time.time()-t0,1); return cmd
             _time.sleep(0.15)
         return {"verdict":"approve","why":"(no answer; approved by timeout)"}
     def _banner(frame,k,text,verdict):
@@ -266,10 +305,13 @@ def run_trial(t):
                       float(_res.get("snmvp_sigma_serve",-1.0)))
             _think=_cmd.get("why","") or ""; _verd=_cmd.get("verdict","approve")
             if _cmd.get("stop"): break
+            _cprop=np.asarray(_res.get("snmvp_c",np.zeros(16,np.float32)),np.float32)
+            _plan_prop=pos+_decode(_cprop)[0]; _plan_cmd=None
             if _verd=="override" and _cmd.get("move"):
                 o2=dict(o); o2["snmvp_agent"]={"move":_cmd["move"],"say":_think,"k":ci}
                 _res=pol.infer(o2); act=np.asarray(_res["actions"])[:,:7]; n=min(len(act),apc)
-            print(f"[agent] {ci}: {_verd} :: {_think[:110]}",flush=True)
+                _plan_cmd=pos+_decode(np.asarray(_res.get("snmvp_c",_cprop),np.float32))[0]
+            print(f"[agent] {ci}: {_verd} ({_cmd.get('wait_s','?')}s) :: {_think[:110]}",flush=True)
         if KICK and executed <= KICK_STEP < executed + n:
             pos = pos + KICK_VEC
             print(f"[kick] applied {KICK_VEC.tolist()} at step {executed}",flush=True)
@@ -278,8 +320,15 @@ def run_trial(t):
             for i in range(0,n,VSTRIDE):
                 wp=pos+cs[i]; wy=yaw-float(act[:i+1,3].sum())
                 frame=rend(wp,wy,Tbc_f,Kv,Wv,Hv)
-                frame=draw_overlay(frame, pos+cs_all[i:], vm(wp,wy,Tbc_f))
-                fr.append(_banner(frame,ci,_think,_verd) if (AGENT_DIR and _think is not None) else frame)
+                _V=vm(wp,wy,Tbc_f)
+                frame=draw_overlay(frame, pos+cs_all[i:], _V)
+                if AGENT_DIR and _think is not None:
+                    _a=_plan_prop if _plan_cmd is not None else None
+                    _b=_plan_cmd if _plan_cmd is not None else _plan_prop
+                    frame=draw_plans(frame,_V,_a,_b)
+                    frame=draw_inset(frame,pos,_a,_b)
+                    frame=_banner(frame,ci,_think,_verd)
+                fr.append(frame)
         for i in range(n): traj.append(pos+cs[i])
         pos=pos+cs[-1]; yaw=yaw-float(act[:n,3].sum()); executed+=n
         if abs(pos[0])>60 or abs(pos[1])>60: break
