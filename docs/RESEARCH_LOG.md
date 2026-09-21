@@ -7513,3 +7513,29 @@ a post for being lined up with an opening, lost the gate when it left the frame,
 visual signature: two of the four identified the stuffed animal in the downward view. (3) So the authored-
 command result is not "any agent can do this": it is a claim about the interface, and the planner's spatial
 competence is a separate variable that this experiment now isolates.
+
+**SONNET SUCCEEDS ON THE FIFTH ATTEMPT, AFTER TWO PROMPT RULES FROM DENIS (2026-09-20: "if the agent is
+uncertain, default to reflexive behavior, which is defaulting to command; and if only one post is visible,
+scoot back to see the centre of the gate"). Same interface, same 10 decisions, same absence of task
+knowledge. Three changes to the brief: (1) WHEN IN DOUBT, APPROVE -- overrides are only for a problem the
+agent can name in the current view, because an approved move costs nothing and buys a new view while a
+speculative override lands somewhere neither party intended; (2) ONE POST MEANS YOU ARE BESIDE THE GATE --
+back up 1.0-1.5 m until both posts and the crossbar are in view before driving at the opening; (3) a
+correction of my own bad heuristic: a gate leaving the frame does NOT mean you passed it (turning away,
+passing beside and flying through look alike in one frame), so a pass counts only if the opening was seen
+between both posts, a move toward it was commanded, and the pose then moved by roughly what was commanded.**
+  RESULT (center7): gates 2/2 in order at steps 60 and 209, goal dwell 51 -> SUCCESS=True, the first
+  Sonnet success. Closest approach to the goal 0.09 m. NOT clearance-clean: min 0.099 m at step 331,
+  after both gates, on the way back to the goal (27 steps under 0.18 m).
+  It approved 6 of 10 decisions and overrode 4 (k=3, 6, 8, 9), each override naming a visible problem and
+  citing the served trust: "proposed forward+right when the gap was left-of-centre, trust 0.45", "near-null
+  move, trust 0.16, with a decisive push available through an already-centred gate". Its self-assessment
+  was also calibrated for the first time: both gates likely passed (true), the hover uncertain (it in fact
+  dwelled 51 steps).
+READS: (1) The failures in attempts 1-4 were not the model's spatial ceiling; they were a brief that let it
+override on suspicion and taught it a false transit test. Two rules and one correction turned 0/3 into a
+success. (2) The winning division of labour is the one Denis named: the policy is the reflex and the agent
+is the deliberation, and the reflex wins by default. Six approvals did the routine flying, including the
+left-gate transit; the four overrides were spent where the agent could point at something. (3) What the
+agent still does not deliver is clearance -- the same weakness as the human-reviewed flights, and the thing
+the trained slack exists for. Next: let the reviewer use sigma > 0 on approved legs.
