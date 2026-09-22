@@ -70,6 +70,8 @@ SIM_TABLES = """
 | mixed pin, no swap (gmsig3) | 40/40 / 40/40 | 40/40 / 37/40 | 80/80 / 77/80 | seed-7 grazes are 3 CFR |
 | xswap (coarse-only swap) | 40/40 / 40/40 | 40/40 / 40/40 | 80/80 / 80/80 | dropped from the paper (swap) |
 | scratch pi0 | 36/40 | 36/40 | 72/80 | CFR 7/10 on both seeds |
+| real-only pin (realonly) | 1/40 (right 1/10) | - | - | 100 real demos, never a rendered frame; transit judge left 6/10, right 5/10 |
+| real-only pi0 (scratch_real) | 9/40 (left 2/10, right 7/10) | - | - | clearance-clean 5/40; center cells 0/10 |
 
 ## Compounds and sketches (5 trials per cell)
 
@@ -144,10 +146,19 @@ add("gmsig3", "Sim atomics", "center from right", "10/10 · 10/10"); add("gmsig3
 add("xswap", "Sim atomics", "center from right", "10/10 · 10/10"); add("xswaps7", "Sim atomics", "center from right", "10/10 · 10/10")
 for pol in ("scratch3", "scratch3s7"):
     add(pol, "Sim atomics", "center from right", "7/10 judge"); add(pol, "Sim atomics", "four cells pooled", "36/40 judge", "CFR is the gap")
-add("realonly", "Sim atomics", "center from left", "0/10", "no center demos in its data")
+# real-only arms in the simulator (2026-09-15; 10 trials per cell): route-clean judge / transit judge / clearance-clean
+add("realonly", "Sim atomics", "left", "0/10 · 6/10 transit · 0/10", "100 real demos, never a rendered frame")
+add("realonly", "Sim atomics", "right", "1/10 · 5/10 transit · 1/10")
+add("realonly", "Sim atomics", "center from left", "0/10", "no center demos in its data"); add("realonly", "Sim atomics", "center from right", "0/10")
+add("scratch_real", "Sim atomics", "left", "2/10 · 6/10 transit · 1/10"); add("scratch_real", "Sim atomics", "right", "7/10 · 4/10 transit · 4/10", "3 grazes")
+add("scratch_real", "Sim atomics", "center from left", "0/10"); add("scratch_real", "Sim atomics", "center from right", "0/10")
+add("realonly", "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5"); add("scratch_real", "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5")
+add("realonly", "Sim compounds", "orbit / figure-eight sketches (rendered frames)", "5/5 · 5/5 route; fig8 5/5 clean, tracking 0.05-0.07 m", "orbit clearance 0/5 from post-handback hover drift")
+add("realonly", "Real-frame anchors", "right-gate head-chunk crossings", "9/55", "gmsig3 8, xswap 15, xswapc 17")
+add("gmsig3", "Real-frame anchors", "right-gate head-chunk crossings", "8/55"); add("xswap", "Real-frame anchors", "right-gate head-chunk crossings", "15/55")
 for pol in ("gmsig3", "gmsig3s7", "xswap", "xswaps7", "scratch3", "scratch3s7", "realonly", "scratch_real"):
     add(pol, "Sim atomics", "four cells pooled", {"gmsig3": "40/40 · 40/40", "gmsig3s7": "40/40 · 37/40", "xswap": "40/40 · 40/40", "xswaps7": "40/40 · 40/40",
-        "scratch3": "36/40 judge", "scratch3s7": "36/40 judge", "realonly": "see Real-Only Arms page", "scratch_real": "see Real-Only Arms page"}[pol])
+        "scratch3": "36/40 judge", "scratch3s7": "36/40 judge", "realonly": "1/40 route-clean", "scratch_real": "9/40 route-clean"}[pol])
 # sim compounds and sketches (5 trials)
 for pol in ("gmsig3", "gmsig3s7", "xswap", "xswaps7", "scratch3", "scratch3s7"): add(pol, "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5", "structural: goal-first past the first gate")
 add("gmsig3", "Sim compounds", "CMPL hand-drawn sketch", "5/5 route-clean · 5/5 clean"); add("gmsig3", "Sim compounds", "CMPR hand-drawn sketch", "5/5 route-clean")
