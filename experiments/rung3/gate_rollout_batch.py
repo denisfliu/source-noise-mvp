@@ -309,11 +309,11 @@ if AGENT_DIR:
 def run_trial(t):
     PROMPT=BASE_PROMPT
     pos=np.array(_st[:3]); yaw=float(os.environ.get("STARTYAW","0")); fr=[]
-    executed=0; traj=[pos.copy()]
+    executed=0; traj=[np.array([*pos,yaw])]   # x,y,z + rollout yaw per step (2026-09-22; heading = -yaw)
     _switched=False; _mid_left=0
     for ci in range(NCH):
         if COMPOSE and not _switched:
-            sd_=(np.array(traj)-GANCH)@GNRM
+            sd_=(np.array(traj)[:,:3]-GANCH)@GNRM
             if len(sd_)>2 and (np.sign(sd_[:-1])!=np.sign(sd_[1:])).any():
                 if COMPOSE_MID:
                     PROMPT=COMPOSE_MID; _mid_left=COMPOSE_MID_CHUNKS
@@ -412,17 +412,17 @@ def run_trial(t):
                 for _j,_im in enumerate(_sf): _strip.paste(_im,(4+_j*(_F+4),4))
                 _sp=os.path.join(AGENT_DIR,"obs",f"{ci:03d}_during.jpg"); _strip.save(_sp,quality=88)
                 _last_strip[0]=_sp
-        for i in range(n): traj.append(pos+cs[i])
+        for i in range(n): traj.append(np.array([*(pos+cs[i]),yaw-float(act[:i+1,3].sum())]))
         pos=pos+cs[-1]; yaw=yaw-float(act[:n,3].sum()); executed+=n
         if abs(pos[0])>60 or abs(pos[1])>60: break
     out=OUT.replace("{t}",str(t)) if OUT else ""
     if VIDEO and fr and out: iio.mimsave(out,fr,fps=FPS,codec="libx264",quality=6)
-    P=np.array(traj); sd_=(P-GANCH)@GNRM; inb=int(np.all((P>=GAABB[0])&(P<=GAABB[1]),axis=1).sum())
+    P4=np.array(traj); P=P4[:,:3]; sd_=(P-GANCH)@GNRM; inb=int(np.all((P>=GAABB[0])&(P<=GAABB[1]),axis=1).sum())
     cr=np.where(np.sign(sd_[:-1])!=np.sign(sd_[1:]))[0]; thru=False; cf=None
     for i in cr:
         tt=sd_[i]/(sd_[i]-sd_[i+1]+1e-9); X=P[i]+tt*(P[i+1]-P[i])
         if GAABB[0][0]<=X[0]<=GAABB[1][0] and GAABB[0][2]<=X[2]<=GAABB[1][2] and not thru: thru=True; cf=(round(float(X[0]),2),round(float(X[1]),2),round(float(X[2]),2))
-    if TRAJ: np.save(TRAJ.replace("{t}",str(t)),P)
+    if TRAJ: np.save(TRAJ.replace("{t}",str(t)),P4)   # 4 columns; every scorer slices [:, :3]
     print("trial %d: %d frames end x=%.2f y=%.2f z=%.2f | in_aabb=%d THROUGH=%s at %s"%(t,len(fr),pos[0],pos[1],pos[2],inb,thru,cf),flush=True)
 
 for t in range(1,TRIALS+1):

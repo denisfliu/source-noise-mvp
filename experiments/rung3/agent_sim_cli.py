@@ -107,6 +107,9 @@ def main():
     if g.cmd == "stop":
         write(d, {"k": g.k, "stop": True, "verdict": "approve", "why": g.why})
     elif g.cmd == "approve":
+        armf = os.path.join(d, "arm")
+        if os.path.exists(armf) and open(armf).read().strip() == "waypoints":
+            sys.exit("this flight is the WAYPOINTS arm: nothing is proposed, so there is nothing to approve -- give a move with override")
         write(d, {"k": g.k, "verdict": "approve", "why": g.why})
     else:
         fwd, lft, up = g.forward, g.left, g.up

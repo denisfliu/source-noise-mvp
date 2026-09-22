@@ -1,0 +1,139 @@
+"""Trajectory judges for the agent-in-the-loop evaluation (docs/AGENT_EVAL_PLAN.md, 2026-09-22).
+
+  python agent_judges.py --task mannequin|double|orbit|left_mannequin --traj traj_X.npy [--dir mailbox] [--scene left_and_center]
+
+Trajectories are N x 4 (x, y, z, rollout yaw; heading = -yaw) from gate_rollout_batch.py; older N x 3 files
+take the final heading from the mailbox's latest.json. The double-gate task reuses gate_success.py (compound
+judge) and gate_clearance.py; the others are defined here. Prints one JSON line.
+"""
+import argparse
+import json
+import math
+import os
+import subprocess
+import sys
+
+import numpy as np
+import yaml
+
+RD = os.path.dirname(os.path.abspath(__file__))
+FALSIFY = os.path.expanduser("~/code/falsify-pi")
+VENVPY = "/home/dfliu/code/openpi/.venv/bin/python"
+TV = "/home/dfliu/code/tv/bin/python"
+EV = ["env", "-u", "VIRTUAL_ENV", "PYTHONPATH=/home/dfliu/code/openpi-snmvp/src", "JAX_PLATFORMS=cpu", "CUDA_VISIBLE_DEVICES=-1"]
+MANNEQUIN = np.array([7.4, -0.2])          # RESEARCH_LOG 2026-09-21 correction, against the back wall
+HOLD = 20                                   # final steps that must satisfy the hover criterion
+HOVER_M = 1.25                              # 'about one metre in front': 1 m target with a quarter-metre tolerance
+Z_MIN, Z_MAX = 0.8, 2.0
+
+
+def centre_gate_xy(scene="left_and_center"):
+    saf = yaml.safe_load(open(f"{FALSIFY}/configs/safety/{scene}.yaml"))
+    g = saf["ordered_miss_gate"]["gates"][-1]["corners"]
+    return np.asarray(g, float)[:, :2].mean(0)
+
+
+def load(traj, mailbox=None):
+    P = np.load(traj)
+    if P.shape[1] >= 4:
+        return P[:, :3], -P[:, 3]
+    head = np.full(len(P), np.nan)
+    if mailbox and os.path.exists(os.path.join(mailbox, "latest.json")):
+        head[:] = json.load(open(os.path.join(mailbox, "latest.json")))["pose"][3]
+    return P[:, :3], head
+
+
+def clearance(traj, scene):
+    out = subprocess.run([TV, f"{RD}/gate_clearance.py", "--scene", scene, "--traj", traj], capture_output=True, text=True).stdout
+    line = [l for l in out.splitlines() if "min-clearance" in l]
+    if not line:
+        return {"min_clearance": None, "clean": None}
+    v = float(line[0].split("min-clearance")[1].split()[0])
+    return {"min_clearance": v, "clean": "CLEAN=True" in line[0]}
+
+
+def judge_gate(traj, side):
+    out = subprocess.run(EV + [VENVPY, f"{RD}/gate_success.py", "--traj", traj, "--side", side], capture_output=True, text=True).stdout
+    line = [l for l in out.splitlines() if l.startswith("traj_")]
+    if not line:
+        return {"transit": None, "route_clean": None, "goal": None, "judge_success": None, "transit_step": None}
+    l = line[0]
+    def field(k):
+        return l.split(k + "=")[1].split()[0] if k + "=" in l else None
+    if "gates=" in l:   # the ordered multi-gate judge: "gates=2/2 steps=[60, 223] dwell=159 SUCCESS=True"
+        g = field("gates"); a, b = [int(x) for x in g.split("/")]
+        steps = l.split("steps=[")[1].split("]")[0] if "steps=[" in l else ""
+        steps = [int(x) for x in steps.replace(" ", "").split(",") if x]
+        return {"transit": a == b, "gates": g, "route_clean": a == b, "goal": int(field("dwell") or 0) > 0,
+                "judge_success": field("SUCCESS") == "True", "transit_step": steps[0] if steps else None, "gate_steps": steps,
+                "dwell": int(field("dwell") or 0)}
+    tr = field("transit"); step = tr.split("@")[1] if tr and "@" in tr else None
+    return {"transit": tr.startswith("True") if tr else None, "route_clean": field("wrong_dir") == "0",
+            "goal": field("goal") == "True", "judge_success": field("SUCCESS") == "True",
+            "transit_step": int(step) if step and step.isdigit() else None}
+
+
+def mannequin(P, head, start=0):
+    seg, hs = P[start:], head[start:]
+    if len(seg) < HOLD:
+        return {"success": False, "reason": "too short"}
+    tail, th = seg[-HOLD:], hs[-HOLD:]
+    d = np.hypot(tail[:, 0] - MANNEQUIN[0], tail[:, 1] - MANNEQUIN[1])
+    bearing = np.arctan2(MANNEQUIN[1] - tail[:, 1], MANNEQUIN[0] - tail[:, 0])
+    off = np.degrees(np.abs((th - bearing + np.pi) % (2 * np.pi) - np.pi))
+    ok_d, ok_h = bool(d.max() <= HOVER_M), bool(np.nanmax(off) <= 20.0)
+    ok_z = bool(seg[:, 2].min() >= Z_MIN)
+    dall = np.hypot(seg[:, 0] - MANNEQUIN[0], seg[:, 1] - MANNEQUIN[1])
+    return {"success": ok_d and ok_h and ok_z, "final_dist": round(float(d[-1]), 3), "hold_max_dist": round(float(d.max()), 3),
+            "hold_max_heading_off_deg": round(float(np.nanmax(off)), 1), "closest": round(float(dall.min()), 3),
+            "z_min": round(float(seg[:, 2].min()), 3), "reason": "" if ok_d and ok_h and ok_z else
+            ("distance" if not ok_d else "heading" if not ok_h else "altitude")}
+
+
+def orbit(P, centre, r_lo=0.8, r_hi=2.0):
+    v = P[:, :2] - centre
+    ang = np.unwrap(np.arctan2(v[:, 1], v[:, 0]))
+    r = np.hypot(v[:, 0], v[:, 1])
+    in_band = (r >= r_lo) & (r <= r_hi)
+    # the winding segment: from the first in-band step, does the cumulative angle reach a full turn while staying in band?
+    best = 0.0; done = None
+    for s0 in np.where(in_band)[0][:1]:
+        run_end = s0
+        while run_end + 1 < len(P) and in_band[run_end + 1]:
+            run_end += 1
+        turn = ang[s0:run_end + 1] - ang[s0]
+        best = float(np.abs(turn).max()) if len(turn) else 0.0
+        hit = np.where(np.abs(turn) >= 2 * np.pi)[0]
+        done = int(s0 + hit[0]) if len(hit) else None
+    ok_z = bool(P[:, 2].min() >= Z_MIN and P[:, 2].max() <= Z_MAX)
+    return {"success": done is not None and ok_z, "turn_deg": round(math.degrees(best), 1), "completed_step": done,
+            "r_median": round(float(np.median(r[in_band])) if in_band.any() else float("nan"), 2),
+            "r_min": round(float(r.min()), 2), "r_max": round(float(r.max()), 2), "z_ok": ok_z,
+            "centre": [round(float(c), 3) for c in centre]}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--task", required=True, choices=["mannequin", "double", "orbit", "left_mannequin"])
+    ap.add_argument("--traj", required=True); ap.add_argument("--dir", default=None); ap.add_argument("--scene", default="left_and_center")
+    a = ap.parse_args()
+    P, head = load(a.traj, a.dir)
+    out = {"task": a.task, "traj": os.path.basename(a.traj), "steps": int(len(P)),
+           "path_m": round(float(np.linalg.norm(np.diff(P, axis=0), axis=1).sum()), 2)}
+    out.update(clearance(a.traj, a.scene))
+    if a.task == "mannequin":
+        out.update(mannequin(P, head)); out["success"] = bool(out["success"] and out["clean"])
+    elif a.task == "orbit":
+        out.update(orbit(P, centre_gate_xy(a.scene))); out["success"] = bool(out["success"] and out["clean"])
+    elif a.task == "double":
+        out.update(judge_gate(a.traj, "left_and_center")); out["success"] = bool(out["judge_success"] and out["clean"])
+    elif a.task == "left_mannequin":
+        g = judge_gate(a.traj, "left"); out.update({"left_" + k: v for k, v in g.items()})
+        st = g["transit_step"] or 0
+        m = mannequin(P, head, start=st); out.update({"mann_" + k: v for k, v in m.items()})
+        out["success"] = bool(g["transit"] and g["route_clean"] and out["clean"] and m["success"])
+    print(json.dumps(out))
+
+
+if __name__ == "__main__":
+    main()
