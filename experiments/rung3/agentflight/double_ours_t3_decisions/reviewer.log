@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** crossed cleanly at decision k=4→k=5 (x: -0.03 → 1.01). Approach was symmetric — both posts and crossbar centered on the tick before the final straight move — and the crossing was confirmed by the crossbar passing overhead in the downward camera. Through the middle.
+
+**Second gate:** the approach to it was troubled. Twice (k=6, k=8) I closed to a single-post-filling-frame view and backed up per R5, but each backup overshot back across the gate plane, and at k=9 the forward view matched the *original* left-gate approach almost exactly — strong evidence the drone re-crossed the left gate backward rather than ever reaching a distinct center gate. From there I re-lined-up and crossed a gate again at k=12→13 (posts split to the edges, crossbar visible passing in the downward camera during the transit). I could not fully verify from the imagery alone whether this second crossing was the true center gate or the left gate re-crossed forward a second time — the room views before/after look similar and no third gate or the penguin's table was ever unambiguously identified in the forward panel.
+
+**Penguin:** never located. No black-and-white shape was visible on any low table in either the forward or downward camera at any decision, including the final one, which showed only a bench/table silhouette and a dark doorway ahead-left.
+
+**Final pose:** x≈1.04, y≈0.55, z≈1.54, heading≈+7°, still moving forward into the room, not descended, not hovering.
+
+**Verdict:** I do not believe the task finished successfully. One clean, confirmed gate crossing (the left gate) is solid; the second crossing is unconfirmed as the correct (center) gate rather than a re-crossing of the left one; and the penguin was never found or hovered over, so the flight ran out of decisions well short of completion.

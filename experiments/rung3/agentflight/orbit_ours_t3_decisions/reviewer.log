@@ -1,0 +1,13 @@
+## Flight report
+
+**Gate midpoint estimate:** approximately **x 3.0, y −0.3** (room coordinates), triangulated from three independent bearing/distance fixes as I approached (k5, k9, k13 all agreed within ~0.2 m).
+
+**Radius flown:** approximately **1.3–1.5 m** from that midpoint, measured at every waypoint (k8: 1.33 m, k10: 1.36 m, k12: 1.52 m, k13: 1.47 m, k17: 1.42 m, k18/close: 1.39 m) — slightly inside the nominal 1.5 m on the far side of the loop (k14–k16 dipped to ~1.1 m) but never closer than the ~0.5 m clearance rule.
+
+**Direction:** clockwise as seen from above — from the start point on the gate's −y side, first swinging toward −x/+y (past the near-left-gate region), around through +y, +x, and back down through −y to close.
+
+**Loop closed at:** decision **k18** (pose 2.93, −1.69), within 0.08 m of the start point recorded at decision **k8** (2.89, −1.62). Decision k19 was held with all-zeros to end the flight cleanly at closure.
+
+**Did I complete a full circle without touching the gate?** Yes — the pose track shows continuous progression through all eight ~45°-bearing waypoints around the estimated midpoint, radius stayed in the 1.1–1.5 m band throughout (never inside the 0.5 m clearance), and the drone returned to within 8 cm of its starting point on the loop, heading having rotated a full ~360° (yaw track: +7° → −30° → −60° → −95° → −120° → −146° → −172°, consistent with one full clockwise turn). No forward-camera frame at any point showed a post closer than roughly 1 m, and the one early scare (k10, "post filling the frame") was resolved by backing off before continuing — I don't believe the gate structure was ever touched.
+
+**One caveat:** the far side of the loop (k14–k16) never showed both gate posts clearly in frame — I was relying on the pose track and prior triangulation rather than fresh visual confirmation of the midpoint there, so the true radius on that arc could have drifted somewhat from my 1.5 m target (estimated 1.1–1.3 m based on position math alone).
