@@ -64,9 +64,10 @@ def judge_gate(traj, side):
         g = field("gates"); a, b = [int(x) for x in g.split("/")]
         steps = l.split("steps=[")[1].split("]")[0] if "steps=[" in l else ""
         steps = [int(x) for x in steps.replace(" ", "").split(",") if x]
-        return {"transit": a == b, "gates": g, "route_clean": a == b, "goal": int(field("dwell") or 0) > 0,
+        dw = field("dwell"); dw = int(dw) if dw and dw.isdigit() else 0
+        return {"transit": a == b, "gates": g, "route_clean": a == b, "goal": dw > 0,
                 "judge_success": field("SUCCESS") == "True", "transit_step": steps[0] if steps else None, "gate_steps": steps,
-                "dwell": int(field("dwell") or 0)}
+                "dwell": dw}
     tr = field("transit"); step = tr.split("@")[1] if tr and "@" in tr else None
     return {"transit": tr.startswith("True") if tr else None, "route_clean": field("wrong_dir") == "0",
             "goal": field("goal") == "True", "judge_success": field("SUCCESS") == "True",
