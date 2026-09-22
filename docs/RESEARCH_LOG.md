@@ -8138,3 +8138,17 @@ clearance-clean.
 Mean min-clearance over successes unchanged (0.23-0.30 m). Differences inside the ±5-6 pt protocol noise; the
 latch is not load-bearing. Paper: describe it as a design choice or drop it; the 25-step cell can be quoted
 either way. Page: `viz/realonly_apc25.html` (latch-off groups added).
+
+## latch ablation extended to older cells: identical everywhere (2026-09-22 ~19:00 PDT)
+`HYST=0` reruns via `run_realonly_apc25.sh gmsig3 50` and the new `scripts/run_ctr_hyst.sh <NAME>` (compound cells,
+0.30 card slice beside the hardware server). Success = judge route-clean + clearance-clean.
+| cell | gmsig3 latched | gmsig3 off | real-only latched | real-only off |
+| left / right (50-step) | 10/10, 10/10 | 10/10, 10/10 | 0/10, 5/10 | 0/10, 4/10 |
+| CFL / CFR | 10/10, 9/10 | 10/10, 8/10 | 0/10, 0/10 | 0/10, 0/10 |
+| CMPL / CMPR (dwell judge) | 0/5, 0/5 | 0/5, 0/5 | 0/5, 0/5 | 0/5, 0/5 |
+(CFL/CFR counts here = success AND clean; CMPL/CMPR clean 2/5, 5/5 both arms for gmsig3, 0/5, 2/5 vs 0/5, 0/5 for
+real-only.) Offline scan of every clog on the box: the latch fires on <4% of replans for the mixed checkpoints
+(gmsig3 6/160 atomics, 20/340 compounds; gmsig3s7 2/500 — one component at 0.99) and most on the real-only
+checkpoint (10/160, 26/320) and its agent flights (1-6 per ~25-replan flight, 8-20%). Conclusion: the latch is a
+no-op for the mixed checkpoints and inside protocol noise for real-only; the only untested place it could matter
+is the agent-in-the-loop flights. Page: `viz/latch_ablation.html`.
