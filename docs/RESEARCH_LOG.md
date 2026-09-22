@@ -7966,3 +7966,30 @@ re-embedded; 34 artifacts republished to their existing URLs (the flagship atlas
 fresh, having fallen out of the listing window). Pages older than the listing window with no URL on hand
 (Endgame Ownership, Center Pin Real vs Sim, the two demo-fan pages, Guided Composition, xswap Sketch
 Re-attribution) carry the new cloud locally but were not republished.
+
+**REAL-ONLY PIN AT A 25-STEP REPLAN (2026-09-22; Denis: "failures of real pin are kind of weird. can we try running
+25 action chunks instead?").** Same checkpoint, server, sigma map and scorer as the APC-50 cells; NCH 16 x APC 25 =
+the same 400 steps; 10 trials per cell (scripts/run_realonly_apc25.sh; page viz/realonly_apc25.html).
+                         transit  route-clean  clearance-clean  goal box  judge success
+    left,  APC 50         9/10      8/10          0/10           0/10       0/10
+    left,  APC 25         8/10      7/10          5/10           1/10       1/10
+    right, APC 50         8/10      8/10          5/10           1/10       1/10
+    right, APC 25         9/10      9/10         10/10           1/10       1/10
+  READ 1: the real-only pin was never failing the GATE. At either interval it crosses the correct aperture in the
+  correct direction 7-9 times in 10. The judge's SUCCESS needs a post-transit frame inside the goal box
+  (1.525, -0.615, 1.0) +- (0.3, 0.3, 0.5), and that is what it misses: on the right it parks 0.03-0.18 m from the
+  goal in xy in 7/10 APC-50 flights but at z 1.51-1.56, just above the box's top face at z 1.5; on the left it
+  stops 0.5-0.8 m short at x ~ 1.0. The pilot's own 100 demonstrations end inside that box only 23/50 (left) and
+  9/50 (right): median end z 1.44 (left) and 1.53 (right), so the box is a sim-demo criterion (the synth courses
+  descend to z ~1.0) that the real data does not teach. The real-only arm reproduces the pilot's ending, and the
+  judge scores it as failure. HARDWARE_RESULTS.md already reports the goal box but does not use it for success;
+  the sim ledger should do the same for the real-only arms.
+  READ 2: the shorter open-loop horizon buys clearance, not the goal: left clearance-clean 0/10 -> 5/10, right
+  5/10 -> 10/10 (right min clearance 0.27-0.33 m at APC 25 vs grazes at APC 50). Re-observing every 2.5 s lets
+  the flow correct the crossing line before the post. The goal miss is unchanged (1/10 each), and on the right
+  the APC-25 endings drift further to -y (0.15-0.94 m off in xy vs 0.03-0.18) -- more replans, more chances for
+  the head's goal estimate to wander. One APC-25 right flight (trial 4) never crossed: it turned back at
+  x -0.5 with a 2.0 m path.
+  READ 3: for the paper, the real-only pin's sim atomics should be reported as transit / route-clean /
+  clearance-clean, with the goal box as a separate column flagged as a sim criterion the pilot misses. Under
+  that reading the real-only pin at APC 25 is right 9/10 route-clean, 10/10 clean; left 7/10, 5/10 clean.

@@ -110,6 +110,7 @@ PAGES = """
 
 | Page | Policy | What it shows |
 |---|---|---|
+| [Real-Only Pin, Replan Interval](https://claude.ai/code/artifact/REALONLY_APC25_URL) | realonly | left and right at a 50-step vs 25-step replan; the goal box, not the gate, is what it misses |
 | [gmsig3 Flight Atlas](https://claude.ai/code/artifact/6e7d6eef-5720-49f1-92fa-96aa226d8bf4) | gmsig3 (mixed pin, seed 42) | all four cells, 40/40 route-clean, 40/40 clearance-clean |
 | [Seed-7 Flight Atlas](https://claude.ai/code/artifact/5e4accc4-aa53-4737-9948-fcb31caa3099) | gmsig3s7 (seed 7) | all four cells, 40/40 route-clean, 37/40 clean (3 CFR grazes) |
 | [Xswap Six Cells](https://claude.ai/code/artifact/6b3bb73b-5ce1-415e-ae09-56379ccd4d2e) | xswap (seed 42) | four atomics + two compounds |
@@ -162,8 +163,10 @@ add("xswap", "Sim atomics", "center from right", "10/10 · 10/10"); add("xswaps7
 for pol in ("scratch3", "scratch3s7"):
     add(pol, "Sim atomics", "center from right", "7/10 judge"); add(pol, "Sim atomics", "four cells pooled", "36/40 judge", "CFR is the gap")
 # real-only arms in the simulator (2026-09-15; 10 trials per cell): route-clean judge / transit judge / clearance-clean
-add("realonly", "Sim atomics", "left", "0/10 · 6/10 transit · 0/10", "100 real demos, never a rendered frame")
-add("realonly", "Sim atomics", "right", "1/10 · 5/10 transit · 1/10")
+add("realonly", "Sim atomics", "left", "0/10 · 9/10 transit (8 route-clean) · 0/10 clean", "100 real demos, never a rendered frame; judge success needs the goal box, which the pilot's demos enter 23/50")
+add("realonly", "Sim atomics", "right", "1/10 · 8/10 transit (8 route-clean) · 5/10 clean", "parks 0.03-0.18 m from the goal at z 1.51-1.56, above the box top")
+add("realonly", "Sim atomics", "left, APC 25", "1/10 · 8/10 transit (7 route-clean) · 5/10 clean", "2026-09-22; same 400 steps")
+add("realonly", "Sim atomics", "right, APC 25", "1/10 · 9/10 transit (9 route-clean) · 10/10 clean", "goal miss unchanged; clearance 0.27-0.33 m")
 add("realonly", "Sim atomics", "center from left", "0/10", "no center demos in its data"); add("realonly", "Sim atomics", "center from right", "0/10")
 add("scratch_real", "Sim atomics", "left", "2/10 · 6/10 transit · 1/10"); add("scratch_real", "Sim atomics", "right", "7/10 · 4/10 transit · 4/10", "3 grazes")
 add("scratch_real", "Sim atomics", "center from left", "0/10"); add("scratch_real", "Sim atomics", "center from right", "0/10")
