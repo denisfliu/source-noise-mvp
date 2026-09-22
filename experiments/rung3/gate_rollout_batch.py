@@ -285,11 +285,14 @@ if AGENT_DIR:
             _time.sleep(0.15)
         return {"verdict":"approve","why":"(no answer; approved by timeout)"}
     def _banner(frame,k,text,verdict):
-        im=Image.fromarray(frame); W,_=im.size; pad=Image.new("RGB",(W,150),(14,16,20)); im2=Image.new("RGB",(W,im.size[1]+150))
+        im=Image.fromarray(frame); W,_=im.size; pad=Image.new("RGB",(W,170),(14,16,20)); im2=Image.new("RGB",(W,im.size[1]+170))
         im2.paste(im,(0,0)); im2.paste(pad,(0,im.size[1])); d=ImageDraw.Draw(im2); y0=im.size[1]+7
         try:
             from PIL import ImageFont; f=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",15); fb=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",15)
         except Exception: f=fb=None
+        # the task, the arm and the flight tag on every frame (Denis, 2026-09-22: "label the video with what the task is supposed to be")
+        _tag=os.path.basename(OUT.replace("{t}","")).replace("agent_","").replace(".mp4","") if OUT else ""
+        d.text((10,y0),f"TASK: {BASE_PROMPT}   ·   arm {os.environ.get('ARM','?')}   ·   {_tag}",fill=(200,205,215),font=fb); y0+=20
         col=(120,220,150) if verdict=="approve" else (250,180,90)
         d.text((10,y0),f"decision {k}  ·  {verdict.upper()}",fill=col,font=fb)
         wmax=W-20
