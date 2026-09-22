@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward panel shows one yellow post right-of-center with a teal crossbar at the top of frame, no second post visible yet, downward panel shows clean mats | rule: R5 | action: turn further right to bring the second post of the gate into view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.0}}

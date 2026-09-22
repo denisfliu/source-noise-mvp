@@ -1,0 +1,9 @@
+## Report
+
+- **Gate midpoint estimate:** ≈ (x 3.0, y 0.3) in room coordinates, triangulated from post spacing and pose after decision k=9, once both posts and the crossbar were reliably in view.
+- **Radius flown:** 1.5 m, as 8 chords of ≈1.15 m each, turning 45° per chord (matches the planned circle geometry).
+- **Direction:** counter-clockwise (increasing heading, +45° yaw each chord), held constant the whole way.
+- **Loop closure:** at decision k=18, pose (x 2.18, y −1.00, heading 417°=57°) matched the loop's start pose from k=10 exactly, and the forward/downward views were pixel-for-pixel consistent with the starting view — confirming closure.
+- **Full circle completed without touching the gate:** yes — every chord (k=10–17) showed both posts and the crossbar clearly visible and well separated with no crowding of either post, indicating clearance was maintained throughout; no contact or graze was observed at any waypoint.
+
+Decisions 0–9 were spent locating the correct gate (the near left gate was passed with clearance, one false read on a "single post" view at k=8 triggered a back-off per R5) before the loop itself ran cleanly k=10→k=18, followed by a hold to end the flight.

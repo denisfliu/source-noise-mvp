@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: both yellow posts equal size, level teal crossbar, gap near the centre tick, matching the LINED UP calibration frame | rule: R6 | action: straight along heading 16 deg, 2 m, no yaw, to cross", "move": {"forward": 1.9972220482669427, "left": -0.0020223541721743343, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

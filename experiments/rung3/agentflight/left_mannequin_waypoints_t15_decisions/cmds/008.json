@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: both yellow posts similar size with a level teal crossbar between them, gap near centre | rule: R6 | action: straight along heading 16 deg, 1.5 m closer, no yaw", "move": {"forward": 1.4972256470787966, "left": -0.003919404224907774, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

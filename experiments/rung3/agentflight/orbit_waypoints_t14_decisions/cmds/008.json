@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: both posts centered, crossbar level, we have come halfway around and are now viewing the gate from the opposite side | rule: R2 | action: chord 5/8 of the loop, continuing CCW around the gate", "move": {"forward": 0.6935502879624773, "left": -0.7926461998061713, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

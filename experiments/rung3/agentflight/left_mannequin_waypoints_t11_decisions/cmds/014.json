@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: forward panel is a hazy close-up blur with a dark shape, downward panel shows clutter close below, nothing identifiable | rule: R3 | action: view is confusing so back up along heading to get distance and a clearer look", "move": {"forward": -1.0056770494718723, "left": -0.0036975891537224803, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

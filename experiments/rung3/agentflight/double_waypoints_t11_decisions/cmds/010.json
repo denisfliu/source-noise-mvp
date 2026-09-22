@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: forward panel is filled with the wooden table surface very close, downward panel shows blurry pale texture with no distinct object, we are too close and too low for a clear view | rule: R2 | action: ascend to widen the downward view of the table area", "move": {"forward": 0.0, "left": 0.0, "up": 0.5, "yaw_deg": 0.0, "sigma": 0.5}}

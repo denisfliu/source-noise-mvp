@@ -1,0 +1,1 @@
+{"k": 23, "verdict": "override", "why": "seen: cluttered shelving close on the left, no standing figure in view, last decision available | rule: R2 | action: hold in place with no movement to stay clear of nearby clutter", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

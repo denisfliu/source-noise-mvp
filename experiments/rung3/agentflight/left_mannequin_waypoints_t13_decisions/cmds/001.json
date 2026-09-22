@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward camera shows one large yellow post with teal crossbar filling the center, no second post visible, downward shows a penguin decal on floor | rule: R5 | action: back up 1.5m along heading (-x) to bring both posts into view", "move": {"forward": -1.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

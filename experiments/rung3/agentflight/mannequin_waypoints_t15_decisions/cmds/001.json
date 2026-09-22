@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows more wall with windows and a dark alcove, no gate visible; downward panel shows floor tiles | rule: R3 | action: continue the sweep, turn another 45 degrees", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

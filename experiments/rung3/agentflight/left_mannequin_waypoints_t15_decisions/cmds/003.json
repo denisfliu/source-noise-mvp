@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: left yellow post is nearer and larger than the far post, whole gate visible but off-centre | rule: R4 | action: move sideways (dy -0.5) toward the gate centreline, no yaw, no forward", "move": {"forward": -0.13817782428205688, "left": -0.48052771915538545, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

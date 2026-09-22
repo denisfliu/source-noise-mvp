@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: both center-gate posts in view again, gap near center tick, radius looks good | rule: R2 | action: chord 4/8 of the loop, continuing CCW around the gate at radius ~1.3m", "move": {"forward": 0.6301842447061444, "left": -0.8099801341540089, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

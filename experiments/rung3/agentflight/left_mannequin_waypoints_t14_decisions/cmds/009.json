@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel is dominated by dense render noise/clutter near a wall or door frame, no clear gate or mannequin; downward panel similarly noisy | rule: R3 | action: turn left 45 deg more to continue the scan rather than dwell on a confusing view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

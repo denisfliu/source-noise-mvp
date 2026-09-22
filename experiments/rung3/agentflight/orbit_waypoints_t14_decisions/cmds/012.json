@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: single post left-of-center, no second post, same near-tangent gate view as the loop's starting point | rule: R2 | action: hold in place, the 8-chord loop has closed back at the start", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

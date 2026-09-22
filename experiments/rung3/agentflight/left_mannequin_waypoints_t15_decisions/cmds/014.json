@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: figure no longer in view, only a shelf/cabinet with a warning sign on the left | rule: R3 | action: yaw -30 deg right to scan for the figure, which was last seen toward the R mark", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: both gate posts and crossbar visible and well separated, no crowding, consistent with continuing around the far side of the gate | rule: R3 | action: fly chord 4 of 8 (dx-0.67 dy+0.94) and turn +45 to keep facing the gate", "move": {"forward": 0.4580608949334742, "left": -1.0532303720139982, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

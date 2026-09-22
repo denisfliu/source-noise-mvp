@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** Crossed around decision k=8→9 (the 2 m straight move from x≈-0.08,y≈-0.59 to x≈1.70,y≈-0.18, heading +13°). Line-up before that crossing was messy — repeated oscillation between "single post fills frame" (R5 back-ups at k=3 and k=5) and lateral size-mismatch corrections (R4 strafes at k=2, k=6, k=7) before the posts finally looked symmetric with the gap on the tick at k=8. So the crossing was likely not clean through the exact middle; at k=9 the forward camera still showed a post close by right after, suggesting a graze rather than a centered pass. The downward camera at k=9 did briefly show the penguin on its table nearby, consistent with being on the gate's far side.
+
+**Center gate:** Never found. After clearing the left-gate post area (k=10-11), the forward camera showed open floor, furniture, and a standing figure but no yellow/teal gate structure. Spent the last two decisions (k=11, k=12) turning toward -y (heading went from +13° to -67°) to search, but a white pillar/desk blocked the view at the end. No center-gate posts were ever sighted.
+
+**Penguin:** Seen once, in the downward camera at k=9, on a table near the left gate's far side — never relocated or approached afterward since the flight pivoted to searching for the center gate.
+
+**Final pose:** x=2.87, y=-1.34, z=1.50, heading≈-77° (after the final -20° yaw).
+
+**Outcome:** Not finished. The left gate was crossed but not cleanly through the middle, the center gate was never located or crossed, and no hover over the penguin was achieved — the 14-decision budget was consumed largely by line-up oscillation on the left gate, leaving too little to find and cross the second gate.

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward panel shows the same cart-corner as before with no figure, confirming this heading is a dead end; downward panel plain floor | rule: R3 | action: turn right 45 deg to scan the unexplored -y facing directions from this spot", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

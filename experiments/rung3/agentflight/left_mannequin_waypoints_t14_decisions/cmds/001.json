@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows a gate (teal crossbar, yellow posts) with its gap left of the centre tick, near the L mark; a second post structure further back on the right | rule: R4 | action: turn left 15 deg more to bring this gate's gap onto the centre tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

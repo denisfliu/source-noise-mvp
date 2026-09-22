@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** crossed during the k=3 override (straight move along heading +18°, sigma 0.5, no yaw), confirmed at k=4 — posts split to the frame edges and disappeared, revealing the room beyond (matches the calibration "just crossed" signature). This crossing followed the turn‑then‑straight procedure with the gap in the dead‑band, so I believe it was through the middle.
+
+**Center gate:** crossed during the k=12 override (heading corrected to −46°, straight move, sigma 0.5), confirmed at k=13 — posts again left the forward frame and a sliver of post/crossbar was seen exiting the downward frame. However, getting lined up on this gate took much longer than the left gate (k=5–k=12): I overshot into "beside the post" views twice (k=9, k=11) and made a wrong-direction yaw correction at k=11 (turned right when the gap was actually left of center, per the panel-position rule), which cost two extra decisions to undo. I'm less confident this crossing was dead-center — it may have clipped closer to the post I kept meeting than a clean middle pass.
+
+**Penguin:** never relocated after the initial glimpse at k=1 (seen to the drone's right, i.e. −y, from position x≈1.4, y≈0, right after the left gate). By the time the center gate was cleared, decisions had run out, so no search or descent toward it was possible.
+
+**Final pose:** x≈3.99, y≈−0.53, z=1.50, heading ≈−47°.
+
+**Outcome:** I do not believe the task finished — both gates were crossed in the correct order, but the flight ended immediately after the second crossing with no attempt made to locate or hover over the penguin.

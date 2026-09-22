@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward panel shows a yellow gate post with teal crossbar near the L mark, close range; downward panel shows floor tiles | rule: R5 | action: turn 30 deg left to bring the gate toward the frame centre and see both posts", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.0}}

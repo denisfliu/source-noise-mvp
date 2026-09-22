@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: two yellow posts with teal crossbar near-centered slightly left of the tick in the forward camera, mats below in the downward camera | rule: R6 | action: move straight along heading to close distance since the gap is within the dead-band", "move": {"forward": 1.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

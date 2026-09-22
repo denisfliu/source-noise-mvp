@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: forward panel shows one thick yellow post filling most of the frame near centre; downward panel shows floor mats | rule: R5 | action: back up 1.5 m along heading to bring both posts back into view", "move": {"forward": -1.502331501875853, "left": 0.00024180869225420842, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

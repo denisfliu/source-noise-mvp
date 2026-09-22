@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: one yellow post fills the frame near the R mark, no crossbar or left post visible | rule: R5 | action: back up 1 m along heading to regain both posts", "move": {"forward": -0.999992802376292, "left": -0.003794100105466658, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

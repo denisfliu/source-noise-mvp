@@ -1,0 +1,1 @@
+{"k": 20, "verdict": "override", "why": "seen: forward camera shows cluttered colorful gear bottom-left, no mannequin, downward shows a narrow gap between structures | rule: R3 | action: turn left 45 degrees to scan further into this unexplored corner for the mannequin", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

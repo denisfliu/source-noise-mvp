@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: forward camera shows an empty room with a dark doorway ahead and a mic stand on the left, no gate or mannequin visible, downward shows plain floor | rule: R3 | action: turn right 45 degrees to scan toward center of room for the next gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

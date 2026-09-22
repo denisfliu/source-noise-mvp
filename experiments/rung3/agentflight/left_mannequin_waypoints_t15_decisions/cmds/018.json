@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: heavily blurred close-up of a dark doorway/wall, no figure visible, image quality indicates proximity | rule: R2 | action: back up 1 m along heading to regain clearance and a clear view", "move": {"forward": -0.9946179235179557, "left": 0.005931797099520353, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: forward panel shows only one gate post, filling much of the frame near the R mark; downward panel shows a cage/table below | rule: R5 | action: back up 1.5 m along heading to bring both posts into view", "move": {"forward": -1.4995312744135538, "left": -0.037496093872068495, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

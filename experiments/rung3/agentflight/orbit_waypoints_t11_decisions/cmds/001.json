@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows a single yellow post filling the centre, near the L mark, no opening visible | rule: R5 | action: move -y 0.8 to clear the left gate's post sideways while advancing +x 0.8 to keep progressing toward the centre gate", "move": {"forward": 0.8, "left": -0.8, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

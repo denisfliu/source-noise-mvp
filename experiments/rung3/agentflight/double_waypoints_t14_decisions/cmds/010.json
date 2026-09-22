@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: forward panel shows a thick yellow post close and centred, downward panel shows a teal crossbar overhead | rule: R2 | action: strafe right and toward -y to clear the post and head toward the centre gate's side", "move": {"forward": -0.008414836425762962, "left": -1.1997458858141286, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,13 @@
+## Flight report
+
+**Sweep:** Turned in place from the start heading (-180°) through -140°, -100°, -59°, to -19° (decisions 0–3) with no gate in view; a gate first appeared at heading -19° (decision 4), so sweeping stopped there per R3's "stop as soon as you see a gate."
+
+**Commit:** Turned to square up (heading ~-1° then, after drift, +12°) and pushed through the gate. Lining up took much longer than planned — repeated "one post filling the frame" overshoots (decisions 6, 7, 10) forced three back-up-and-realign cycles, eating nearly all of the decision budget before the crossing succeeded around decision 12 (crossbar visible overhead in the downward panel, posts gone from forward view, pose x≈1.00, y≈0.43).
+
+**Mannequin:** Never seen. Decisions 12 and 13 (the only budget left after crossing) showed a new bay — desk, chair, doorway, window, mic stand — with no grey mannequin figure in either forward panel. No mark (L/R) is applicable since it never appeared.
+
+**Room position estimate:** Unknown — the mannequin is presumably further into the bay beyond the gate at heading ≥+52° from x≈1.00, y≈0.43, past what the two remaining decisions could reveal.
+
+**Final pose:** x≈1.00, y≈0.43, z=1.50, heading≈+97° (after the last 45° turn), inside the new bay.
+
+**Outcome:** I did not end in front of the mannequin — the objective was not met. The budget was consumed almost entirely by gate alignment (a lining-up miscalibration cost 3 extra back-up decisions), leaving no room for a proper Phase 3 search once through the gate.

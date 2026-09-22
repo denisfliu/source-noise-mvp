@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: forward panel shows both gate posts and crossbar, gap within the dead-band of the centre tick; downward panel shows mats | rule: R6 | action: fly straight along heading 1.8 m to cross the gate", "move": {"forward": 1.7984710118934828, "left": -0.001421048497470323, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

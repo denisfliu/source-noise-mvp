@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: a dark passage centred between two cabinets, clutter shelf to the right, no figure visible | rule: R2 | action: move 1.5 m straight along heading 80 deg through the passage, staying centred for clearance", "move": {"forward": 1.5075266854033638, "left": 0.019060241256282306, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: forward camera shows shelving with boxes and equipment, no mannequin visible, downward shows a wood floor edge | rule: R3 | action: turn right another 45 degrees to continue scanning for the mannequin", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

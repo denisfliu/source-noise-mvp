@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward panel shows open room with furniture and a standing figure but no gate posts, downward panel shows clean mats with no crossbar, confirming we are clear of the left gate | rule: R6 | action: turn right toward -y to search for the center gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.0}}

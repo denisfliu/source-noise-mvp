@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: same gate posts and crossbar arrangement as the closed loop's start view, position unchanged | rule: R3 | action: hold position with zero move, flight complete", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 20, "verdict": "override", "why": "seen: forward camera filled entirely with blank wall, no doorway beyond, dead end | rule: R2 | action: back up 1.5 m along heading to regain clearance from the wall", "move": {"forward": -1.5075266854033638, "left": -0.019060241256282306, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

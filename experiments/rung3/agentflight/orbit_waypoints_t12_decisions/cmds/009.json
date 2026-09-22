@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward camera shows both center-gate posts and crossbar, similar size, gap sitting left of the centre tick, low bench/table in foreground | rule: R4 | action: turn left (+yaw) about 14 degrees to bring the gap onto the centre tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 14.0, "sigma": 0.5}}

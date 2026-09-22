@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: single large yellow/teal post left-of-center near L mark (beside left gate, passing it), no clear second gate resolved yet ahead | rule: R2 | action: continue translating toward estimated center gate midpoint area on its -y side, clearing left gate", "move": {"forward": 1.5, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

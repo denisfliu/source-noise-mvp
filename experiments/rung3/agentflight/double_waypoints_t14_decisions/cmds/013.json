@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward panel shows a white pillar/partition and a desk close ahead, no gate posts or penguin visible, downward panel shows plain mats | rule: R2 | action: yaw-only turn to keep clear of the pillar for this final decision, no gate found", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.0}}

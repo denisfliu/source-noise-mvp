@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel still shows the same capped person now near the L tick beside a shelf/cabinet, no mannequin visible, downward panel shows floor | rule: R3 | action: continue turning right to scan the rest of the room for the mannequin", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

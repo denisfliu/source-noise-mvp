@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: forward panel again shows one thick yellow post with crossbar filling the centre, no second post visible, downward panel shows mats | rule: R5 | action: back up along heading until both posts are visible again", "move": {"forward": -1.1997458858141286, "left": 0.008414836425762962, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: forward camera shows a closed door with paper notices and stacked boxes, no mannequin visible, downward shows a wood floor edge and a dark mat | rule: R3 | action: turn right another 45 degrees to keep scanning around this bay for the mannequin", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

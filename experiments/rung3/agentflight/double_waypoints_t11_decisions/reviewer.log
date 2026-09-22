@@ -1,0 +1,8 @@
+**Flight report — agent_sim_double_waypoints_t11**
+
+- **Left gate:** crossed at decision k=1 (turn to square up at k=0, then straight move through the gap at k=1; k=2's view and filmstrip confirmed posts left frame / crossbar underneath). Lined up on the centre tick before crossing — through the middle.
+- **Center gate:** crossed at decision k=5 (turned to find it at k=3–k=4, then both posts + crossbar centered near the tick, straight move at k=5; k=6's view/filmstrip confirmed the crossing). Also through the middle, gap close to centered before the move.
+- **Penguin:** never got a visually unambiguous black-and-white penguin — the render is heavy with noise/artifacts. A pale, rounded object was consistently visible on a wooden low table (seen from k=7 through k=12) and was my best candidate for it. I maneuvered toward that table and descended.
+- **Final pose:** x=6.63, y=-0.41, z=1.00, heading +31°. The downward camera at the final decision was filled entirely with the wooden table surface (directly above it, correct altitude), but I could not visually confirm the penguin pattern was centered beneath the drone versus just table surface.
+
+**Assessment:** both gates were crossed in the correct order through the middle. The final hover is over a low table at the target 1.0 m altitude, consistent with the penguin's likely location, but I'm not fully confident the drone ended precisely centered over the penguin itself rather than an adjacent part of the same table — I'd call this a probable but unconfirmed full success.

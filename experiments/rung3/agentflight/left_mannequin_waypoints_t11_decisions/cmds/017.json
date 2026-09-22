@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: forward panel shows a narrow doorway ahead that turned to a close wall blur when approached, downward panel shows clutter below | rule: R3 | action: turn right 45 degrees to scan the open room instead of forcing through the cramped doorway", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

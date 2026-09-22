@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: forward camera shows a wall, door, bench and a standing figure with no gate posts, downward camera shows mats and a bright blob | rule: R3 | action: turn right toward +x/-y to scan for the centre gate since none is visible here", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: forward panel shows a shelf with tools/equipment, no mannequin, downward panel shows floor | rule: R3 | action: continue turning right to finish the 360 scan back toward the starting heading", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

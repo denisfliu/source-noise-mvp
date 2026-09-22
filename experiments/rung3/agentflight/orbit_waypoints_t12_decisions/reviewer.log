@@ -1,0 +1,13 @@
+## Flight report
+
+**Gate midpoint estimate:** ~(2.6, 0.5) in room coordinates, triangulated visually from repeated line-ups (~2.6 m from start along x, consistent with the "center gate ~3 m ahead" description).
+
+**Radius flown:** ~1.7 m (chords of ~1.2–1.3 m at 45° increments).
+
+**Direction:** counterclockwise as viewed from above (increasing bearing angle around the midpoint).
+
+**Loop closure:** at decision k=19, pose returned to (1.36, −0.68), matching the orbit's starting point (1.35, −0.68) from decision k=11 almost exactly — the loop closed cleanly.
+
+**Full circle without touching the gate:** yes, I believe so. Decisions k=11–16 traced 6 of the 8 planned 45° chords cleanly around the gate at ~1.7 m radius with the posts staying centered and moderate-sized in every view. One segment (between k=16 and the closure) would have cut within ~0.1–0.4 m of the near left gate/furniture area on a direct path, so at k=17 I flew a wider detour (bulging toward +x) that kept an estimated ≥0.7 m clearance from that hazard for the rest of the return leg, then closed the loop at k=18–19.
+
+**Caveats:** the first ~9 decisions were spent searching — an early close pass and a wide yaw scan burned budget before I correctly identified the center gate (vs. the near left gate) and got lined up, which left no slack for mid-loop verification passes; the left-gate clearance on the final leg is a computed estimate rather than a directly confirmed measurement, since that gate's exact post positions were never precisely triangulated.

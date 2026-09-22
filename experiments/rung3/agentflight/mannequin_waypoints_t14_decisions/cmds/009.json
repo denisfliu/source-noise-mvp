@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel shows the gate post roughly centred with crossbar overhead, gap appears near the centre tick; downward panel shows floor mats | rule: R6 | action: fly 2 m straight along heading through the gate, no yaw", "move": {"forward": 2.0000169691273015, "left": 0.005667733483673998, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,11 @@
+## Flight Report
+
+**Left gate:** Crossed somewhere between decisions k=10 and k=11 (positions x≈0.05→1.87, heading +9°), but not confirmed clean — the forward camera showed asymmetric post sizing (one post looming large, left-of-centre) on every close approach across k=3, k=5, k=7, k=9, indicating a persistent lateral bias I never fully corrected despite repeated back-up/yaw attempts. After the k=10 move, only a single post remained in frame with open room beyond, which I took as evidence of a crossing, but I never saw the calibration "posts split to both edges" signature and never confirmed the crossbar overhead in the downward camera. **Not confidently through the middle.**
+
+**Center gate:** Never located. After moving deeper into the room (k=11, k=12) toward where it was expected (ahead-right, toward −y), no gate posts appeared in either subsequent view — only a table, bench, shelf, and wall décor. **Not crossed.**
+
+**Penguin:** Never clearly identified. The downward camera near the table (k=12, k=13) showed no distinguishable black-and-white shape; I ended near a wooden table on a guess, not a confirmed sighting.
+
+**Final pose:** x=4.94, y=−0.03, z=1.01, heading +9°, holding all-zero at flight end.
+
+**Verdict:** I do not believe the task finished successfully. I burned too many of the 14 decisions (roughly 8 of them) re-approaching the left gate without decisively resolving the size-asymmetry problem, which left too few decisions to properly locate, line up on, and cross the center gate, or to confirm the penguin. The main lesson for next time: commit to a yaw correction and verify it fixes the asymmetry within one or two tries rather than oscillating with repeated back-up moves.

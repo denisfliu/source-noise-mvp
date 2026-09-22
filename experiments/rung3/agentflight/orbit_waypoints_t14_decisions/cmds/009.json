@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: both posts in view, gap centered, crossbar level | rule: R2 | action: chord 6/8 of the loop, continuing CCW; watching clearance to the left gate as we swing past its side", "move": {"forward": 0.7114834784431505, "left": -0.7548451893616566, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

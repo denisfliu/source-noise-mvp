@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward camera shows one yellow post filling the center of the frame with the second post not visible, downward camera shows the penguin to the right | rule: R5 | action: back up along heading since only one post is visible, meaning I am beside the gate", "move": {"forward": -1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: forward panel shows cluttered gate posts ahead, unclear which set is the left gate; downward panel shows floor under drone | rule: R3 | action: turn left 25 deg to bring the left (+y) gate more clearly into view before committing to a move", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 25.0, "sigma": 0.0}}

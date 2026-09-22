@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel shows both posts and crossbar equal size, gap within the dead-band of the centre tick, downward shows open floor ahead | rule: R6 | action: fly straight along heading 2 m with no yaw to cross the gate", "move": {"forward": 2.003808849567415, "left": 0.007077739421209039, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

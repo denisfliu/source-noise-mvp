@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward panel shows a gate post near the L tick, a bench and mats, a corridor continuing right past a shelf, no mannequin, downward panel shows floor | rule: R3 | action: continue turning right to complete the scan of the room", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

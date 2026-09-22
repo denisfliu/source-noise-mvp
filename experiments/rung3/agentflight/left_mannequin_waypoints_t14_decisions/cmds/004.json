@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward panel shows a plain room with a door/wall and a mic stand, no gate or mannequin visible; downward panel shows open floor | rule: R3 | action: turn right 45 deg to scan toward +x for the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

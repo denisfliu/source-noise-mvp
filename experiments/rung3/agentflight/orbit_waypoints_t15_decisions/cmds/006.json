@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: both centre-gate posts and its teal crossbar now visible, the gap between them sits left of the centre tick, roughly 17 degrees left | rule: R4 | action: turn left 17 degrees in place to bring the gap onto the centre tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 17.0, "sigma": 0.5}}

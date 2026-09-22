@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: forward panel shows furniture (table, standing figure) blocking the view, no gate posts visible, downward panel shows plain mats | rule: R3 | action: turn another 45 deg right to continue searching toward -y for the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

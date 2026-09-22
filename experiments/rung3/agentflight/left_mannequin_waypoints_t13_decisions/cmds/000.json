@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: forward camera shows a near gate with teal crossbar low-left and a farther gate with yellow posts center-right, downward shows floor below | rule: R3 | action: move forward 1.5m to close distance and get a clearer look at both gates", "move": {"forward": 1.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

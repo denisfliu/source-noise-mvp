@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: standing figure in a cluttered storage bay, slightly left of the centre tick, filling roughly half the panel height | rule: R3 | action: yaw +12 deg toward it and move 1 m closer in the same decision", "move": {"forward": 0.978848151200076, "left": 0.20556336466450767, "up": 0.0, "yaw_deg": 12.0, "sigma": 0.0}}

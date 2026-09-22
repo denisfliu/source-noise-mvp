@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: no gate posts in forward view, just room walls/furniture (we are beside the gate looking past it, not at it) | rule: R5 | action: pure turn left 45deg to bring the center gate into view before lining up the loop start", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

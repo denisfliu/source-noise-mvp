@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward panel shows both left-gate posts visible and roughly symmetric with the gap near the centre tick, downward panel shows mats | rule: R6 | action: move straight along heading 1.3 m to close distance toward the gate", "move": {"forward": 1.3004080803832745, "left": -0.008764957152597286, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: right post is nearer/larger, left post smaller near the L mark, whole gate visible but off-centre | rule: R4 | action: move sideways (dy +0.8) toward the gate centreline, no yaw, no forward", "move": {"forward": 0.22108451885129102, "left": 0.7688443506486168, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

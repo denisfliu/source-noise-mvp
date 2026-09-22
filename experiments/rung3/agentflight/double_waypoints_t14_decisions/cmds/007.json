@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: forward panel now shows a thin far post near the L mark and a thicker near post right of centre, downward panel shows mats | rule: R4 | action: strafe back left (room +y) partway to re-centre between the posts", "move": {"forward": 0.002045741517712807, "left": 0.2996932847790265, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

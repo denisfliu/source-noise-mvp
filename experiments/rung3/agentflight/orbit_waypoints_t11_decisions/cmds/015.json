@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: both gate posts and crossbar framed the same way as at loop start, pose x2.90 y-1.95 matches the recorded start point x2.81 y-1.94 | rule: R2 | action: hold with all zeros, the loop has closed", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

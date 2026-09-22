@@ -1,0 +1,1 @@
+{"k": 21, "verdict": "override", "why": "seen: same cabinet passage and clutter shelf, no figure, this side-passage is a dead end | rule: R3 | action: yaw -45 deg and move 1.7 m back toward the bearing where the figure was last clearly seen", "move": {"forward": 1.2008757662913987, "left": -1.17796323963613, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

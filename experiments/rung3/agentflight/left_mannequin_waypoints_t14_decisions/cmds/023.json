@@ -1,0 +1,1 @@
+{"k": 23, "verdict": "override", "why": "seen: forward panel unchanged, figure centred, static; downward panel unchanged | rule: R2 | action: hold position for the final decision, no movement", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

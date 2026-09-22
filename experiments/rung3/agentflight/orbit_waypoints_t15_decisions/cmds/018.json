@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: both gate posts and crossbar visible in the same arrangement as the loop's start view, pose matches the start point exactly | rule: R3 | action: hold position with zero move, the circle is complete", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

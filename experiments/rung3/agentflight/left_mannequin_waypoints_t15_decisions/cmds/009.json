@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: one yellow post with a diagonal draping crossbar, no second post visible, forward camera side-on to the gate | rule: R5 | action: back up 1.5 m along heading to regain a square view of both posts", "move": {"forward": -1.4972256470787966, "left": 0.003919404224907774, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

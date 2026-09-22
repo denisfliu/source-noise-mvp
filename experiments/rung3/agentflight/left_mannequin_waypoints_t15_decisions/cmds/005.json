@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: one yellow post fills the centre of the frame, no second post clearly visible | rule: R5 | action: back up 1 m along heading to regain both posts before lining up again", "move": {"forward": -0.999992802376292, "left": -0.003794100105466658, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: a standing dark figure ahead, near-centred between L and R marks, too small/far to tell mannequin from person | rule: R3 | action: move 2 m straight along heading 16 deg toward it for a clearer view, no yaw", "move": {"forward": 1.9972220482669427, "left": -0.0020223541721743343, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

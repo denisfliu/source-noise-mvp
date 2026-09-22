@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: forward camera clear of posts, filmstrip shows posts splitting to the edges then vanishing, room opens up beyond | rule: R7 | action: 1 m straight along +x heading, no yaw, to clear the gate before turning to search", "move": {"forward": 0.9610554383107709, "left": -0.27635564856411376, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward panel shows office desks and shelving, no gate posts, downward shows tiled floor | rule: R3 | action: turn another 45 deg left to continue sweep, last sweep step", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

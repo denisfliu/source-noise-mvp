@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: both center-gate posts in view, gap near the center tick, roughly equal size | rule: R2 | action: chord 1/8 of the loop, moving CCW around estimated midpoint (2.8,-0.3) while turning to keep facing it", "move": {"forward": 0.45748273878530465, "left": -0.833492377717695, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

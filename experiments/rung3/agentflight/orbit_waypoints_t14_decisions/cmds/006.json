@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single yellow post close on center-left again, radius has been drifting slightly inside 1.2m of the near post | rule: R2 | action: chord 3/8, nudging radius outward a bit while continuing the CCW turn around the gate", "move": {"forward": 0.466196112235608, "left": -0.9635669073481117, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

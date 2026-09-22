@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows one thick yellow post filling the frame near centre (only one post visible), downward panel shows the penguin off to the side | rule: R5 | action: back up 1.5 m along heading (-x) to bring both posts into view", "move": {"forward": -1.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

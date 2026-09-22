@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: forward panel shows the same room corner with a shelving cart, no figure; downward panel plain floor | rule: R3 | action: turn right 40 deg more to reach the heading near +x where the figure was last clearly seen", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.0}}

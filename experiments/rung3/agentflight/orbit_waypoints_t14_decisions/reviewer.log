@@ -1,0 +1,7 @@
+**Flight report — orbit_waypoints_t14**
+
+- **Gate midpoint estimate:** ≈ (2.8, -0.3) in room coordinates (the center gate, confirmed clear of the left gate at ≈(1, 0.5)).
+- **Radius flown:** ≈1.24–1.29 m, averaged over the 8 chords (widened slightly mid-loop after two near-post passes at ~0.8 m clearance).
+- **Direction:** counterclockwise (heading advanced +45° per chord, from +76° through +408°).
+- **Decision the loop closed:** k=12, landing at (2.55, -1.51) — within 0.08 m of the k=4 loop-start pose (2.62, -1.54), with a matching camera view (same near-tangent single-post framing).
+- **Full circle without touching the gate:** yes — I believe a complete, un-collided loop was flown. Minimum clearance to the near post was ≈0.8 m (never under the 0.5 m floor), and clearance to the left gate's posts stayed ≥0.78 m throughout. No gate crossing occurred at any point; the drone held its distance from the structure the whole way around.

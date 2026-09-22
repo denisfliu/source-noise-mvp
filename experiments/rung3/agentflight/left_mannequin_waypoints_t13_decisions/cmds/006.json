@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: forward camera shows a bench and a black stool with shelving near the R mark, no gate or mannequin visible, downward shows floor with a green mat corner | rule: R3 | action: turn right another 45 degrees to continue scanning toward center of room", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: a yellow post appearing near L mark at the frame edge, still off to the left, no second post yet | rule: R4 | action: continue turning left toward the gate, it is further left than current heading", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.0}}

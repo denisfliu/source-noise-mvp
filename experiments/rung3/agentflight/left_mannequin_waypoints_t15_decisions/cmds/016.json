@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: shelving and clutter on the left, the figure vanished again after closing in, suggesting it moves (a person, not the mannequin) | rule: R3 | action: yaw +45 deg left to scan an unexplored part of the bay", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: a single yellow post centred in the forward panel with teal fabric edges, no second post or opening visible | rule: R5 | action: back up 1.5 m along my heading (dx -1.28 dy -0.78) so both posts come into view", "move": {"forward": -1.4989290427926025, "left": -0.0034241309630321792, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward camera shows a single thick yellow post filling much of the frame near center with only a hint of crossbar/second post, downward shows floor patches | rule: R5 | action: back up along heading (-x) to reveal both posts before lining up", "move": {"forward": -1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: forward panel shows a plain wall with a door, no gate; downward panel shows floor tiles, nothing notable | rule: R3 | action: turn in place 45 degrees to begin the sweep toward the interesting side of the room", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

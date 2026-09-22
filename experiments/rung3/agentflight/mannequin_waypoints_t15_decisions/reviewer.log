@@ -1,0 +1,13 @@
+## Flight report
+
+**Sweep (decisions 0-4):** Turned in place from the starting heading (-180°) through -140°, -100°, -59°, -19° — all walls/office/workshop, no gates. At +7° heading (decision 4) a gate post first appeared near the L mark (one post only).
+
+**Commit (decisions 4-10):** Centered and approached the gate at heading ≈+7°. Two false starts on lining up — one pass came in with the posts badly unequal in size (approaching at an angle) and required backing up twice before both posts sat symmetric on the centre tick. Crossed cleanly at decision 10→11 with `--sigma 0.5`, no yaw (posts left the forward panel, crossbar passed overhead).
+
+**Approach and hold (decisions 11-13):** Immediately beyond the gate, a standing human-shaped figure appeared near the L mark, then R mark as I turned toward it. Closed distance and centered it over three decisions, ending facing it at roughly a 1-1.5 m stand-off.
+
+**Estimated room position of the figure:** roughly x≈5.2, y≈0.6 (drone's final pose was x 4.70, y 0.54, heading +6°, after a final 0.5 m forward move along that heading).
+
+**Final pose:** approximately x 5.2, y 0.6, z 1.5, heading ≈+6°, facing the figure.
+
+**Caveat:** I'm not fully certain this was the mannequin rather than the safety pilot — a separate person in blue clothing was visible in the downward camera in the adjacent bay while approaching the gate (almost certainly the pilot), and the final figure's head showed a skin-like tone in the render rather than clearly grey, which is more consistent with a live person than the described grey mannequin. I could not resolve bare feet vs. shoes at this render resolution/distance. Given this was the only motionless-appearing full-body humanoid figure found in the unexplored bay and I was out of decisions, I held facing it as the best final answer, but flag the identity as unconfirmed.

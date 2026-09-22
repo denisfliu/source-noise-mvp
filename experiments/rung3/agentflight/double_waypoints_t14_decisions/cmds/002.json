@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: forward panel shows the near yellow post large on the left, a farther thinner post right of centre, downward panel shows mats below | rule: R4 | action: strafe sideways (room -y) to equalize post sizes before advancing", "move": {"forward": -0.0028822355935582272, "left": -0.4002395441707169, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

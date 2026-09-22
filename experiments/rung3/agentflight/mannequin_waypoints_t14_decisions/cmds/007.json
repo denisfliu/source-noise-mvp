@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: forward panel now shows both gate posts (near yellow post left-of-centre, farther post to its right) with crossbar on top; downward panel shows floor mats | rule: R4 | action: turn 15 deg right to bring the gap between the posts onto the centre tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

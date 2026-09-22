@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward panel shows a window, wall and doorway with a chair and mic stand, no mannequin; downward panel shows mats | rule: R3 | action: turn left 45 degrees for a last look before the flight ends, no mannequin found yet", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

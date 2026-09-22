@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward camera shows both gate posts equally sized with teal crossbar overhead, gap close to centre tick, downward shows floor mats | rule: R6 | action: fly straight along heading through the now-lined-up gate", "move": {"forward": 2.0050353995941412, "left": -0.005748597599691485, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

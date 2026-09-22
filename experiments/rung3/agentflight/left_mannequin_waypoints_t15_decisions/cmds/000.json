@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: yellow posts and teal crossbar ahead, gap sits left of the centre tick, crossbar recedes off the left edge | rule: R4 | action: yaw +18 deg left to bring the gap onto the tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 18.0, "sigma": 0.0}}

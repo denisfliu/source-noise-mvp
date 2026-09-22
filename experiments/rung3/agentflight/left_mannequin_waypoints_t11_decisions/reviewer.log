@@ -1,0 +1,9 @@
+**Flight report**
+
+- **Left gate crossed:** at decision k=11→12 (the straight move from x=-0.07,y=0.20 heading+34° to x=1.44,y=1.21). The forward panel's filmstrip showed the classic transit signature (posts growing, splitting to the two edges, then vanishing to reveal the room beyond), matching the calibration "JUST CROSSED" pattern. Approach was squared up with both posts equal size and the gap on the centre tick before the crossing move, so I judge it a clean, centred pass through the middle.
+- **First saw the mannequin:** at decision k=18 (x=2.67,y=1.59, heading+8°), a pale-topped, dark-trousered standing figure appeared near centre, slightly nearer the **R** mark side of the panel.
+- **Estimated room position of the mannequin:** roughly x≈5.1–5.5, y≈1.3–1.4 (near where the flight ended, since I closed to about one metre in front of it along a heading near 0°/-10°).
+- **Final pose:** x=5.12, y=1.44, z=1.50, heading -10° (-0.17 rad), held with all-zero commands for the last two decisions.
+- **Belief on end state:** I believe I ended facing the mannequin at close range, roughly one metre out — the figure filled nearly the full panel height, centred, head near the top and feet near the bottom, with the last two decisions unchanged (holding station).
+
+Caveat: lining up on the left gate cost far more decisions (12) than intended due to repeated yaw/distance misjudgments and one dead-end into a narrow, render-hazy doorway before backtracking to scan for the figure — the search phase itself, once the figure was sighted, closed cleanly in 5 more decisions.

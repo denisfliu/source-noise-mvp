@@ -1,0 +1,1 @@
+{"k": 22, "verdict": "override", "why": "seen: a cluttered cart/table with colourful items, no standing figure in view | rule: R3 | action: yaw -30 deg right to check the unexplored side of the bay with one decision remaining", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

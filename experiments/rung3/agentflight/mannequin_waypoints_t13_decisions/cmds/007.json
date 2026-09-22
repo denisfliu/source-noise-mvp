@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: forward panel shows one yellow post near the L mark still dominant, no clear second post; downward panel shows mats | rule: R5 | action: back up another 1.5 m along heading to get both posts in view", "move": {"forward": -1.4995312744135538, "left": -0.037496093872068495, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

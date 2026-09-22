@@ -1,0 +1,7 @@
+## Flight report
+
+- **Centre gate midpoint estimate:** ≈ x 2.9, y −0.45 (room coordinates), triangulated from three independent sightings across decisions k4–k7 that agreed within ~0.2 m.
+- **Radius flown:** 1.5 m (loop start at x 2.81, y −1.94, sitting 1.49 m from the estimated midpoint; each of the 7 chords was computed as 1.5 m from that midpoint).
+- **Direction:** counter-clockwise as commanded (θ stepped −90° → −45° → 0° → 45° → 90° → 135° → 180° → 225° → back to −90°), passing first around the gate's far +x side, then its +y side, then back around the near −y side to close.
+- **Decision the loop closed:** k=14's move, landing at k=15's pose (x 2.90, y −1.95, heading 446°/86°) — matching the recorded loop-start pose (x 2.81, y −1.94) to within 0.1 m, with the forward view (both posts, crossbar centred) visually matching the k=7 start frame.
+- **Full circle, gate untouched:** yes. All 8 waypoints were confirmed by camera view before/after each chord (both posts and crossbar visible and centred at every check), the closest approach to the left gate (chord 5, ~0.85 m estimated clearance) showed no obstruction in frame, and the drone never crossed the gate's plane — it orbited entirely around it. Held at the closed position for one decision (k=15→k=16) to confirm stability before stopping at k=16.

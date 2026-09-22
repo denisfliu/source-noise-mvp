@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: standing dark figure in a back bay, roughly centred slightly toward the R mark, taller now but details still unclear | rule: R3 | action: move 1.5 m straight along heading 16 deg to close distance, no yaw", "move": {"forward": 1.4972256470787966, "left": -0.003919404224907774, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

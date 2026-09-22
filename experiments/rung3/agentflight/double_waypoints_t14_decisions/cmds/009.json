@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel shows a yellow post close by, downward panel shows the penguin on its table nearby inside a metal frame | rule: R7 | action: straight +x move 1 m with no yaw to clear the post on the gate's far side", "move": {"forward": 0.9727466980222181, "left": -0.2318703549116868, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}
