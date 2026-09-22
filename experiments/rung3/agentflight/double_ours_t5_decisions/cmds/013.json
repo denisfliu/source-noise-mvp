@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward shows both centre-gate posts symmetric with the gap on the centre tick, downward shows mats | rule: R6 | action: fly straight along heading 1.4 m with no yaw to cross the centre gate on the final decision", "move": {"forward": 1.4013188515255108, "left": 0.0023401622216200346, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

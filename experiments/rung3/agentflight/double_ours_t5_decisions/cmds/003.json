@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward shows a single large yellow post filling the frame near center-right with no second post visible, downward shows mats | rule: R5 | action: back up 1.2 m along heading to bring both posts into view", "move": {"forward": -1.1981785428497804, "left": 0.008257085101703698, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

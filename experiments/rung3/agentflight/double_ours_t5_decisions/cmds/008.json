@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: forward shows both posts similar in size with the gap within the dead-band of the centre tick, downward shows mats | rule: R6 | action: fly straight along heading 1.4 m with no yaw to cross the left gate", "move": {"forward": 1.3973684729933018, "left": 0.012702388923654911, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}
