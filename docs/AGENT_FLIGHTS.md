@@ -8,7 +8,7 @@ as `experiments/rung3/agentflight/traj_<tag>.npy`, videos as `~/ctxrun/agent_<ta
 sent to Denis). Dense narrative: `docs/RESEARCH_LOG.md` from the 2026-09-20 "agent-reviewed flight" entries
 onward; one-liners in `experiments/FINDINGS_INDEX.md`.
 
-Where the other results live:
+Where the other results live (all of it in one tabbed page: https://claude.ai/code/artifact/9a4fdb85-b3a7-47d2-ae0d-33431453cd5d, rebuilt by `experiments/rung3/viz/build_results_dashboard.py`):
 - Real-drone flights: `docs/HARDWARE_RESULTS.md` (ledger) and `experiments/rung3/viz/hw_flights.html`.
 - Injection / velocity-projection / bad-sketch / compliance series: `docs/APPENDIX_INJECTION.md` (sections A-E)
   with pages `vproj_compare.html`, `badsketch.html`, `worsesketch.html` under `experiments/rung3/viz/`.
