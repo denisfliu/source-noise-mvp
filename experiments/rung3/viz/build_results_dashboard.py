@@ -128,7 +128,99 @@ PAGES = """
 - `docs/RESEARCH_LOG.md` (dense trail, newest at the bottom) and `experiments/FINDINGS_INDEX.md` (one line per finding).
 """
 
+# ---- results by policy: one row per (policy, test). Add a row per new result; the By-policy tab renders
+# the union of tests for the selected policies as columns. Keep values short; the note carries caveats.
+POLICIES = [("gmsig3", "gmsig3: mixed pin, no swap, seed 42"), ("gmsig3s7", "gmsig3s7: mixed pin, no swap, seed 7"),
+            ("xswap", "xswap: mixed pin + swap, seed 42"), ("xswaps7", "xswaps7: mixed pin + swap, seed 7"),
+            ("scratch3", "scratch3: mixed pi0, seed 42"), ("scratch3s7", "scratch3s7: mixed pi0, seed 7"),
+            ("realonly", "realonly: real-only pin (100 real demos)"), ("scratch_real", "scratch_real: real-only pi0")]
+R = []
+def add(policy, line, test, value, note=""):
+    R.append({"p": policy, "l": line, "t": test, "v": value, "n": note})
+# sim atomics (10 trials per cell; route-clean judge / clearance-clean)
+for pol, cells in [("gmsig3", "10/10 · 10/10"), ("gmsig3s7", "10/10 · 10/10"), ("xswap", "10/10 · 10/10"), ("xswaps7", "10/10 · 10/10")]:
+    for c in ("left", "right", "center from left"): add(pol, "Sim atomics", c, cells)
+add("gmsig3", "Sim atomics", "center from right", "10/10 · 10/10"); add("gmsig3s7", "Sim atomics", "center from right", "10/10 · 7/10", "3 CFR grazes")
+add("xswap", "Sim atomics", "center from right", "10/10 · 10/10"); add("xswaps7", "Sim atomics", "center from right", "10/10 · 10/10")
+for pol in ("scratch3", "scratch3s7"):
+    add(pol, "Sim atomics", "center from right", "7/10 judge"); add(pol, "Sim atomics", "four cells pooled", "36/40 judge", "CFR is the gap")
+add("realonly", "Sim atomics", "center from left", "0/10", "no center demos in its data")
+for pol in ("gmsig3", "gmsig3s7", "xswap", "xswaps7", "scratch3", "scratch3s7", "realonly", "scratch_real"):
+    add(pol, "Sim atomics", "four cells pooled", {"gmsig3": "40/40 · 40/40", "gmsig3s7": "40/40 · 37/40", "xswap": "40/40 · 40/40", "xswaps7": "40/40 · 40/40",
+        "scratch3": "36/40 judge", "scratch3s7": "36/40 judge", "realonly": "see Real-Only Arms page", "scratch_real": "see Real-Only Arms page"}[pol])
+# sim compounds and sketches (5 trials)
+for pol in ("gmsig3", "gmsig3s7", "xswap", "xswaps7", "scratch3", "scratch3s7"): add(pol, "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5", "structural: goal-first past the first gate")
+add("gmsig3", "Sim compounds", "CMPL hand-drawn sketch", "5/5 route-clean · 5/5 clean"); add("gmsig3", "Sim compounds", "CMPR hand-drawn sketch", "5/5 route-clean")
+add("gmsig3", "Sim compounds", "hand-drawn sketches pooled", "17/20 clearance-clean"); add("gmsig3", "Sim compounds", "4-click sketch, sigma 0 / 0.5", "2/10 / 9/10 clean")
+add("xswap", "Sim compounds", "all sketch rows, pooled with s7", "49/50 route-clean", "reproduces every gmsig3 sketch row within one trial")
+add("gmsig3", "Sim compounds", "GMM head at decision points", "unimodal, weight 1.00", "sigma does not flag task failure")
+# injection appendix, authored routes (real-only regime): tracking m / clean
+for test, pin, sd, inj, s0, s1, s3, s5 in [
+    ("orbit", "0.05 / 0/5", "0.06 / 1/5", "0.12 / 1/5", "0.011 / 5/5", "0.010 / 5/5", "0.024 / 5/5", "0.039 / 2/5"),
+    ("figure-eight", "0.06 / 5/5", "0.05 / 1/5", "0.15 / 0/5", "0.012 / 5/5", "0.020 / 5/5", "0.048 / 0/5", "0.092 / 0/5"),
+    ("compound (goal reached)", "0.12 / 1/5 (3/5)", "0.08 / 0/5 (5/5)", "2.8 / never", "0.013 / 5/5 (5/5)", "0.043 / 5/5 (1/5)", "0.106 / 5/5 (0/5)", "1.28 / 5/5 (0/5)")]:
+    add("realonly", "Injection: authored routes (tracking m / clean)", f"{test}, pin sigma 0", pin)
+    add("scratch_real", "Injection: authored routes (tracking m / clean)", f"{test}, SDEdit t0 0.5", sd)
+    add("scratch_real", "Injection: authored routes (tracking m / clean)", f"{test}, inject", inj)
+    for sv, val in (("0", s0), ("0.1", s1), ("0.3", s3), ("0.5", s5)): add("scratch_real", "Injection: authored routes (tracking m / clean)", f"{test}, v-proj s={sv}", val)
+for test, pin, sd, inj, s0, s1, s3, s5 in [("orbit", "0.89", "0.78", "0.95", "0.80", "0.82", "0.82", "0.83"), ("figure-eight", "0.84", "0.74", "0.96", "0.78", "0.74", "0.81", "0.82"), ("compound", "0.88", "0.84", "0.95", "0.78", "0.81", "0.86", "0.90")]:
+    add("realonly", "Injection: realism AUC vs pilot (lower = closer)", f"{test}, pin", pin)
+    for m, val in (("SDEdit", sd), ("inject", inj), ("v-proj s=0", s0), ("v-proj s=0.1", s1), ("v-proj s=0.3", s3), ("v-proj s=0.5", s5)): add("scratch_real", "Injection: realism AUC vs pilot (lower = closer)", f"{test}, {m}", val)
+# bad sketches: both gates / clean / min clearance
+L = "Injection: bad sketches (gates · clean · min clearance m)"
+add("gmsig3", L, "L->C 0.07 m, pin sigma 0", "5/5 · 0/5 · 0.035-0.15"); add("gmsig3", L, "L->C 0.07 m, pin sigma 0.5", "4/5 · 4/5 · 0.19-0.26")
+add("gmsig3", L, "R->C 0.04 m, pin sigma 0", "0/5 · 0/5 · 0.003-0.008"); add("gmsig3", L, "R->C 0.04 m, pin sigma 0.5", "0/5 · 0/5 · 0.004-0.12")
+add("scratch3", L, "L->C 0.07 m, v-proj s=0", "5/5 · 0/5 · 0.066"); add("scratch3", L, "R->C 0.04 m, v-proj s=0", "5/5 · 0/5 · 0.003-0.03")
+add("scratch3", L, "L->C 0.07 m, v-proj s=0.1", "5/5 · 5/5 · 0.18-0.19", "tracking 0.09"); add("scratch3", L, "R->C 0.04 m, v-proj s=0.1", "0/5 · 0/5 · 0.002-0.007")
+add("scratch3", L, "L->C 0.07 m, v-proj s=0.3", "5/5 · 4/5 · 0.17-0.21", "tracking 0.42, flies its own route"); add("scratch3", L, "R->C 0.04 m, v-proj s=0.3", "1/5 · 0/5 · 0.004-0.025")
+add("scratch3", L, "L->C 0.07 m, v-proj s=0.5", "0/5 · 2/5 · 0.11-0.22", "leaves the sketch"); add("scratch3", L, "R->C 0.04 m, v-proj s=0.5", "0/5 · 0/5 · 0.002-0.04", "leaves")
+add("scratch3", L, "L->C 0.07 m, SDEdit", "1/5 · 0/5 · 0.002-0.14"); add("scratch3", L, "R->C 0.04 m, SDEdit", "2/5 · 0/5 · 0.002-0.05")
+add("realonly", L, "L->C 0.07 m, pin sigma 0", "1/5 · 0/5 · 0.01-0.08"); add("realonly", L, "L->C 0.07 m, pin sigma 0.5", "0/5 · 3/5 · 0.02-0.22", "leaves the sketch")
+add("realonly", L, "R->C 0.04 m, pin sigma 0", "3/5 · 0/5 · 0.005-0.05"); add("realonly", L, "R->C 0.04 m, pin sigma 0.5", "0/5 · 0/5", "leaves the sketch")
+add("scratch_real", L, "L->C 0.07 m, v-proj s=0", "5/5 · 0/5 · 0.066"); add("scratch_real", L, "R->C 0.04 m, v-proj s=0", "5/5 · 0/5 · 0.008-0.020")
+add("scratch_real", L, "L->C 0.07 m, v-proj s=0.1", "1/5 · 0/5 · 0.09-0.13"); add("scratch_real", L, "R->C 0.04 m, v-proj s=0.1", "1/5 · 0/5 · 0.006-0.03")
+add("scratch_real", L, "L->C 0.07 m, v-proj s=0.3", "2/5 · 3/5 · 0.12-0.24", "leaving"); add("scratch_real", L, "R->C 0.04 m, v-proj s=0.3", "0/5 · 0/5 · 0.005-0.015")
+add("scratch_real", L, "L->C 0.07 m, v-proj s=0.5", "0/5 · 1/5 · 0.11-0.19", "leaves"); add("scratch_real", L, "R->C 0.04 m, v-proj s=0.5", "0/5 · 0/5 · 0.002-0.012", "leaves")
+add("scratch_real", L, "L->C 0.07 m, SDEdit", "0/5 · 0/5 · 0.001-0.08"); add("scratch_real", L, "R->C 0.04 m, SDEdit", "2/5 · 0/5 · 0.003-0.04")
+W = "Injection: worse sketches (gates · clean · min clearance m · tracking m)"
+for w, p0, p5, v0, v1, v3, sd in [("w2 (0.02 m)", "4/5 · 0/5 · 0.002-0.10 · 0.06", "4/5 · 3/5 · 0.16-0.26 · 0.12", "3/5 · 0/5 · 0.014-0.016 · 0.014", "5/5 · 0/5 · 0.12-0.13 · 0.11", "5/5 · 5/5 · 0.18-0.22 · 0.45", "0/5 · 0/5 · 0.01-0.13 · 0.07"),
+    ("w3 (through the post)", "1/5 · 0/5 · 0.004-0.07 · 0.06", "4/5 · 4/5 · 0.18-0.28 · 0.12", "0/5 · 0/5 · 0.003-0.006 · 0.015", "5/5 · 0/5 · 0.08-0.10 · 0.12", "5/5 · 5/5 · 0.18-0.24 · 0.45", "0/5 · 0/5 · 0.02-0.16 · 0.07"),
+    ("w4 (wrong side)", "0/5 · 0/5 · 0.003-0.06 · 0.06", "4/5 · 3/5 · 0.16-0.24 · 0.14", "0/5 · 0/5 · 0.042 · 0.014", "5/5 · 0/5 · 0.02-0.04 · 0.11", "5/5 · 5/5 · 0.20-0.24 · 0.45", "0/5 · 1/5 · 0.06-0.22 · 0.06")]:
+    add("gmsig3", W, f"{w}, pin sigma 0", p0); add("gmsig3", W, f"{w}, pin sigma 0.5", p5)
+    add("scratch3", W, f"{w}, v-proj s=0", v0); add("scratch3", W, f"{w}, v-proj s=0.1", v1); add("scratch3", W, f"{w}, v-proj s=0.3", v3); add("scratch3", W, f"{w}, SDEdit", sd)
+C = "Injection: compliance E_comp (sigma_c units, median of 5)"
+for sk, p0, p5, v0, v1, v3, sd in [("0.07 m sketch", "0.118", "0.222", "0.000", "0.116", "0.350", "0.186"), ("w2", "0.124", "0.228", "0.000", "0.108", "0.307", "0.187"),
+    ("w3", "0.129", "0.258", "0.000", "0.100", "0.318", "0.186"), ("w4", "0.127", "0.273", "0.000", "0.096", "0.320", "0.191")]:
+    add("gmsig3", C, f"{sk}, pin sigma 0", p0); add("gmsig3", C, f"{sk}, pin sigma 0.5", p5)
+    add("scratch3", C, f"{sk}, v-proj s=0", v0); add("scratch3", C, f"{sk}, v-proj s=0.1", v1); add("scratch3", C, f"{sk}, v-proj s=0.3", v3); add("scratch3", C, f"{sk}, SDEdit", sd)
+add("realonly", C, "0.07 m sketch, pin sigma 0", "0.193"); add("realonly", C, "0.07 m sketch, pin sigma 0.5", "0.316"); add("scratch_real", C, "0.07 m sketch, v-proj s=0", "0.000")
+# hardware (n = 5 per cell): through by eye · contact by eye · judge transit · goal box
+H = "Hardware atomics (through · contact · judge · goal box), n=5"
+add("scratch3", H, "left (apc 8)", "4 · 2 · 4 · 0", "09-11; long wandering flights"); add("scratch3", H, "right", "1 · 4 · 1 · 1", "09-16; three hit the west post")
+add("scratch3", H, "center from left", "0 · 0 · 0 · 0", "goes to the goal or flies the left route"); add("scratch3", H, "center from right", "0 · 0 · 0 · 0")
+add("realonly", H, "left", "5 · 0 · 5 · 3", "09-15; altitude 1.45-1.65 m"); add("realonly", H, "right", "3 · 2 · 3 · 1", "09-15; notes 03/05 may be swapped, video needed")
+add("realonly", H, "center from left", "0 · 0 · 0 · 0", "no center demos")
+add("xswap", H, "left (apc 8)", "0 · 0 · 0 · 0", "09-11; setpoints not followed, execution-side; no valid cell")
+add("scratch_real", H, "left", "4 · 1 · 4 · 3", "09-18; 05 crashed before the gate"); add("scratch_real", H, "right", "4 · 1 · 4 · 4", "09-18; 05 crashed before traversal")
+add("gmsig3", H, "left", "3 · 5 · 3 · 0", "09-18; all five crashed, head turns to the goal right after the crossing")
+add("gmsig3", H, "center from left (log only)", "goal-first, never the center gate")
+S = "Hardware sketches (median tracking on replan poses)"
+add("realonly", S, "fig8_denis3 (10.5 m), 2 attempts", "0.10 m (max 0.29 / 0.69)", "09-16; flight 2 dipped to z 0.83; logs only")
+add("realonly", S, "orbit_wide 1.3 m, ~5 attempts", "0.06-0.15 m on 2 that flew", "09-16; others aborted/restarted; video needed")
+add("realonly", S, "orbit 0.9 m, fig8 (09-15 morning)", "no result", "execution-side descent")
+add("xswap", S, "sessions 09-11 pm, 09-15 am", "no result", "execution-side descent")
+add("realonly", "Hardware pace", "vs setpoint stream", "trails 0.10-0.16 m median, 0.35-0.6 m at chunk ends", "85-90% of commanded pace; flights 1.5-2x pilot time")
+add("realonly", "Hardware agent flight", "agentmann_pin_01 (Sonnet, mannequin)", "invalid", "aircraft tracked ~30% of each chunk; node fix applied; refly")
+# agent flights in sim: the flying policy was gmsig3 throughout
+A = "Agent-reviewed sim flights (flying policy)"
+add("gmsig3", A, "compound task, Claude Code task-aware", "2/2 success; 2nd clearance-clean 0.257 m")
+add("gmsig3", A, "compound task, Sonnet no task knowledge", "3/15 success (center7, 11, 17)")
+add("gmsig3", A, "compound task, Opus", "1/1 success, clearance-clean 0.369 m"); add("gmsig3", A, "compound task, Haiku", "0/1")
+add("gmsig3", A, "find the mannequin, Sonnet", "found on attempt 4: 1.0 m in front, 14 deg off")
+add("gmsig3", A, "find the penguin, Sonnet", "found on attempt 1: 0.11 m off, 1.00 m up, 30-step hold")
+
 TABS = [("overview", "Overview", None, OVERVIEW),
+        ("policy", "By policy", None, "__POLICY__"),
         ("sim", "Sim", "docs/status_latest.md", SIM_TABLES),
         ("hardware", "Hardware", "docs/HARDWARE_RESULTS.md", None),
         ("injection", "Injection", "docs/APPENDIX_INJECTION.md", None),
@@ -224,6 +316,12 @@ th{background:var(--head);font-weight:600;white-space:nowrap;position:sticky;top
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover td{background:var(--band)}
 strong{font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);border-radius:999px;padding:5px 12px 5px 8px;font-size:13.5px;background:var(--panel);cursor:pointer;color:var(--ink2)}
+.chip:has(input:checked){border-color:var(--accent);color:var(--accent-ink);background:var(--band);font-weight:600}
+.chip input{accent-color:var(--accent);margin:0}
+.pline td{background:var(--head);font-weight:600;color:var(--ink2)}
+td.empty{color:var(--muted)} .note{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 @media (max-width:640px){header,main{padding-left:14px;padding-right:14px}}
 """
 
@@ -237,6 +335,20 @@ function show(id,push){tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.
 tabs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab,true)));
 let start=location.hash.slice(1); if(!secs.some(s=>s.id===start)){try{start=localStorage.getItem('snmvp-tab')}catch(e){}}
 if(!secs.some(s=>s.id===start))start=secs[0].id; show(start,false);
+(function(){const box=document.getElementById('pchips');if(!box)return;const inputs=[...box.querySelectorAll('input')];
+ const names=Object.fromEntries(PDB.policies);let sel=['gmsig3','scratch3'];try{const v=localStorage.getItem('snmvp-policies');if(v)sel=JSON.parse(v)}catch(e){}
+ inputs.forEach(i=>i.checked=sel.includes(i.value));
+ function esc(x){return String(x).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+ function render(){const ps=inputs.filter(i=>i.checked).map(i=>i.value);try{localStorage.setItem('snmvp-policies',JSON.stringify(ps))}catch(e){}
+  const out=document.getElementById('ptable');if(!ps.length){out.innerHTML='<p class="src">pick one or more policies above</p>';return}
+  const rows=PDB.rows.filter(r=>ps.includes(r.p));const lines=[];const tests={};
+  for(const r of rows){if(!tests[r.l]){tests[r.l]=[];lines.push(r.l)}if(!tests[r.l].includes(r.t))tests[r.l].push(r.t)}
+  let h='<div class="tw"><table><thead><tr><th>test</th>'+ps.map(p=>'<th title="'+esc(names[p])+'">'+esc(p)+'</th>').join('')+'</tr></thead><tbody>';
+  for(const l of lines){h+='<tr class="pline"><td colspan="'+(ps.length+1)+'">'+esc(l)+'</td></tr>';
+   for(const t of tests[l]){h+='<tr><td>'+esc(t)+'</td>'+ps.map(p=>{const r=rows.find(x=>x.p===p&&x.l===l&&x.t===t);
+     return r?'<td>'+esc(r.v)+(r.n?'<span class="note">'+esc(r.n)+'</span>':'')+'</td>':'<td class="empty">–</td>'}).join('')+'</tr>'}}
+  out.innerHTML=h+'</tbody></table></div>'}
+ inputs.forEach(i=>i.addEventListener('change',render));render()})();
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(secs.some(s=>s.id===h))show(h,false)});
 """
 
@@ -253,6 +365,13 @@ def main():
         else:
             srcline = f"inline in build_results_dashboard.py · built {today}"
         nav.append(f'<button role="tab" data-tab="{tid}" aria-selected="false">{html.escape(name)}</button>')
+        if text == "__POLICY__":
+            import json as _json
+            chips = "".join(f'<label class="chip"><input type="checkbox" value="{k}"> {html.escape(k)}</label>' for k, _ in POLICIES)
+            body.append(f'<section id="{tid}" role="tabpanel" hidden><p class="src">inline results database in build_results_dashboard.py ({len(R)} rows) · built {today}</p>'
+                        f'<div class="chips" id="pchips">{chips}</div><div id="ptable"></div>'
+                        f'<script>const PDB={_json.dumps({"policies": POLICIES, "rows": R})};</script></section>')
+            continue
         body.append(f'<section id="{tid}" role="tabpanel" hidden><p class="src">{html.escape(srcline)}</p>{md_to_html(text)}</section>')
     page = ("<title>Source-Noise Results</title>\n"
             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono&display=swap">\n'
