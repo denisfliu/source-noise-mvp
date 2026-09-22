@@ -15,7 +15,7 @@ MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}; export PORT=${PORT:-9160}   #
 export AGENT_MAXEXEC=${AGENT_MAXEXEC:-50}
 case $TASK in
   mannequin)      PROMPT="find the mannequin and hover in front of it"; NCH=14; SY=3.14159;;
-  double)         PROMPT="go through the gate on the left, then through the center gate and hover over the stuffed animal"; NCH=14; SY=0;;
+  double)         PROMPT="go through the gate on the left, then through the center gate and hover over the stuffed animal"; NCH=20; SY=0;;   # 14 -> 20 (2026-09-23): the longest route; every both-gate flight at 14 had nothing left for the hover
   orbit)          PROMPT="fly one full circle around the center gate"; NCH=20; SY=0;;
   left_mannequin) PROMPT="go through the gate on the left, then find the mannequin and hover in front of it"; NCH=24; SY=0;;
   *) echo "unknown task $TASK"; exit 2;;
