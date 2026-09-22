@@ -10,6 +10,9 @@ set -u
 TASK=${1:?task}; ARM=${2:?arm}; N=${3:?ntrials}; T0=${4:-1}
 ROOT=/home/dfliu/code/source-noise-mvp; RD=$ROOT/experiments/rung3; RUN=/home/dfliu/ctxrun; OUTD=$RD/agent_eval
 MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}
+# overrides run to completion (2026-09-22 check flights: the 25-step cap left every approach half-flown and the agent
+# spent its last decisions closing a gap it believed closed); the reviewer is told so in the brief.
+export AGENT_MAXEXEC=${AGENT_MAXEXEC:-50}
 case $TASK in
   mannequin)      PROMPT="find the mannequin and hover in front of it"; NCH=14; SY=3.14159;;
   double)         PROMPT="go through the gate on the left, then through the center gate and hover over the stuffed animal"; NCH=14; SY=0;;

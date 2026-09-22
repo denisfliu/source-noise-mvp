@@ -6,6 +6,8 @@ BEFORE YOUR FIRST DECISION, read this image with the Read tool:
   /home/dfliu/code/source-noise-mvp/experiments/rung3/agent_calibration.jpg
 It shows what this room's GATES look like from the drone's forward camera (pairs of yellow posts with a teal crossbar), and a filmstrip of what passing through one looks like. Pass through the MIDDLE of an opening, straight, with --sigma 0.5 and no yaw during the crossing; keep half a metre from posts, walls and furniture otherwise. One post alone filling the frame means you are beside it, not in front of it: back up until both posts show, then square up. You have crossed a gate when the crossbar passes overhead in the downward camera and the posts leave the forward camera.
 
+HOW TO LINE UP ON A GATE (this is where flights are lost). Do not strafe back and forth judging which post looks bigger. From 2-3 m back with both posts in view: TURN until the gap between the posts sits on the centre tick (a --yaw only move; the gap 20 degrees right of the tick means --yaw -20). Then move STRAIGHT ALONG YOUR HEADING: --dx = cos(heading) x distance, --dy = sin(heading) x distance, with no yaw, in one or two moves, --sigma 0.5. If the posts look unequal in size you are approaching at an angle: back up 1 m along your heading and turn again, do not strafe.
+
 HOW TO FLY. Run these from /home/dfliu/code/source-noise-mvp with `python3`. Every call needs --dir exactly as written. Use --then-wait on every approve and override: it submits your decision AND prints the next one in the same call.
 
   python3 experiments/rung3/agent_sim_cli.py wait --dir {DIR}
@@ -17,7 +19,7 @@ The loop: read the decision image, then one approve/override call with --then-wa
 
 HOW MUCH HAPPENS PER DECISION
 - APPROVE (where allowed) runs the policy's whole five-second plan, about one to two metres.
-- OVERRIDE flies your move at a natural pace and asks you again after at most 2.5 seconds. A pure turn (--yaw with no dx/dy) is quick. The readout says how much of your last move ran. Limits per decision: 2 m sideways, 1 m vertical, 45 degrees of yaw.
+- OVERRIDE flies your move to completion at a natural pace (a 2 m move takes about 4.5 seconds) and then asks you again. A pure turn (--yaw with no dx/dy) is quick. The readout says how much of your last move ran. Limits per decision: 2 m sideways, 1 m vertical, 45 degrees of yaw.
 - You have {BUDGET} decisions in total. The flight ends by itself after the last one.
 
 THE COORDINATE FRAME
@@ -25,6 +27,7 @@ THE COORDINATE FRAME
 - Heading is where the forward camera points, in radians in the room frame: 0 faces +x, +1.57 faces +y, +3.14 or -3.14 faces -x. A positive --yaw turns left and increases the heading.
 - You command in ROOM coordinates: --dx and --dy are metres along the room axes regardless of heading, so a move is the place you want minus your pose. --dz is metres up (negative is down). The policy's proposal is reported in the same coordinates.
 - Something straight ahead lies along the heading; something on the R side of the view lies at the heading MINUS its angle off centre (the panel is 75 degrees wide, so halfway from the centre to the edge is about 20 degrees); on the L side, PLUS.
+- Distance from apparent size, for a standing 1.7 m figure seen head to feet: filling the panel top to bottom, about 1 m away; half the panel height, 2 m; a quarter, 4.5 m; an eighth, 9 m. Judge the fraction honestly against the panel edges: a figure whose head is well below the top edge is NOT 'most of the panel'. If only the upper body is in frame, you are closer than 1 m.
 
 WHAT YOU SEE. Each decision writes ONE small image whose path is printed; read it with the Read tool. Left half is the FORWARD camera now, right half the DOWNWARD camera now. The forward panel carries a yellow "L" in its bottom-left corner, a yellow "R" in its bottom-right corner, and a small yellow tick at the top and bottom of its centre column. BEFORE you say an object is left or right, look at which mark it is nearer, and say so in your reason. In the downward panel, image UP is the drone's forward and image RIGHT is the drone's right; the drone's own struts sit in its top corners. After a long move a strip of in-between views is appended. The readout also replays your own previous decisions and your pose track: keep a list of where you have looked from and what you saw.
 
