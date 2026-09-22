@@ -77,14 +77,22 @@ def scene_cloud(scene):
 
 
 CROP = (np.array([-6.0, -6.0, -0.4]), np.array([6.0, 6.0, 4.0]))  # flight volume; drops far field
+# The goal table (the low wire table carrying the penguin, goal box centre (1.525, -0.615, 1.0)) and the
+# tub beside it: kept at full density like the gates (Denis, 2026-09-22: "put the point cloud of the
+# table in all of these artifacts"); a uniform thin left it ~120 points and invisible.
+TABLE_REGION = (np.array([0.95, -1.35, 0.03]), np.array([2.2, 0.05, 1.05]))
 
 
-def decimate(pts, rgb, keep, gate_mask, gate_budget=3000, seed=0):
+def decimate(pts, rgb, keep, gate_mask, gate_budget=9000, seed=0):
     """Crop to the flight volume, voxel-thin the BACKGROUND to ~keep points, and keep gate
-    Gaussians at full density (subsampled only above gate_budget)."""
+    Gaussians and the goal table at full density (subsampled only above gate_budget)."""
     lo, hi = CROP
     inside = np.all((pts >= lo) & (pts <= hi), axis=1)
     pts, rgb, gate_mask = pts[inside], rgb[inside], gate_mask[inside]
+    tlo, thi = TABLE_REGION
+    table = np.all((pts >= tlo) & (pts <= thi), axis=1)
+    print(f"table-region points at full density: {int(table.sum())}")
+    gate_mask = gate_mask | table
     rng = np.random.default_rng(seed)
     gp, gc = pts[gate_mask], rgb[gate_mask]
     if len(gp) > gate_budget:
