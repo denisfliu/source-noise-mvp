@@ -46,9 +46,9 @@ figure (within 3 m, or within 0.5 m regardless of facing) and facing it within 4
 | find the mannequin (180-degree start) | 14 | 3/5 · 3/5 · **3/5** | 3/5 · 0/5 · **0/5** | 5/5 · 4/5 · **4/5** | __ |
 | left gate, then centre gate, hover over the penguin | 14 | 0/5 · 1/5 · **0/5** | 0/5 · 0/5 · **0/5** | 1/5 · 0/5 · **0/5** | __ |
 | one full circle around the centre gate | 20 | 5/5 · 2/5 · **2/5** | 4/5 · 4/5 · **3/5** | 5/5 · 3/5 · **3/5** | __ |
-| left gate, then find the mannequin | 24 | 3/5 · 2/5 · **2/5** | 2/5 · 3/5 · **1/5** | 4/4 · 4/4 · **4/4** (t25 pending) | __ |
+| left gate, then find the mannequin | 24 | 3/5 · 2/5 · **2/5** | 2/5 · 3/5 · **1/5** | 4/5 · 5/5 · **4/5** | __ |
 
-Sonnet trials 11-15 and Opus trials 21-25 of 2026-09-23, briefs round 3 + R7. The double-gate cells are being
+Sonnet trials 11-15 and Opus trials 21-25 of 2026-09-23 (Opus t25 on the last task reached the figure at 0.8 m but held 50 deg off axis), briefs round 3 + R7. The double-gate cells are being
 re-flown (trials 31-35) after the brief stopped rewarding reverses: partial credit there before the redo was
 left gate crossed 5/5 (Sonnet ours), 1/5 (waypoints), 4/5 both gates in order (Opus ours). Every waypoint
 mannequin flight grazed a gate in a 0.15-0.17 m band.

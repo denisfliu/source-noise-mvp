@@ -250,7 +250,7 @@ add("gmsig3", A, "find the mannequin, Sonnet", "found on attempt 4: 1.0 m in fro
 add("gmsig3", A, "find the penguin, Sonnet", "found on attempt 1: 0.11 m off, 1.00 m up, 30-step hold")
 E = "Agent eval suite, 5 trials (2026-09-23; done · clean · both)"
 for task, o, w, op in [("find the mannequin", "3/5 · 3/5 · 3/5", "3/5 · 0/5 · 0/5", "5/5 · 4/5 · 4/5"), ("left gate, centre gate, penguin", "0/5 · 1/5 · 0/5", "0/5 · 0/5 · 0/5", "1/5 · 0/5 · 0/5"),
-                       ("circle around the centre gate", "5/5 · 2/5 · 2/5", "4/5 · 4/5 · 3/5", "5/5 · 3/5 · 3/5"), ("left gate, then mannequin", "3/5 · 2/5 · 2/5", "2/5 · 3/5 · 1/5", "4/4 · 4/4 · 4/4")]:
+                       ("circle around the centre gate", "5/5 · 2/5 · 2/5", "4/5 · 4/5 · 3/5", "5/5 · 3/5 · 3/5"), ("left gate, then mannequin", "3/5 · 2/5 · 2/5", "2/5 · 3/5 · 1/5", "4/5 · 5/5 · 4/5")]:
     add("realonly", E, f"{task}, Sonnet + ours (pin)", o); add("realonly", E, f"{task}, Sonnet + waypoints", w); add("realonly", E, f"{task}, Opus + ours (pin)", op)
 add("realonly", E, "left gate crossed on the double task", "ours 5/5 · waypoints 1/5")
 

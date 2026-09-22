@@ -8078,9 +8078,9 @@ every record carries task_done, clean and gate_touch, and the cell is reported a
     find the mannequin        3/5 · 3/5 · 3/5   3/5 · 0/5 · 0/5      5/5 · 4/5 · 4/5
     left, centre, penguin     0/5 · 1/5 · 0/5   0/5 · 0/5 · 0/5      1/5 · 0/5 · 0/5
     orbit                     5/5 · 2/5 · 2/5   4/5 · 4/5 · 3/5      5/5 · 3/5 · 3/5
-    left, then mannequin      3/5 · 2/5 · 2/5   2/5 · 3/5 · 1/5      4/4 · 4/4 · 4/4 (t25 pending)
+    left, then mannequin      3/5 · 2/5 · 2/5   2/5 · 3/5 · 1/5      4/5 · 5/5 · 4/5 (t25: 0.8 m, 50 deg off)
   Correction to the 2026-09-23 Opus double-gate note: the judge's own SUCCESS (dwell threshold) held for one of
-  the four both-gate flights, not two. Opus reached the mannequin in 9/9 search flights (0.1-1.3 m), Sonnet in
+  the four both-gate flights, not two. Opus reached the mannequin in 10/10 search flights (0.1-1.3 m), Sonnet in
   6/10, the waypoint agent in 5/10 of which every mannequin-task flight grazed a gate (0.15-0.17 m).
   BACKWARD PRIMITIVE AUDIT (Denis: "the backwards primitive goes way too far backward"): across the 15 double
   flights, realized/commanded displacement is 0.84 for reverses (n = 40) and 0.90 for forward moves (n = 69); the
