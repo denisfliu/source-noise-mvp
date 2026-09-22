@@ -110,7 +110,7 @@ PAGES = """
 
 | Page | Policy | What it shows |
 |---|---|---|
-| [Real-Only Pin, Replan Interval](https://claude.ai/code/artifact/b5495c04-6761-43db-b676-05acf488b6c7) | realonly | left and right at a 50-step vs 25-step replan; the goal box, not the gate, is what it misses |
+| [Real-Only Pin, Replan Interval](https://claude.ai/code/artifact/b5495c04-6761-43db-b676-05acf488b6c7) | realonly, scratch_real | both real-only arms, left and right, at a 50-step vs 25-step replan; the goal box, not the gate, is what the pin misses |
 | [gmsig3 Flight Atlas](https://claude.ai/code/artifact/6e7d6eef-5720-49f1-92fa-96aa226d8bf4) | gmsig3 (mixed pin, seed 42) | all four cells, 40/40 route-clean, 40/40 clearance-clean |
 | [Seed-7 Flight Atlas](https://claude.ai/code/artifact/5e4accc4-aa53-4737-9948-fcb31caa3099) | gmsig3s7 (seed 7) | all four cells, 40/40 route-clean, 37/40 clean (3 CFR grazes) |
 | [Xswap Six Cells](https://claude.ai/code/artifact/6b3bb73b-5ce1-415e-ae09-56379ccd4d2e) | xswap (seed 42) | four atomics + two compounds |
@@ -168,7 +168,8 @@ add("realonly", "Sim atomics", "right", "1/10 · 8/10 transit (8 route-clean) ·
 add("realonly", "Sim atomics", "left, APC 25", "1/10 · 8/10 transit (7 route-clean) · 5/10 clean", "2026-09-22; same 400 steps")
 add("realonly", "Sim atomics", "right, APC 25", "1/10 · 9/10 transit (9 route-clean) · 10/10 clean", "goal miss unchanged; clearance 0.27-0.33 m")
 add("realonly", "Sim atomics", "center from left", "0/10", "no center demos in its data"); add("realonly", "Sim atomics", "center from right", "0/10")
-add("scratch_real", "Sim atomics", "left", "2/10 · 6/10 transit · 1/10"); add("scratch_real", "Sim atomics", "right", "7/10 · 4/10 transit · 4/10", "3 grazes")
+add("scratch_real", "Sim atomics", "left", "2/10 · 7/10 transit (6 route-clean) · 1/10 clean"); add("scratch_real", "Sim atomics", "right", "7/10 · 9/10 transit (8 route-clean) · 4/10 clean", "descends to z ~1.2 after the crossing, into the goal box")
+add("scratch_real", "Sim atomics", "left, APC 25", "0/10 · 7/10 transit (7 route-clean) · 9/10 clean", "2026-09-22"); add("scratch_real", "Sim atomics", "right, APC 25", "5/10 · 6/10 transit (6 route-clean) · 7/10 clean", "four flights never reach the aperture")
 add("scratch_real", "Sim atomics", "center from left", "0/10"); add("scratch_real", "Sim atomics", "center from right", "0/10")
 add("realonly", "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5"); add("scratch_real", "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5")
 add("realonly", "Sim compounds", "orbit / figure-eight sketches (rendered frames)", "5/5 · 5/5 route; fig8 5/5 clean, tracking 0.05-0.07 m", "orbit clearance 0/5 from post-handback hover drift")
