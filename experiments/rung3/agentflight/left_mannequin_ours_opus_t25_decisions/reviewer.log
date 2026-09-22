@@ -1,0 +1,15 @@
+# Flight report — `left_mannequin_ours_opus_t25`
+
+**Left gate crossing.** Crossed during the k=6 move, confirmed at **k=7**: the strip showed both posts growing, splitting to the two edges and vanishing, with the room beyond appearing — the transit signature from the calibration filmstrip. It was through the middle: the gap had been measured ~9° right of the centre tick from 1.6 m back (inside the dead-band), and the posts left the frame at roughly equal rates on both sides. The approach cost two extra decisions — at k=5 a single post filled the left edge at close range and I backed off 1.0 m (R5) before re-acquiring both posts and committing.
+
+**After the gate.** At k=7 I took over with a straight 1.2 m move along +x rather than letting the policy's trained turn toward the table pull me back across the gate line (R7).
+
+**Search.** Scanned in 45° steps from (2.86, 1.53) at k=8–k=11. Saw a complete gate (two posts + teal crossbar) about 3 m off toward −y at k=11, but the upright figures lay toward +x, so I went for them instead.
+
+**First sighting of the mannequin.** **k=14**, from (4.59, −0.60) heading −12°: a life-size standing figure, grey top, dark legs, about a third of the panel high (~3 m). It sat **just left of the centre tick** — nearer the yellow "L" mark than "R", but only by ~5°. Confirmed as the mannequin at k=16: grey bald head, dark top, dark trousers, perfectly still across every subsequent frame, distinct from the orange-clad person standing by the brick column further right.
+
+**Estimated mannequin room position:** about **x ≈ 8.0, y ≈ −0.9**, standing against the white wall.
+
+**Final pose:** x 6.83, y −0.75, z 1.46, heading −6° (essentially facing +x).
+
+**Did I end in front of it?** Yes. It sat ~1.2 m ahead, full body in frame, within 5° of the centre tick — just outside the 1 m target rather than inside it, which I chose deliberately to keep the R2 half-metre clearance rather than risk closing on it. Held with all zeros from k=16 through k=23.

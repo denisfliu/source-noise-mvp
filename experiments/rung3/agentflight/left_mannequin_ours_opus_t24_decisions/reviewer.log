@@ -1,0 +1,15 @@
+**Flight report — left gate → mannequin**
+
+**Left gate crossing.** Crossed on the move commanded at **k=2**, **through the middle**. I spent k=0 and k=1 on pure yaw only (the near post was ~11° left of the tick with its partner out of frame, then both posts came into view), which put the gap 3° off the centre tick — inside the dead-band. The k=3 filmstrip shows the canonical transit signature: gate grows, posts split to the two frame edges, then it's gone and the room beyond appears. In the transit frame the posts sat roughly symmetric about the panel centre, marginally biased to my right, so the pass was through the opening, not a graze.
+
+**Post-crossing.** At k=3 the policy wanted to turn right (-y) toward the table beside the gate — the trained-task pull warned about. I took it over with a straight 1 m +x move (k=3), then a 45° right sweep (k=4) to search.
+
+**First sighting.** **k=5**, from (2.73, 1.19) heading −17°. The figure was **essentially on the centre tick, a hair toward the R mark** (~2° right), about 7 m out — a still, pale-headed figure with a dark top and trousers. Confirmed as the mannequin at k=6–k=7 (grey bald head, dark top, dark trousers, bare pale feet, standing on a base, perfectly motionless — no shoes, no movement, so not the safety pilot).
+
+**Mannequin room position (estimate).** **≈ x 8.3, y −0.9**, standing on the floor with its head at ~1.9 m. Four independent sightings (k=6, k=10, k=11, k=14) agreed within ~0.3 m. It faces roughly the +x/+y quadrant — its front is on the +y side, which is why I swung around at k=8–k=11 after first meeting it in profile.
+
+**Final pose.** **x 7.30, y −0.26, z 1.49, heading −32° (−0.57 rad)**, held with all zeros from k=17 through k=23.
+
+**Did I end in front of it?** Yes. From that pose the mannequin bears −32.6°, i.e. dead on my heading — it sat squarely on the centre tick for all seven holding frames — at a range of **~1.1–1.2 m**, and I was looking at its front: face, chest, both arms and jeans visible. 
+
+Two honest caveats. First, I approved nothing: all 24 decisions were overrides. The policy's proposals were either the wrong heading (post-gate right turn toward the table) or sub-metre creeps, so R0 never applied. Second, the final metre cost more decisions than it should have — apparent-size distance judging was unreliable at close range and I overshot to ~0.75 m at k=14 and again at k=16 before trimming back. Clearance was never worse than about half a metre and the corrections were straight-line retreats along the heading, but a steadier distance estimate would have saved four decisions.

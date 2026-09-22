@@ -1,0 +1,32 @@
+**Flight ended.** Report:
+
+## Gate midpoint estimate
+**x ≈ 2.6, y ≈ −0.3, z ≈ 1.5** (room frame), about 2.6 m from the start along +x.
+
+I got this by triangulating bearings rather than apparent size, which kept misleading me. Two independent line intersections:
+- k=3 sighting from (2.29, −1.45) at bearing 70° × k=9 sighting from (2.23, +1.14) at bearing 284° → **(2.64, −0.49)**
+- k=6 sighting from (4.15, −0.31) at bearing 175° × k=7 sighting from (4.00, +0.56) at bearing 203° → **(2.33, −0.15)**
+
+I also fixed the **left gate** at roughly (0.9, 0.0) when its post filled the frame at k=10 — it sits almost exactly on a 1.5 m circle about the centre gate, which forced a change of plan.
+
+## Radius flown
+Nominal 1.5 m. Actual radii at the decision points: 1.36, 1.64, 1.55, 1.64, 1.65, 1.49, 1.57, **0.92**, 1.28, 1.51, 1.51 m.
+
+The 0.92 m is deliberate: at k=10 the left gate's post was ~1.2 m ahead and directly on my circle at bearing 180°. There was no outward escape — going wider put me *closer* to it — so I pinched the orbit inward for one leg to thread the 1.7 m gap between the two gates, then opened back to 1.5 m. Mean radius ≈ 1.5 m, minimum 0.92 m.
+
+## Direction
+**Counter-clockwise** (bearing about the midpoint increasing), held the same the whole way: −59° → −31° → 0° → +32° → +67° → +104° → +128° → +166° → +208° → +251° → +304°.
+
+## Where the loop closed
+**k=14**, arriving at (3.45, −1.54) — 0.18 m from the k=4 start point (3.30, −1.45), bearing −55.6° vs. the start's −58.7°. I held all zeros from k=15 through k=19, drifting less than 0.1 m.
+
+## Did I complete a full circle without touching the gate?
+**Yes, to both.**
+
+The circle: the gate's *bearing from the drone* wound monotonically through a full 360° — 91° → 137° → 175° → 203° → 255° → 284°, then behind me while I threaded the gap, then back to 94° at k=15. A bearing that winds once around is the geometric test for enclosing the object, and the k=15 forward view is the same edge-on single-post view I had at k=4 from the same side.
+
+No contact: closest approach to a centre-gate post was ~0.9–1.0 m (on the closing chords), and ~0.75 m to the left gate's post on the pinched leg — both above the 0.5 m rule. Altitude stayed in 1.48–1.55 m throughout.
+
+No transit of either gate: **the downward camera showed plain floor or mats at every one of the 20 decisions — a crossbar never passed overhead.** The two times I crossed the centre gate's plane I did so at y ≈ +1.23 and y ≈ −1.6, roughly 0.9 m and 0.9 m clear of the posts, well outside the opening.
+
+One caveat on the numbers: my distance-from-apparent-size estimates were unreliable here and disagreed with the bearing triangulation by up to 0.7 m in x (size said x ≈ 3.3, bearings said x ≈ 2.6). I trusted the bearings. If the true midpoint is nearer x = 3.3, the loop is still complete and still non-contacting — it just becomes an eccentric circle rather than a concentric one.

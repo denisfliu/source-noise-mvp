@@ -1,0 +1,24 @@
+Flight ended. Report:
+
+## Flight report — "fly one full circle around the centre gate"
+
+**Gate midpoint estimate: x ≈ 3.2, y ≈ +0.6, z ≈ 1.5** (≈3.3 m from the start, ~11° left of the starting heading).
+
+I fixed it three independent ways, all agreeing within ~0.15 m:
+- k=3, from (1.89, −1.10): both posts centred, spanning ~21°, ~2.3 m off on bearing 52° → (3.15, 0.58).
+- k=5, from (1.71, −1.06): same pair, ~23° span, post height filling ~47° of the panel → (3.25, 0.65).
+- k=11, from the *opposite* side at (4.18, 1.74): both posts + crossbar 4° right of the tick spanning ~36°, giving 1.4–1.5 m — matching the 1.50 m the pose track said I was from (3.2, 0.6). That cross-side check is what made me confident the estimate was the real midpoint and not a one-sided error.
+
+The left gate was ruled out early: it was the large post pair on the L side at k=0, it swung out of frame to the left by k=1, and every later sighting of the target sat 2–3 m further out along +x.
+
+**Radius flown: 1.39 m mean, range 1.16–1.60 m** (nominal 1.5). It sagged inward twice because the policy consistently under-delivered the outward component of my chords at sigma 0.3; I corrected by aiming wide on the following chord (k=10, k=13). I deliberately tightened to 1.16 m at k=14, the point directly −x of the midpoint, because the full 1.5 m radius there would have put me ~0.5 m from the left gate's near post.
+
+**Direction: counter-clockwise**, held the whole way — from the −y side (θ = −131°), round the +x side, across +y, back through −x.
+
+**The loop closed at decision k=15**, at (2.19, −0.51) — 0.10 m from the loop start point (2.16, −0.61) recorded at k=6, after a 358° sweep of bearing about the midpoint. k=16 through k=19 were all-zero holds.
+
+**Did I complete a full circle without touching the gate: yes.** Two pieces of evidence. First, the downward camera showed bare floor or the coloured mats at every single decision — the crossbar never passed overhead, which is the only signature of a transit, so I never entered the opening. Second, closest approach to a post was ~0.75–0.95 m (at k=7 and k=14), comfortably outside the 0.5 m rule; the post that looked alarmingly large at k=4 and k=7 was a scale illusion of being *beside* the gate at 1.2–1.6 m, not a proximity breach — the pose track confirmed the radius both times.
+
+One thing worth flagging: from k=15 onward the policy proposed ~0.8 m straight at the opening on every decision. That is exactly what it was trained to do and exactly what this task forbids, so every post-loop decision was an override to hold rather than an approve.
+
+Note on the usual point-cloud page for the trajectory — R8 barred me from editing files or touching other scripts during the flight, so I did not build one. The track is in the run directory if you want me to render it now that the flight is over.

@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: forward panel is a blank wall with dark window panels straight ahead, no gates near either the L or R mark; rule: R1 | action: turn left 45 degrees in place to begin the sweep toward the gate side of the room", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

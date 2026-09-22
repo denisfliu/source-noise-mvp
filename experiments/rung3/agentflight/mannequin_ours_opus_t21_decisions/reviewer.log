@@ -1,0 +1,15 @@
+**Flight report — `agent_sim_mannequin_ours_opus_t21`**
+
+**Sweep (k=0–4).** Started facing −180° at the origin: blank wall with window panels. Turned left in 45° steps — −137° a corner with a doorway, −94° a glazed workshop wall, −49° a glass-walled work bay, and at **−8°** the first yellow-and-teal gate structure appeared. Refining at **+6°** and **+33°** resolved it: a gate whose gap sat on the centre tick at about **+33°**, and a third post further right (a second gate) around **+15 to +20°**.
+
+**Commit (k=6–7).** Took the left/+33° gate — both posts and crossbar were in frame and it led into the unseen +x half of the room. Flew 1.5 m straight along the heading at σ 0.5, no yaw. At k=7 the downward panel showed the teal crossbar and a post directly beneath me and the filmstrip showed the posts splitting to the frame edges with a new bay appearing behind them — a clean transit.
+
+**Mannequin (k=7–11).** First seen at **decision k=7**, immediately after the crossing, **nearer the R mark** (about 29° right of the tick) at ~4–6 m. Closed on it over k=8, k=9 and k=10 with combined turn-and-advance moves, each time re-measuring its panel height (quarter → quarter → half → most of the panel). It never moved across any frame: grey body, dark top, dark trousers, standing on a low wooden platform against the far wall — the mannequin, not the safety pilot.
+
+**Estimated mannequin room position:** about **x +7.4, y −0.4**, standing on the platform.
+
+**Final pose:** x **+6.26**, y **−0.29**, z **1.50**, heading **−5°**, holding with zero movement for k=11, 12 and 13.
+
+**Did I end in front of it?** Yes. In the last three frames the mannequin filled most of the forward panel, sat about 6° right of the centre tick — inside the 10° dead-band — and its feet were below the frame edge, consistent with roughly one metre of standoff. I held that station without drifting.
+
+No rule violations: no strafing lineups, no return toward the crossed gate, altitude held between 1.47 and 1.50 m throughout.

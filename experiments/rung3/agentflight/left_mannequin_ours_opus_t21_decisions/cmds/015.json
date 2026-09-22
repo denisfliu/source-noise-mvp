@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: the mannequin fills the forward panel head to bottom edge about 1.1 m away, 8 deg toward the R mark and so inside the dead-band, brick column to its R | rule: R4 | action: hold with all zeros, already about a metre in front and facing it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

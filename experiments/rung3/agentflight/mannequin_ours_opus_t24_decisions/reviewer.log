@@ -1,0 +1,15 @@
+**Flight report — mannequin_ours_opus_t24**
+
+**Sweep (k=0–4).** Starting at (0,0) facing −180°, I turned left in 45° steps. Headings −180°, −137°, −94° and −49° showed only walls, a glazed office alcove and open floor with tables — no posts. At **heading −8° (k=4)** a gate appeared on the L side of the panel: yellow posts with a teal crossbar. That was the only opening I saw, so the sweep stopped there.
+
+**Commit (k=5–9).** The first close-up was one post alone with its crossbar running off the left edge, so I backed off 0.8 m and turned left (R5); at heading +26° both posts and the crossbar were in frame ~3.5 m out. A 2 m run along the heading drifted me onto the right post, so I backed off 0.9 m and turned left 20° again. At **(0.19, 0.09), heading +36°** the posts were equal in size, crossbar level, gap 4° left of the tick — I flew 2 m straight through at --sigma 0.5 with no yaw. The filmstrip shows the posts splitting to the frame edges and vanishing: a clean transit. One 45° right turn on the far side to scan the bay.
+
+**Approach (k=10–13).** First saw the mannequin at **k=10**, heading −12°, a quarter of the panel tall just right of the centre tick (nearer the R mark). Three straight runs along the bearing at −12° to −16°, no yaw needed as it stayed inside the 10° dead band. By k=13 it was unmistakable: grey figure, bare feet, dark trousers, half the panel tall, motionless across four frames — the mannequin, not the safety pilot.
+
+- **Openings seen:** one gate, at heading −8° from the start.
+- **Committed to:** that gate, crossed at ~(1.0, 0.7) on heading +36°.
+- **First saw the mannequin:** decision k=10, nearer the R mark.
+- **Estimated mannequin position:** about **x 7.6, y −0.8** on the floor.
+- **Final pose:** approximately **x 6.6, y −0.6, z 1.49, heading −16°**.
+
+**Do I believe I ended in front of it?** Yes. It was centred in the forward panel at ~2 m on the last look, and the final decision closed 1 m straight along that same bearing with no yaw, leaving it roughly a metre ahead and square in view. The one caveat: several of my moves under-travelled (the 2 m commands at k=10–12 delivered 1.2–1.5 m of actual displacement), so the true standoff may be nearer 1.2–1.4 m than exactly 1.0 m — in front of it either way, and never closer than the safe margin.

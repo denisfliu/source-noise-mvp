@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward panel shows a glass-walled work bay ahead with dark shapes near the L mark and coloured floor mats at bottom, still no yellow-and-teal gate; rule: R1 | action: turn left a final 45 degrees to face +x where the gates should be", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

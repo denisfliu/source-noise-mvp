@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: a thick near yellow post sits right on the centre tick with a thinner post and teal bar to its R, no clear opening ahead | rule: R5 | action: pure 35 deg left turn to bring the +y side left gate into view before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 35.0, "sigma": 0.0}}

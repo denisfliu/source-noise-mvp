@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: one yellow post left of the centre tick and the near post now off the L edge, with open floor and a figure by the far wall | rule: R4 | action: a pure 25 deg left turn to bring the gap between the two posts onto the centre tick before flying straight", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 25.0, "sigma": 0.0}}

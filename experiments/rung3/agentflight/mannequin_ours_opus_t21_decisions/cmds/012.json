@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: unchanged view, the grey mannequin filling most of the forward panel just right of the centre tick and the wooden platform edge in the downward panel; rule: R4 | action: hold station with zero movement in front of the mannequin", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

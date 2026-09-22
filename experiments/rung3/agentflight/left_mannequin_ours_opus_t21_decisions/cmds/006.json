@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: no gate posts anywhere, a white wall with a dark doorway on the centre tick, a bench and tan tabletop nearer the R mark, clear floor below | rule: R3 | action: pure 45 deg right turn to scan toward +x and -y where the far centre gate should lie", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.3}}

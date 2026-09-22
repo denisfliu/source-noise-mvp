@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: forward panel shows a yellow gate post with a teal crossbar running up to the right, sitting just right of the centre tick, against a windowed wall; rule: R5 | action: turn right 25 degrees to bring the whole gate into view and find its second post", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -25.0, "sigma": 0.0}}

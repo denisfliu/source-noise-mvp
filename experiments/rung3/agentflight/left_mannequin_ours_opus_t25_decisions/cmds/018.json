@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: the grey mannequin still centred just left of the centre tick about 1.2 m ahead, nothing else has changed; downward shows its head and bare floor | rule: R2 | action: holds station with all zeros", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

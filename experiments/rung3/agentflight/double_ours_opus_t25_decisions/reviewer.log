@@ -1,0 +1,11 @@
+# Flight report
+
+**Left gate — crossed during decisions k=2–3.** I approved the policy's own proposals at k=0–2, which is what it was trained on; the k=3 strip showed the posts splitting to the frame edges and the crossbar sweeping the downward panel, and the policy then tried to turn right toward the table (the trained-task ending). I took over at k=3 with a 1 m straight carry-through. Crossing looked central — both posts spread symmetrically to the edges, no post ever filled the frame.
+
+**Centre gate — crossed during decisions k=7–8.** After clearing the left gate I advanced deeper (+x) and yawed right in two 45° steps to face roughly -y. At k=6 a single post was close and left of the tick, so I backed 1.5 m along my heading (R5); at k=7 both posts and the teal crossbar sat straddling the centre tick ~2.5 m out, and I flew 2 m straight at σ 0.5 with no yaw, then 1.2 m more at k=8. Through the middle: the gap was ~5° off the tick, inside the dead band, and the posts were of equal apparent size. By k=9 the forward panel was clear room with the last post leaving the L edge.
+
+**The penguin** was on a low light-topped table with a teal edge on the coloured mats, off to the -y/-x side beyond the centre gate, around room x≈1.5, y≈-1.3. I first picked it up low and right of the tick in the forward panel at k=10, closed on it at k=10–11, and centred it in the downward camera with two sub-0.5 m corrections at k=11–12.
+
+**Final pose:** x 1.46, y -1.29, z 0.99, heading -116°, holding all zeros with the table centred in the downward panel.
+
+**Did I finish?** Yes, I believe so — both gates in order and through the middle, followed by a stable hover at 1.0 m over the table. The one thing I cannot fully certify is that the object under me is the penguin itself: at 1.0 m the downward panel shows the table top clearly but I could not resolve a distinct black-and-white penguin shape on it, so my identification rests on tracking that same table from the forward view at k=7 and k=10 rather than on seeing the penguin from directly above.

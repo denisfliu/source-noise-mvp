@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows a corner of the room with white walls and dark panels, no yellow posts near the L tick or R mark, downward panel is floor mat; rule: R3 | action: continue the sweep with another 45 deg left turn in place", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

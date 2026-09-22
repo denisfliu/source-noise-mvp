@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: the standing figure fills the panel head to feet just R of the centre tick, dark top and grey-blue legs, motionless, table top below | rule: R4 | action: holds all zeros one metre in front of it, facing it, since it is inside the dead band", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,13 @@
+## Flight report
+
+**Left gate — crossed during decision 2→3** (approved policy plan, ~x 0.3 → 1.1). Through the middle as far as I could tell: the approach at k=2 had the post pair straddling the centre tick, and by k=3 the room beyond was open on the left with the crossbar sweeping through the downward panel. This was the policy's own trained crossing, which is why I approved k=0–k=2.
+
+**Immediately after**: the k=3 proposal was already pulling −y toward the table, so I took over per the briefing with a straight 1 m +x move (R7), then a −40° yaw at k=4 to find the centre gate.
+
+**Centre gate — crossed during decision 7→8**, flown as an authored crossing: I repositioned at k=5–k=6 onto its +y side (k=6 showed one post only, so I backed off in +y and shifted +x per R5), then at k=7 both posts were in frame with the gap inside the dead-band of the tick, and I flew 2 m straight along heading −77° with no yaw at σ 0.5. The k=8 strip shows the posts splitting to both frame edges and vanishing — a clean transit, through the middle.
+
+**Penguin**: on a black low table at approximately x 1.55, y −0.58 — just on the −y side of the left gate's far side, as briefed. I found it in the downward camera at k=10 after tracking back in −x while keeping clear of the centre-gate line, centred it over k=10–k=12, and descended 1.54 → 0.97 m.
+
+**Final pose**: x 1.55, y −0.58, z 0.97, heading −74°. The last two decisions were all-zero holds; the penguin sat within a few centimetres of the downward panel's centre in both.
+
+**Did I finish?** Yes — I believe both gates were crossed in order and through their middles, and the flight ended hovering directly over the penguin at ~1.0 m. The one place I'd want video confirmation is the left-gate crossing: it was flown by the policy across decisions 2–3 and I inferred the transit from the strip and the post/crossbar geometry rather than seeing a single unambiguous lined-up frame beforehand.

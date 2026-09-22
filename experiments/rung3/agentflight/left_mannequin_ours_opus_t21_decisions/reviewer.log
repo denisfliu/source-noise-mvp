@@ -1,0 +1,17 @@
+# Flight report — `agent_sim_left_mannequin_ours_opus_t21`
+
+**Left gate crossing — decision k=4, through the middle.**
+The policy's early proposals (k=0, k=1) headed generally at the gate and I approved them, but by k=2 a single post filled the frame just left of the tick with the crossbar running off the L edge — I was beside the gate, not in front of it. I backed up 1 m along my heading with a 25° left turn (k=2), then a pure 15° left turn (k=3) put the gap on the centre tick with both posts equal in size and the crossbar level. The crossing itself was one straight 2 m move along heading +32° with no yaw at `--sigma 0.5` (k=4). The k=5 filmstrip shows the textbook signature: posts growing, splitting to the frame edges, then gone with the room beyond appearing. Centred, no post contact.
+
+**Post-crossing takeover — k=5.** The policy immediately proposed a −y turn (its trained table task, which would have swung back at the post I'd just passed). I overrode with 1.2 m straight along +x to clear the gate line (R7).
+
+**First saw the mannequin — decision k=8, nearer the R mark.**
+Two pale standing shapes appeared against the far wall about 22° toward the R mark. I closed on the right-hand one over k=9–k=11. At k=12 it filled the panel with its feet cut off, so I could not tell a grey mannequin from the safety pilot — I backed up 1.4 m (k=12) to get the whole body in frame. At k=13 it read clearly: life-size, perfectly still, grey featureless head, dark top, dark trousers, pale feet with no dark shoes. I then closed at k=13 and k=14.
+
+**Estimated mannequin room position:** about **x +8.4, y −0.9**, standing at floor level beside a tan table with a brick column to its right.
+
+**Final pose:** x **+7.53**, y **−0.23**, z **1.59 m**, heading **−27°** (−0.48 rad). Held with all zeros from k=15 through k=23.
+
+**Did I end in front of it — yes.** The final frames show the mannequin head-to-feet filling roughly 85–90% of the forward panel, i.e. about 1.1 m away, sitting ~8° toward the R mark, which is inside the 10° dead-band, so the drone is facing it. Altitude 1.59 m, within the 0.8–2.0 m band throughout; no post, wall or furniture contact at any point.
+
+**One caveat worth flagging:** the strategy anticipated a second (centre) gate between the left gate and the mannequin's bay. I scanned at headings +30° and −17° after the crossing (k=6, k=7) and found no further yellow/teal posts on either bearing — only a shelved wall, a bench and a dark doorway — so I searched on the open bearing instead and reached the figure without a second transit. If the intended route required passing the centre gate, this flight reached the target by going around it rather than through it.

@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: room with a black stool near the centre tick and a yellow post at the R edge of the forward panel, mats below | rule: R6 | action: a pure 45 deg right turn to bring that gate's gap toward the centre tick before committing to any approach", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.3}}

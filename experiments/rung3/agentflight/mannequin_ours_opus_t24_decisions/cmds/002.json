@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: forward panel shows a white wall bay with an office-like alcove behind glass, no yellow posts or teal crossbar, downward panel shows mats and floor | rule: R3 | action: third 45 degree left turn to bring the +x side of the room into view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

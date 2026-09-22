@@ -248,9 +248,10 @@ add("gmsig3", A, "compound task, Sonnet no task knowledge", "3/15 success (cente
 add("gmsig3", A, "compound task, Opus", "1/1 success, clearance-clean 0.369 m"); add("gmsig3", A, "compound task, Haiku", "0/1")
 add("gmsig3", A, "find the mannequin, Sonnet", "found on attempt 4: 1.0 m in front, 14 deg off")
 add("gmsig3", A, "find the penguin, Sonnet", "found on attempt 1: 0.11 m off, 1.00 m up, 30-step hold")
-E = "Agent eval suite, Sonnet, 5 trials (2026-09-23; success = task judge + clearance-clean)"
-for task, o, w in [("find the mannequin", "1/5", "0/5"), ("left gate, centre gate, penguin", "0/5", "0/5"), ("circle around the centre gate", "2/5", "3/5"), ("left gate, then mannequin", "1/5", "0/5")]:
-    add("realonly", E, f"{task}, ours (pin)", o); add("realonly", E, f"{task}, waypoints (decode-only)", w)
+E = "Agent eval suite, 5 trials (2026-09-23; done · clean · both)"
+for task, o, w, op in [("find the mannequin", "3/5 · 3/5 · 3/5", "3/5 · 0/5 · 0/5", "5/5 · 4/5 · 4/5"), ("left gate, centre gate, penguin", "0/5 · 1/5 · 0/5", "0/5 · 0/5 · 0/5", "1/5 · 0/5 · 0/5"),
+                       ("circle around the centre gate", "5/5 · 2/5 · 2/5", "4/5 · 4/5 · 3/5", "5/5 · 3/5 · 3/5"), ("left gate, then mannequin", "3/5 · 2/5 · 2/5", "2/5 · 3/5 · 1/5", "4/4 · 4/4 · 4/4")]:
+    add("realonly", E, f"{task}, Sonnet + ours (pin)", o); add("realonly", E, f"{task}, Sonnet + waypoints", w); add("realonly", E, f"{task}, Opus + ours (pin)", op)
 add("realonly", E, "left gate crossed on the double task", "ours 5/5 · waypoints 1/5")
 
 TABS = [("overview", "Overview", None, OVERVIEW),

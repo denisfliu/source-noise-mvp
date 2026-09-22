@@ -1,0 +1,13 @@
+**Flight ended — report**
+
+**Gate midpoint estimate.** I triangulated the centre gate from four viewpoints (k=1, 2, 5, 9). Its two posts sit at roughly **(2.39, −0.37)** and **(3.13, −0.30)** — separated along *x*, so the aperture faces ±y — giving a midpoint of **(2.76, −0.33), about 2.8 m from the start**. That is comfortably past the 2 m threshold, so it was the far pair, not the left gate. The estimate was confirmed independently at k=9, where I sat square in front of the opening: predicted post bearings 287.8°/252.3°, observed 289.3°/252.3° apart by 34.8° against a predicted 35.5°. The left gate's near post came out at **(1.16, 0.27)**, about 1.2 m from the start.
+
+**Radius flown.** Between 1.15 m and 1.47 m, **mean ≈ 1.33 m**. Two deliberate pull-ins account for the low end: at k=9 the +y wall reconstruction was closing in, and at k=12 I squeezed the radius to ~1.1 m to slip *inside* the left gate's near post, which otherwise sits almost exactly on a 1.5 m circle at bearing 160°.
+
+**Direction.** One revolution in the sense **−y side → +x end → +y side → −x end**, i.e. increasing bearing about the midpoint, held the whole way. Bearings about the midpoint, in order: 219° → 259° → 302° → 334° → 15° → 52° → 90° → 130° → 185° → 214° → 219°. Monotonic, one lap, no reversal.
+
+**Where it closed.** At **k=13**, pose (1.60, −1.11) — bearing 213.7° against the 219.4° where the circle began at k=2, and 0.17 m from that point. I spent k=13 and k=14 on two pure turns to bring the gate back into frame, and at k=15 the posts and crossbars sat at 30° and 47°, matching the predicted 29.1° and 44.6° — the same geometry I had when I started the lap. k=15 through k=19 were held at all zeros; the policy proposed flying a metre straight ahead on every one of those, which would have carried me into the gate.
+
+**Did I complete a full circle without touching the gate?** Yes. Closest approach to a centre-gate post was about **0.77 m** (at k=12), and about 0.85 m to the left gate's post (k=10) — both above the half-metre bar. No crossbar ever appeared in the downward camera, so neither gate was ever transited. Final hold was at (1.64, −1.23), 0.04 m from where the loop began.
+
+Two honest caveats. The circle is not a clean 1.5 m: the −x sector is flattened to ~1.1 m because the left gate's post occupies the ideal track there, and choosing to pass inside it rather than outside was a judgement call I'd make again — outside would have run into that gate's far post. And my post positions come from monocular bearing-and-size estimates, so the clearance figures carry maybe ±0.15 m; they were consistent across five independent viewpoints, which is why I trust the topology (one full lap, gate never crossed) more firmly than the exact radii.

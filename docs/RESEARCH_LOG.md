@@ -8068,3 +8068,23 @@ both gates clean and ran out before the hover). (4) The L/R read bias (RESEARCH_
 search tasks: two ours flights held within 1.7 m of the figure 36-41 deg off axis. Videos of all 40 sent; page
 viz/agent_eval.html; records experiments/rung3/agent_eval/*.jsonl; decisions archived per flight. Opus pass on
 ours started 04:06 (trials 21-25).
+
+**SUITE RE-JUDGED TO DENIS'S CRITERION + OPUS PASS (2026-09-23; Denis, after the videos: "trials 11 and 14 are clear
+successes ... 13 and 15 are close enough ... every single opus mannequin find looked like a success to me, unless
+there was a gate touch ... clearance failures are considered failures").** Mannequin criterion is now reached +
+looking: mean over the final 20 steps within 3 m (or within 0.5 m regardless of facing) and facing within 45 deg;
+every record carries task_done, clean and gate_touch, and the cell is reported as done · clean · both.
+                              Sonnet + ours     Sonnet + waypoints   Opus + ours
+    find the mannequin        3/5 · 3/5 · 3/5   3/5 · 0/5 · 0/5      5/5 · 4/5 · 4/5
+    left, centre, penguin     0/5 · 1/5 · 0/5   0/5 · 0/5 · 0/5      1/5 · 0/5 · 0/5
+    orbit                     5/5 · 2/5 · 2/5   4/5 · 4/5 · 3/5      5/5 · 3/5 · 3/5
+    left, then mannequin      3/5 · 2/5 · 2/5   2/5 · 3/5 · 1/5      4/4 · 4/4 · 4/4 (t25 pending)
+  Correction to the 2026-09-23 Opus double-gate note: the judge's own SUCCESS (dwell threshold) held for one of
+  the four both-gate flights, not two. Opus reached the mannequin in 9/9 search flights (0.1-1.3 m), Sonnet in
+  6/10, the waypoint agent in 5/10 of which every mannequin-task flight grazed a gate (0.15-0.17 m).
+  BACKWARD PRIMITIVE AUDIT (Denis: "the backwards primitive goes way too far backward"): across the 15 double
+  flights, realized/commanded displacement is 0.84 for reverses (n = 40) and 0.90 for forward moves (n = 69); the
+  executor does not overshoot, the agent asked for 1-1.5 m reverses because the brief said "back up 1 m". Brief
+  changed: no reversing to line up, turn + advance instead; R5 caps a reverse at 0.5 m, never twice in a row; the
+  double brief says forward + yaw onto the centre gate when its posts appear. Double-gate cells re-flown as
+  trials 31-35 in all three reviewer arms (queued behind the Opus chain).

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: unchanged view, the motionless figure fills the panel head to feet just R of the centre tick, wooden table below | rule: R4 | action: holds all zeros one metre in front of it rather than letting the policy drift back to -y", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

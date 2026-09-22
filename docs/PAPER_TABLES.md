@@ -32,26 +32,23 @@ against the route; clearance unmeasured.
 | figure-eight, fig8_denis3 (10.5 m) | real, 2 attempts | 0.10 (max 0.29 / 0.69) | 2/2 reached the handback | unmeasured | flight 2 dipped to z 0.83 |
 | orbit around the right gate, 1.3 m, 1.5 loops | real, ~5 attempts | 0.06-0.15 on the 2 that flew | 2 reached the handback | unmeasured | the others aborted or restarted; video needed |
 
-## Table 3. Agent-in-the-loop (Sonnet + primitives), to fill in
+## Table 3. Agent-in-the-loop (reviewer + primitives), sim, 5 trials per cell
 
-Both arms use the real-only checkpoint and the same primitives, brief and budget; ours flies the agent's move
-through the pin, waypoints flies the decoded track with no denoising. Sim: 5 trials per cell (10 for claims).
-Real: n per cell to be decided by battery count.
+Both arms use the real-only checkpoint, the same primitives, brief and budget; ours flies the agent's move through
+the pin (the agent may also approve the policy's own proposal), waypoints flies the decoded track with no
+denoising and nothing to approve. Each cell: task done (the task's own judge) / clearance-clean / both. A gate touch
+(clearance < 0.18 m) is a failure and is counted in the middle number. Success for the search tasks = reached the
+figure (within 3 m, or within 0.5 m regardless of facing) and facing it within 45 deg over the final 20 steps
+(Denis, 2026-09-23, from the videos).
 
-| Task | Budget | ours, sim | waypoints, sim | ours, real | waypoints, real |
+| Task | Budget | Sonnet + ours | Sonnet + waypoints | Opus + ours | real (to fill) |
 |---|---|---|---|---|---|
-| find the mannequin (180-degree start) | 14 | 1/5 | 0/5 | __/_ | __/_ |
-| left gate, then centre gate, hover over the penguin | 14 | 0/5 | 0/5 | __/_ | __/_ |
-| one full circle around the centre gate | 20 | 2/5 | 3/5 | __/_ | __/_ |
-| left gate, then find the mannequin | 24 | 1/5 | 0/5 | __/_ | __/_ |
+| find the mannequin (180-degree start) | 14 | 3/5 · 3/5 · **3/5** | 3/5 · 0/5 · **0/5** | 5/5 · 4/5 · **4/5** | __ |
+| left gate, then centre gate, hover over the penguin | 14 | 0/5 · 1/5 · **0/5** | 0/5 · 0/5 · **0/5** | 1/5 · 0/5 · **0/5** | __ |
+| one full circle around the centre gate | 20 | 5/5 · 2/5 · **2/5** | 4/5 · 4/5 · **3/5** | 5/5 · 3/5 · **3/5** | __ |
+| left gate, then find the mannequin | 24 | 3/5 · 2/5 · **2/5** | 2/5 · 3/5 · **1/5** | 4/4 · 4/4 · **4/4** (t25 pending) | __ |
 
-Sim columns: Sonnet reviewer, trials 11-15 of 2026-09-23, identical briefs (experiments/rung3/briefs, round 3 + R7).
-Partial credit behind the numbers: ours crossed the left gate 5/5 on the double task (waypoints 1/5) and found the
-mannequin (within 2.5 m) 3/5 + 3/5 across the two search tasks (waypoints 2/5 + 0/5); waypoints completed the
-orbit loop 5/5 with cleaner radii. Clearance-clean flights: ours 8/20, waypoints 7/20.
-
-Success per task: mannequin = within 2.5 m and facing within 30 deg for the final 20 steps, clearance-clean;
-double = compound judge (both gates in order, dwell) + clearance-clean; orbit = 360 deg of bearing about the centre
-gate without passing through it (r >= 0.3 m) or detouring (r <= 3 m), clearance-clean; left+mannequin = left transit route-clean + clearance-clean + the
-mannequin criterion. Secondary columns to add per cell: decisions used, overrides, median reviewer seconds,
-min clearance. 
+Sonnet trials 11-15 and Opus trials 21-25 of 2026-09-23, briefs round 3 + R7. The double-gate cells are being
+re-flown (trials 31-35) after the brief stopped rewarding reverses: partial credit there before the redo was
+left gate crossed 5/5 (Sonnet ours), 1/5 (waypoints), 4/5 both gates in order (Opus ours). Every waypoint
+mannequin flight grazed a gate in a 0.15-0.17 m band.

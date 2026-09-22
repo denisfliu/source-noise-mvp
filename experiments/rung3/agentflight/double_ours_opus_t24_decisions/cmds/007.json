@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: yellow post just left of the centre tick with its teal crossbar running up and off the R edge of the forward panel, so the far post is further right | rule: R6 | action: yaw -20 deg to put the gate gap on the centre tick before flying straight through", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.0}}

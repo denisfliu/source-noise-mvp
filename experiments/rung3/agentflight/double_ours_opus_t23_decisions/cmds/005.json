@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: wall, bench and a black stool ahead with a yellow post smeared along the R edge of the forward panel, so the centre gate lies well to my right | rule: R5 | action: pure 40 deg right turn to bring both of that gate's posts into view before any approach", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.3}}

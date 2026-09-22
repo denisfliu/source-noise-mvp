@@ -1,0 +1,13 @@
+**Flight ended — report.**
+
+**Gate midpoint estimate.** The centre gate's midpoint at **x ≈ 2.9, y ≈ −0.2, z ≈ 1.5**. I fixed it by crossing post bearings from four poses (k=2 28°, k=3 19°, k=4 36°, k=5 62°), and it then predicted every later sighting to within ~8° — the gap sat on the tick at k=9, k=10 and k=11 exactly when the estimate said it should. At ~2.9 m out along x it is the far gate, not the left one. A side result: at k=9 the two posts collapsed to ~12° apart, which means I was sighting **along** the gate line — the gate's posts run along x at roughly (3.3, −0.25) and (2.5, −0.15), so its opening faces ±y.
+
+**Radius flown.** Nominal 1.4 m, and held between **1.29 and 1.41 m for the whole +x and +y half** (k=6 through k=11). On the −x side I deliberately bulged out to **1.8 → 2.4 → 2.2 → 1.7 m** (k=12–k=16), because the left gate sits almost exactly on the nominal circle at bearing ~150° from the midpoint. So the path is a circle over three quarters and an outward detour over the last quarter.
+
+**Direction.** Counter-clockwise throughout, no reversal. Bearing about the midpoint went 256° → 294° → 331° → 10° → 50° → 99° → 131° → 139° → 164° → 198° → 241° → 256°, monotonically increasing through a full 360°. The heading readout independently confirms it: it wound from 0° to 420°, one full revolution plus the turn-in.
+
+**Where the loop closed.** Started at **k=6, (2.59, −1.49)**; closed at **k=18, (2.51, −1.52)** — 0.09 m from the start point, and the k=18 image reproduces the k=6 image (post by the L mark, post just right of the tick, same crossbar and tubs).
+
+**Did I complete a full circle without touching the gate — yes.** I never entered the gate plane; the centre gate's posts were in the forward panel for most of the loop and always off to one side, never splitting to the frame edges (the transit signature from the calibration strip never appeared, and no crossbar ever passed through the downward panel). Closest approach to a centre-gate post was ~0.9 m, at k=9. Closest approach to anything was the **left gate at ~0.85 m** around k=13–k=15, which is what forced the detour.
+
+Two honest caveats. The left gate's position is the weakest number in this flight — my fixes for it ranged over x 0.9–1.7, y −0.1 to 0.8, which is why I spent decision k=12 on a pure look and then routed wide rather than threading it; I cleared it, but with less margin than I'd have liked. And the loop is not a clean circle: the −x quarter is an outward bulge, so "radius 1.5 m" is true for three quarters of it and an average of ~2.0 m for the rest.

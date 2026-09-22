@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: far wall with a table and no gate posts anywhere in the forward panel, bare floor and mat edges in the downward panel | rule: R3 | action: yaw -45 deg to look right where the centre gate should be instead of drifting back -x -y toward the crossed gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: the low table on the coloured mats sitting on the centre of the downward panel with the drone at 0.99 m, room desks ahead in the forward panel | rule: R4 | action: holds all zeros over the target rather than taking the policy's 0.5 m drift off it", "move": {"forward": -0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}
