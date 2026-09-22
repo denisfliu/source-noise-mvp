@@ -168,7 +168,7 @@ add("realonly", "Sim atomics", "right", "1/10 · 8/10 transit (8 route-clean) ·
 add("realonly", "Sim atomics", "left, APC 25", "1/10 · 8/10 transit (7 route-clean) · 5/10 clean", "2026-09-22; same 400 steps")
 add("realonly", "Sim atomics", "right, APC 25", "1/10 · 9/10 transit (9 route-clean) · 10/10 clean", "goal miss unchanged; clearance 0.27-0.33 m")
 add("realonly", "Sim atomics", "center from left", "0/10", "no center demos in its data"); add("realonly", "Sim atomics", "center from right", "0/10")
-add("scratch_real", "Sim atomics", "left", "2/10 · 7/10 transit (6 route-clean) · 1/10 clean"); add("scratch_real", "Sim atomics", "right", "7/10 · 9/10 transit (8 route-clean) · 4/10 clean", "descends to z ~1.2 after the crossing, into the goal box")
+add("scratch_real", "Sim atomics", "left", "2/10 · 7/10 transit (6 route-clean) · 6/10 clean"); add("scratch_real", "Sim atomics", "right", "7/10 · 9/10 transit (8 route-clean) · 4/10 clean", "descends to z ~1.2 after the crossing, into the goal box")
 add("scratch_real", "Sim atomics", "left, APC 25", "0/10 · 7/10 transit (7 route-clean) · 9/10 clean", "2026-09-22"); add("scratch_real", "Sim atomics", "right, APC 25", "5/10 · 6/10 transit (6 route-clean) · 7/10 clean", "four flights never reach the aperture")
 add("scratch_real", "Sim atomics", "center from left", "0/10"); add("scratch_real", "Sim atomics", "center from right", "0/10")
 add("realonly", "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5"); add("scratch_real", "Sim compounds", "CMPL / CMPR autonomous", "0/5 · 0/5")

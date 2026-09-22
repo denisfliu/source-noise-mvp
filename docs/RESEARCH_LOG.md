@@ -7997,12 +7997,12 @@ the same 400 steps; 10 trials per cell (scripts/run_realonly_apc25.sh; page viz/
 **REAL-ONLY PLAIN PI0 AT A 25-STEP REPLAN (2026-09-22; Denis: "also check real only scratch with this same thing").**
 scripts/run_scrreal_apc25.sh, same protocol; page viz/realonly_apc25.html now carries both arms.
                               transit  route-clean  clearance-clean  goal box  judge success
-    pi0 real-only, left  50      7/10      6/10          1/10           2/10       2/10
+    pi0 real-only, left  50      7/10      6/10          6/10           2/10       2/10
     pi0 real-only, left  25      7/10      7/10          9/10           0/10       0/10
     pi0 real-only, right 50      9/10      8/10          4/10           7/10       7/10
     pi0 real-only, right 25      6/10      6/10          7/10           5/10       5/10
     (pin real-only, for reference: left 8/10 · 7/10 · 5/10 · 1/10; right 9/10 · 9/10 · 10/10 · 1/10 at APC 25)
-  READS: (1) The clearance gain from the shorter horizon is not pin-specific: the plain flow goes 1/10 -> 9/10
+  READS: (1) The clearance gain from the shorter horizon is not pin-specific: the plain flow goes 6/10 -> 9/10
   clean on the left and 4/10 -> 7/10 on the right. Re-observing every 2.5 s fixes the crossing line for either
   arm. (2) For the plain flow the shorter horizon costs transit on the right (9/10 -> 6/10: four flights never
   reach the aperture, ending 1.2-2.1 m from the goal) and goal reaches on both sides (2 -> 0, 7 -> 5). The pin's
@@ -8011,6 +8011,6 @@ scripts/run_scrreal_apc25.sh, same protocol; page viz/realonly_apc25.html now ca
   its 7/10 on the right), while the pin holds z 1.5 like the pilot's median ending and stays just above it.
   Neither behaviour is taught by the real data alone; the plain flow's descent is closer to the synth-course
   ending the box was written for, without ever having seen a synth course. (4) At 25 steps the two arms are
-  route-clean 7/10 vs 7/10 (left) and 9/10 vs 6/10 (right), clearance-clean 5/10 vs 9/10 and 10/10 vs 7/10.
+  route-clean 7/10 vs 7/10 (left) and 9/10 vs 6/10 (right), clearance-clean 5/10 vs 9/10 and 10/10 vs 7/10 (pin vs pi0).
   On the gate itself, the pin is the better real-only arm on the right and the plain flow on the left, at
   n = 10 and one seed: a lead, not a claim.
