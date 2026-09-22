@@ -39,7 +39,7 @@ the pin (the agent may also approve the policy's own proposal), waypoints flies 
 denoising and nothing to approve. Each cell: task done (the task's own judge) / clearance-clean / both. A gate touch
 (clearance < 0.18 m) is a failure and is counted in the middle number. Success for the search tasks = reached the
 figure (within 3 m, or within 0.5 m regardless of facing) and facing it within 45 deg over the final 20 steps
-(Denis, 2026-09-23, from the videos).
+(Denis, 2026-09-23, from the videos). The double gate counts as done when both gates are crossed in order (route-clean); the hover over the penguin is not required (Denis, 2026-09-23). Its budget is 20 decisions from trial 51 onward (14 before).
 
 | Task | Budget | Sonnet + ours | Sonnet + waypoints | Opus + ours | real (to fill) |
 |---|---|---|---|---|---|
