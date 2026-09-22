@@ -1,6 +1,6 @@
 YOUR OBJECTIVE, the instruction the drone was given:
 "go through the gate on the left, then find the mannequin and hover in front of it"
-You start facing +x. The LEFT gate is the one on your left (+y side) as you face +x. Beyond the gates, deeper in the room, is a mannequin: a life-size standing human figure in a bay you cannot see into from the start. First cross the left gate through its middle; then find the mannequin and end about one metre in front of it, facing it.
+You start facing +x. The LEFT gate is the one on your left (+y side) as you face +x. Beyond the gates, deeper in the room, is a mannequin: a life-size standing human figure in a bay you cannot see into from the start. WHAT IT LOOKS LIKE: a grey shop mannequin, bare feet, dark trousers and a dark top, standing perfectly still. People may also be in the room (a safety pilot: wearing shoes, moving); a person is never the target. First cross the left gate through its middle; then find the mannequin and end about one metre in front of it, facing it.
 
 THE STRATEGY, in two phases
 - Phase 1, THE GATE (about the first 6 decisions): cross the LEFT gate. Where approval is allowed, approve the policy's proposal while both posts are in view and it heads at the opening, and take over if a post fills the frame or the crossing is off centre. Where it is not, author the crossing: a point in front of the opening, square up, one straight move through with --sigma 0.5. You have crossed when the crossbar passes overhead in the downward camera.

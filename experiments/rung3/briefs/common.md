@@ -31,8 +31,14 @@ THE COORDINATE FRAME
 
 WHAT YOU SEE. Each decision writes ONE small image whose path is printed; read it with the Read tool. Left half is the FORWARD camera now, right half the DOWNWARD camera now. The forward panel carries a yellow "L" in its bottom-left corner, a yellow "R" in its bottom-right corner, and a small yellow tick at the top and bottom of its centre column. BEFORE you say an object is left or right, look at which mark it is nearer, and say so in your reason. In the downward panel, image UP is the drone's forward and image RIGHT is the drone's right; the drone's own struts sit in its top corners. After a long move a strip of in-between views is appended. The readout also replays your own previous decisions and your pose track: keep a list of where you have looked from and what you saw.
 
-RULES
-- Read the calibration image once, then the decision image before every decision. --k must match the decision shown; --why is required and appears in the flight video.
-- Keep half a metre from gate posts, walls and furniture except when passing through a gate. Stay above 0.8 m and below 2.0 m.
-- One decision at a time.
-- No other access to the drone or the room: do not look for scene files, configs or coordinates, and do not read other scripts. Do not edit files.
+THE RULES, numbered. Every decision's --why has exactly this form, one line:
+  "seen: <what is in the two panels, in plain words> | rule: R<n> | action: <what the move does>"
+An override must cite the rule that justifies it; an approve cites R0. A --why without a rule number is a mistake.
+- R0. APPROVE when the policy's proposal is the motion you want; where approval exists it is your default when the proposal points where you would go.
+- R1. Read the calibration image once, then the decision image before every decision. --k must match the decision shown.
+- R2. Keep half a metre from gate posts, walls and furniture except when passing through a gate. Stay above 0.8 m and below 2.0 m.
+- R3. No theories about the image. Everything yellow with teal is a gate. Never conclude that an object is an artifact, clutter, a render error, or "not really there", and never conclude that the drone did not move from the picture alone (the pose track says whether it moved). If a view is confusing, the response is a small move to a better view, not an explanation.
+- R4. Dead-band: a target or a gap within 10 degrees of the centre tick counts as centred; do not correct it. Never make the same small correction (under 15 degrees or under 0.5 m) more than twice in a row; if you want to a third time, something else is wrong: back up 1 m along your heading and look again.
+- R5. One post alone filling the frame means you are beside the gate, not in front of it: back up along your heading until both posts show, then line up (turn, then straight).
+- R6. Crossing: both posts in view and the gap on the tick, then straight along the heading with --sigma 0.5 and no yaw until the crossbar is overhead in the downward panel.
+- R7. One decision at a time. No other access to the drone or the room: do not look for scene files, configs or coordinates, and do not read other scripts. Do not edit files.

@@ -1,6 +1,6 @@
 YOUR OBJECTIVE, the instruction the drone was given:
 "find the mannequin and hover in front of it"
-There is a mannequin, a life-size standing human figure, somewhere in this room, and it is NOT visible from where you start. The room has several bays separated by walls and by gate structures; the mannequin is in a bay you cannot see into from the start. Once you see it, fly to a spot about one metre in front of it, facing it, and hold.
+There is a mannequin, a life-size standing human figure, somewhere in this room, and it is NOT visible from where you start. WHAT IT LOOKS LIKE: a grey shop mannequin, bare feet, dark trousers and a dark top, standing perfectly still. People may also be in the room (a safety pilot: wearing shoes, moving); a person is never the target. The room has several bays separated by walls and by gate structures; the mannequin is in a bay you cannot see into from the start. Once you see it, fly to a spot about one metre in front of it, facing it, and hold.
 
 THE STRATEGY, in three phases. Budget them.
 - Phase 1, SWEEP (decisions 0 to 3 at most): from the start, turn in 45-degree steps in place and look. You start facing -x; the interesting side of the room, with the gates and the other bays, is behind you. The point of the sweep is to find the OPENINGS: note the heading at which each gate appears. Stop sweeping as soon as you have seen a gate.
