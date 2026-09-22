@@ -131,7 +131,8 @@ def main():
     elif a.task == "orbit":
         out.update(orbit(P, centre_gate_xy(a.scene))); out["task_done"] = bool(out["success"]); out["success"] = bool(out["success"] and out["clean"])
     elif a.task == "double":
-        out.update(judge_gate(a.traj, "left_and_center")); out["task_done"] = bool(out["judge_success"]); out["success"] = bool(out["judge_success"] and out["clean"])
+        # Denis, 2026-09-23: "we just need to get through both gates without crashing" -- the hover is not required
+        out.update(judge_gate(a.traj, "left_and_center")); out["task_done"] = bool(out["transit"] and out["route_clean"]); out["success"] = bool(out["task_done"] and out["clean"])
     elif a.task == "left_mannequin":
         g = judge_gate(a.traj, "left"); out.update({"left_" + k: v for k, v in g.items()})
         st = g["transit_step"] or 0
