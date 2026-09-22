@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: a single yellow post left of center with teal crossbar above, no second post visible, downward panel shows the blue pool close by | rule: R5 | action: back up along heading to get both posts of this gate into view", "move": {"forward": -1.4884827687647144, "left": -0.1855237103190047, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

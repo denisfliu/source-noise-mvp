@@ -1,0 +1,1 @@
+{"k": 21, "verdict": "override", "why": "seen: mannequin fills nearly full panel height, centered on the tick, about 1 m away | rule: R2 | action: hold position, at target distance and facing it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

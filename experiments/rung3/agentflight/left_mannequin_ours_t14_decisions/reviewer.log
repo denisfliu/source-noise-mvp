@@ -1,0 +1,9 @@
+The flight has ended (24 decisions used). Final report:
+
+**Left gate crossing:** Crossed at decision k=13, through the middle — both posts were symmetric on the centre tick before the final approach (k=12), and the crossing was confirmed by the crossbar passing under the downward camera and both posts leaving the forward view. Lining up on this gate took much longer than expected (k=2 through k=13): repeated approvals of the policy's proposal drifted me onto the near post three separate times (R5 backups at k=2, k=4, k=6, k=9), so I switched to fully manual turn-then-straight lineups for the actual crossing.
+
+**Mannequin:** Never sighted. After crossing the left gate (k=13) and clearing the post line (k=14), I turned away from a small unidentified dark shape glimpsed at the frame's left edge at k=15 (near the left gate's post area) to avoid flying back toward the just-crossed gate per R7 — in hindsight that shape may have been worth a closer look. The search then found and crossed a second gate at k=20 (confirmed by crossbar-under-downward-camera and posts leaving view), landing in a glass-walled office/workbench bay (desk, chair, monitors) with no mannequin visible. Three scanning turns (k=21, k=22, and the room at k=23) all showed the same office booth — no mannequin ever entered frame.
+
+**Final pose:** x 2.38, y −1.95, z 1.56, heading −154° (roughly facing −x). Held with a zero move on the final decision since no target was in view.
+
+**Outcome:** Left gate transit succeeded cleanly through the middle. The mannequin was not found — I do not believe I ended in front of it. My best guess is that the search turned into the wrong bay after the second gate (an office area rather than the mannequin's bay), and/or the dark shape spotted right after the first gate at k=15 was the actual target and I moved away from it under R7 instead of investigating.

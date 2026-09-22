@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel shows both yellow posts and teal crossbar, gap within 10 deg of tick, similar sizes, black cart frame below in downward panel | rule: R6 | action: fly straight through the gate, no yaw, sigma 0.5", "move": {"forward": 2.2003548560885244, "left": -0.006205424050744167, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

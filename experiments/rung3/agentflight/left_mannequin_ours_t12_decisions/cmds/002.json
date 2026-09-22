@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: both gate posts in view but the post nearer the L mark is much larger/closer, right post smaller | rule: R2 | action: shift sideways away from the close post to recenter before advancing", "move": {"forward": -0.0629373738909962, "left": -0.39501757804900905, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

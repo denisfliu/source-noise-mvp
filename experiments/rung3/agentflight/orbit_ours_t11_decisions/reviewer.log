@@ -1,0 +1,9 @@
+**Flight report — orbit_ours_t11**
+
+- **Gate midpoint estimate:** ~(2.9, -0.3) in room coordinates, refined over several close passes (initial guess (3.0, -0.1) from a bearing/size read at k=11, adjusted inward after getting very close to a post at k=12).
+- **Radius flown:** ~1.5 m nominal, but execution was uneven — sigma-0.3 bending pulled several chords short or long of the planned points, and one emergency clearance move (k=18) departed from the planned geometry.
+- **Direction:** counter-clockwise (south → east → north → west), consistent the whole way.
+- **Decision the loop closed:** it did **not** close. Roughly half the 20-decision budget (k=0–10) went to disambiguating the near left gate from the farther center gate — the two gates produced near-identical "single post filling the frame" views at several points along +x, and I repeatedly had to back up per R5 before confirming which gate was which around k=11. The orbit proper only started at k=12/13, leaving 7 decisions for what needed 8 chords. At k=18, on the west leg, I ended up dangerously close to a post (visible directly under the downward camera) and had to break the planned chord sequence to pull away, and the final move (k=19) was sent without `--then-wait` so I never confirmed the landing pose — the flight ended immediately after.
+- **Full circle without touching the gate:** I believe I did **not** complete a full circle, and I can't confirm the gate was never touched — visually no contact was ever shown, but the k=18 near-miss (post essentially under the drone) means a graze can't be ruled out from imagery alone.
+
+Root cause: too much of the budget was spent telling the left and center gates apart, which starved the actual orbit of decisions needed to close it cleanly.

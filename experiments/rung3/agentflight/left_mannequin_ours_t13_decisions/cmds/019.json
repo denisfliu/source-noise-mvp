@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: a large dark blurred blob left of centre, view unclear, no shapes identifiable | rule: R3 | action: move forward 1 m to get a clearer view instead of guessing what the blur is", "move": {"forward": 1.0024470015683151, "left": -9.511411140988857e-05, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

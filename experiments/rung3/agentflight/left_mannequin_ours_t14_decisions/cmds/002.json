@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: forward camera shows one yellow post filling the center of frame, close and large, only a hint of a second post far right | rule: R5 | action: back up 1 m along heading to get both posts in view", "move": {"forward": -1.0028451908364766, "left": -0.0012341864327855834, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

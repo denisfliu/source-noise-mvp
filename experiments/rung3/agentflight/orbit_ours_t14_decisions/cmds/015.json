@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: no post visible, just office wall/windows since heading still lags the radial bearing | rule: R3 | action: chord 6 toward bearing 170deg on the circle, staying south of the left gate's estimated position for clearance", "move": {"forward": 0.6743986832191534, "left": -0.5661151968215232, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.3}}

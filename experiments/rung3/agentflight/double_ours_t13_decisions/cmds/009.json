@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: downward shows a small black-and-white penguin shape on a table behind and slightly left of the drone; forward shows only shelving, no penguin | rule: R3 | action: turn left 45deg in place to bring the penguin's table into forward view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

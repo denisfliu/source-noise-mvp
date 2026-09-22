@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: pose x2.10 y-1.55 still at the loop's starting point | rule: R2 | action: hold, all zeros, final decision", "move": {"forward": -0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

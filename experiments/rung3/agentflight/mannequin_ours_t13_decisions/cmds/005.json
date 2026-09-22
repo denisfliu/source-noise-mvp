@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: forward panel shows one yellow post filling the centre, close, with a teal edge at left; downward shows a black-framed obstacle near the post | rule: R5 | action: back up 1.5 m along heading until both posts show", "move": {"forward": -1.5008309865154497, "left": -0.00251990378032986, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

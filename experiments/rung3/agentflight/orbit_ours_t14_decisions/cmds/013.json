@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: post visible left-of-centre with teal crossbar, consistent with being past the gate on its +y side at bearing ~80deg | rule: R2 | action: chord 5 toward bearing 125deg on the circle, turning to keep tracking the gate", "move": {"forward": 1.1318385140754712, "left": 0.425959596740617, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.3}}

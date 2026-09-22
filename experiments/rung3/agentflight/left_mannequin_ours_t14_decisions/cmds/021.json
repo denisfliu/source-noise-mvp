@@ -1,0 +1,1 @@
+{"k": 21, "verdict": "override", "why": "seen: a white pillar blocks the center view, a glass-walled workbench room to the left, no mannequin visible yet | rule: R3 | action: pure turn -45 degrees right to look past the pillar for the mannequin bay", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

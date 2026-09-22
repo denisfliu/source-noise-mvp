@@ -1,0 +1,9 @@
+**Flight report — orbit_ours_t15**
+
+- **Gate midpoint estimate:** ~(x 2.8, y −0.4) in room coordinates — the centre gate, roughly along the starting heading and slightly to the −y side, matching the briefing's guidance. Precise visual triangulation of both posts was difficult (see below), so this is a best estimate refined from one clean two-post sighting plus the briefed approximate location.
+- **Radius flown:** ~1.0 m for most of the loop, dipping to ~0.75 m on one leg (k15, corrected outward the next leg) and widening to ~1.1–1.3 m on the far side.
+- **Direction:** clockwise, viewed from above (bearing from the gate midpoint decreased by ~45° per chord: ≈209°→165°→144°→82°→29°→−13°→−55°→−114°→closing).
+- **Decision the loop closed at:** k=19 (the last decision) — the final commanded chord returned the drone to (x 2.18, y −0.75), the same point the orbit began at (k=12), after 8 chords of ~45° each.
+- **Did I complete a full circle without touching the gate?** Likely yes geometrically (the tracked bearing swept a full 360° and the position closed), but I can't certify it as clean: the first 12 of 20 decisions were spent just locating the gate (repeated single-post sightings with no visible partner post forced multiple back-up/strafe/turn cycles before I got a real two-post read at k=14), which left only the minimum 8 decisions for the orbit itself — no slack for verification or correction. One leg (k15) came in close enough (~0.75 m, teal crossbar directly overhead in the downward view) that I can't rule out a graze, and I have no final image confirming exact closure since the last call wasn't followed by another decision.
+
+**Caveat for the record:** treat this as an unconfirmed partial success — the gate identification phase ate most of the budget, so the orbit itself is a single best-effort pass with no margin for re-verification.

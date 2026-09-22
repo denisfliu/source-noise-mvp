@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: both posts of the gate in view, gap centred on the tick, floor clear ahead in the downward view | rule: R6 | action: fly straight through the gate, 2m along heading, no yaw, sigma 0.5, budget is tight so commit now", "move": {"forward": 2.0025981740554433, "left": -0.000743821083086238, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

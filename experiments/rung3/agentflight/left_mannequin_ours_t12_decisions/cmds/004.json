@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: only a single thin, distant post near centre now, not two posts as expected, after two sideways corrections | rule: R4 | action: back up 1 m along heading to regain a clear view of both posts", "move": {"forward": -1.0002398919369242, "left": 0.00039821854552604674, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

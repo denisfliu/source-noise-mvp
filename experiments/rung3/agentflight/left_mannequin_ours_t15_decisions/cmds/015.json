@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: forward shows a person with plaid shirt, jeans and visible face standing on a wood platform, downward shows floor clutter | rule: R3 | action: this is a person not the mannequin, turn left to scan the room for the actual target instead of approaching", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.4}}

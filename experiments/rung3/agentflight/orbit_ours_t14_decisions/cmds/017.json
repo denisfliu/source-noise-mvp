@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: office window ahead, no gate post, stuffed toy tub below near the loop's start area | rule: R3 | action: small final adjustment to precisely return to the loop's starting point before holding", "move": {"forward": 0.1986190375467146, "left": 0.32946999548368106, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

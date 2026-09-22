@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: both yellow posts of the gate back in view, gap near the centre tick, roughly equal post sizes | rule: R6 | action: move 1m straight along heading toward the gate, no yaw, sigma 0.5", "move": {"forward": 1.0042392222824381, "left": -0.0018932589795830068, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

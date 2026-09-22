@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: only one yellow post close on the left, a white pillar (not yellow, not a gate part) center, a workbench room beyond, no second post | rule: R5 | action: back up 1 m along heading to regain both posts of this gate", "move": {"forward": -0.9982484227434153, "left": 0.0002940923045441357, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

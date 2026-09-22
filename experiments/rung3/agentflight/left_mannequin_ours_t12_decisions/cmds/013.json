@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: no posts visible anymore, open room with a window and chair beyond, matching the just-crossed signature | rule: R7 | action: fly straight 1 m along +x with no yaw to clear the gate area before turning to search", "move": {"forward": 0.6002361482517589, "left": -0.7998228343401385, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

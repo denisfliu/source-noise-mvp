@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: open room, furniture and the mannequin ahead, no posts close by - clear stretch of the orbit | rule: R2 | action: fly the second orbit chord, curving further round the gate's east side", "move": {"forward": 0.9756068698752498, "left": 0.8656738620590421, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

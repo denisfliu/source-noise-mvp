@@ -1,0 +1,11 @@
+## Flight Report
+
+**Left gate crossing:** The crossing happened during the approved move at decision k=8 (confirmed at k=9, x≈0.93→1.87, y≈0.53→0.62), where the downward camera showed the crossbar passing overhead and the forward camera opened into the room beyond with no posts in frame. Approach was messy — repeated "one post fills the frame" states (k=2, k=4, k=7) required backing up per R5 before re-lining up — but the final crossing frame at k=6/k=8 showed both posts symmetric with the gap on the centre tick, so I assess it as through the middle, not a clip. Right after crossing (k=9), the policy's proposal drifted -y toward the post per the known failure pattern, so I overrode with a straight +x move to clear it (R7).
+
+**First mannequin candidate:** A standing figure first appeared at k=9-11, initially looking plausibly grey/still from a distance. By k=15, at close range, it resolved into a person: plaid shirt, blue jeans, visible face/hair, standing on a wood platform — inconsistent with the "grey shop mannequin, bare feet" description. I judged it a person (likely the safety pilot) per R3/the objective's rule that a person is never the target, and turned away rather than hovering on it.
+
+**Search outcome:** Decisions k=15–23 scanned left (through a dead-end doorway/closet, k=16-20) and right (back toward the person, k=21-23) from that bay. No second yellow/teal gate and no distinct bare-foot grey mannequin were found in the remaining budget — the same clothed person reappeared at the final decision (k=23).
+
+**Final pose:** x≈5.75, y≈-0.17, z≈1.58, heading≈-36°, held with all zeros.
+
+**Assessment:** I do **not** believe I ended in front of the mannequin. I have high confidence the left gate was crossed cleanly through the middle, but I ran out of decisions before locating the actual mannequin — the only humanoid figure found was judged to be a person and correctly not approached as the target, per the flight rules.

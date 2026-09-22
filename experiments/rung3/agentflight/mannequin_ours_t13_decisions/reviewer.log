@@ -1,0 +1,14 @@
+## Flight report
+
+**Sweep (k=0–4):** Turned in place from the start heading (-180°) through -135°, -90°, -47°, to -3°, each step scanning plain walls, a windowed office bay and a standing figure (likely the safety pilot) with no gate visible — until -3°, where a gate (yellow posts + teal crossbar) finally appeared.
+
+**Commit (k=4–9):** Flew toward the gate at heading -3°. This gate proved very hard to line up on: repeated straight-line approaches ended with a single post filling the frame (R5 cases at k=5, k=6, k=10, k=12) rather than a clean centred pair. Backing up and re-squaring (k=7, k=8) did produce a clean "both posts, gap near tick" view at k=9, and I flew the R6 straight-through move — but the drone again ended beside a single post at k=10, suggesting the two "posts" seen were not a simple frontal pair (possibly overlapping posts or a stray pillar confusing the geometry). A diagnostic lateral offset (k=10) and a sigma-0.5 push with rightward bias (k=11) got the drone past x≈2.2, into a visually different room (bench, shelving, a door) — plausibly through or alongside the gate, though I never got the calibration "crossbar overhead, posts gone" confirmation cleanly.
+
+**Search (k=12–13):** With the drone in this new bay, two scan turns (heading -16° → -53° → -98°) showed shelving, a window structure, and furniture, but **no mannequin was ever sighted** — no grey figure with bare feet and dark clothing appeared in either forward view.
+
+**Outcome:**
+- Openings seen: one gate, first sighted at heading -3°, committed to.
+- First mannequin sighting: never occurred.
+- Estimated mannequin position: unknown — not located within the 14-decision budget.
+- Final pose: x≈2.15, y≈-0.25, z≈1.59, heading≈-98° (post-turn, unconfirmed by a subsequent view).
+- I do **not** believe I ended in front of the mannequin; the flight ran out of decisions during gate-crossing difficulty and initial exploration of the far bay before any sighting.

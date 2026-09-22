@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward shows a table and chair ahead with the left gate's far post at the right edge, no second gate visible yet; downward shows mats | rule: R7 | action: turn right (-yaw) in place to scan for the center gate before approaching the table", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.3}}

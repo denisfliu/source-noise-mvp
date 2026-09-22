@@ -1,0 +1,13 @@
+## Flight report
+
+**Sweep (k0–4):** Turned 45° left four times from the start (heading −180° → −137° → −94° → −49° → −8°). Saw a dead-end wall with a door, a pillar with dark windows, and an office-desk area behind glass partitions — no clear two-post gate anywhere in the sweep. At heading −8° a single yellow post appeared near the L mark; backing up 1.5 m (R5) and turning didn't reveal a matching second post or crossbar, so I treated it as a support pole rather than a gate and pushed on through that bay instead of committing to a gate crossing.
+
+**Commit/search (k5–9):** No genuine gate was ever confirmed; I worked forward through the office-cubicle bay (desks, glass partition, a cart) since it was the only unexplored direction, ending near x≈1.1, y≈−1.2.
+
+**First sighting of the target (k9):** At decision k=9 (pose x=1.06, y=−1.21, heading −34°) I spotted a standing, still, human-shaped figure near the **L mark**, about a third of the panel height. A second, moving figure also appeared near the L mark shortly after — read as the safety pilot and disregarded per the rule that a person is never the target.
+
+**Approach (k10–13):** Closed in over four moves, re-estimating bearing and distance each time as the figure's apparent position shifted (it was consistently left-of-tick, never dead centre). Final pose: x=6.11, y=−0.25, z=1.55, heading +7°, with the figure filling most of the forward panel height and sitting just left of the tick — consistent with "about 1 m away, roughly centred."
+
+**Caveat:** In the final frame the figure showed a patterned top and blue-ish trousers, which doesn't cleanly match the briefed "bare feet, dark trousers, dark top" mannequin description — it could be render-noise texture on a dark figure (this sim's textures are heavily degraded everywhere) or it could be the safety pilot rather than the mannequin. I had no decisions left to verify further or search for an alternative candidate.
+
+**Bottom line:** I ended facing and close to a still, upright figure at roughly 1 m standoff, holding with zero commanded movement — the geometry matches "in front of it," but I'm not fully confident this figure is the mannequin rather than the safety pilot, and I was unable to confirm a gate crossing anywhere in the room during this flight.

@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: forward panel shows a plain wall with a door and window, downward panel shows floor tiles, no gate visible | rule: R0 sweep phase | action: turn 45 deg left in place to continue scanning for a gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

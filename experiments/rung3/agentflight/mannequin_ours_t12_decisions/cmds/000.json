@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: plain empty room ahead, no gate, downward shows floor tiles and struts | rule: R3 | action: turn 45 deg to sweep since interesting side is behind me at start", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

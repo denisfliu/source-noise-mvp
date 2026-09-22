@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: centre gate's two posts and crossbar now in view ahead, gap close to the centre tick within dead-band | rule: R6 | action: fly straight along heading through the centre gate, no yaw", "move": {"forward": 2.002991933930036, "left": -0.011104621164853001, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: forward shows a dark rectangular doorway centred in the far wall, no yellow/teal gate visible, downward shows floor | rule: R3 | action: advance toward the doorway to see what lies beyond it", "move": {"forward": -0.015203087486108456, "left": -0.9998844263868149, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

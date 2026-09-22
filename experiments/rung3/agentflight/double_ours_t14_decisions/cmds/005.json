@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: only one yellow post fills the centre of the forward frame close-up, no second post visible on either side | rule: R5 | action: back up ~1m along heading to get both posts in view again", "move": {"forward": -0.9998287539430767, "left": 0.006516347798758537, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

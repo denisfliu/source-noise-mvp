@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: the same narrow dark passage ahead has caused two close calls with its walls, no mannequin seen in it | rule: R4 | action: turn 45 degrees right to scan for a wider opening instead of repeating the same tight approach", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

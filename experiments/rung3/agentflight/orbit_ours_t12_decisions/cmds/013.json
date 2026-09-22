@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: no gate posts in frame, just a wall with an easel and a cart, floor clear below | rule: R0 | action: continue loop chord 3 of 8 toward circle point (4.24,-0.25), turning further to bring the gate back into view", "move": {"forward": 1.047894975149213, "left": -0.09173941931923163, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.3}}

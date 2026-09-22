@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: forward camera shows both left-gate posts fairly symmetric in size but the gap sits left of the centre tick; downward shows mats | rule: R4 | action: yaw left to bring the gap onto the centre tick before advancing straight", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 14.0, "sigma": 0.3}}

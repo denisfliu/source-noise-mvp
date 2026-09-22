@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: pose x2.11 y-1.54 matches the loop's starting point x2.09 y-1.54 almost exactly | rule: R2 | action: hold in place, all zeros, the loop is closed", "move": {"forward": -0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

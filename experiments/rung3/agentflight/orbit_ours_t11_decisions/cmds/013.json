@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: now clear of the post, roughly on the 1.5 m circle south of the center gate | rule: R2 | action: fly the first orbit chord (~1.3 m) counter-clockwise around the gate midpoint, sigma 0.3 to bend around any post seen", "move": {"forward": 1.2606435465253873, "left": -0.3230756081846688, "up": 0.0, "yaw_deg": -14.0, "sigma": 0.3}}

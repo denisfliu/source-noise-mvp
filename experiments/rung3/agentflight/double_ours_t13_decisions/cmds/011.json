@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: downward shows the penguin roughly centered in its dark stand; forward shows yellow posts close by on the left, so no forward move | rule: R2 | action: descend 0.4m toward hover altitude without lateral or forward motion", "move": {"forward": 0.0, "left": 0.0, "up": -0.4, "yaw_deg": 0.0, "sigma": 0.4}}

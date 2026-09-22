@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: only blurred dark shapes, no recognizable mannequin or clear wall, view unclear | rule: R3 | action: turn another 30 degrees left to get a clearer look at more of the room", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.0}}

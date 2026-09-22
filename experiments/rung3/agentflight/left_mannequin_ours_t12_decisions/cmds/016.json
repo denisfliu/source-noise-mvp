@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: a grey human-shaped standing figure near a table, slightly right of the centre tick, about half panel height (~2 m away) | rule: R2 | action: turn right toward the figure and move toward it", "move": {"forward": 1.2583571590271558, "left": -0.34269120257909363, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

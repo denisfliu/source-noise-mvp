@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: a bright wall panel edge left-of-centre with a dark open area beyond it toward the R mark, no mannequin yet | rule: R3 | action: turn slightly right toward the open dark area and advance into it", "move": {"forward": 1.4777408050100336, "left": -0.26623694936709713, "up": 0.0, "yaw_deg": -10.0, "sigma": 0.0}}

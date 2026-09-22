@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: mannequin full height visible, roughly centered on the tick, about 55-60% panel height (~1.7 m away), table edge below in the downward view | rule: R2 | action: move straight forward to close remaining distance toward it", "move": {"forward": 0.6999716501913619, "left": -0.006299914950344452, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

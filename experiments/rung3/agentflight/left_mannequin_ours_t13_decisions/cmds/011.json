@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: a dark narrow passage between walls sits left of the centre tick, no mannequin visible yet | rule: R3 | action: turn left to centre the passage opening before approaching, no forward move yet", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 18.0, "sigma": 0.0}}

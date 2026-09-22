@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: bare wall and a bench ahead, no gate posts in view - clear stretch on the far side of the orbit | rule: R2 | action: fly the third orbit chord, curving round toward the gate's north side", "move": {"forward": 0.6902580371104486, "left": 1.1106952067081368, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

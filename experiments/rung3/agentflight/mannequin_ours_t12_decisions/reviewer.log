@@ -1,0 +1,11 @@
+**Flight report**
+
+- **Sweep (k0–k3):** turned in place from start heading −180° through −137°, −94°, −49° — walls, an office alcove and shelving, no gate seen in any of these.
+- **First gate seen:** k4, heading −8° (facing roughly +x, the "behind you" side at start). No other opening was found during the sweep, so this was the only gate available to commit to.
+- **Commit/crossing:** took far longer than budgeted — repeated back-up/re-align cycles (k4–k11) because moving forward from a seemingly-centred gap twice put me on top of the near (left) post instead of through the gap, suggesting a lateral drift I corrected for with extra yaw at k10. Crossed at k11–k12 (teal crossbar overhead in the downward camera at k12).
+- **Mannequin candidate first seen:** k13 (the final decision, `obs/013_view.jpg`) — a grey figure in dark clothing beside a shelf/cabinet, **nearer the L mark**, about 20° left of centre, roughly half the panel height (≈2–2.5 m away).
+- **Estimated room position of the figure:** from pose x≈2.40, y≈−0.37, heading −6° at time of sighting, bearing ≈+14° and distance ≈2.5 m → roughly **x≈4.8, y≈0.2**.
+- **Final commanded pose:** turned +20° and moved 1.46/0.36 m (room frame) toward that bearing, ending at approximately **x≈3.86, y≈−0.01, z≈1.55, heading≈+14°** — this was the last of 14 decisions, so no hold could follow.
+- **Did I end in front of it?** No — I only closed part of the estimated distance and never got a confirming closer look or held position; the sighting came on the very last decision, so this is a directed approach, not a verified hover-in-front.
+
+Root cause worth flagging: too much of the 14-decision budget (8 of 14) went into re-aligning on the first gate; a tighter turn-then-straight discipline earlier would have left room to actually close on and hold at the figure.

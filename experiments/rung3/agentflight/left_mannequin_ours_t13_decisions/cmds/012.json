@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: a dark narrow passage now centred on both ticks, walls either side, no mannequin visible yet | rule: R3 | action: advance into the centred passage, sigma 0.5 to let it bend around the walls", "move": {"forward": 1.4977272691119754, "left": 0.0036093432067515474, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

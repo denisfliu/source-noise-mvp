@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: gate posts and teal crossbar now roughly centred on the tick, both posts similar size, near the L mark side | rule: R6 | action: move straight along heading toward the gate, sigma 0.5, no yaw", "move": {"forward": 1.5260379116570661, "left": -0.014432331251058583, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

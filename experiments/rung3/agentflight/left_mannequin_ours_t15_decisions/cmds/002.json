@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: forward shows one thick yellow post filling centre-left with only a small sliver of the second post far right, downward shows struts | rule: R5 | action: back up along heading to bring both posts into view", "move": {"forward": -0.8006143631613667, "left": -0.004079399431210454, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.4}}

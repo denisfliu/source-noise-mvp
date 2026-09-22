@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: forward camera shows a wall and furniture, no gate visible; downward shows floor only | rule: R3 | action: turn right and advance toward +x/-y to search for the centre gate, which lies ahead-right and deeper in the room", "move": {"forward": 0.5473297485030566, "left": -1.3040054242232204, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

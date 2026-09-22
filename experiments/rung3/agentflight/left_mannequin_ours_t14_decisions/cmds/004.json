@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward camera again shows one yellow post filling the center of frame, close, only a corner of crossbar visible | rule: R5 | action: back up 1 m along heading to regain both posts before lining up manually", "move": {"forward": -1.1985200754105525, "left": 0.007044773799304571, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

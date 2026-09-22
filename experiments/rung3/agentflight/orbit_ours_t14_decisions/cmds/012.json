@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: no gate visible, just wall/shutter and floor mats since heading still lags the radial bearing | rule: R3 | action: continue chord 4 toward bearing 80deg on the circle, keep turning to bring the gate back into view", "move": {"forward": 1.239017232799493, "left": -0.011674623158233977, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.3}}

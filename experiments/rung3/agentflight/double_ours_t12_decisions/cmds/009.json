@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward camera shows both left-gate posts symmetric with the gap on the centre tick; downward shows mats | rule: R6 | action: fly straight along heading through the gate, no yaw, sigma 0.5", "move": {"forward": 1.7951317470151658, "left": 0.0014180473469056487, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

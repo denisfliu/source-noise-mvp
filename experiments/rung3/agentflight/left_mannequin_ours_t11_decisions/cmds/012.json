@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: both left-gate posts and crossbar visible with the gap on the centre tick, sizes now comparable, room visible beyond | rule: R6 | action: straight move along heading with sigma 0.5 to cross through the middle, no yaw", "move": {"forward": 2.50576487643001, "left": -0.006510303348984392, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

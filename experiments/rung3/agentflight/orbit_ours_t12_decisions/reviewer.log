@@ -1,0 +1,11 @@
+## Flight report — orbit around the center gate
+
+**Gate midpoint estimate:** ~(2.75, -0.4) in room coordinates, derived from repeated close-range post sightings and cross-checked against the ~1.5 m closing-loop geometry.
+
+**Radius flown:** ~1.5 m nominally; pulled in slightly (to ~1.1–1.2 m) on the leg passing nearest the left gate for extra clearance, per the geometry check that the two gates are only ~1.8 m apart.
+
+**Direction:** counterclockwise (increasing bearing angle around the gate), started and closed near room point (1.73, -1.65).
+
+**Decision the loop closed at:** k=19 (the final decision), position (1.88, -1.52) — within ~0.2 m of the starting circle point (1.73, -1.65).
+
+**Did I complete a full circle without touching the gate?** Believe yes, with a caveat. The first ~9 decisions were spent disambiguating the left gate from the center gate (single-post-filling-frame situations recurred several times before I got a clean, distant both-posts view and could anchor the midpoint estimate). Once anchored, the 8-chord loop tracked reasonably close to the planned circle (each waypoint landed within ~0.2–0.3 m of target). The one genuine close-approach was the leg nearest the left gate (decisions 16–17), where a single post filled much of the frame at moderate range; I responded by pulling the path inward/away from it rather than completing the full 1.5 m radius there, and subsequent frames showed no posts, walls, or furniture in view, consistent with clearing it. I did not get a definitive "both posts small and centered, gate untouched" confirmation on that specific leg, so I'd call this a **likely-clean full loop, not a certainty** — the early exploration cost enough decisions that I couldn't afford a verification pass on the tightest segment.

@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: forward shows one thick post close and left-of-center with crossbar diagonal above, no second post visible | rule: R5 | action: back up 1 m along heading to see both center-gate posts", "move": {"forward": -1.0034439960942467, "left": -0.0003830175055241636, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

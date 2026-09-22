@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: forward shows both posts, near/larger post left of centre near L side, far post nearer the tick, downward shows struts | rule: R4 | action: strafe right to centre the gap between posts before advancing", "move": {"forward": -0.00570697361898765, "left": -0.40443470480673666, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

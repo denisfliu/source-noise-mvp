@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: near yellow post large and left-of-centre, a smaller post near the R mark, unequal sizes | rule: R5 | action: back up 1 m along heading to get both posts equal size before lining up", "move": {"forward": -1.0028451908364766, "left": -0.0012341864327855834, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

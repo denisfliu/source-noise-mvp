@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: both left-gate posts and the crossbar in view, gap within the deadband of the centre tick, room visible beyond | rule: R6 | action: straight move along heading with sigma 0.5 to cross through the middle, no yaw", "move": {"forward": 1.8046850711330011, "left": 0.0034342436831187595, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

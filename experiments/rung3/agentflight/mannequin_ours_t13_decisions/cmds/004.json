@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: forward panel shows a gate ahead, yellow post left with teal crossbar and a second teal-lit post right of centre tick, gap roughly centred | rule: R6 | action: move straight along heading 1.8 m toward the gate", "move": {"forward": 1.802226440789506, "left": -0.008936225108517382, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

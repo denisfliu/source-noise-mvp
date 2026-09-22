@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: both gate posts large and roughly equal size, crossbar overhead, gap within the dead-band of the centre tick | rule: R6 | action: fly straight through the gate along heading, sigma 0.5, no yaw", "move": {"forward": 1.9905981959251204, "left": 0.004338476651566614, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

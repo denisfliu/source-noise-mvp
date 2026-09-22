@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: both left-gate posts and crossbar visible, gap roughly on the centre tick though the near post is still bigger than the far one | rule: R6 | action: move straight along heading to close distance before crossing, no yaw", "move": {"forward": 0.7990613221519843, "left": -0.0010017188841444924, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** crossed between decisions k=2 and k=3 (filmstrip showed the posts split to the frame edges and vanish, crossbar overhead in the downward camera). The policy flew this crossing itself (k=0–2 approved); the gap tracked centered throughout, so the crossing was through the middle. Took over at k=3 with a straight +x move to clear the far post before the policy could turn into it, per the briefed risk.
+
+**Center gate:** located by turning in place (k=4–5) after clearing the left gate, then lined up (both posts + crossbar visible, gap centered) and flown through with a straight 1.5 m move at k=6. Crossed between k=6 and k=7 (same clear filmstrip signature: posts to edges, then gone; teal crossbar under the drone). Line-up looked good going in, so this crossing was also through the middle, though the sim let the move bend somewhat during the sigma-0.5 pass (actual displacement diverged a bit from the commanded straight line).
+
+**Penguin:** first spotted in the downward camera at k=9, sitting on a table just behind/left of the drone right after the center gate — consistent with the objective's note that it's in the gate area. Centered it with a turn (k=9) and a series of small lateral/backward/descent corrections (k=10–13), descending from z≈1.56 m to z≈1.0 m while tracking it in the downward view, avoiding a big backward move that would have re-crossed the gate line.
+
+**Final pose:** roughly x≈1.85, y≈-0.38, z≈1.0 m, heading ≈+8°, with the penguin centered-to-slightly-off in the downward camera at the last frame.
+
+**Assessment:** I believe the task was completed successfully — both gates crossed in order through their middles, and the flight ended hovering close to the penguin at the target altitude. The final centering wasn't perfectly dead-on (slight residual offset), but well within a reasonable hover-over tolerance.

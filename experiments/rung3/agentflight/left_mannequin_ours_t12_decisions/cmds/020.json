@@ -1,0 +1,1 @@
+{"k": 20, "verdict": "override", "why": "seen: mannequin very close now, about 80% of panel height, roughly centered on the tick, table edge visible in the downward view | rule: R2 | action: small forward nudge to close final distance, avoiding the table", "move": {"forward": 0.19984791927769763, "left": -0.007798022850368219, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

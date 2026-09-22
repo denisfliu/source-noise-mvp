@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: both posts in view, gap still a little left of the centre tick, previous sigma 0.5 turn only rotated 1 degree instead of the commanded 6 | rule: R4 | action: pure turn +6 degrees at sigma 0 for an exact turn", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 6.0, "sigma": 0.0}}

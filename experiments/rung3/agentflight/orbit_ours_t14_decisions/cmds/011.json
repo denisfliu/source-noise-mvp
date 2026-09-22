@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: near post large again at left edge, closer than comfortable | rule: R2 | action: chord 3 toward bearing 35deg, stepping the radius out slightly to 1.7m for clearance, turning to keep facing the gate", "move": {"forward": 1.2344322084792907, "left": -0.4497522903431853, "up": 0.0, "yaw_deg": 40.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: near post large and just left of centre, far post small and pushed toward the R mark - the gap's true middle is right of the tick | rule: R4 | action: turn right only, no translation, to bring the gap onto the centre tick before advancing further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.0}}

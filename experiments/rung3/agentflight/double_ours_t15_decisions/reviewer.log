@@ -1,0 +1,9 @@
+## Flight report
+
+- **Left gate**: crossed during the k=8 override (straight 2 m move along heading +7°, after two back-up corrections at k=3/k=4 and one lateral strafe at k=7 to fix a persistent unequal-post-size approach angle). The k=9 filmstrip confirmed a clean transit — posts split to the frame edges and the crossbar passed overhead. Crossing was through the middle, gap within the 10° dead-band.
+- **Center gate**: crossed during the k=12 override (straight 2 m move along heading −29°, after backing up once at k=11 when only one post was visible). The k=13 filmstrip showed the same growing-then-vanishing post pattern, so this transit also read as clean and centered.
+- **Penguin**: never positively identified. After the center gate, the forward camera showed a table/bench and a standing mannequin-like figure repeatedly, and the downward camera showed only floor mats plus one ambiguous pale rounded shape near a table on the final frame — I did not have a decision budget left to confirm or center on it.
+- **Final pose**: roughly x≈2.9, y≈−1.0, z≈1.0 (last commanded descent to ~1.0 m plus a 0.5 m forward step along heading −30°; the flight ended before I could read the resulting frame).
+- **Overall**: I believe both gates were crossed in the correct order and cleanly, but the task is **not finished** — I ran out of decisions before locating and hovering over the penguin, so the final hover requirement is unmet.
+
+The 14-decision budget was consumed mostly by the left-gate line-up (an oscillating back-up/forward/strafe sequence took 6 of the 14 decisions), which left too few decisions to search for and settle on the penguin after the second gate.

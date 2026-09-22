@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: forward panel shows an office bay with desk and monitor through an opening, no gate posts | rule: R3 | action: turn 45 deg left to continue sweep", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

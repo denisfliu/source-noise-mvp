@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: one yellow post fills most of the forward frame close-up with only a sliver near R, matching the beside-the-gate calibration case | rule: R5 | action: back up ~1m along heading to get both posts in view before lining up", "move": {"forward": -1.0027827073361544, "left": -0.011262409492313552, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 22, "verdict": "override", "why": "seen: a glass-walled office booth with desk, chair and monitor, no mannequin, floor and downward camera clear | rule: R3 | action: pure turn -45 degrees more to continue the sweep for the mannequin, only two decisions remain", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

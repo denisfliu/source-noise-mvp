@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward posts now thin at frame edges with table/chair beyond, downward shows the teal crossbar passing underneath | rule: R7 | action: fly straight +x 1.0m no yaw to clear the post before turning toward the table", "move": {"forward": 0.9925672259822949, "left": -0.12169758381254774, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

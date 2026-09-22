@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: still one near yellow post dominating the frame near centre and a much smaller post far to the right, unequal sizes persist | rule: R5 | action: back up further along heading to shrink the size difference before turning", "move": {"forward": -1.4962473143823847, "left": 0.0066313048113714745, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

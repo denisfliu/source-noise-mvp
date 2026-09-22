@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward panel shows office desks and glass walls, a blue shape at bottom-left edge but no yellow/teal gate; downward panel shows floor only | rule: R3 | action: turn 45 deg left in place, last sweep step", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

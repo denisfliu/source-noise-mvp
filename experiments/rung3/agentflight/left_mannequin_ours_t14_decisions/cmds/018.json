@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: both posts of a gate with teal crossbar visible, gap sitting noticeably left of the centre tick, workbench room beyond | rule: R4 | action: pure turn +8 degrees at sigma 0 to centre the gap precisely before closing distance", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.0}}

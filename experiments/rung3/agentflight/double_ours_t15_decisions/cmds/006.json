@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: forward shows only one post close on the right with the crossbar diagonal in the downward view, no second post visible | rule: R5 | action: back up 1.5 m along heading to regain both posts before lining up again", "move": {"forward": -1.500830731799878, "left": 0.002667299203883061, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

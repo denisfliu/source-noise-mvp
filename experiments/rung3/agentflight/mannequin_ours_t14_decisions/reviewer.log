@@ -1,0 +1,11 @@
+The flight has ended. Final report:
+
+**Sweep (k=0–3):** Turned in place from the starting heading (facing −x) through −137°, −94°, −49°, down to −8°, seeing only interior walls, an office partition, and doorways — no gate. First gate appeared at k=4, heading ≈ −8°, so I stopped sweeping there.
+
+**Commit:** Committed to the gate found near heading −8° (roughly the +x direction, "behind" the start as expected). Lining up on it took longer than planned — the approach repeatedly collapsed to "one post filling the frame" (k=6, k=8) even though the gap looked centered at range, which per R4 meant the heading itself was off rather than the distance. Backing up and applying a +12° yaw correction at k=9 fixed it: afterward both posts were symmetric with the gap on the tick, and the crossing completed at k=12 (posts left the forward frame, crossbar passed overhead in the downward camera).
+
+**Mannequin:** First seen at k=12, a dark-clothed still figure near the L mark beside a wooden table, roughly 13° left of heading and an estimated 4–5 m out. Turned toward it and closed 2 m in the same move. By k=13 it was nearly centered (slightly left of the tick) and about half the panel tall (~2–2.5 m out); I moved the final ~1.3 m along heading to end roughly 1 m short of it.
+
+**Final pose:** approximately x=5.15, y=0.42, heading ≈ +6° (from x=3.86,y=0.28 + commanded dx 1.29/dy 0.14), facing the figure.
+
+**Assessment:** I believe I ended close to in front of the mannequin, facing it, though I did not get a final confirming frame after the last move since the flight ended immediately after the 14th decision — the position was based on my last estimate rather than a verified final image.

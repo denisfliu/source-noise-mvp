@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: both gate posts in forward view but the left post is nearer and larger than the right, an angled approach | rule: R4 | action: back up 1 m along heading to square up rather than strafing", "move": {"forward": -1.0028292604641025, "left": 0.005785702811337612, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward view fully blurred and close, filmstrip shows the passage walls closing in, likely right against a wall now | rule: R2 | action: back up 1.5 m along heading to regain clearance from the wall", "move": {"forward": -1.4320555067202185, "left": 0.10058342642949913, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

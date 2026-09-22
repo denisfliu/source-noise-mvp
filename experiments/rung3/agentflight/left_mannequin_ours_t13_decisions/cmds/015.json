@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: a light grey humanoid figure standing by a table/shelf, roughly centred near the bottom tick, about half the panel height | rule: R3 | action: turn slightly and move toward the figure, likely the mannequin", "move": {"forward": 1.4905796641321187, "left": 0.18754270147297109, "up": 0.0, "yaw_deg": 7.0, "sigma": 0.0}}

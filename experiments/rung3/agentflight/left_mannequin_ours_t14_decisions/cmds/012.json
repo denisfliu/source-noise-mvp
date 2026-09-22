@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: both posts equal size and symmetric, gap centered on the tick, downward camera shows clear floor ahead | rule: R6 | action: fly 2 m straight along heading, no yaw, sigma 0.5, to cross the gate", "move": {"forward": 1.9990162137277598, "left": 0.00584613150139518, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

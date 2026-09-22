@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: forward shows one thick yellow post filling centre with only a thin second post right, downward shows struts | rule: R5 | action: back up 1m along heading to regain both-post view before lining up manually", "move": {"forward": -1.002196422693833, "left": -0.0101158459697622, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

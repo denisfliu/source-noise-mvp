@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward panel shows a teal/blue shape at the bottom-left edge near the L mark, possibly a gate post; downward panel shows floor | rule: R3 | action: turn 45 deg left again to bring the possible gate fully into view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

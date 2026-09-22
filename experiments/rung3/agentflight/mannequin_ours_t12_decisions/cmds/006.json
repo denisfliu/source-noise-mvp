@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: gate gap now near the centre tick, a cart/table sits on the floor below and left of the gate | rule: R6 | action: move 1.5m straight along heading toward the gate, no yaw, to close distance before crossing", "move": {"forward": 1.4990639507431205, "left": -0.002696587181530208, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

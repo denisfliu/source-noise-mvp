@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: one thick yellow post fills the left-centre of the forward view, close, a person stands by a table to its right | rule: R5 | action: back up 1.3m along heading to bring both posts of the gate back into view", "move": {"forward": -1.3024953751973727, "left": -0.0024078184016266824, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

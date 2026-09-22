@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: only a blurred wall-like surface, nothing recognizable, this direction looks empty | rule: R3 | action: turn back 45 degrees right toward the furniture/shelf area where a figure was seen, to search near it for the mannequin", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

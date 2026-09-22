@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: forward panel shows both yellow posts and teal crossbar, gap sitting slightly right of the centre tick, similar sizes | rule: R4 | action: turn 8 deg right and move 1.5 m toward the gap to square up closer", "move": {"forward": 1.4788164359816223, "left": -0.24901395276291755, "up": 0.0, "yaw_deg": -8.0, "sigma": 0.5}}

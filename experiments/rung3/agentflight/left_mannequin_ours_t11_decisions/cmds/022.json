@@ -1,0 +1,1 @@
+{"k": 22, "verdict": "override", "why": "seen: mannequin still visible full body, now slightly left of centre but within the deadband, close range | rule: R7 | action: hold position with all zeros rather than approving further drift", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

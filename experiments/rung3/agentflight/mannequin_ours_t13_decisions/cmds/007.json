@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: forward panel shows both yellow posts with teal crossbar now, left post noticeably larger/nearer than the right, gap left of tick | rule: R4 | action: back up 1 m along heading before re-lining up, no strafe", "move": {"forward": -0.999995500003375, "left": 0.002999995500002025, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

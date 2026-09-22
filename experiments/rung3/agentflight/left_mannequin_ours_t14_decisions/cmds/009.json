@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: one yellow post again filling the center-left of frame close up, only a sliver of a second post far right edge | rule: R5 | action: back up 1.5 m along heading to reassess the gap position carefully", "move": {"forward": -1.4977540287686564, "left": 0.0057331760185057035, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

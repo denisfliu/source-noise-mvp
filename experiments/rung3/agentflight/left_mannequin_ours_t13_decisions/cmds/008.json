@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: a dark doorway ahead, left of the centre tick, no mannequin yet, walls otherwise plain | rule: R3 | action: turn toward the doorway and move decisively toward it to search the next room", "move": {"forward": 1.940999601174997, "left": 0.4822038451096211, "up": 0.0, "yaw_deg": 14.0, "sigma": 0.0}}

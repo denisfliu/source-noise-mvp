@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: forward shows both left-gate posts now equal size with gap within 10 degrees of center tick, downward shows mats | rule: R6 | action: fly straight 2 m along heading through the gate, no yaw", "move": {"forward": 1.9944905275599552, "left": -0.002745081713093761, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

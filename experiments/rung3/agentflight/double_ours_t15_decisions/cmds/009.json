@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward shows open room beyond with no posts (gate just crossed), downward shows the crossbar now behind us | rule: R7 | action: fly 1 m straight along +x, no yaw, to clear the post before turning", "move": {"forward": 0.9887710779360422, "left": -0.14943813247359922, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

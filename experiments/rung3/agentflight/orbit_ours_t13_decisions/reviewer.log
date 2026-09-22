@@ -1,0 +1,11 @@
+## Flight report — orbit_ours_t13
+
+**Gate midpoint estimate:** ~x 3.0, y −0.1 (roughly along the starting heading, slightly toward −y, matching the briefed location of the center gate ~3 m ahead).
+
+**Radius flown:** ~1.5 m, held to within ~0.2 m across all 8 chords (position checks each leg tracked the planned circle points closely).
+
+**Direction:** counter-clockwise as seen from above (bearing around the midpoint increased monotonically: −139° → −94° → −49° → −4° → 41° → 86° → 131° → 176° → back to −139°), flown by turning left (+yaw) on every chord.
+
+**Loop closure:** decision k=18 (chord 8) returned the drone to x 1.83, y −1.08 — within 0.2 m of the k=11 starting vantage point (x 1.73, y −1.21). k=19 was held at all-zeros to confirm closure.
+
+**Assessment:** I believe I completed a full circle around the center gate without touching it. Both posts and the crossbar were visible and centered on most chords (k=11, 12, 16, 17), confirming the gate stayed inside the loop the whole way; on a few legs (k=13, 14, 15, 18) only one post was in frame at the edge, consistent with the oblique viewing angle on the far side of the circle rather than with getting close to a post — no leg showed a post filling the frame the way the "close" calibration case does. Decisions k=0–10 were spent locating the correct (center) gate and reaching a valid 1.5 m vantage point, after initially over-correcting past it toward the left gate and back.

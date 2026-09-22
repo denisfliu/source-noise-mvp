@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows a room corner and wall, no gate; downward panel shows floor | rule: R3 | action: continue sweep, turn another 45 deg left", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

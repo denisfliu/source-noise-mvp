@@ -1,0 +1,1 @@
+{"k": 23, "verdict": "override", "why": "seen: glass-walled room continues ahead with monitors, still no mannequin located, this is the final decision | rule: R2 | action: hold in place rather than risk a blind move into unexplored space with no target sighted", "move": {"forward": -0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

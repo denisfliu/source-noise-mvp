@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: both gate posts visible with the gap now roughly on the centre tick, near post still bigger than the far one but crossbar level | rule: R6 | action: move straight along heading to close remaining distance, no yaw", "move": {"forward": 0.8030560050014147, "left": -0.0010260756151065226, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

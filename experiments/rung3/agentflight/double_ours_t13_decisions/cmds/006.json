@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: forward shows both yellow posts and the teal crossbar of the center gate, gap roughly centered between them; downward shows mats | rule: R6 | action: fly straight along heading 1.5m no yaw toward the gap", "move": {"forward": 1.5002062277256685, "left": 0.007434668326111504, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

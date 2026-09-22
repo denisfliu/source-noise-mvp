@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: still a single yellow post centered in the forward view close up, downward shows furniture - still beside the gate | rule: R5 | action: back up further along heading to widen the view until both posts appear", "move": {"forward": -0.9998000066665778, "left": 0.01999866669333308, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

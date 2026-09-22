@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: one yellow post fills forward view near a teal object low, downward shows open floor ahead | rule: R5 | action: back up 1m along heading to bring both posts of this gate into view", "move": {"forward": -0.9998488377129263, "left": -0.0015171434046050425, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: mannequin figure clearly visible near a table, roughly centered just left of the tick, about half to two-thirds panel height | rule: R2 | action: nudge left onto it and close distance, stopping short of the table and boxes", "move": {"forward": 0.7974467131698579, "left": 0.1023657152302001, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.5}}

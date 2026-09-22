@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: both posts symmetric with gap centered on the tick, workbench room visible beyond | rule: R6 | action: fly 2 m straight along heading, no yaw, sigma 0.5, to cross this gate", "move": {"forward": 1.9988054446752035, "left": 0.00876323780131616, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

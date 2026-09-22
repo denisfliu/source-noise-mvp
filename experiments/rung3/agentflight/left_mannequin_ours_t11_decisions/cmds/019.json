@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: the mannequin now fills most of the panel height at close range, slightly right of centre, feet near the bottom edge - hover distance reached | rule: R7 | action: small right-only turn to square up and face it, no further advance", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -5.0, "sigma": 0.0}}
