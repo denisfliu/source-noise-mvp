@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "Mannequin fills most of the frame at roughly 1 m, slightly left of centre; small yaw to square up directly in front of it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 4.0, "sigma": 0.3}}

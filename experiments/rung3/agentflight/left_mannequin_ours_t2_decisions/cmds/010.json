@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "A stand is close on the left and a doorway sits further left of centre; turning left to face the doorway and check clearance before moving", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 20.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "mannequin left-of-center at ~3m; turning left ~14deg and advancing to the stand-off point one metre in front of it", "move": {"forward": 1.9375906409371875, "left": 0.4991417715966271, "up": 0.0, "yaw_deg": 14.0, "sigma": 0.3}}

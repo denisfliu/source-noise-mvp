@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "A single post now fills dead-center, meaning I overshot the gap and am aimed at the right post; backing off and shifting left to find the opening.", "move": {"forward": -0.19993880027809963, "left": 0.4153606579147261, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

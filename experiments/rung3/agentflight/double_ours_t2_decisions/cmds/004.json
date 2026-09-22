@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "Right gate post is close and off-center, filling more of the frame; policy proposal drifts further -y toward it, so I shift +y to re-center between the two posts before proceeding", "move": {"forward": 0.03285157066769789, "left": 0.34845483825693285, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

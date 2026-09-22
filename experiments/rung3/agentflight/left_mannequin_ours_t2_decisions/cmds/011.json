@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "Doorway now roughly centred ahead; moving toward it with a slight left correction, sigma up to steer past the stand", "move": {"forward": 1.4979446133617436, "left": 0.13986398857653504, "up": 0.0, "yaw_deg": 5.0, "sigma": 0.5}}

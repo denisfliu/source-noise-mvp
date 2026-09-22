@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "Only one post visible and the downward camera shows the crossbar's teal color close underneath -- likely tight to the gate on this far side; stepping outward and continuing the loop toward the next 45deg waypoint.", "move": {"forward": 1.1513182540404872, "left": -0.7021155730456095, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

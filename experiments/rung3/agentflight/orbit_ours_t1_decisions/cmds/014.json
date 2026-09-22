@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "One post, moderate distance; heading toward the loop-closing waypoint near the original start point (~x0.16,y-0.11), turning left toward the 45deg max.", "move": {"forward": 1.4912900482319977, "left": 0.3585442679003612, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

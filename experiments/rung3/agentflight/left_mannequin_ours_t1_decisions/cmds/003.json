@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Both posts visible but sit left of the center tick, so yaw left and strafe toward +y to square up on the opening before advancing.", "move": {"forward": 0.36909798661698157, "left": 0.45140522402303945, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

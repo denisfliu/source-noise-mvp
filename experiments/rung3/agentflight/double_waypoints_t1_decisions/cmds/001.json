@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "One post fills the frame near center-left, meaning I am beside the gate; backing away and shifting -y to reveal both posts.", "move": {"forward": -0.6, "left": -0.2, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

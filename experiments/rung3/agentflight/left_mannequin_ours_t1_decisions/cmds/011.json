@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "Mannequin now fills about two-thirds of frame height (roughly 1.3 m away) and is nearly centered, so a small precise nudge to finish centering before stopping.", "move": {"forward": 0.30351256884927136, "left": 0.019496680499928434, "up": 0.0, "yaw_deg": 3.0, "sigma": 0.2}}

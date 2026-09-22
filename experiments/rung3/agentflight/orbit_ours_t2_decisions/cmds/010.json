@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "Now well clear of the left gate's +y region yet still see a single post left-of-center, likely the center gate's near post; turning left slightly to center it before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 10.0, "sigma": 0.0}}

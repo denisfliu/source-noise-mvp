@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "Last decision: a post and crossbar are visible right-of-center; turning slightly left and pushing forward toward the likely gap, this is the final commit of the flight.", "move": {"forward": 1.2769982761307876, "left": 0.38636175115945004, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.5}}

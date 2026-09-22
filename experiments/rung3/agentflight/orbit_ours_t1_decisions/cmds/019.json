@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "Final decision; loop already closed at the start point, holding in place.", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

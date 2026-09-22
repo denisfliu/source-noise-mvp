@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "Backing in x alone keeps reproducing a single centered post, suggesting I am beside the left gate's x-line rather than facing a gate; moving to a clear side vantage further -y and slightly back in x to re-survey both gates fresh", "move": {"forward": -0.4585675754294425, "left": -0.8244487726746657, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

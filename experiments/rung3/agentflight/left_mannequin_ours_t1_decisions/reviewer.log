@@ -1,0 +1,11 @@
+## Flight Report
+
+**Left gate:** Crossed cleanly at decision k=6 (the straight sigma-0.5 move from x=0.94,y=0.57). Both posts had been lined up roughly symmetric about center at k=5 before the crossing, and by k=7 the posts had fully left the forward camera with the room beyond visible — consistent with a middle-of-opening transit, not a graze.
+
+**Mannequin:** First seen (as a confirmable standing silhouette) at decision k=8, near the frame center, slightly left of the center tick, at roughly a quarter of frame height (~4.5 m out). From there I turned/advanced across k=8–k=11, closing distance while re-centering each step (half-height ~2 m at k=10, two-thirds height ~1.3 m at k=11).
+
+**Estimated mannequin room position:** roughly x≈6.2, y≈0.4 (final pose plus ~1 m along heading +10°).
+
+**Final pose:** x=5.23, y=0.38, z=1.57, heading +10° (≈0.17 rad), held with all-zero commands from k=12 through k=23.
+
+**Assessment:** Yes — I believe the drone ended in front of the mannequin, roughly 1 m out and facing it, based on the figure filling most of the forward panel's height and sitting centered from k=12 onward with a stable hold for the remaining eleven decisions.

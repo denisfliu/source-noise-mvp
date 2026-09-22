@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "Triangulating from both posts visible left-of-center: gate midpoint estimate (3.0,-0.3); flying to standoff point (3.0,-1.8), 1.5m to its -y side, at sigma 0 for precise placement", "move": {"forward": 1.1998690803118341, "left": -1.226830954170799, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

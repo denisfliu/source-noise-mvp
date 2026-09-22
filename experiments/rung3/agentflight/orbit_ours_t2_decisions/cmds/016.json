@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "Only ~0.6m from the estimated gate midpoint here, tighter than the safe 0.5m post clearance; correcting outward to r~1.4m at sigma 0 while also advancing the arc, since only 3 decisions remain to close the loop", "move": {"forward": 0.9838693282827122, "left": 1.0097530118125544, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

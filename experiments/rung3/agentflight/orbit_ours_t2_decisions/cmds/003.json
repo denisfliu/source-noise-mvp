@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Only one post and a crossbar edge visible, no second post in frame: too close to line up; backing away at sigma 0 to bring the whole gate into view before turning", "move": {"forward": -0.7995644395292651, "left": -0.02639520866089586, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

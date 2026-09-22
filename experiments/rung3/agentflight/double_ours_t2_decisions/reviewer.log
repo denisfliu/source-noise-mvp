@@ -1,0 +1,11 @@
+## Flight report
+
+**Gate 1 (left): crossed, decision k11.** The override at k11 (forward 1.30 m, left −0.35 m, σ 0.5) carried the drone through — confirmed by the filmstrip at k12, which showed the two posts splitting to the frame edges and then vanishing, the exact transit signature from calibration. Centering was imperfect on the approach (several oscillations between "near post on right" and "near post on left" across k4–k10 cost most of the budget), so I can't certify a dead-center crossing, but it was through the opening rather than beside a post.
+
+**Center gate: not crossed.** After the left-gate transit I pushed forward twice (k12, k13) to locate it. By the final decision (k13) a single thick post filled the right side of the frame with no second post in view — the "beside the gate, close" signature — meaning I was off to the side of the center gate, not lined up on it. With no decisions left, I used the last move to back off and strafe away from that post for safety rather than attempt a blind crossing.
+
+**Penguin: not located** — never reached, since the center gate wasn't cleared.
+
+**Final pose:** roughly x 2.36, y 0.19, z 1.52 (start 2.87, −0.12, 1.52 plus the last override's forward −0.51/left +0.28).
+
+**Verdict: did not finish.** Left gate crossed (not verifiably centered); center gate and penguin hover not achieved — the flight ran out of decisions while still lining up on gate 2, in part because repeated re-centering on gate 1 consumed most of the 14-decision budget.

@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Left post again bigger and near the frame edge, right post smaller and more central; shifting right again to balance the two posts before advancing further.", "move": {"forward": 0.14422045529600766, "left": -0.47085078344865505, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.35}}

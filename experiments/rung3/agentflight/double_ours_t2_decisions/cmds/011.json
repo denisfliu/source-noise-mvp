@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "Left post still near/thick, correcting -y while pushing forward decisively through the gap given limited decisions remain; sigma 0.5 lets the policy bend around the posts", "move": {"forward": 1.2989441515793867, "left": -0.35389841915118386, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

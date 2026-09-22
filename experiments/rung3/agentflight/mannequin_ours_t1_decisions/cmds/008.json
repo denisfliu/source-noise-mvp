@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "too close beside the left post, it fills the frame edge; backing away and strafing right to bring both posts into view", "move": {"forward": -0.9161209900168414, "left": -0.40090189778867635, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

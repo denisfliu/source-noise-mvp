@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "Only a single thin pole visible, no second post/crossbar; pushing forward along heading with slight right offset to clear the pole and continue into the room", "move": {"forward": 1.6361722982040565, "left": -0.20722019831487476, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.4}}

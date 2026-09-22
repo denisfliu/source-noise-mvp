@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "Still only one post visible even after turning, matching the calibration 'beside the gate, too close' case; backing away toward the centerline (less sideways, less forward) to regain a two-post symmetric fix.", "move": {"forward": -0.005130122070346854, "left": 0.6708007765704683, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.2}}

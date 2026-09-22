@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "Final decision: penguin is visible in the downward camera forward-left of the drone, so nudging forward-left and descending toward it as the best achievable end state.", "move": {"forward": 0.3456938147846141, "left": 0.24595891205577589, "up": -0.3, "yaw_deg": 0.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "Both posts visible but left one still nearer/larger than the right; strafing further right and edging forward to balance them before crossing.", "move": {"forward": 0.18708477268349188, "left": -0.4636801568214518, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

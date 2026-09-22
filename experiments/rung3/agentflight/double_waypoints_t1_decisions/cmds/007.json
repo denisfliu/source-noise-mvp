@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Lateral strafes keep oscillating between which post looks nearer; backing off substantially to get a wide, undistorted view of the whole gate before re-approaching.", "move": {"forward": -1.2007073457226034, "left": -0.0013674530267991925, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

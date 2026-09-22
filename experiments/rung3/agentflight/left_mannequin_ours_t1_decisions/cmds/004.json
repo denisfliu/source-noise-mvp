@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "Left post has drifted near the frame edge while the right post sits central, so yaw right and strafe back toward -y to recenter the opening before advancing.", "move": {"forward": 0.14746763255495413, "left": -0.43675313089734924, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

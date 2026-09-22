@@ -1,0 +1,13 @@
+## Flight report
+
+**Sweep (k=0–3):** Turned left in 45° steps from the start heading (-180°, facing -x, "interesting side" behind me per briefing). Saw only walls/furniture through -137°, -94°, -49°; at -8° a yellow post came into view.
+
+**Commit — finding the gate (k=4–8):** The first post (near -8° heading) turned out to be an isolated pole, not a gate — pushed past it, then encountered a single close post (beside-the-gate signature), backed up and turned to reveal both posts + crossbar, corrected yaw -12° to center the gap on the tick, then flew straight through with --sigma 0.5.
+
+**Crossing was messy (k=9–12):** The first "straight through" attempt bent short and left me hugging the left post twice more (re-lined up, retried, still clipped it). Only after a --sigma 0 exact move with a hard rightward offset (k=11) did the post fully clear the frame and the crossbar pass overhead — confirmed crossed at k=12, where the mannequin appeared beyond a table, slightly left of center at ~3.5 m.
+
+**Approach and hold (k=12–13):** Turned toward it (+9°) and closed most of the distance around the table (k=12); at k=13 it was centered, slightly left, at ~2.2 m — closed to ~1 m with a final +5° yaw correction to square up, --dz 0, ending the flight.
+
+**Final pose:** approx x≈6.05, y≈-0.23, heading≈+14° (my computed target; the CLI didn't print a post-move readout since the flight ended on this call).
+
+**Belief:** I believe I ended close to and facing the mannequin, roughly 1 m out — but the repeated near-post clipping while crossing the gate (three attempts before a clean transit) means my distance/bearing estimates to the mannequin carry more error than usual, so the final hold spot may be off by several tenths of a metre rather than exact.

@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "Posts now balanced and gap centred like the calibration lined-up example; taking a straight move along heading with no yaw to close distance while centred, since prior approvals from this state drifted off-centre", "move": {"forward": 0.9999395006100392, "left": -0.010999778168008754, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

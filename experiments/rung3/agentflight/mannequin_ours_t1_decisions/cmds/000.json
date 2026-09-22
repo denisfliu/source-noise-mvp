@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "sweeping: turning left 45deg to scan for gate openings, room ahead is empty", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

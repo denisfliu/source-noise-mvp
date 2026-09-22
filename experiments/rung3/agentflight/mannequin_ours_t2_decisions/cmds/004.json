@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "See a near yellow post left-of-center (nearer/larger), shifting right to center the gate per calibration guidance, slight forward", "move": {"forward": 0.3818944386595648, "left": -0.5515039779737729, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

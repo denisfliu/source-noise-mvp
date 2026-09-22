@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "Near post dominates center-left with a smaller post to its right (both posts in view, off-centre toward the near one); strafing right to move toward the gap before advancing.", "move": {"forward": -0.12854027594607756, "left": -0.4831949890672566, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

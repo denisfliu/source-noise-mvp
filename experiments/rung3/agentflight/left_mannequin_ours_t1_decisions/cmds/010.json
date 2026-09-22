@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "Mannequin clearly visible at about half frame height (roughly 2 m away) and slightly right of center, so turn right a little and close half the remaining distance.", "move": {"forward": 0.6320228633078813, "left": -0.4249083433590205, "up": 0.0, "yaw_deg": -8.0, "sigma": 0.3}}

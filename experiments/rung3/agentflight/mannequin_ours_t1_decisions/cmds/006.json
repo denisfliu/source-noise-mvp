@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "left post still close/large in frame; continuing to strafe right to bring both posts to equal size before advancing", "move": {"forward": -0.2143242978584545, "left": -0.9767625583259631, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

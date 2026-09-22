@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "Back near start: large near post left (left gate) and small far post right-of-center (center gate) both visible; turning right ~15 deg to square up on the center gate before advancing, no translation yet", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

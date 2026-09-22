@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "Only one close post fills the frame (beside a gate, not in front); backing straight up at sigma 0 to regain a view of both posts before identifying which gate this is", "move": {"forward": -0.9999995000000417, "left": 0.0009999998333333417, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

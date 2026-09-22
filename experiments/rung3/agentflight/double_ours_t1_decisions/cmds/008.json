@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "Single post now centered and close, consistent with being lined up on the opening; committing to the crossing push straight ahead with sigma 0.5 to let perception fine-tune through the gap.", "move": {"forward": 0.9896499035251115, "left": -0.14350285172336283, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

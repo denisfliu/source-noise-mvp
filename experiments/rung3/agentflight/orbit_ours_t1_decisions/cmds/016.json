@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "Position is back essentially at the start point (x0.23,y-0.07 vs start 0,0), one post and the foreground cage visible matching the original start view; pure turn to bring heading back to ~0deg (facing the gate) to close the loop.", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 38.0, "sigma": 0.0}}

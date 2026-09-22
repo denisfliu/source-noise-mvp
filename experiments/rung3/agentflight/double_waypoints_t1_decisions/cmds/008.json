@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "Wide view shows the left gate roughly 19 degrees left of current heading; turning to face it and closing distance.", "move": {"forward": 1.2313699792665476, "left": 0.4278176879946671, "up": 0.0, "yaw_deg": 19.0, "sigma": 0.5}}

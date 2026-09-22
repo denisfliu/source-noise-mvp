@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "Posts look fairly large/close now, radius has shrunk to ~1.2m from M(1.6,0.3); correcting outward while continuing the loop toward the next 45deg waypoint, turning left toward the 45deg max to keep facing the gate.", "move": {"forward": 0.40440483991600507, "left": -0.9853713642340692, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

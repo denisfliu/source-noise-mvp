@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Left post is thicker/nearer than the right post, indicating an oblique approach angle; backing up further along heading to reduce the disparity before turning", "move": {"forward": -1.0012982144677405, "left": -0.0013732092757324232, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.4}}

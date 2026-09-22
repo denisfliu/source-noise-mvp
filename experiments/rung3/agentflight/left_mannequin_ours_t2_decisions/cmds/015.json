@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "Mannequin clearly visible ahead past a table, roughly centred; closing distance while sigma steers around the table", "move": {"forward": 1.200390398946134, "left": 0.09519921280105643, "up": 0.0, "yaw_deg": 5.0, "sigma": 0.5}}

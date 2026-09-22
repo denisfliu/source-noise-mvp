@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "Only 6 decisions remain; switching to a 6-chord loop (60 deg/leg, r~1.12m) around midpoint estimate (3.0,-0.3) to close the circle within budget - leg 1 of 6, turning toward the gate", "move": {"forward": 1.117898373386843, "left": 0.10631663453594933, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

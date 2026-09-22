@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "Left gate visible left-of-center ahead; closing distance while drifting toward it (+y) to square up.", "move": {"forward": 1.0, "left": 0.4, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

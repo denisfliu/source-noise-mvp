@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "Only one post fills the frame now (ONE POST, CLOSE per calibration) meaning I got too close for both posts to fit in FOV; backing away to regain the full gate view.", "move": {"forward": -0.497401254285088, "left": 0.05091161199197275, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

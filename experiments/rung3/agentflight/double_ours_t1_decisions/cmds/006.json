@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Both posts are symmetric and similar size again (lined up); advancing straight with a smaller step than last time to avoid overshooting into a too-close single-post view.", "move": {"forward": 0.34764783933165855, "left": -0.04050900897367549, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

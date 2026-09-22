@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "Mannequin is larger now and nearly centered with a table in the path, so nudge left slightly and continue advancing with sigma 0.5 to let it bend around the table.", "move": {"forward": 1.2163586719850992, "left": -0.021715917817265312, "up": 0.0, "yaw_deg": 5.0, "sigma": 0.5}}

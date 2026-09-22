@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "Both posts visible: large near post at left (left gate) and small far post right of center (center gate); moving forward with sigma 0 for exact control, biasing -y to stay clear of the left gate and close on the center gate", "move": {"forward": 1.3066118269954101, "left": -0.377843265859955, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

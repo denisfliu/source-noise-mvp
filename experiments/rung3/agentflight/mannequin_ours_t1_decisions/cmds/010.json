@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "only one close post visible with no crossbar, ambiguous crossing; pushing forward to clear it into open space beyond", "move": {"forward": 1.5402399916312801, "left": 0.012679439249202396, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

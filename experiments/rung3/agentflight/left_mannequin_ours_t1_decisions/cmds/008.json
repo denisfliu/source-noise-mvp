@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "A standing humanoid figure is now visible slightly left of center at roughly a quarter of frame height, so turn slightly left and advance decisively toward it.", "move": {"forward": 1.6275450678513008, "left": 0.03312177701913477, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.4}}

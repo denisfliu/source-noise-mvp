@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "Left gate transit confirmed by filmstrip (posts split to edges then vanished); no center gate visible yet, pushing forward to search deeper into the room with only one decision left after this", "move": {"forward": 1.4999992500000625, "left": -0.0014999997500000125, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

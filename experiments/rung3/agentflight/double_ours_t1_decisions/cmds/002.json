@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "Both posts are now equally sized and framed with the gap centered (lined up per calibration); policy's proposed +y drift would re-offset me, so I'm advancing straight instead.", "move": {"forward": 0.4978854920643171, "left": -0.04593513678952992, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

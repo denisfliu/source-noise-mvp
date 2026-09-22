@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** Never confirmed crossed cleanly. I spent decisions k=1–k=9 trying to line up on it, repeatedly oscillating between a symmetric two-post view and a single-post-fills-frame view that never matched the calibration's "posts split to the two edges then vanish" crossing signature. At k=8 I pushed forward with sigma 0.5 betting I was lined up; by k=12 the downward camera showed a post-colored blob immediately next to the drone, indicating I had brushed past/beside a single post rather than through the middle of an opening — a fault, not a clean transit.
+
+**Center gate:** Never located or attempted separately — I could not disentangle it from the left-gate confusion within the decision budget, so no crossing of a second gate happened.
+
+**Penguin:** Spotted only in the last three decisions (k=9 onward) in the downward camera, off to the side amid other furniture (a table, a blue tub). My final move (k=13) nudged toward it and descended slightly, but the flight ended before I could center over it or reach ~1.0 m hover.
+
+**Final pose:** roughly x=2.2, y=-0.6, z≈1.2 (post k=13 move from x=1.91,y=-0.89,z=1.48).
+
+**Assessment: task not completed.** I do not believe I achieved a validated left-gate transit through the middle, did not cross a second/center gate, and did not hover over the penguin. The main failure mode was that my lateral corrections (based on relative post size/position in a blurry, artifact-heavy render) never reliably resolved into the "two posts splitting outward" crossing pattern before I ran out of decisions — I should have tried a decisive heading (yaw) correction earlier instead of repeatedly translating, and reserved fewer decisions for fine alignment given the 14-decision budget.

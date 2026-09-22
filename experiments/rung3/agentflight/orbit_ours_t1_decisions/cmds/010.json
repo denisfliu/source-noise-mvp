@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "Only one post visible and large again (near it, likely under 0.5m to that post) -- widening the radius slightly to ~1.7m while continuing the loop to the next waypoint, turning left toward the 45deg max to keep facing the gate.", "move": {"forward": 0.8247751214699995, "left": -0.9107941584156916, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "Left gate's near post is bigger/closer while far post is more centered, so I'm off-centre toward the near post; shifting right while advancing to square up on the opening.", "move": {"forward": 0.26665180574554803, "left": -0.4229619539540625, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

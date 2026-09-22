@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "Single post fills center-left at close range, still beside the gate; backing off and turning left slightly to bring both posts into frame.", "move": {"forward": -0.6, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

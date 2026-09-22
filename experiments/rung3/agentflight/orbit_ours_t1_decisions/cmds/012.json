@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "One post visible at comfortable distance, radius holding near 1.5m; continuing the loop toward the next 45deg waypoint (top of the circle, y~1.8), turning left toward the 45deg max.", "move": {"forward": 1.2548914599049539, "left": -0.2695318605612574, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

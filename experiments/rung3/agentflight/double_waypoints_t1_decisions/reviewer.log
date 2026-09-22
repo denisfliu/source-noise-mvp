@@ -1,0 +1,15 @@
+## Flight Report
+
+**Neither gate was crossed.** I spent the entire 14-decision budget (all overrides, since nothing was proposed to approve) trying to line up on the left gate and never achieved the clean "posts split to the edges, crossbar overhead" transit signature.
+
+- **k=0–7:** Repeatedly oscillated beside the left gate — each strafe correction (toward what looked like the gap) instead put a single post dead-center or filled the frame at close range, so I kept backing off and re-approaching without ever confirming a centered, squared-up approach.
+- **k=8:** A deliberate wide retreat gave the clearest view of the whole gate, both posts and crossbar visible, gap estimated ~19° left of heading.
+- **k=9–12:** Closing on that bearing repeatedly overshot past the gap onto one post at close range or lost the gate entirely (k=12 showed only a bare side wall, no posts at all) — net effect was more lateral drift than progress through the opening.
+- **k=13 (final):** Committed to one last forward+turn move toward a post/crossbar visible right-of-center, but the flight ended before any transit signature could be confirmed.
+
+**Left gate:** never crossed — closest approach was beside a post at close range multiple times, never a clean centered pass.
+**Center gate:** never reached/attempted — the left gate was never cleared.
+**Penguin:** never located — no downward-camera sighting of it at any point; final downward views showed only floor mats and clutter.
+**Final pose:** approximately x≈1.6, y≈1.7 (from k=13's commanded delta on top of k=13's pre-move pose x=0.31, y=1.43), z=1.5, heading≈2°, exact post-move pose unconfirmed since I omitted `--then-wait` on the last call.
+
+**Overall: task not completed.** I do not believe the objective was achieved — this run failed to cross either gate. The core failure mode was misjudging lateral distance/bearing to the gate posts repeatedly, burning the entire decision budget on left-gate alignment alone.

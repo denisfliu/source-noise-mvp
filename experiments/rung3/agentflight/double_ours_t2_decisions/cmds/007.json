@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Right post is again near/large and left post nearly out of frame at the L edge, meaning I'm off-centre toward the right post; strafing +y to re-center before advancing, per calibration guidance to move sideways not forward", "move": {"forward": 0.007199692803932137, "left": 0.44994240122878953, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

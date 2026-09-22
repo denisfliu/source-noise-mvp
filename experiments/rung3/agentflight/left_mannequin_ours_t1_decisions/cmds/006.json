@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Very close to the gate with the crossbar already showing overhead in the downward camera, so fly straight through the middle rather than the policy's rightward drift that risks the near post.", "move": {"forward": 0.686733368684704, "left": -0.13563657447369534, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

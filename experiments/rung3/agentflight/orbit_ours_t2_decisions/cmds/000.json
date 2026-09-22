@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "Ignoring policy's tiny gate-transit nudge; moving forward and toward -y to close distance on the center gate while staying clear of the near left gate on its -y side", "move": {"forward": 1.2, "left": -0.4, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

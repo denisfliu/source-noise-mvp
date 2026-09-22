@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "Crossbar now shows at top of downward view but a yellow post still hugs close on the left in forward view - pushing forward and further right with exact control to clear the post and finish the crossing", "move": {"forward": 1.4926921740947496, "left": -0.6179563685215079, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

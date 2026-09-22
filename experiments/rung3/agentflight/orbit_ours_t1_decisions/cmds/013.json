@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "One post, moderate distance, no sign of the left gate nearby; continuing the loop toward the next 45deg waypoint, turning left toward the 45deg max to keep facing the gate.", "move": {"forward": 1.1662556039281338, "left": -0.1576320598933596, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

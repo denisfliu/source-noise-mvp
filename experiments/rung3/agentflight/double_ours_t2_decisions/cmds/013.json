@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "Final decision: one post close/filling right side of frame with no second post visible (beside-the-gate signature), proposal pushes further -y toward it risking collision, so moving away for safety since this is the last move", "move": {"forward": -0.5129892796352193, "left": 0.2772038942355226, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

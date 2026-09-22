@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "Both posts of a gate now visible together, offset left-of-center in frame; turning left ~11 deg to center the pair before judging standoff distance", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 11.0, "sigma": 0.0}}

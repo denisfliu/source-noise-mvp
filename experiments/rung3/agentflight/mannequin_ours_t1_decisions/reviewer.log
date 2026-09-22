@@ -1,0 +1,11 @@
+## Flight report
+
+**Sweep (k=0–3):** Turned left in 45° steps from heading −180° through −137°, −94°, −49°, to −8°; the room in each direction was empty (walls, shelving, a windowed partition) until a gate first appeared as a hint of color at frame edge at heading −8°.
+
+**Commit (k=4–10):** Turned to heading +10–14° to square up on the gate. It took two sideways corrections (the left post kept reading nearer/larger than the right — a signature I mistook for "centered" once and had to back off from), plus two forward pushes, to actually get through: the filmstrip at k=11 confirmed a clean crossing signature (post receding to the frame edge, new room appearing beyond).
+
+**Mannequin found:** First seen at k=11, standing figure near-centered against the back wall past a table/shelf, roughly equidistant from the L/R marks. Estimated room position from bearing+height heuristics: roughly (6.3–6.6, 0.5–1.0).
+
+**Approach (k=11–13):** Turned progressively left (heading 12°→31°) while closing distance across three moves, each capped at ~50–57% completion by the 2.5s per-call limit, so I never got confirmation of a fully executed final approach. Final commanded pose target: roughly (5.7, 0.6) facing ~bearing 23°, but the CLI reported "flight ended" immediately after the k=13 override with no further decision printed, so I have no final-pose readout to confirm against.
+
+**Assessment:** I'm reasonably confident I crossed the gate and closed most of the distance to the mannequin, but I did not get a hold-in-place confirmation decision — the last command was still an approach move, not a verified stationary hold in front of it. Given the ambiguity at k=13 (partial execution likely, no follow-up pose printed), I'd call this a probable but unconfirmed success: likely within 1–2m of the target stand-off point and roughly facing the mannequin, not certainly settled exactly one metre in front of it.

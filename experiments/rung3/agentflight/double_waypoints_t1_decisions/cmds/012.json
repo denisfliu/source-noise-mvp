@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "No gate in view here, only the side wall; turning back right to try to reacquire the gate with the remaining decisions.", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Turning right 15 lost the small center gate from view and only shows the left gate's two posts on the left; the brief says the center gate is near the starting heading, so turning back left toward heading 0 before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 13.0, "sigma": 0.0}}

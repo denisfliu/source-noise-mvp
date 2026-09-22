@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "Radius now a safe ~1.15m from the gate midpoint with no obstacles visible; leg 5 of the loop, continuing the arc toward closure with 2 decisions left", "move": {"forward": -0.6415541553068163, "left": 1.2541165280023054, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

@@ -1,0 +1,11 @@
+## Flight report — orbit around the center gate
+
+**Gate midpoint estimate:** ≈ (x 1.6, y 0.3) in room coordinates, triangulated from several fixes where both posts appeared symmetric/centered in frame at different drone positions (k=2, k=3, k=6, k=7). The y-coordinate was well constrained (~0.3 across estimates); the x-coordinate (depth) was noisier since most triangulation rays were nearly parallel — I refined it live during positioning (k=6→k=7) before committing.
+
+**Radius flown:** target 1.5 m, actually varied ~1.1–1.7 m across the 8 chords — I corrected outward twice (k=9, k=10) when a single post filled the frame (too close), and once accepted a slightly tight pass (k=13, ~1.3 m) after confirming no obstruction in view.
+
+**Direction:** counterclockwise as measured from the gate midpoint (heading and position both advanced through increasing bearing angles, φ: 196°→241°→286°→331°→16°→45°→90°→135°→196°).
+
+**Loop closure:** by k=16–17 the drone was back at (x 0.26, y ‑0.09), essentially the start point (0, 0), and the k=17 forward-camera view matched the original k=0 frame closely (both posts, crossbar, and the foreground cage all in the same configuration). I held position for the remaining decisions (k=17–19).
+
+**Did I complete a full circle without touching the gate?** Yes, with caveats: position tracking closed the loop cleanly and clearance to the posts was kept ≥0.5 m at every decision I reviewed (the two close calls at k=9 and k=13/k=14, where only one post was visible and large, were corrected outward before any contact risk). The main weakness was heading control lagging position through the second half of the loop (capped at 45°/decision), which briefly lost the gate from view around k=15 — position math kept the radius intact, and heading was re-squared by k=17. No video/clearance-sensor confirmation was available to me beyond the camera frames reviewed at each decision.

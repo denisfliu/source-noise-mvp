@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "left gate post is nearer/larger than the right; strafing right to center between the posts before advancing", "move": {"forward": 0.0714480371595474, "left": -0.7244964996368498, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

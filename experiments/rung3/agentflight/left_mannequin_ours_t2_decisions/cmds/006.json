@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "Near post still larger than far post, gap sits slightly left of centre; backing up a little and turning left to square up before the final approach", "move": {"forward": -0.5053680499217764, "left": 0.0017703441080670346, "up": 0.0, "yaw_deg": 10.0, "sigma": 0.4}}

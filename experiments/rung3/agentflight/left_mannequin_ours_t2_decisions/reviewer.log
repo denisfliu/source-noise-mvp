@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate crossing:** Between k=7 and k=8. After several correction cycles (k=2–k=7) to fix an oblique approach angle (the near post repeatedly appeared larger than the far post), the k=7 approve moved straight through a squared-up, centered gate — the k=8 forward view showed the posts gone and the room beyond revealed, matching the calibration "just crossed" signature. Crossing looked clean/through the middle: both posts were comparably sized and the gap sat on the centre tick just before the transit.
+
+**First saw the mannequin:** A pale, human-shaped silhouette appeared at k=8/k=9 (nearer the L mark) but was too ambiguous to act on — turned out to likely be a mic stand once viewed head-on. The mannequin was unambiguously identified at k=14, appearing right of centre (nearer the R mark) past a wooden table, after passing through a small furnished room and a doorway/passage beyond the left gate.
+
+**Estimated room position of the mannequin:** Roughly around x≈7.5–7.8, y≈0.6–0.7 (final approach placed the drone about 1 m short of it at x=6.76, y=0.64, heading ≈ -30°/-0.53 rad, i.e. facing back toward -x/-y from the drone's post-gate path — the mannequin sits in a bay reached via a passage angling right after the gate room).
+
+**Final pose:** x=6.76, y=0.64, z=1.42, heading -0.53 rad (-30°), holding with all-zero commands for the last four decisions (k=20–23).
+
+**Assessment:** Yes — by k=19/k=20 the mannequin filled most of the forward panel, centred, consistent with the ~1 m "full height" distance cue, and heading was fine-tuned to square up directly in front of it. The final four decisions held that pose steady with no drift, so I believe the flight ended correctly positioned about one metre in front of the mannequin, facing it.

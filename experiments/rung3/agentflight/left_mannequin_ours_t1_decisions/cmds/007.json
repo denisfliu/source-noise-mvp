@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "Left gate crossed cleanly, posts now gone from view; a standing silhouette appears near center ahead so advance toward it for a clearer look rather than the policy's rightward drift near the fenced object below.", "move": {"forward": 1.0005194845857635, "left": -0.09466129602027575, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.4}}
