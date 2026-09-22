@@ -1,0 +1,16 @@
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_03.jpg {"side": "left", "deg": 20, "height_frac": 0.55}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_00.jpg {"side": "right", "deg": 15, "height_frac": 0.5}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_01.jpg {"side": "right", "deg": 8, "height_frac": 0.45}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_02.jpg {"side": "left", "deg": 15, "height_frac": 0.45}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_04.jpg {"side": "left", "deg": 15, "height_frac": 0.55}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_05.jpg {"side": "left", "deg": 9, "height_frac": 0.42}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_07.jpg {"side": "left", "deg": 20, "height_frac": 0.5}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_09.jpg {"side": "right", "deg": 12, "height_frac": 0.45}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_06.jpg 
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_08.jpg {"side": "right", "deg": 20, "height_frac": 0.55}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_10.jpg {"side": "left", "deg": 5, "height_frac": 0.35}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_11.jpg {"side": "right", "deg": 6, "height_frac": 0.35}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_13.jpg {"side": "left", "deg": 8, "height_frac": 0.45}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_12.jpg 
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_15.jpg {"side": "left", "deg": 30, "height_frac": 0.55}
+/tmp/claude-1002/-home-dfliu-code-source-noise-mvp/e0e9cb98-7501-4afd-a834-5584b07b276e/scratchpad/lrprobe/probe_14.jpg {"side": "left", "deg": 6, "height_frac": 0.38}

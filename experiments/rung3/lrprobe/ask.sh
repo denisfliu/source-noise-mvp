@@ -1,0 +1,3 @@
+#!/bin/bash
+f=$1
+claude -p "Read the image file $f with the Read tool. The LEFT half is a drone's forward camera. It carries a yellow 'L' in its bottom-left corner, a yellow 'R' in its bottom-right corner, and a small yellow tick at the top and bottom of its centre column. There is a standing mannequin somewhere in the forward view. Answer with ONE line of JSON and nothing else: {\"side\": \"left\" or \"right\" (which side of the centre tick the mannequin's body is on), \"deg\": estimated degrees off the centre tick (the panel is 75 degrees wide), \"height_frac\": fraction of the panel height the figure spans}" --model sonnet --max-turns 4 --dangerously-skip-permissions --output-format text < /dev/null 2>/dev/null | grep -o '{.*}' | tail -1

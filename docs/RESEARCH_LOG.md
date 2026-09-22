@@ -8014,3 +8014,29 @@ scripts/run_scrreal_apc25.sh, same protocol; page viz/realonly_apc25.html now ca
   route-clean 7/10 vs 7/10 (left) and 9/10 vs 6/10 (right), clearance-clean 5/10 vs 9/10 and 10/10 vs 7/10 (pin vs pi0).
   On the gate itself, the pin is the better real-only arm on the right and the plain flow on the left, at
   n = 10 and one seed: a lead, not a claim.
+
+**LEFT/RIGHT: SONNET'S READING, NOT A BUG (2026-09-22; Denis: "i'm not sure sonnet understands left from right. why
+did it think the mannequin was slightly left? ... is this an issue with sonnet as an image interpreter or is this a
+bug").** Three checks. (1) Geometry of the flight in question (left_mannequin_ours_t1, decision 8, "slightly left of
+the center tick"): from the recorded poses and headings the mannequin was 17-28 deg to the RIGHT of the heading at
+every step after the crossing, i.e. at column 146-171 of the 224-px panel; the decision-8 image shows the figure
+right of the tick. (2) The render is not mirrored: the mann3 post-mortem (2026-09-21) matched pixel column to
+bearing with the same sign, and the compound flights steer through the correct gates. (3) A controlled probe
+(experiments/rung3/lrprobe/: 16 rendered views at 3.0 and 4.5 m with the mannequin at +-6/12/20/30 deg, marked
+exactly like the decision images, Sonnet asked only "which side of the centre tick"): side correct 11/16; every
+miss is a figure to the RIGHT called "left" at -6/-12/-12 deg (two non-answers at +6/+20); no miss in the other
+direction. Sonnet also over-reads apparent size: it reported the figure at 0.45-0.55 of the panel height at 3 m
+(true 0.37) and 0.35-0.55 at 4.5 m (true 0.25), which is the "1 m away" at 2.2 m error seen in the flights.
+READS: a systematic left bias for targets within ~12 deg right of centre, and a size over-read of ~1.5x. Neither
+is in our pipeline. Mitigations that do not touch the agent: (a) the brief's turn-toward-it rule already limits
+the damage (a 12-deg mirror is a 24-deg wrong turn, recoverable next decision); (b) a coarse column readout
+could be handed to the agent in words ("the tallest dark vertical blob is at 68% of the panel width") -- cheap,
+but it is a detector, and the point of the exercise is the agent's own perception; (c) render the forward panel
+larger (the 224-px policy frame is what the agent reads); (d) the distance scale in the brief could be
+re-anchored to Sonnet's over-read (tell it 'half the panel' means 3 m). Left for Denis to choose.
+  REAL FLIGHT LOG PAGE: ~/gate_flights/agent_log/agentmann_pin_01 (36 replans in 5 workstation sessions, the
+  frames the policy saw + what the agent said + the move + the executed chunk) laid out decision by decision:
+  viz/build_hw_agent_page.py -> hw_agent_agentmann.html. In the 14-decision session the agent crossed the left
+  gate with two approved chunks (k 7-8), then found the mannequin at k 15 ("tall upright figure visible near
+  center, slightly nearer the R mark") and approached over k 16-19; the tracking-loss caveat applies to how far
+  the aircraft actually went.
