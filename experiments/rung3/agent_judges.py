@@ -92,25 +92,21 @@ def mannequin(P, head, start=0):
             ("distance" if not ok_d else "heading" if not ok_h else "altitude")}
 
 
-def orbit(P, centre, r_lo=0.8, r_hi=2.0):
+def orbit(P, centre, r_lo=0.3, r_hi=3.0):
+    """A full circle around the gate without passing through it or touching it (Denis, 2026-09-22: "as long as it
+    completes a circle around the gate it should be fine"). Winding = spread of the unwrapped bearing about the
+    gate midpoint over the whole flight; r_lo excludes a pass through the aperture (posts at +-0.4 m), r_hi a
+    detour; contact is the clearance scorer's job (combined in main)."""
     v = P[:, :2] - centre
     ang = np.unwrap(np.arctan2(v[:, 1], v[:, 0]))
     r = np.hypot(v[:, 0], v[:, 1])
-    in_band = (r >= r_lo) & (r <= r_hi)
-    # the winding segment: from the first in-band step, does the cumulative angle reach a full turn while staying in band?
-    best = 0.0; done = None
-    for s0 in np.where(in_band)[0][:1]:
-        run_end = s0
-        while run_end + 1 < len(P) and in_band[run_end + 1]:
-            run_end += 1
-        turn = ang[s0:run_end + 1] - ang[s0]
-        best = float(np.abs(turn).max()) if len(turn) else 0.0
-        hit = np.where(np.abs(turn) >= 2 * np.pi)[0]
-        done = int(s0 + hit[0]) if len(hit) else None
+    wind = float(ang.max() - ang.min())
+    hit = np.where(np.abs(ang - ang[0]) >= 2 * np.pi)[0]
+    ok_r = bool(r.min() >= r_lo and r.max() <= r_hi)
     ok_z = bool(P[:, 2].min() >= Z_MIN and P[:, 2].max() <= Z_MAX)
-    return {"success": done is not None and ok_z, "turn_deg": round(math.degrees(best), 1), "completed_step": done,
-            "r_median": round(float(np.median(r[in_band])) if in_band.any() else float("nan"), 2),
-            "r_min": round(float(r.min()), 2), "r_max": round(float(r.max()), 2), "z_ok": ok_z,
+    return {"success": wind >= 2 * np.pi and ok_r and ok_z, "turn_deg": round(math.degrees(wind), 1),
+            "completed_step": int(hit[0]) if len(hit) else None, "r_median": round(float(np.median(r)), 2),
+            "r_min": round(float(r.min()), 2), "r_max": round(float(r.max()), 2), "r_ok": ok_r, "z_ok": ok_z,
             "centre": [round(float(c), 3) for c in centre]}
 
 
