@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single yellow post ahead-right in forward panel, edge-on with crossbar end, table below | rule: R3 | action: continue along +x with no yaw, keeping the post to my right, until it leaves the frame", "move": {"forward": 1.160213960134134, "left": 0.5864329174849162, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

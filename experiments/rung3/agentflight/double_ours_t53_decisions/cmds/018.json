@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: yellow post close at right frame edge, teal fabric/mat fill in downward panel, no penguin confirmed | rule: R2 | action: small move left away from the nearby post to keep clearance while holding near 1.0 m altitude", "move": {"forward": 0.08969958575833469, "left": 0.12022472422419259, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

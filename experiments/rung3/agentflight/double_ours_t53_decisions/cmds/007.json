@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: center-gate post has left the frame, table and figure visible ahead-left, mats below | rule: R3 | action: yaw right 45 degrees, first half of the 90-degree turn to face -y toward the gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

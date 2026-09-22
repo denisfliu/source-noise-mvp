@@ -8104,3 +8104,17 @@ crossing's progress sensor; R5 the only rule that permits a reverse; straight-th
   ten flights on this task across two briefs (one left-gate crossing in the first cell). The arms separate on
   gate crossings (ours 4/5 left, 2/5 both; waypoints 0/5) but neither completes the task at 14 decisions.
   Opus redo stopped at Denis's request after two flights (records kept, not tabled).
+
+**SIM PAUSED FOR HARDWARE (2026-09-23 10:45; Denis: "we are setting up in hardware so need to wrap up the sim
+experiments and return to it later").** State of the double-gate line at the pause:
+  - Criterion (Denis): both gates in order without a post touch; the hover is not required. Budget 20 from trial 51.
+  - Final brief (bd8dcf0): centre gate step by step (edge-on / abeam / lined up / through) on the calibration
+    sheet and in words; the task is done after the second gate, hold, do not turn back toward the post.
+  - Check flight t53 on the recipe: both gates crossed (steps 149, 338) via the recipe as written, then a post
+    contact at 0.011 m while turning back for the penguin -> the hold-after-crossing wording. t54 and the
+    five-trial cells (t61-65, ours then waypoints) were not flown: killed at the pause, nothing on the GPU.
+  - Best double-gate results so far under the final criterion: ours t14 and t33 both gates clean (2 of 30
+    ours flights); waypoints 0 both-gate crossings in 15.
+  RESUME: `MODEL=sonnet PORT=9160 bash scripts/run_agent_matrix.sh double ours 5 61` then the same with
+  `waypoints`; then `bash scripts/agent_rejudge.sh 11`, rebuild viz/agent_eval.html and the dashboard, and
+  update docs/PAPER_TABLES.md Table 3's double row. Trials 51-54 are check flights, not suite rows.

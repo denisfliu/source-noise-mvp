@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: left gate post now at right frame edge, open room beyond with table ahead, mats/frame below | rule: R7 | action: one straight move along +x with no yaw to clear the gate line before turning", "move": {"forward": 0.9939560979566968, "left": -0.10977830083717481, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

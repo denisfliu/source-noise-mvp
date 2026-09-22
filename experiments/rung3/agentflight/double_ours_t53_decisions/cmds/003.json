@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: single left-gate post near center with crossbar crossing the frame and open room beyond, crossbar visible in downward panel | rule: R6 | action: straight forward along heading, no yaw, to complete the crossing", "move": {"forward": 0.7962978669072678, "left": 0.003115631386316764, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

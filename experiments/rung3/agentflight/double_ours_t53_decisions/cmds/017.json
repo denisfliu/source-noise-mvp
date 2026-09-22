@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: low table ahead with dark objects on it, mostly teal/cyan fill in downward panel with a small dark shape, no confirmed penguin | rule: R3 | action: move closer toward the table to get the downward camera over it", "move": {"forward": 0.1557349261696978, "left": -0.37181532078562707, "up": -0.04, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: office storage room again, still no yellow posts, purple mat corner visible below | rule: R3 | action: advance along this heading to reveal more of the room and search for the gate", "move": {"forward": 1.0042397374449967, "left": -0.0015967894050444298, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

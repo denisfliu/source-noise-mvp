@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: yellow post at right frame edge, a low table with a dark figure ahead-left, fence/mat pattern below | rule: R3 | action: move toward the table while descending to search the downward camera for the penguin", "move": {"forward": 0.48130816998924475, "left": 0.1354342848085531, "up": -0.3, "yaw_deg": 0.0, "sigma": 0.5}}

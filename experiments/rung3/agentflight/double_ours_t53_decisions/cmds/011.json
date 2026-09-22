@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: office storage area with shelving and a person figure, no yellow gate posts, mats below | rule: R3 | action: continue yaw left to scan further for the center gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

@@ -1,0 +1,11 @@
+## Flight Report
+
+**Left gate:** Crossed at decision k=3 (override, straight forward along heading from x≈1.12,y≈0.52). Both posts were centered before the push-through and the transit signature (post moving to frame edge, open room beyond) confirmed a clean, through-the-middle crossing.
+
+**Center gate:** Not reliably confirmed. I tracked the gate edge-on at k=6 (single yellow post, ahead-right), then continued along +x and the post disappeared from frame by k=7 — but it vanished rather than exiting cleanly via the frame edge, meaning I likely passed closer to it than the intended 1 m standoff. The subsequent 90° turn and forward probe (k=9–10) showed a pale pillar with an office space beyond, resembling the calibration's "through the gate" frame, but without ever seeing both posts + crossbar lined up first. I could not re-find unambiguous yellow-post confirmation afterward despite an extensive heading scan (k=10–13, spanning roughly 160° of heading). **I cannot certify this crossing as clean or even confirm it happened through the middle** — it's plausible but unverified.
+
+**Penguin:** Not located. After the search, I moved back toward the left gate's far side / table area (k=14–19) and descended to ~1.0 m, but the downward camera showed only colorful mat fabric (teal/purple) and no confirmable black-and-white penguin shape before decisions ran out.
+
+**Final pose:** x≈2.99, y≈-0.14, z≈1.01, heading≈+36°, holding with a zero-move at k=19.
+
+**Overall:** Left gate crossed cleanly through the middle. Center gate transit is unconfirmed/uncertain — I spent too much of the budget scanning for it without a verified line-up-and-cross, which is the main failure of this run. Penguin hover was not achieved. I do not believe the task fully succeeded, primarily due to losing track of the center gate after the abeam turn.

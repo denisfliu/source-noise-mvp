@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: left gate post shrunk to frame edge with open room beyond, crossbar no longer under us, penguin visible below-right | rule: R7 | action: straight move along heading away from the just-crossed gate before turning", "move": {"forward": 1.0040415432221423, "left": 0.0007612385295695662, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

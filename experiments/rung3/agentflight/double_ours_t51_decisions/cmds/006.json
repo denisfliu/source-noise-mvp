@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: centre gate's single post ahead-right edge-on with crossbar end, per calibration this is the left-gate's-far-side view | rule: R3 | action: continue straight along +x keeping the post to my right", "move": {"forward": 1.0011987402591764, "left": -0.010053979482684383, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

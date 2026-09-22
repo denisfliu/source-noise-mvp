@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: room with table and dark doorway ahead-left, no gate posts visible, mats below | rule: R3 | action: yaw right to scan for the center gate before any move toward the table", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.0}}
