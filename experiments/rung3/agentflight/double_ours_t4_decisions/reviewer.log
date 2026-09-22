@@ -1,0 +1,9 @@
+**Flight report**
+
+- **Left gate:** crossed on the decision-4 override (straight move along heading, sigma 0.5), confirmed by the filmstrip at k=5 showing the posts split to the frame edges and vanish, and no crossbar left overhead. Crossing was through the middle — both posts had been framed with the gap on/near the centre tick before the straight-through move.
+- **Right-toward-table risk:** as warned, right after the left gate the policy's proposal swung sharply toward -y (toward the table) at k=5; I overrode with a straight +x move to clear the post before continuing.
+- **Centre gate:** located after a scan turn (k=6 override, yaw -30°) and one back-up-to-reveal-both-posts correction (k=7, per R5, only one post had been visible). Crossed on the decision-8 override (straight move along heading -19°/-22°, sigma 0.5), confirmed at k=9 by the downward camera showing the teal crossbar passing directly overhead. Crossing was through the middle — both posts and the crossbar were framed with the gap near the centre tick beforehand.
+- **Penguin:** first spotted in the downward camera at k=11, behind and centred left-right; corrected with a back-up+descend, then a forward-left+descend move (k=12), then a final small forward-right nudge and descend (k=13, last decision).
+- **Final pose:** x ≈ 1.49+0.11 ≈ 1.6, y ≈ -0.34-0.01 ≈ -0.35, z ≈ 1.0 m (from z 1.07 minus the 0.07 m final descent), heading ≈ -24°. The downward camera at the last decision showed the penguin nearly centred under the drone, slightly forward/left, just before the flight ended (so the very last nudge's outcome wasn't visually re-confirmed).
+
+I believe the task was completed: both gates were crossed in order through their middles, and the flight ended hovering close to directly over the penguin at roughly 1.0 m — though the final centering precision is unverified since no further image was produced after the last move.
