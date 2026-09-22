@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single yellow post near L edge with teal crossbar overhead, second post still not resolved | rule: R7 | action: advance along heading with a small left correction to close distance and let the gate structure resolve", "move": {"forward": 0.793958378104755, "left": 0.005485785018289058, "up": 0.0, "yaw_deg": 10.0, "sigma": 0.4}}

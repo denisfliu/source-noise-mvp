@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: centre gate posts and crossbar with gap now on the centre tick, mats below | rule: R6 | action: fly straight along heading 1.5m no yaw toward the gate", "move": {"forward": 1.4999584693226315, "left": 0.007588827795391329, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

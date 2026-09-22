@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: left gate's two posts and teal crossbar roughly centered on the tick in forward view, mats in downward view | rule: R0 | action: advance 1 m straight along heading to close distance before final line-up", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

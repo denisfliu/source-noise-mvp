@@ -44,11 +44,13 @@ figure (within 3 m, or within 0.5 m regardless of facing) and facing it within 4
 | Task | Budget | Sonnet + ours | Sonnet + waypoints | Opus + ours | real (to fill) |
 |---|---|---|---|---|---|
 | find the mannequin (180-degree start) | 14 | 3/5 · 3/5 · **3/5** | 3/5 · 0/5 · **0/5** | 5/5 · 4/5 · **4/5** | __ |
-| left gate, then centre gate, hover over the penguin | 14 | 0/5 · 1/5 · **0/5** | 0/5 · 0/5 · **0/5** | 1/5 · 0/5 · **0/5** | __ |
+| left gate, then centre gate, hover over the penguin | 14 | 0/5 · 0/5 · **0/5** | 0/5 · 3/5 · **0/5** | (not run on the final brief) | __ |
 | one full circle around the centre gate | 20 | 5/5 · 2/5 · **2/5** | 4/5 · 4/5 · **3/5** | 5/5 · 3/5 · **3/5** | __ |
 | left gate, then find the mannequin | 24 | 3/5 · 2/5 · **2/5** | 2/5 · 3/5 · **1/5** | 4/5 · 5/5 · **4/5** | __ |
 
-Sonnet trials 11-15 and Opus trials 21-25 of 2026-09-23 (Opus t25 on the last task reached the figure at 0.8 m but held 50 deg off axis), briefs round 3 + R7. The double-gate cells are being
-re-flown (trials 31-35) after the brief stopped rewarding reverses: partial credit there before the redo was
-left gate crossed 5/5 (Sonnet ours), 1/5 (waypoints), 4/5 both gates in order (Opus ours). Every waypoint
-mannequin flight grazed a gate in a 0.15-0.17 m band.
+Sonnet trials 11-15 and Opus trials 21-25 of 2026-09-23 (Opus t25 on the last task reached the figure at 0.8 m but
+held 50 deg off axis). The double-gate row is from trials 41-45 on the final brief (in-the-opening state, no
+reversing to line up, straight-then-yaw after the left gate), Sonnet only: partial credit there is left gate
+crossed 4/5 and both gates in order 2/5 for ours, no gate crossed in 5/5 for waypoints (its three clean flights
+never approached a post). Earlier double-gate cells on earlier briefs (trials 11-15, 31-35) are in the records but
+not in the table. Every waypoint mannequin flight grazed a gate in a 0.15-0.17 m band.

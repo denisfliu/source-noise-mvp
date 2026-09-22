@@ -1,0 +1,13 @@
+## Final report
+
+**Gate crossings: neither gate was crossed.** The flight never achieved a confirmed transit signature (posts splitting to frame edges, crossbar overhead in the downward panel) for either the left or center gate.
+
+- A single yellow post with teal wrap was located repeatedly near x≈2.7–3.5, y≈−0.2 to +0.2, but no matching second post ever appeared alongside it despite sweeping headings from -58° to +31° and translating in x, y. At one point (k=6→k=7) the drone got close enough to this post that the forward view was a motion-blurred wall of yellow — I reversed 0.5 m per R5 to avoid a strike.
+- After repeated unsuccessful sweeps, I translated 1.5 m further into +y (toward where the left gate should be per the objective) but found only open room (table, mannequin, shelving) with no gate structure at all — so the true left-gate opening was never located.
+- Decisions ran out (14/14 used) while still searching; the center gate and penguin were never reached.
+
+**Penguin:** never seen in either camera.
+
+**Final pose:** x=3.47, y=0.86, z=1.50, heading=-58°.
+
+**Assessment:** the task was not completed. My best explanation is that the single post found repeatedly was one post of the left gate, but its partner post/opening was never within the 75° FOV at any tested heading or lateral offset, and with only 14 decisions and several spent on cautious safety maneuvers (reverse, re-center) there wasn't enough budget left to complete a wider search-and-cross for the left gate, let alone the center gate and the hover-over-penguin finish. I did not fly through anything, so no false-success risk — this is a clean incomplete/no-gate-crossed result.

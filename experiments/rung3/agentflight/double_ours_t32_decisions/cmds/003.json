@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: one post near R mark close up in forward camera, crossbar diagonal overhead in downward camera, mid-crossing | rule: R6 | action: continue straight ahead no yaw to finish clearing the left gate before any turn", "move": {"forward": 0.9900759580132933, "left": -0.1405332607038616, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

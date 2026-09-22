@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: no posts visible, empty room ahead, something yellow at the edge of the downward panel behind-right | rule: R5 | action: turn back right 45 degrees to reacquire both posts of the left gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.3}}

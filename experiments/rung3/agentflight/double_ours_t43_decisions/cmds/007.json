@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: forward view clear of posts (open room, bench, furniture), downward still shows crossbar/post diagonally beneath us | rule: R6 | action: continue straight forward, no yaw, to finish passing under the crossbar", "move": {"forward": 0.8025643172488061, "left": 0.009514025381389901, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

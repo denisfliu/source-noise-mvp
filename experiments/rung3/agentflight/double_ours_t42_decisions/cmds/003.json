@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: single yellow post right-of-centre fills much of the forward panel, no second post or gap visible, mats below in downward panel | rule: R5 | action: turn left 35 degrees away from the post before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 35.0, "sigma": 0.4}}

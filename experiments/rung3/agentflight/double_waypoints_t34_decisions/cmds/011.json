@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: no gate posts visible, only room clutter, a mannequin and shelving | rule: R3 | action: turn partway back left and advance to sweep for the centre gate, which strategy places ahead and toward -y", "move": {"forward": 0.9364921690416319, "left": 0.3514917030652351, "up": 0.0, "yaw_deg": 21.0, "sigma": 0.5}}

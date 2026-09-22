@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward panel shows a mannequin against a corner wall, no gate posts or penguin; downward shows a dark shelf-like object underneath | rule: R2 | action: hold position, this is the final decision and no gate or penguin has been found from here", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

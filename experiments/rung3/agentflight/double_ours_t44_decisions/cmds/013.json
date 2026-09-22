@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: no gate posts or penguin visible, only furniture, shelving and a mannequin figure | rule: R3 | action: final decision, turn left to face back toward the room centre since neither the centre gate nor the penguin was located", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 20.0, "sigma": 0.3}}

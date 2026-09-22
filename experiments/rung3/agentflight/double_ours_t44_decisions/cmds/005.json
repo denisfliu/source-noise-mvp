@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: both left gate posts visible, gap sits right of centre tick, crossbar overhead in both panels | rule: R4 | action: turn right 15 degrees to bring the gap onto the centre tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.3}}

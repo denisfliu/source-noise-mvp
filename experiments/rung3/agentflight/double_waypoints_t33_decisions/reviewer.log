@@ -1,0 +1,10 @@
+## Flight report
+
+**Neither gate was crossed.** The flight ended after 14 decisions still short of the left gate.
+
+- **Left gate**: never crossed. I got close twice — at k=1 (pos 0,0, heading +13°) and again at k=3 (pos 1.80,0.14, heading -19°) both posts were visible with the gap near-centred, but each time the subsequent straight-ahead advance closed to within collision range of a single post rather than passing through the gap (k=4, k=10). I then spent the remaining decisions oscillating: turning away from the near post repeatedly overshot into headings/positions where both posts vanished entirely (k=6, k=8, k=11-13), and I was never able to re-square on a clean two-post, centred-gap view a third time before decisions ran out.
+- **Center gate**: never seen, never attempted.
+- **Penguin**: never located.
+- **Final pose**: x=3.54, y=0.45, z=1.50, heading -15° (before the last, ineffective +45° search yaw), facing the far wall/furniture with no gate in view.
+
+I do not believe the task was completed — the drone ended lost near the far wall, having failed even the first gate crossing. The core failure was misjudging depth/lateral offset from the small, motion-blurred forward-camera views: each "both posts centred" moment was actually still laterally offset from the true gate line, so straight-ahead advances repeatedly clipped close to one post instead of threading the gap, and the recovery turns overcorrected past the gate rather than converging on it.

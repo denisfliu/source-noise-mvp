@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: both left-gate posts and crossbar visible, gap slightly left of centre tick but within the dead-band | rule: R6 | action: fly straight along heading through the gate, no yaw", "move": {"forward": 1.5032314061775154, "left": -0.017185443886326507, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

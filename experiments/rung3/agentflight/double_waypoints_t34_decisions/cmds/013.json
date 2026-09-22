@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: a wall with boxes and equipment close ahead, no gate posts or penguin found, this is the final decision | rule: R2 | action: turn away from the clutter to end the flight at a safe clearance rather than advance blind", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

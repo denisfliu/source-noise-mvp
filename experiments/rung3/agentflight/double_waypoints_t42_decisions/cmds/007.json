@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: a wall with crates/shelving close on the right and a table ahead, no gate posts in either panel | rule: R7 | action: yaw -30 deg further right to scan more toward -y for the centre gate before advancing further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: an enclosed windowed room with desks ahead, no gate posts or penguin, mats and a teal object in the downward view | rule: R2 | action: pure yaw left back toward the heading where both center-gate posts were last seen clearly", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

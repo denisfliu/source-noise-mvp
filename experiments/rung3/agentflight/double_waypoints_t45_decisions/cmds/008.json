@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: open room, doorway and bench, no post or crossbar anywhere in frame | rule: R3 | action: move back down in y toward where the post was last clearly seen and turn to scan that area, since we drifted too far +y past it", "move": {"forward": 0.32681910115226137, "left": -1.0692002970080152, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.5}}

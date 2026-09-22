@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: two unequal yellow posts with teal crossbar sit left of the forward panel's centre column, downward panel shows only floor | rule: R4 | action: yaw left 15 deg to bring the gap toward the centre tick before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

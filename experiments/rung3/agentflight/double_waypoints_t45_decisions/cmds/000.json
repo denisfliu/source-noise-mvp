@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: gate structures ahead but distance/alignment unclear from the small thumbnail | rule: R3 | action: small forward step for a clearer view before lining up", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

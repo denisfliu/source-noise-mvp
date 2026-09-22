@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: one yellow post roughly centred with a teal wisp beneath it, no second post visible either side, open room around | rule: R3 | action: pure turn further left to scan for the gate's second post", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 25.0, "sigma": 0.5}}

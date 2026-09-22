@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: forward camera shows an open room with a table and chair, no gate posts visible; downward camera shows mats, no crossbar | rule: R3 | action: pure yaw turn right 30 deg to scan toward -y for the centre gate before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

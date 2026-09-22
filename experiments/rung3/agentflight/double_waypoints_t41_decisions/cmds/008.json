@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: forward panel still shows open room with mannequin, table, stool and shelving, no gate posts yet; downward panel shows a hint of teal at the lower-right edge | rule: R3 | action: continue turning right to search for the center gate toward -y", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.5}}

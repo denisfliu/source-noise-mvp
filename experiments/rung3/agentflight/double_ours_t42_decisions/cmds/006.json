@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single yellow post at the right frame edge near the R mark, teal crossbar above it, no second post visible, mats and drone struts below | rule: R5 | action: turn right 20 degrees toward the post to bring it off the edge and search for the gap beyond it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.4}}

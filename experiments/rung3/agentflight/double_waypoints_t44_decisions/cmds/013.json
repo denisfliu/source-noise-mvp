@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: open room with mannequin, shelves and table, no posts or penguin visible, plain floor below | rule: R2 | action: hold position, last decision, no safe gate line-up available", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: mannequin, equipment shelf and workbench, still no post or crossbar anywhere | rule: R3 | action: final search turn back toward the heading where the post was last reliably seen, one decision remains", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 44.0, "sigma": 0.5}}

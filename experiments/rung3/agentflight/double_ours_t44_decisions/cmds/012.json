@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: left gate posts gone from view, open room ahead with a table, chair and a standing figure, no gate posts yet | rule: R7 | action: turn further right and advance to search for the centre gate deeper in the room", "move": {"forward": 1.117694400530174, "left": -0.027554074535266038, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.5}}

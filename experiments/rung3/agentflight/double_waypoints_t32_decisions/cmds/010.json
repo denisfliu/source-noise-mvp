@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: forward camera shows both centre-gate posts and crossbar evenly sized with the gap on the centre tick, downward camera mostly clutter | rule: R6 | action: advance straight along heading with no yaw toward the centred gap", "move": {"forward": 1.8001152910567417, "left": -0.009216230449687002, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: a low table with small items centre-right of forward view, downward still plain floor mats | rule: R2 | action: turn slightly toward the table and advance to bring it under the downward camera", "move": {"forward": 1.197078072858868, "left": -0.002021751839160646, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

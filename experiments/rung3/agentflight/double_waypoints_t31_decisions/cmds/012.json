@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: same table/mannequin room, no gate posts, downward shows cluttered floor | rule: R3 | action: pull back slightly and turn toward -y to check an unexplored bearing for the centre gate before decisions run out", "move": {"forward": -0.3428197377294798, "left": -1.0641779115463217, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single post spans full frame height near the tick, teal crossbar ahead-right in downward panel | rule: R6 | action: advance 0.5m along heading to see if a second post splits into view", "move": {"forward": 0.4997269644371708, "left": 0.0017207598352440567, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

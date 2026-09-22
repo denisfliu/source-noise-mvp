@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: post now out of frame, open room with table and mannequin ahead in forward view, mats below | rule: R5 | action: advance 0.5m along new heading to pass the post", "move": {"forward": 0.5006014750950131, "left": -0.0017785198050608575, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

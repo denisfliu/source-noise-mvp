@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: two near yellow posts with teal crossbar roughly ahead, gap close to centre tick, downward panel shows mats below | rule: R4 | action: advance 1m straight ahead, no yaw, to close distance for a clearer lineup", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

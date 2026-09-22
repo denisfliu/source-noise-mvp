@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: one yellow post very close and dominant near the L mark, crossbar overhead, no second post visible | rule: R5 | action: turn away 35 degrees right and advance 0.5m past the post before turning back to find the opening", "move": {"forward": 0.4092428729755991, "left": -0.28128325744465776, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.3}}

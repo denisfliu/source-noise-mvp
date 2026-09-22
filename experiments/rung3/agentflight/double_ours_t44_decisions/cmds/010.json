@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: no posts, a cabinet and window ahead, I have drifted past the gate's lateral line with nothing in view | rule: R5 | action: turn left 45 degrees and advance toward the gate's last known bearing to reacquire it", "move": {"forward": 0.3172119328677111, "left": 0.9807530727182713, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

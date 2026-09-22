@@ -8088,3 +8088,19 @@ every record carries task_done, clean and gate_touch, and the cell is reported a
   changed: no reversing to line up, turn + advance instead; R5 caps a reverse at 0.5 m, never twice in a row; the
   double brief says forward + yaw onto the centre gate when its posts appear. Double-gate cells re-flown as
   trials 31-35 in all three reviewer arms (queued behind the Opus chain).
+
+**DOUBLE-GATE ROW, FINAL BRIEF (2026-09-23, trials 41-45, Sonnet; Denis: "hold off on opus, we should focus on getting
+our sonnet agent to do ok while significantly outperforming the waypoints strategy").** Brief additions since the
+suite: the IN THE OPENING state named in words and as a calibration frame (one post at the frame edge, room
+beyond, gate base under the drone in the downward panel: keep going forward); the downward panel as the
+crossing's progress sensor; R5 the only rule that permits a reverse; straight-then-yaw after the left gate.
+                       done · clean · both     left gate   both gates   contacts
+    Sonnet + ours       0/5 · 0/5 · 0/5         4/5         2/5          t43, t44 on the centre gate's west post (x ~ 2.3)
+    Sonnet + waypoints  0/5 · 3/5 · 0/5         0/5         0/5          t42, t43; the clean three never reached a post
+  READS: (1) The in-the-opening frame did what it was for: t41 and t45 recognised it at the left gate and went
+  through in one pass (both gates by step 239 and 262, the fastest yet); reverses over 0.6 m stayed at 0-1 per
+  flight. (2) The centre gate is now the wall: both contacts are the same post, on the approach from its +y
+  side, and the two both-gate flights had no decisions left for the penguin. (3) Waypoints crossed nothing in
+  ten flights on this task across two briefs (one left-gate crossing in the first cell). The arms separate on
+  gate crossings (ours 4/5 left, 2/5 both; waypoints 0/5) but neither completes the task at 14 decisions.
+  Opus redo stopped at Denis's request after two flights (records kept, not tabled).

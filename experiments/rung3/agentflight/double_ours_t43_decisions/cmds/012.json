@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: a low flat wooden table near the L mark, bottom-left of forward view, close range | rule: R2 | action: turn toward the table and advance to bring it under the downward camera for final centring", "move": {"forward": 1.6363600486097551, "left": 0.6925502085147908, "up": -0.2, "yaw_deg": 25.0, "sigma": 0.5}}

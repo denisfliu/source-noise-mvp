@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: one post at frame edge with open room beyond in forward view, and the crossbar diagonally under the drone in the downward view | rule: R6 | action: straight along heading, no yaw, to complete the left gate crossing", "move": {"forward": 0.997236658563263, "left": -0.004364265983855947, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

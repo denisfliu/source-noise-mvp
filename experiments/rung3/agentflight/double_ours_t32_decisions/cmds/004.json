@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: left gate cleared, table and mannequin ahead, one yellow post near R edge likely the centre gate | rule: R7 | action: turn right to bring the centre gate's second post into view instead of drifting toward the table", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -25.0, "sigma": 0.3}}

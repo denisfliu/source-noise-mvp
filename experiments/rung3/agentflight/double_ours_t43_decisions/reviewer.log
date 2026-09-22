@@ -1,0 +1,7 @@
+**Flight report:**
+
+- **Left gate:** crossed at decision **k=3** (override, straight forward along heading after approving k0–k2 which tracked the gap onto the centre tick). Crossing was through the middle — downward panel showed the crossbar pass overhead and posts left the forward camera by k=4.
+- **Center gate:** crossed between **k=6 and k=8** — both posts aligned on the centre tick at k=6, advanced straight through with the crossbar visible diagonally in the downward panel at k=7, and by k=8 the downward panel showed clean floor mats with no crossbar and the forward view was clear of posts. Crossing was through the middle.
+- **Penguin:** never conclusively identified. From k=8 onward the room ahead was cluttered with shelving/equipment, not the expected low table with a black-and-white penguin. The best candidate — a low wooden table with a small round grey object — appeared only at k=12/k=13, too late to confirm or center precisely.
+- **Final pose:** approximately x≈6.8, y≈-0.3, z≈1.0 m, heading ≈+35°, from the final commanded move (turn toward the table, close distance, descend to ~1.0 m).
+- **Belief:** both gates were cleanly crossed through their middles. I do **not** believe the task fully completed — I ran out of decisions before conclusively locating and centering over the penguin, so the final hover position is only a best-effort approach toward a plausible table, not a confirmed success.

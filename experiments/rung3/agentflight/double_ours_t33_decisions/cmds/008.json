@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: no gate posts visible now, room ahead shows shelving and a mannequin figure, downward view shows faint crossbar residue near the top edge | rule: R3 | action: turn left 25deg to reacquire the centre gate that was left of view before", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 25.0, "sigma": 0.3}}

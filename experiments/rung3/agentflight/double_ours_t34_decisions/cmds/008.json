@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: no posts visible, just wall, window and furniture in forward panel, downward shows mats only | rule: R5 | action: turn back right, past overshoot, toward where the gate posts were seen", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.2}}

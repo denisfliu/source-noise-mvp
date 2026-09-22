@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: no gate posts, plain room with table, stools and cluttered shelving, downward shows cluttered floor | rule: R3 | action: advance deeper into the room and drift toward -y to search for the centre gate", "move": {"forward": 1.5774577973475503, "left": 0.10782809275608563, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: shelving, cables and a mannequin close on the left, no gate posts in either panel, downward shows a dark corner/prop | rule: R7 | action: yaw -40 deg further right toward -y to scan for the centre gate without advancing into the cluttered corner", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.5}}

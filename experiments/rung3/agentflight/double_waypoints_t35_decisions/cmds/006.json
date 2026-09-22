@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: empty room ahead with a table and mannequin, no gate posts in either panel | rule: R3 | action: advance 1.5m straight along heading 0 (+x), no yaw, to get deeper into the room where the centre gate should come into view", "move": {"forward": 1.4999632501500624, "left": -0.010499914250210088, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: wall, shelving unit and a stool, no gate posts visible after turning too far right | rule: R3 | action: turn back left partway to re-find the centre gate posts", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 25.0, "sigma": 0.3}}

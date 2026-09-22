@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: both gate posts in view with crossbar overhead, gap roughly on the centre tick, table and room beyond visible | rule: R6 | action: fly straight along heading through the gate, no yaw", "move": {"forward": 1.5033167756601598, "left": 0.006218683039082573, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

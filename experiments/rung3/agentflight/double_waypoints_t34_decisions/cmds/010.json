@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: open room beyond the left gate, table and boxes, no centre-gate posts in view yet | rule: R3 | action: turn right and advance toward the -y side of the room to search for the centre gate", "move": {"forward": 0.5743532820177173, "left": -0.39973904917517944, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.5}}

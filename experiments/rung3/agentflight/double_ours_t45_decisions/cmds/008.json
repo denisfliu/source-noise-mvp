@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: one yellow post near the R mark and a low black table ahead, mats below in downward view | rule: R5 | action: turn right 40 deg to locate the centre gate's second post before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.0}}

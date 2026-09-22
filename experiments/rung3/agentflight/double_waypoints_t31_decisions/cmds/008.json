@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: still no gate posts, same cluttered shelving and mannequin, downward shows cluttered floor | rule: R3 | action: shift further toward -y where the centre gate should be, since turning alone has not revealed it", "move": {"forward": 1.2673371697690623, "left": -0.8566542465439269, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

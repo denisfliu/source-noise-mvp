@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: one yellow post fills most of frame height left-of-centre, no second post or crossbar visible, downward shows debris not a crossbar | rule: R5 | action: turn away from the post 40 deg and advance 0.5m to bring both posts into view", "move": {"forward": 0.38, "left": -0.32, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.5}}

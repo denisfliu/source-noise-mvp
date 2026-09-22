@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: both center-gate posts in forward view near frame edges with crossbar spanning between them, gap centered near the tick | rule: R6 | action: straight along heading, no yaw, to advance toward the center gate", "move": {"forward": 1.5023048631327174, "left": -0.008949760208358526, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

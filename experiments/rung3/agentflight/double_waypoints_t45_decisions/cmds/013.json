@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: a bench and mannequin close ahead, no post or crossbar found, this is the final decision | rule: R2 | action: small safe turn away from the nearby bench rather than advancing blind with no gate in view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 20.0, "sigma": 0.5}}

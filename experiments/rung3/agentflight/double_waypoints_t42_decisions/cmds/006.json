@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: still an open room ahead with a mannequin, table and crate, no gate posts in either panel | rule: R7 | action: advance 1.5 m along the current heading toward -y to search deeper into the room for the centre gate", "move": {"forward": 1.4961391177787156, "left": 0.00823044666624484, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

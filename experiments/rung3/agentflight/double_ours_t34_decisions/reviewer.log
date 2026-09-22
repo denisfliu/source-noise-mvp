@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** Never cleanly crossed. I got a good symmetric both-posts/crossbar-overhead alignment at k=4 (x=1.25, y=0.36, heading +5°) but subsequent policy-approved and my own corrective moves lost that alignment repeatedly — the flight oscillated between single-post-close views (post filling much of the frame with no second post visible) and one full overturn (k=7→8) into an empty wall. Backing up at k=10 briefly recovered a genuine both-posts view (k=11), and I flew a straight crossing move, but the follow-up frame (k=12) showed the same post still un-split (never separated to the two frame edges as the calibration's crossing signature requires), so the crossing did not register as clean. By k=13 (the final decision) only a single, smaller, distant post remained visible on the right side with no crossbar — I ended on a cautious in-place left turn rather than a blind forward move.
+
+**Center gate:** Never reached — the left gate was not resolved within the 14-decision budget.
+
+**Penguin:** Never located; no downward-camera sighting of the table/penguin occurred during the flight.
+
+**Final pose:** approximately x=1.75, y=0.47, z=1.47, heading ≈ +8–23° (final yaw override was in flight when the run ended).
+
+**Did I finish:** No. The task requires left gate → center gate → penguin hover, in order; none of the three legs were completed. The flight burned most of its decision budget hunting for a stable two-post view of the left gate — likely because close-range approaches (x≳1.1) kept losing sight of one post (occlusion or FOV limits at close range), while the well-aligned far view at k=4 wasn't converted into a crossing before drift set in.

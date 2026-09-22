@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: yellow post with teal crossbar reappeared, roughly centred, moderate size, black table below-left | rule: R3 | action: centre slightly and advance briskly toward the post to close distance given decisions are running low", "move": {"forward": 1.4849244257683272, "left": 0.2188594292156577, "up": 0.0, "yaw_deg": 8.0, "sigma": 0.5}}

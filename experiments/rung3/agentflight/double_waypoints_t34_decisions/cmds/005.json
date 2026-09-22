@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: only one post visible (near-centre, moderate size), the second post of the left gate is not in frame | rule: R5 | action: turn left to search for the missing far post while keeping the near post in view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 18.0, "sigma": 0.5}}

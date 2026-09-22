@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: workshop clutter, shelving and a mannequin, no gate posts or penguin found, downward shows cluttered floor | rule: R3 | action: final scan turn toward -y, out of decisions to search further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -40.0, "sigma": 0.0}}

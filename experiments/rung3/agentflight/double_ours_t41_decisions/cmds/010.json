@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: the same white obstacle still centered/left in the forward view at close range, no yellow posts, basin-like shape in downward view | rule: R2 | action: pure yaw further right, no translation, to look past the obstacle", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

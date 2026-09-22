@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward panel shows a sliver of yellow entering at the R mark edge; downward panel still shows the crossbar on the right | rule: R4 | action: pure yaw -15 deg further right to bring the post fully into the forward panel", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

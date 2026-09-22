@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: yellow post reduced to a thin sliver at the far left edge near the L mark, no crossbar or second post, open room ahead | rule: R3 | action: pure turn left to reacquire the gate before advancing further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

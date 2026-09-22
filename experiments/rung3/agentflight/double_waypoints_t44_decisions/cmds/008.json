@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: same single post near center at heading -40, sweeping to search for the second post | rule: R5 | action: turn right 20deg more (to -60) to look for the gate's other post", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -20.0, "sigma": 0.5}}

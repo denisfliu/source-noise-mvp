@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: forward shows furniture/shelf with items but no clear penguin shape, downward shows plain floor mats | rule: R2 | action: continue forward along heading to bring the table area into the downward camera", "move": {"forward": 0.9997924716893387, "left": 0.010724437203089354, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

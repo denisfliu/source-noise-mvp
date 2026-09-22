@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: open room ahead, one small post at R-mark edge, downward shows floor mats not crossbar, we are through the left gate | rule: R7 | action: pure yaw right toward centre gate instead of proposal's reverse toward the post just passed", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

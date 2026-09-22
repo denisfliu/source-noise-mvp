@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: both gate posts visible in forward panel, near post left-of-center and far post right-of-center, gap roughly on the centre tick, downward shows mats | rule: R6 | action: fly straight along heading toward the centered gap", "move": {"forward": 0.595378868220193, "left": -0.004899313915441503, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

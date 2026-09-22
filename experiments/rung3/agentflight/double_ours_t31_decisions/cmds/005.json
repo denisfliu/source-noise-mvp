@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: both left-gate posts in forward view roughly straddling the centre tick, wide gap between them, crossbar visible at top | rule: R7", "move": {"forward": 0.6029884794301782, "left": 0.002212165111730696, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

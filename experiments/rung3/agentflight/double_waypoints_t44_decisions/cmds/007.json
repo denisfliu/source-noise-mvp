@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: post fills right half of frame in heavy motion blur very close, yellow post and teal crossbar directly ahead in downward panel | rule: R5 | action: reverse 0.5m along heading, too close to the post", "move": {"forward": -0.4997269644371708, "left": -0.0017207598352440567, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

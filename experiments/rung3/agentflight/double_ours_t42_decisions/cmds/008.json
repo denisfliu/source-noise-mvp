@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: a single yellow post roughly centred and fairly close in the forward panel with a stool beyond it, crossbar visible close ahead in the downward panel | rule: R5 | action: turn right 25 degrees to shift the post toward the edge and search for the gap", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -25.0, "sigma": 0.4}}

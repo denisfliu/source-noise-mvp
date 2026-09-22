@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: a low wooden table and a standing mannequin ahead, a hint of yellow near the R mark at the frame's right edge, downward shows cluttered floor | rule: R3 | action: turn right toward the R-edge yellow hint to look for the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: no posts at all now, empty room with door and table, my last left turn pushed the gate further out of frame | rule: R5 | action: turn right 30 degrees to bring the left gate posts back into view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.3}}

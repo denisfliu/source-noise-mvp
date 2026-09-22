@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: left-gate posts now roughly equal size with the gap on the centre tick and crossbar level; downward panel shows plain mats, no gate yet | rule: R6 | action: straight along heading toward the gate, no yaw", "move": {"forward": 1.8121782701678966, "left": 0.0031491477085601183, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

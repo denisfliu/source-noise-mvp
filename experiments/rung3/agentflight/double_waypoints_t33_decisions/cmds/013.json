@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: forward panel still shows only the far wall, furniture and a mannequin figure, no posts; downward panel shows no crossbar | rule: R4 | action: final decision, yaw +45 deg left to make one last sweep for the gate posts before the flight ends", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

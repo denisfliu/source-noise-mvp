@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: mannequin, table and shelving, no gate posts, we seem to have swung past the centre gate's bearing to our left | rule: R3 | action: turn left toward where the post was last seen to re-find the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

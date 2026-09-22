@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: shelving and a stool ahead-left, no gate posts in either panel | rule: R7 | action: advance 1.2 m along the -44 deg heading toward -y to keep searching for the centre gate while giving the shelving clearance", "move": {"forward": 1.1951874126409288, "left": 0.005200833075805544, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

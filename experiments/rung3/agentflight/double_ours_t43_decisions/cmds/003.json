@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: one post at R-mark frame edge with open room beyond, crossbar diagonal under us in downward panel | rule: R6 | action: straight forward along heading, no yaw, to finish crossing before any turn", "move": {"forward": 0.9984987133182005, "left": 0.0005652449894245348, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

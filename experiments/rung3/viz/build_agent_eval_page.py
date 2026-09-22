@@ -14,6 +14,7 @@ TASKS = [("mannequin", "Find the mannequin (14 decisions, start facing -x)"), ("
          ("orbit", "One full circle around the centre gate (20)"), ("left_mannequin", "Left gate, then find the mannequin (24)")]
 ARMS = [("ours", [80, 220, 120]), ("waypoints", [90, 170, 240]), ("ours_opus", [200, 150, 255])]
 MIN_TRIAL = 11   # suite trials; 1-5 were the brief-development check flights
+MIN_TRIAL_TASK = {"double": 41}   # the double-gate row is the final-brief cell (trials 41-45)
 OK, BAD = None, [240, 80, 80]
 MANN = np.array([7.4, -0.2, 0.0], np.float32)
 
@@ -49,7 +50,7 @@ def main():
             ok, bad = [], []
             for tf in sorted(glob.glob(os.path.join(AF, f"traj_{task}_{arm}_t*.npy"))):
                 tag = os.path.basename(tf)[5:-4]; P = np.load(tf)[:, :3].astype(np.float32); j = rec.get(tag, {})
-                if int(tag.rsplit("_t", 1)[1]) < MIN_TRIAL: continue
+                if int(tag.rsplit("_t", 1)[1]) < MIN_TRIAL_TASK.get(task, MIN_TRIAL): continue
                 (ok if j.get("success") else bad).append(P)
                 rows.append((arm, tag, j.get("success"), j.get("min_clearance"), j.get("decisions"), j.get("overrides"), j.get("median_wait_s")))
             if ok: groups.append({"label": f"{arm}: success ({len(ok)})", "color": col, "trajs": ok})

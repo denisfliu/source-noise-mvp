@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: one thick gate post very close left-of-centre with crossbar overhead, table further left | rule: R5 | action: reverse 0.5 m along heading since the post is closer than half a metre", "move": {"forward": -0.5000006417892227, "left": 0.0005985067797502908, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

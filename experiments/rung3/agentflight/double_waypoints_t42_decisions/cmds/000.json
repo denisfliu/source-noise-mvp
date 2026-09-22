@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: both left-gate posts and teal crossbar in forward panel, gap sits left of the centre tick nearer the L mark; downward panel shows plain floor mats | rule: R4 | action: yaw +12 deg to bring the gap onto the centre tick before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 12.0, "sigma": 0.5}}

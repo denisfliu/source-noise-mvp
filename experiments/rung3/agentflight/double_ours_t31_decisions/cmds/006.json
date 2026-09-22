@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: only the right-hand post visible near the R mark, no left post visible, table and doorway where it should be | rule: R3 | action: back away 0.5m along heading for a clearer two-post view", "move": {"forward": -0.5015857487692071, "left": -0.003425876768625928, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

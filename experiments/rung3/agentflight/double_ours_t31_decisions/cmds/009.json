@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: one thick post right-of-centre, no left post visible, penguin shape visible below in downward camera | rule: R4 | action: turn left a little to widen the view left of the post, then advance", "move": {"forward": 0.6935189876492863, "left": 0.07163388702219796, "up": 0.0, "yaw_deg": 6.0, "sigma": 0.5}}

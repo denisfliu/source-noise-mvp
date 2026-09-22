@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: one yellow post with teal crossbar left-of-centre in forward view, downward shows floor mats, likely centre gate's near post | rule: R5 | action: yaw further right to bring both posts and the gap into view before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

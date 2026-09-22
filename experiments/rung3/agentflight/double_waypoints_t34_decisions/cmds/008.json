@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: both gate posts visible near centre (thin far post and larger near post), gap roughly on the centre tick within dead-band | rule: R6 | action: straight advance along heading, no yaw, to cross the gate", "move": {"forward": 2.0004045638231305, "left": 0.005155679934916446, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

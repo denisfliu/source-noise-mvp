@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: post with teal crossbar near right edge, open room ahead-left, mats below | rule: R6 | action: advance 1m along heading toward the open gap left of the post", "move": {"forward": 1.000001677602068, "left": 0.0008029900683478863, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

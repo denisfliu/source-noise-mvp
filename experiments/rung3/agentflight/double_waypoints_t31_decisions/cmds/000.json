@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: left gate's two posts and crossbar ahead, gap close to centre tick, downward shows floor mats | rule: R6 | action: fly straight ahead along heading toward the gate", "move": {"forward": 1.2, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

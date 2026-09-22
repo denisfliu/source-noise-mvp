@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: both centre-gate posts in view, gap roughly on centre tick, downward shows floor mats | rule: R6 | action: straight along heading toward the gate, no yaw", "move": {"forward": 1.2984311622276112, "left": -0.013285968397333758, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

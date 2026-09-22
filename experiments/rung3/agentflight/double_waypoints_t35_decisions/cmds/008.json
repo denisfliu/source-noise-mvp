@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: room ahead with a mannequin and shelving unit, still no gate posts in either panel | rule: R3 | action: advance 1.5m along the current heading (-35 deg) to move further toward -y and +x in search of the centre gate", "move": {"forward": 1.5007981995966087, "left": 0.010235432945318923, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

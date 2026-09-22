@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: only one tall yellow post visible near centre of forward camera, no second post or gap, downward shows floor mats | rule: R5 | action: turn left away from the near post and advance diagonally to bring both posts into view", "move": {"forward": 0.3, "left": 0.3, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.0}}

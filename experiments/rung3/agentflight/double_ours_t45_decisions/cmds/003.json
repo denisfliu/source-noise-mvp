@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: only one thick gate post visible right-of-centre filling much of the forward frame, crossbar edge in downward view | rule: R5 | action: turn left 35 deg away from the post and advance 0.5 m along the new heading", "move": {"forward": 0.4079742992321439, "left": 0.28170369391621597, "up": 0.0, "yaw_deg": 35.0, "sigma": 0.4}}

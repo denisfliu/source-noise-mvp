@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: no yellow posts in forward camera, plain room with bench and mic stand, downward shows only mats | rule: R3 | action: turn right to reacquire the gate that the last left turn swung out of frame", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -25.0, "sigma": 0.0}}

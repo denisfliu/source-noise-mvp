@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: open room ahead with a mannequin and table, no gate posts visible, downward panel shows plain mats and a teal prop at the edge | rule: R7 | action: yaw -35 deg right to turn toward the centre gate, no gate posts to correct onto yet", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.5}}

@@ -1,0 +1,9 @@
+## Flight report
+
+**Gate crossings:** The left gate was approached and (most likely) crossed around decisions k=9–k=10, at pose x≈3.0–3.8, y≈0 to -0.4, heading -31°: the forward camera showed the post shrink to the frame edge with open room beyond, and the downward camera showed the yellow post and teal crossbar pass directly underneath, then both cleared entirely by k=11. **However, this crossing was not confirmed through the middle** — across the whole approach (k=0 through k=10) I only ever saw one post at a time; the paired post never appeared despite a wide heading sweep (-31° to +23°) and one required 0.5 m reverse under R5. I believe I clipped past the gate line rather than threading a lined-up gap. The **center gate was never found** — decisions k=11–k=13 searched deeper into the room (to x=5.13, y=-1.10) and found only a mannequin, shelving, a doorway and a table, no second gate.
+
+**Penguin:** Spotted only fleetingly in the downward camera near k=3–k=6 (around x≈1.3–2.8, y≈0, on a dark rack), well behind my final position, not reachable in the remaining budget without violating R7/backtracking.
+
+**Final pose:** x=5.13, y=-1.10, z=1.50, heading -21°, holding.
+
+**Outcome:** I do not believe the task finished. I got tangled up early misreading gap direction at k=1 (turned away from, not toward, the true gate bearing), which cost several decisions recovering via R5's turn/advance/reverse cycle. That consumed most of the 14-decision budget before I had a confirmed clean crossing, and I never located the center gate or returned to the penguin. The left-gate crossing itself is unconfirmed as "through the middle" — best characterized as a single-post skim-past rather than a lined-up transit.

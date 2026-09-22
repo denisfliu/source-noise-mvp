@@ -1,0 +1,11 @@
+## Flight report
+
+**Left gate:** crossed cleanly through the middle. The approach (k0–k2) was a straightforward approve chain toward centered posts, but the trained policy's final approach at k3 drifted to within R5 range of one post (filling most of the frame). Recovery took three R5-style turn/advance corrections (k3–k5) before the gate disappeared from view entirely; the k6 image then matched the calibration sheet's "just crossed" scene (door/mannequin/bench, no posts, no crossbar), and the policy's own proposal curving toward −y (table direction) confirmed the crossing had already happened — likely during the k5 advance, off-camera between decisions. **Crossing quality: uncertain** — no clean "both posts splitting to frame edges" signature was captured for this one, only inferred post-hoc from scene match and pose progression.
+
+**Center gate:** crossed cleanly at k10–k11, with an unambiguous "JUST CROSSED" filmstrip signature (posts splitting to the frame edges, crossbar passing underneath in the downward camera). Line-up at k10 had both posts in view with the gap roughly on the centre tick before the straight-through move. **Crossing quality: clean, through the middle.**
+
+**Penguin:** never positively identified in either camera panel through the remaining decisions (k11–k13). The policy's proposals carried high trust (1.06–1.12) and moved consistently into a room with shelving/cabinets and a low table/stool visible at frame edge, consistent with the trained target zone, but no black-and-white penguin shape was confirmed before decisions ran out.
+
+**Final pose:** x≈2.31, y≈−0.74, z≈1.56, heading≈−50°, after the last approved move (destination reported by the policy: x≈2.63, y≈−0.95, z≈1.58).
+
+**Overall:** both gates were crossed in the correct order, but I can't confirm the hover-over-penguin finish — the target was never visually confirmed, so I do not believe the task fully completed to the stated success criterion, even though both gate crossings and the final approach direction look right.

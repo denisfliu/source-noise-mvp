@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: only one gate post, large, near the L side of the forward view, crossbar overhead in downward view, second post not visible | rule: R5 | action: turn right 35deg away from the post and advance 0.5m to reveal the opening", "move": {"forward": 0.41137871957086486, "left": -0.2851553069543608, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.3}}

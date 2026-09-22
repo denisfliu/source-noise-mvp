@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: open room ahead with a door and a small table, no posts visible in either panel, downward panel largely obscured | rule: R3 | action: pure yaw right 35 degrees, no translation, to scan toward the centre gate which lies ahead-right", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -35.0, "sigma": 0.5}}

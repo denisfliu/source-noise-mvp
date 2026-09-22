@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: no post or crossbar at all now, just a doorway/hallway and a mic stand ahead, downward is dark debris texture | rule: R3 | action: pure turn back toward where the post was last centred, since we have drifted well past it in +y", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

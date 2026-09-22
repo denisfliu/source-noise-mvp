@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: only one yellow post right-of-centre in forward view, no second post or crossbar visible, downward panel shows a diagonal teal line | rule: R3 | action: back away 0.5m along heading to bring both posts into view", "move": {"forward": -0.5035841720121423, "left": -0.0017267596373193306, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

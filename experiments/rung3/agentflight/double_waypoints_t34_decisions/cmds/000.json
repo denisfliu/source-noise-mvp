@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: both posts of the left gate visible with teal crossbar, gap roughly on the centre tick (small ~6deg offset, within dead-band) | rule: R6 | action: advance straight along heading toward the gate, no yaw", "move": {"forward": 1.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

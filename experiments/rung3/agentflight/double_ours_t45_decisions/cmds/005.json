@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: one thin gate post near the R mark at frame edge, wall and bench beyond in forward view | rule: R5 | action: turn left 30 deg away from the post and advance 0.5 m along new heading", "move": {"forward": 0.43543450852223575, "left": 0.24432926306113842, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.4}}

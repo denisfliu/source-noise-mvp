@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: shelving, boxes and workshop clutter, no gate posts, downward shows a dark mat square | rule: R3 | action: turn back toward +x heading to re-scan, since drifting further -y found no gate and may have overshot it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: one yellow post centre-left near table and mannequin, second post not yet visible | rule: R7 | action: advance along heading while turning further right to reveal the centre gate's far post, not drifting to the table", "move": {"forward": 0.7969929470493651, "left": -0.0014974490201574153, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.4}}
