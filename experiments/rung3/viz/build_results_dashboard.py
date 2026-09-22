@@ -106,6 +106,21 @@ SIM_TABLES = """
 """
 
 PAGES = """
+## Sim atomic cells (left, right, center from left, center from right; 10 flights per cell)
+
+| Page | Policy | What it shows |
+|---|---|---|
+| [gmsig3 Flight Atlas](https://claude.ai/code/artifact/6e7d6eef-5720-49f1-92fa-96aa226d8bf4) | gmsig3 (mixed pin, seed 42) | all four cells, 40/40 route-clean, 40/40 clearance-clean |
+| [Seed-7 Flight Atlas](https://claude.ai/code/artifact/5e4accc4-aa53-4737-9948-fcb31caa3099) | gmsig3s7 (seed 7) | all four cells, 40/40 route-clean, 37/40 clean (3 CFR grazes) |
+| [Xswap Six Cells](https://claude.ai/code/artifact/6b3bb73b-5ce1-415e-ae09-56379ccd4d2e) | xswap (seed 42) | four atomics + two compounds |
+| [Coarse-Only Swap, Six Cells](https://claude.ai/code/artifact/9ed41d6b-2565-4710-a069-52979aa1495a) | xswapc | four atomics + two compounds |
+| [Real-Only Arms, Six Cells](https://claude.ai/code/artifact/7912909d-2dba-440c-b5b7-82935b3df162) | realonly pin and scratch_real | four atomics + two compounds, both real-only arms |
+| [Baseline on Center From Right](https://claude.ai/code/artifact/e0a3ad0c-b1b1-4336-ad90-0944ce589e02) | scratch3 | the CFR cell where the scratch control loses (7/10) |
+| [Without the Swap on Center From Right](https://claude.ai/code/artifact/88b05f04-109d-4fa6-9db7-a9d71812ca44) | gmsig3 | CFR cell |
+| [Gmsig3 vs Xswap](https://claude.ai/code/artifact/f56e145c-12b1-4701-8174-9935836ccbe0) | gmsig3, xswap | where the two mixed pins differ (CFR clearance tail) |
+| [Ablation Matrix](https://claude.ai/code/artifact/33fbf136-f600-4712-9853-a4155760ce5f) | pin-reading vs pin-blind models | the mechanism in one picture: the orbit through each |
+| [Dsplit Verdict](https://claude.ai/code/artifact/59ec9846-bb66-4236-a845-4c8d59daa054), [Real-In-The-Loop Ladder](https://claude.ai/code/artifact/b48f72bf-80dd-46cd-b9b7-d1b2006d6804), [Extreme Gate Poses](https://claude.ai/code/artifact/9c80439a-8d73-4372-be11-2c9181e4faa7) | - | domain-split negative; real-in-the-loop ladder; gate-pose stress (2026-08-28/29) |
+
 ## Published point-cloud pages, newest first
 
 - [Search Flights](https://claude.ai/code/artifact/cb0a2180-ed4e-4a41-9603-689899333f5a): the four mannequin flights and the penguin flight over the room, both targets marked (2026-09-21).
