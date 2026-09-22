@@ -34,7 +34,7 @@ refused with a message, so a brief written for ours runs unchanged.
 | # | Task | Start | Budget | Success (from the trajectory) |
 |---|---|---|---|---|
 | 1 | find the mannequin, hover in front of it | (0, 0, 1.5) heading -pi | 14 | within 2.5 m of (7.4, -0.2) and heading within 30 deg of the bearing to it for the final 20 steps (Denis: looking at it, somewhat centred, pretty close); never below 0.8 m; no contact (clearance >= 0.18 m to gates) |
-| 2 | left gate, then centre gate, hover over the penguin | (0, 0, 1.5) heading 0 | 14 | compound judge (both gates in order, route-clean, goal dwell) AND clearance-clean |
+| 2 | left gate, then centre gate, hover over the penguin | (0, 0, 1.5) heading 0 | 20 | both gates in order, route-clean, AND clearance-clean; the hover is not required (Denis, 2026-09-23) |
 | 3 | fly one full circle around the centre gate | (0, 0, 1.5) heading 0 | 20 | the bearing about the centre gate's midpoint spans 360 deg over the flight, the radius never drops below 0.3 m (no pass through the aperture) or above 3 m, clearance-clean, altitude 0.8-2.0 m |
 | 4 | left gate, then find the mannequin | (0, 0, 1.5) heading 0 | 24 | left-gate transit route-clean and clearance-clean, then task 1's criterion |
 
