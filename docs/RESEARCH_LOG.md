@@ -8118,3 +8118,23 @@ experiments and return to it later").** State of the double-gate line at the pau
   RESUME: `MODEL=sonnet PORT=9160 bash scripts/run_agent_matrix.sh double ours 5 61` then the same with
   `waypoints`; then `bash scripts/agent_rejudge.sh 11`, rebuild viz/agent_eval.html and the dashboard, and
   update docs/PAPER_TABLES.md Table 3's double row. Trials 51-54 are check flights, not suite rows.
+
+## pi-hysteresis latch audited and ablated: no effect at n=10 (2026-09-22 ~16:30 PDT)
+Denis, reading the paper's "temporal hysteresis filter" sentence: does the served-component latch
+(`serve_gate_pin_joint.py`, SNMVP_GMM_HYST=0.2 default, never ablated since 2026-08-20) change results?
+**Offline** (scratch `latch_audit.py`, replaying the rule on logged pi): on the real-only pin sim cells the latch
+overrode the argmax in 7/20 trials (50-step) and 13/20 (25-step), always at top pi 0.45-0.59 between the same two
+components (2 and 3, similar ||c||), 1-3 consecutive replans; success touched vs untouched 2/7 vs 3/13 (50) and
+10/13 vs 4/7 (25) — no adverse signal. Real-only real flights: overrides on ~3-7% of replans (7/230 09-15 L/R
+session, 7/101 09-22 agent session, 7/109 center-from-left), the through-flights had 0-1 override each, usually at
+the end; the parked 78-replan center-from-left flight had component 2 at 0.88-0.99 for 71 replans and the latch
+held it on the other 7 — at most a minor contributor to that documented goal-first failure.
+**Closed loop** (`HYST=0 bash scripts/run_realonly_apc25.sh realonly 25|50`, new HYST knob, tags
+`armrealonly_apc{25,50}_hyst0_*`, beside the port-8900 hardware server): success = transit + route-clean +
+clearance-clean.
+| real-only pin | L latched | L latch off | R latched | R latch off |
+| 25-step | 5/10 | 6/10 | 9/10 | 10/10 |
+| 50-step | 0/10 | 0/10 | 5/10 | 4/10 |
+Mean min-clearance over successes unchanged (0.23-0.30 m). Differences inside the ±5-6 pt protocol noise; the
+latch is not load-bearing. Paper: describe it as a design choice or drop it; the 25-step cell can be quoted
+either way. Page: `viz/realonly_apc25.html` (latch-off groups added).
