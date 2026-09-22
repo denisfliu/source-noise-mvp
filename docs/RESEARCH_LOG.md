@@ -8040,3 +8040,31 @@ re-anchored to Sonnet's over-read (tell it 'half the panel' means 3 m). Left for
   gate with two approved chunks (k 7-8), then found the mannequin at k 15 ("tall upright figure visible near
   center, slightly nearer the R mark") and approached over k 16-19; the tracking-loss caveat applies to how far
   the aircraft actually went.
+
+**AGENT-IN-THE-LOOP SUITE, SONNET, 40 FLIGHTS (2026-09-23; Denis: "let's continue iterating ... if things start
+going well, let's run an evaluation suite, say, 5 runs for each (and the baseline which is waypoints)").** Harness:
+docs/AGENT_EVAL_PLAN.md; briefs experiments/rung3/briefs (round 3: numbered rules with a seen|rule|action format,
+R3 no image theories, R4 10-degree dead-band, R7 never fly back through a gate just crossed; mannequin description;
+post-crossing warning about the policy's own table; centre-gate orientation). Check flights t1-t5 developed the
+briefs (ours passed mannequin, orbit and left+mannequin once each; the double reached the judge's success once
+with a post contact). Suite = trials 11-15, both arms, same briefs, real-only checkpoint, Sonnet via `claude -p`.
+                              ours (pin)         waypoints (decode-only)
+    find the mannequin           1/5                 0/5
+    left gate, centre, penguin   0/5                 0/5
+    orbit around the centre gate 2/5                 3/5
+    left gate, then mannequin    1/5                 0/5
+    clearance-clean flights      8/20                7/20
+    median reviewer s/decision   14-18               12-14
+  Partial credit: ours crossed the left gate 5/5 on the double task and both gates once; waypoints crossed the
+  left gate 1/5 and never the centre gate. Mannequin within 2.5 m: ours 3/5 + 3/5 over the two search tasks,
+  waypoints 2/5 + 0/5. Orbit loop completed: ours 5/5 (three post grazes), waypoints 5/5 (one graze, one dip
+  into the aperture band). Every waypoint mannequin flight grazed a gate in a 0.15-0.17 m band: the decoded
+  line through an opening lands wherever the agent aimed it, nothing bends it off the post.
+READS: (1) The arms separate where a gate has to be crossed: the pin's trained left-gate skill (approved by the
+agent, not forced) and its slack around posts are what waypoints lack. (2) On the open-room orbit the exact
+track is as good or better; the pin's slack is not needed and its residual adds graze risk. (3) Absolute rates
+are low for both: Sonnet variance at 14-24 decisions dominates, and the double task's budget is tight (t14 had
+both gates clean and ran out before the hover). (4) The L/R read bias (RESEARCH_LOG 2026-09-22) shows in the
+search tasks: two ours flights held within 1.7 m of the figure 36-41 deg off axis. Videos of all 40 sent; page
+viz/agent_eval.html; records experiments/rung3/agent_eval/*.jsonl; decisions archived per flight. Opus pass on
+ours started 04:06 (trials 21-25).

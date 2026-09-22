@@ -40,10 +40,15 @@ Real: n per cell to be decided by battery count.
 
 | Task | Budget | ours, sim | waypoints, sim | ours, real | waypoints, real |
 |---|---|---|---|---|---|
-| find the mannequin (180-degree start) | 14 | __/5 | __/5 | __/_ | __/_ |
-| left gate, then centre gate, hover over the penguin | 14 | __/5 | __/5 | __/_ | __/_ |
-| one full circle around the centre gate | 20 | __/5 | __/5 | __/_ | __/_ |
-| left gate, then find the mannequin | 24 | __/5 | __/5 | __/_ | __/_ |
+| find the mannequin (180-degree start) | 14 | 1/5 | 0/5 | __/_ | __/_ |
+| left gate, then centre gate, hover over the penguin | 14 | 0/5 | 0/5 | __/_ | __/_ |
+| one full circle around the centre gate | 20 | 2/5 | 3/5 | __/_ | __/_ |
+| left gate, then find the mannequin | 24 | 1/5 | 0/5 | __/_ | __/_ |
+
+Sim columns: Sonnet reviewer, trials 11-15 of 2026-09-23, identical briefs (experiments/rung3/briefs, round 3 + R7).
+Partial credit behind the numbers: ours crossed the left gate 5/5 on the double task (waypoints 1/5) and found the
+mannequin (within 2.5 m) 3/5 + 3/5 across the two search tasks (waypoints 2/5 + 0/5); waypoints completed the
+orbit loop 5/5 with cleaner radii. Clearance-clean flights: ours 8/20, waypoints 7/20.
 
 Success per task: mannequin = within 2.5 m and facing within 30 deg for the final 20 steps, clearance-clean;
 double = compound judge (both gates in order, dwell) + clearance-clean; orbit = 360 deg of bearing about the centre
