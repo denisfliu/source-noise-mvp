@@ -23,7 +23,8 @@ TV = "/home/dfliu/code/tv/bin/python"
 EV = ["env", "-u", "VIRTUAL_ENV", "PYTHONPATH=/home/dfliu/code/openpi-snmvp/src", "JAX_PLATFORMS=cpu", "CUDA_VISIBLE_DEVICES=-1"]
 MANNEQUIN = np.array([7.4, -0.2])          # RESEARCH_LOG 2026-09-21 correction, against the back wall
 HOLD = 20                                   # final steps that must satisfy the hover criterion
-HOVER_M = 1.25                              # 'about one metre in front': 1 m target with a quarter-metre tolerance
+HOVER_M = 2.5                               # 'pretty close, looking at it, somewhat centred' (Denis, 2026-09-22): within 2.5 m,
+HEAD_DEG = 30.0                             # facing it within 30 deg, over the final HOLD steps
 Z_MIN, Z_MAX = 0.8, 2.0
 
 
@@ -82,7 +83,7 @@ def mannequin(P, head, start=0):
     d = np.hypot(tail[:, 0] - MANNEQUIN[0], tail[:, 1] - MANNEQUIN[1])
     bearing = np.arctan2(MANNEQUIN[1] - tail[:, 1], MANNEQUIN[0] - tail[:, 0])
     off = np.degrees(np.abs((th - bearing + np.pi) % (2 * np.pi) - np.pi))
-    ok_d, ok_h = bool(d.max() <= HOVER_M), bool(np.nanmax(off) <= 20.0)
+    ok_d, ok_h = bool(d.max() <= HOVER_M), bool(np.nanmax(off) <= HEAD_DEG)
     ok_z = bool(seg[:, 2].min() >= Z_MIN)
     dall = np.hypot(seg[:, 0] - MANNEQUIN[0], seg[:, 1] - MANNEQUIN[1])
     return {"success": ok_d and ok_h and ok_z, "final_dist": round(float(d[-1]), 3), "hold_max_dist": round(float(d.max()), 3),

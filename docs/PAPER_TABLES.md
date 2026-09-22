@@ -45,7 +45,7 @@ Real: n per cell to be decided by battery count.
 | one full circle around the centre gate | 20 | __/5 | __/5 | __/_ | __/_ |
 | left gate, then find the mannequin | 24 | __/5 | __/5 | __/_ | __/_ |
 
-Success per task: mannequin = within 1.25 m and facing within 20 deg for the final 20 steps, clearance-clean;
+Success per task: mannequin = within 2.5 m and facing within 30 deg for the final 20 steps, clearance-clean;
 double = compound judge (both gates in order, dwell) + clearance-clean; orbit = 360 deg of bearing about the centre
 gate at 0.8-2.0 m radius, clearance-clean; left+mannequin = left transit route-clean + clearance-clean + the
 mannequin criterion. Secondary columns to add per cell: decisions used, overrides, median reviewer seconds,
