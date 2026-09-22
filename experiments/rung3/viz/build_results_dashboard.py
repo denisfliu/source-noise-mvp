@@ -4,7 +4,8 @@ to see results for each thing, e.g. hardware, sim").
 
   python build_results_dashboard.py --out results_dashboard.html
 
-Tabs and their sources:
+Tabs and their sources (the Sim tab is inline tables followed by the status file; a 'tables only' switch, on by
+default, hides paragraphs and bullets: Denis reads tables, not words):
   Overview        inline (below)                      the headline per line, one paragraph each
   Sim             docs/status_latest.md               record board and standing flaws
   Hardware        docs/HARDWARE_RESULTS.md            every real-drone experiment
@@ -24,19 +25,82 @@ SP = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(SP, "..", "..", ".."))
 
 OVERVIEW = """
-## Where the science stands (2026-09-21)
+## Results at a glance (2026-09-21)
 
-- **Sim, atomic gate cells.** The mixed-data pin (gmsig3, two seeds) is 80/80 route-clean on the four atomic cells, 77/80 clearance-clean; the scratch pi0 control is 72/80, with the gap at center-from-right. Hand-drawn sketches fly both compounds 5/5 route-clean and track drawn polylines to about 7 cm. Autonomous compounds remain 0/5 for every arm.
-- **Hardware, atomic gates (n = 5 per cell).** Real-only pin: left 5/5, right 3/5, center-from-left 0/5 (no center demos). Real-only pi0: left 4/5, right 4/5. Mixed pin (gmsig3): left 0/5, all five crashed after or before the crossing. Mixed pi0: left 4/5, right 1/5, center 0/10. The paper's "ours" arm has no valid closed-loop hardware cell; two sessions were lost to an execution-side descent. Clearance is unmeasured on hardware so far.
-- **Hardware, sketches.** The real-only pin tracked the figure-eight and the 1.3 m orbit at 0.06 to 0.15 m median on the replan poses; command logs only, no trajectory files, video needed.
-- **Putting a sketch into a flow.** Exact velocity projection (s = 0) carries any sketch verbatim on any flow, flaws included; SDEdit contacts gates; naive injection runs away. The trained slack (pin sigma 0.5) is the only arm that clears a sketch drawn into or around the wrong side of a post while staying 12 to 14 cm from it, and it does so with a smaller command correction (0.23 to 0.27 sigma_c) than the projection leak that also clears (s = 0.3, 0.31 to 0.32 sigma_c, 45 cm off the sketch). Slack of any kind can only spend knowledge the residual has: on the real-only flow no setting clears the center post.
-- **Head uncertainty.** The GMM head is unimodal (one component at weight 1.00) at every decision point; sigma does not flag task-level failure, and the compound sentence is out of distribution by design (four trained sentences). Prompt programs cannot compose legs: past the left gate the head is state-driven.
-- **Agent in the loop (sim).** A Claude reviewer approving or overriding each policy command: task-aware Claude Code 2/2 on the compound task (second flight clearance-clean at 0.257 m); Sonnet with no task knowledge 3 of 15 valid attempts, Opus 1/1 and the best flight (0.369 m clean), Haiku 0/1. Search tasks from a 180-degree start: the mannequin was found on the fourth attempt and the penguin on the first, both after side marks were drawn on the decision image. Latency per decision: Haiku 14 s, Sonnet 19 to 43 s, Opus 116 s.
-- **Agent in the loop (hardware).** The first flight (agentmann_pin_01) measured PX4's setpoint tracking, not the policy: the aircraft tracked about 30% of each chunk and the node forgave the shortfall. Fixed on the workstation (hold the last setpoint, settle before the snapshot); to be reflown. A uniform 65 to 72% shortfall at sigma 0 between the asked and the returned command is open and is the primitive probe's job.
+| Line | Arm | Cell(s) | n | Result | Tab |
+|---|---|---|---|---|---|
+| Sim atomics | mixed pin, gmsig3 + seed-7 twin | left, right, CFL, CFR | 80 | 80/80 route-clean judge, 77/80 clearance-clean | Sim |
+| Sim atomics | xswap (two seeds) | same four | 80 | 80/80 judge, 80/80 clearance-clean | Sim |
+| Sim atomics | scratch pi0 (two seeds) | same four | 80 | 72/80 judge; CFR 7/10 on both seeds | Sim |
+| Sim compounds, autonomous | every arm, both seeds | CMPL, CMPR | 5 each | 0/5 | Sim |
+| Sim compounds, sketched | gmsig3 + hand-drawn sketch | CMPL, CMPR | 5 each | 5/5 route-clean each; CMPL 5/5 clearance; tracking ~7 cm | Sim |
+| Sim sketches, pooled | xswap s42 + s7 | all sketch rows | 50 | 49/50 route-clean; clearance sketch-geometry-bound | Sim |
+| Cross-domain | synth-authored pins on real observations | right-gate crossings | 11 | 11/11 in-aperture | Sim |
+| Hardware atomics | real-only pin | left / right / CFL | 5 each | 5/5 / 3/5 / 0/5 through (eyewitness) | Hardware |
+| Hardware atomics | real-only pi0 | left / right | 5 each | 4/5 / 4/5 through, one crash each | Hardware |
+| Hardware atomics | mixed pin, gmsig3 | left | 5 | 3/5 through, 5/5 contact (all crashed) | Hardware |
+| Hardware atomics | mixed pi0, scratch3 | left / right / CFL / CFR | 5 each | 4/5 / 1/5 / 0/5 / 0/5 through | Hardware |
+| Hardware atomics | ours (xswap) | left | 5 | 0/5, execution-side failure; no valid cell | Hardware |
+| Hardware sketches | real-only pin | fig8_denis3 / orbit_wide | 2 / ~5 | 0.10 m / 0.06-0.15 m median tracking on replan poses; logs only | Hardware |
+| Hardware clearance | all | all | - | unmeasured (setpoint records before c933466) | Hardware |
+| Injection, authored routes | v-proj s=0 vs pin vs SDEdit vs inject | orbit, fig8, compound | 5 each | s=0 tracks at 1 cm, 5/5 clean; pin 5-12 cm; SDEdit clips; inject runs away | Injection |
+| Injection, worse sketches | pin sigma 0.5 vs v-proj s=0.3 | w2, w3, w4 | 5 each | pin 3-4/5 clean at 12-14 cm tracking; s=0.3 5/5 clean at 45 cm | Injection |
+| Compliance | pin sigma 0.5 vs v-proj s=0.3 | 0.07 m, w2-w4 | 5 each | 0.22-0.27 sigma_c vs 0.31-0.35 sigma_c | Injection |
+| Head uncertainty | gmsig3 GMM | atomic vs compound | - | unimodal (weight 1.00) at every decision; sigma does not flag task failure | Sim |
+| Agent, compound task | Claude Code (task-aware) | left -> center -> hover | 2 | 2/2 success, second clearance-clean 0.257 m | Agent flights |
+| Agent, compound task | Sonnet / Opus / Haiku (no task knowledge) | same | 15 / 1 / 1 | 3/15 / 1/1 (0.369 m clean) / 0/1 | Agent flights |
+| Agent, search | Sonnet | mannequin / penguin | 4 / 1 | found on attempt 4 (1.0 m in front) / attempt 1 (0.11 m off, 1.0 m up) | Agent flights |
+| Agent latency | Haiku / Sonnet / Opus | per decision, median | - | 14 s / 19-43 s / 116 s | Agent flights |
+| Agent, hardware | Sonnet on the real drone | mannequin | 1 | invalid: aircraft tracked ~30% of each chunk; node fix applied; refly | Hardware |
 
 ## Judging rules
 
-Strict success = `falsify.safety.posthoc` transit judge + route-clean (no wrong-direction aperture pass) + `gate_clearance.py` at 0.18 m + human video. Screens are 5 trials; claims need 10 or more and a seed replicate (protocol noise about 5 to 6 points). Hardware success is the pilot's eyewitness note plus the judge on measured poses; contact is by eye only.
+| Tier | Rule |
+|---|---|
+| Strict sim success | `falsify.safety.posthoc` transit judge + route-clean (no wrong-direction aperture pass) + `gate_clearance.py` >= 0.18 m + human video |
+| Statistics | screens 5 trials; claims >= 10 trials and a seed replicate (protocol noise about 5-6 points) |
+| Hardware success | pilot's eyewitness note + judge on measured poses; contact by eye only; goal box reported, not used |
+"""
+
+SIM_TABLES = """
+## Atomic gate cells, per arm and seed (route-clean judge / clearance-clean, out of 40 per seed)
+
+| Arm | Seed 42 | Seed 7 | Pooled | Note |
+|---|---|---|---|---|
+| mixed pin, no swap (gmsig3) | 40/40 / 40/40 | 40/40 / 37/40 | 80/80 / 77/80 | seed-7 grazes are 3 CFR |
+| xswap (coarse-only swap) | 40/40 / 40/40 | 40/40 / 40/40 | 80/80 / 80/80 | dropped from the paper (swap) |
+| scratch pi0 | 36/40 | 36/40 | 72/80 | CFR 7/10 on both seeds |
+
+## Compounds and sketches (5 trials per cell)
+
+| Cell | Arm | Route-clean | Clearance-clean | Note |
+|---|---|---|---|---|
+| CMPL / CMPR autonomous | every arm, both seeds | 0/5 | - | structural: the head plans goal-first past the first gate |
+| CMPL, hand-drawn sketch | gmsig3 | 5/5 | 5/5 | corrective 6-waypoint polyline, sigma 0 over the switch |
+| CMPR, hand-drawn sketch | gmsig3 | 5/5 | - | |
+| hand-drawn sketches, pooled | gmsig3 | - | 17/20 | |
+| 4-click minimal sketch | gmsig3, sigma 0 / sigma 0.5 | - | 2/10 / 9/10 | margin is the portability budget |
+| all sketch rows, pooled | xswap s42 + s7 | 49/50 | sketch-geometry-bound | reproduces every gmsig3 sketch row within one trial |
+
+## Cross-domain and command vocabulary
+
+| Test | Result |
+|---|---|
+| synth-authored pins (oracle and sim-twin head) on real observations | 11/11 in-aperture right-gate crossings, full speed |
+| real demo replayed as a pin sketch in sim | 5/5 strict clean |
+| rotation verb as aim correction | heading error 10-20 deg -> 3-5 deg, dose gain 0.76 |
+| language alone as redirect | 0.05 cstd contrast, both domains (cannot redirect) |
+| pin-gap triplet (sim-to-real) | execution gap ~0; prediction gap at the head's floor; behavior gap 0.62 cstd in the endgame |
+| flight realism (AUC vs real demos; 0.5 = indistinguishable) | command alone: velocity staircase; pin flight closest to real on CFR/CMPL; synth demos 0.999 (planner staircase) |
+
+## Head uncertainty (gmsig3 GMM head)
+
+| Observation | Value |
+|---|---|
+| components active at decision points | one, weight 1.00, every prompt, replans 2-4 |
+| sigma vs task-level failure | uncorrelated; goal-hover is an absorbing state |
+| trained sentences | four (left, right, center-from-left, center-from-right); the compound sentence is OOD by design |
+| prompt programs (advance on declared intent) | cannot compose legs; state-dominated past the left gate |
 """
 
 PAGES = """
@@ -65,7 +129,7 @@ PAGES = """
 """
 
 TABS = [("overview", "Overview", None, OVERVIEW),
-        ("sim", "Sim", "docs/status_latest.md", None),
+        ("sim", "Sim", "docs/status_latest.md", SIM_TABLES),
         ("hardware", "Hardware", "docs/HARDWARE_RESULTS.md", None),
         ("injection", "Injection", "docs/APPENDIX_INJECTION.md", None),
         ("agent", "Agent flights", "docs/AGENT_FLIGHTS.md", None),
@@ -133,7 +197,11 @@ body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system
 header{padding:22px 28px 0;border-bottom:1px solid var(--rule);background:var(--panel)}
 header h1{margin:0 0 4px;font-size:22px;font-weight:600;letter-spacing:-0.01em}
 header .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
-nav{display:flex;gap:4px;flex-wrap:wrap}
+nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.sw{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink2);padding:6px 4px}
+.sw input{accent-color:var(--accent)}
+body.tables-only main p:not(.src),body.tables-only main ul{display:none}
+body.tables-only main h3,body.tables-only main h4{margin-top:14px}
 nav button{background:none;border:0;border-bottom:3px solid transparent;color:var(--ink2);font:inherit;font-size:14px;padding:8px 12px;cursor:pointer;border-radius:4px 4px 0 0}
 nav button:hover{color:var(--ink);background:var(--band)}
 nav button[aria-selected="true"]{color:var(--accent-ink);border-bottom-color:var(--accent);font-weight:600}
@@ -160,6 +228,9 @@ strong{font-weight:600}
 """
 
 JS = """
+const sw=document.getElementById('tonly');let to='1';try{to=localStorage.getItem('snmvp-tables-only')??'1'}catch(e){}
+sw.checked=to==='1';document.body.classList.toggle('tables-only',sw.checked);
+sw.addEventListener('change',()=>{document.body.classList.toggle('tables-only',sw.checked);try{localStorage.setItem('snmvp-tables-only',sw.checked?'1':'0')}catch(e){}});
 const tabs=[...document.querySelectorAll('nav button')],secs=[...document.querySelectorAll('main section')];
 function show(id,push){tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===id));secs.forEach(s=>s.hidden=s.id!==id);
   try{localStorage.setItem('snmvp-tab',id)}catch(e){} if(push){history.replaceState(null,'','#'+id)} }
@@ -176,7 +247,7 @@ def main():
     nav, body = [], []
     for tid, name, src, text in TABS:
         if src:
-            text = open(os.path.join(ROOT, src)).read()
+            text = (text or "") + open(os.path.join(ROOT, src)).read()   # inline tables first, then the ledger
             mtime = datetime.date.fromtimestamp(os.path.getmtime(os.path.join(ROOT, src))).isoformat()
             srcline = f"{src} · file last modified {mtime}"
         else:
@@ -188,7 +259,7 @@ def main():
             f"<style>{CSS}</style>\n"
             "<header><h1>Source-noise action steering: results</h1>"
             f'<p class="sub">Every ledger in one place, one tab per line of work. Rebuilt {today} from the docs named at the top of each tab.</p>'
-            f'<nav role="tablist">{"".join(nav)}</nav></header>\n<main>{"".join(body)}</main>\n<script>{JS}</script>\n')
+            f'<nav role="tablist">{"".join(nav)}<label class="sw"><input type="checkbox" id="tonly" checked> tables only</label></nav></header>\n<main>{"".join(body)}</main>\n<script>{JS}</script>\n')
     open(os.path.join(SP, a.out), "w").write(page); print("wrote", a.out, len(page), "bytes")
 
 
