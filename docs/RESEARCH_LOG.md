@@ -7953,3 +7953,16 @@ pose track doing their job. (3) The hover phase worked as written: three small c
 zero-movement hold, no altitude excursion below the floor of the goal box. (4) The false table at 6-8 cost
 three decisions; a second calibration frame of the penguin itself would remove that, at the price of telling
 the agent what it is looking for in pixels rather than words.
+
+**THE GOAL TABLE IS NOW IN EVERY SCENE CLOUD (2026-09-22; Denis: "put the point cloud of the table in all of
+these artifacts").** The viewer clouds thinned the background uniformly and kept only the gates at full
+density, which left the low wire table under the penguin at ~120 points and invisible. extract_scene_cloud.py
+now keeps a TABLE_REGION (x 0.95-2.2, y -1.35-0.05, z 0.03-1.05, mocap frame) at full density alongside the
+gates (priority budget 9000); the five scene clouds were regenerated (2.9-5.9k table points, table top band at
+z 0.7-0.9). Rather than rerun every builder, viz/reembed_scene_cloud.py swaps the embedded cloud in an
+already-built page: it identifies each payload's scene by matching its centre to the OLD cloud's mean, then
+re-encodes the new cloud about the page's existing centre so trajectories are untouched. 40 pages
+re-embedded; 34 artifacts republished to their existing URLs (the flagship atlases were also republished
+fresh, having fallen out of the listing window). Pages older than the listing window with no URL on hand
+(Endgame Ownership, Center Pin Real vs Sim, the two demo-fan pages, Guided Composition, xswap Sketch
+Re-attribution) carry the new cloud locally but were not republished.
