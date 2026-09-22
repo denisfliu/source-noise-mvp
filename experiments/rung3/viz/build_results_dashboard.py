@@ -110,7 +110,7 @@ PAGES = """
 
 | Page | Policy | What it shows |
 |---|---|---|
-| [Real-Only Pin, Replan Interval](https://claude.ai/code/artifact/REALONLY_APC25_URL) | realonly | left and right at a 50-step vs 25-step replan; the goal box, not the gate, is what it misses |
+| [Real-Only Pin, Replan Interval](https://claude.ai/code/artifact/b5495c04-6761-43db-b676-05acf488b6c7) | realonly | left and right at a 50-step vs 25-step replan; the goal box, not the gate, is what it misses |
 | [gmsig3 Flight Atlas](https://claude.ai/code/artifact/6e7d6eef-5720-49f1-92fa-96aa226d8bf4) | gmsig3 (mixed pin, seed 42) | all four cells, 40/40 route-clean, 40/40 clearance-clean |
 | [Seed-7 Flight Atlas](https://claude.ai/code/artifact/5e4accc4-aa53-4737-9948-fcb31caa3099) | gmsig3s7 (seed 7) | all four cells, 40/40 route-clean, 37/40 clean (3 CFR grazes) |
 | [Xswap Six Cells](https://claude.ai/code/artifact/6b3bb73b-5ce1-415e-ae09-56379ccd4d2e) | xswap (seed 42) | four atomics + two compounds |
