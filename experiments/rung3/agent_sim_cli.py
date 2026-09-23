@@ -10,10 +10,35 @@ The reason is burned into the video.
   python agent_sim_cli.py approve --k K --why "..."
   python agent_sim_cli.py override --k K --why "..." [--forward m] [--left m] [--up m] [--yaw deg] [--sigma s]
   python agent_sim_cli.py stop --k K --why "..."
+  python agent_sim_cli.py prims                     print the movement primitives (--prim NAME [NAME ...] on override)
 """
 import argparse, glob, json, math, os, sys, time
 
 DEF = os.path.expanduser("~/ctxrun/agent_sim")
+
+# Movement primitives (Denis, 2026-09-23): a fixed vocabulary in the drone's own frame, the same for every arm.
+# Several may be given in one override; they are summed into one move (the yaw and the translation run together).
+PRIMS = {}
+for _n, _m in ((0.5, "05"), (1.0, "1"), (2.0, "2")):
+    PRIMS[f"forward_{_m}"] = {"forward": _n}; PRIMS[f"left_{_m}"] = {"left": _n}; PRIMS[f"right_{_m}"] = {"left": -_n}
+for _n, _m in ((0.5, "05"), (1.0, "1")):
+    PRIMS[f"back_{_m}"] = {"forward": -_n}
+PRIMS["up_05"] = {"up": 0.5}; PRIMS["down_05"] = {"up": -0.5}
+for _d in (15, 30, 45):
+    PRIMS[f"turn_left_{_d}"] = {"yaw_deg": float(_d)}; PRIMS[f"turn_right_{_d}"] = {"yaw_deg": -float(_d)}
+PRIMS["hold"] = {}
+
+
+def prims_text():
+    return ("\n".join([
+        "  forward_05  forward_1  forward_2     move along your heading 0.5 / 1 / 2 m",
+        "  back_05  back_1                      move against your heading 0.5 / 1 m",
+        "  left_05  left_1  left_2              sidestep to your left 0.5 / 1 / 2 m (heading unchanged)",
+        "  right_05  right_1  right_2           sidestep to your right 0.5 / 1 / 2 m",
+        "  up_05  down_05                       climb / descend 0.5 m",
+        "  turn_left_15/30/45  turn_right_15/30/45   turn in place by that many degrees",
+        "  hold                                 stay where you are",
+        "Combine up to two, e.g. --prim turn_left_30 forward_1 (the turn and the move run together)."]))
 
 
 def latest(d):
@@ -71,7 +96,7 @@ def write(d, cmd):
 
 def main():
     a = argparse.ArgumentParser()
-    a.add_argument("cmd", choices=["wait", "look", "approve", "override", "stop"])
+    a.add_argument("cmd", choices=["wait", "look", "approve", "override", "stop", "prims"])
     a.add_argument("--dir", default=DEF); a.add_argument("--k", type=int); a.add_argument("--why", default="")
     a.add_argument("--forward", type=float, default=0.0); a.add_argument("--left", type=float, default=0.0)
     a.add_argument("--up", type=float, default=0.0); a.add_argument("--yaw", type=float, default=0.0)
@@ -79,11 +104,14 @@ def main():
     # command in room coordinates and do the rotation here. --dx/--dy are metres along the room axes,
     # independent of where the drone is pointing; --dz is the same as --up.
     a.add_argument("--dx", type=float); a.add_argument("--dy", type=float); a.add_argument("--dz", type=float)
+    a.add_argument("--prim", nargs="+", choices=sorted(PRIMS), metavar="NAME", help="movement primitives (see `prims`)")
     a.add_argument("--sigma", type=float, default=0.0); a.add_argument("--timeout", type=float, default=900.0)
     # --then-wait (2026-09-21): submit the verdict and block for the next decision in the same call, so a
     # decision costs two round trips (this call + reading the image) instead of three.
     a.add_argument("--then-wait", action="store_true", help="after answering, wait for and print the next decision")
     g = a.parse_args(); d = g.dir
+    if g.cmd == "prims":
+        print(prims_text()); return
     if g.cmd in ("wait", "look"):
         t0 = time.time()
         while True:
@@ -113,6 +141,17 @@ def main():
         write(d, {"k": g.k, "verdict": "approve", "why": g.why})
     else:
         fwd, lft, up = g.forward, g.left, g.up
+        if g.prim:
+            if len(g.prim) > 2:
+                sys.exit("at most two primitives per decision")
+            if g.dx is not None or g.dy is not None or g.forward or g.left:
+                sys.exit("give either --prim or --dx/--dy/--forward/--left, not both")
+            mv = {}
+            for n in g.prim:
+                for k, v in PRIMS[n].items():
+                    mv[k] = mv.get(k, 0.0) + v
+            fwd, lft, up = mv.get("forward", 0.0), mv.get("left", 0.0), up + mv.get("up", 0.0)
+            g.yaw = g.yaw + mv.get("yaw_deg", 0.0)
         if g.dx is not None or g.dy is not None or g.dz is not None:
             if g.forward or g.left:
                 sys.exit("give either --forward/--left (drone frame) or --dx/--dy (room frame), not both")

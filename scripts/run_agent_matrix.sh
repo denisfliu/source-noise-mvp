@@ -35,6 +35,12 @@ case $ARM in
     ;;
   *) echo "arm must be ours | waypoints"; exit 2;;
 esac
+if [ "$BRIEF" = min ]; then   # the primitive brief: control is stated per arm, nothing else about the arm
+  case $ARM in
+    ours) BACKEND="A learned policy flies the drone. It was trained on exactly two tasks in this room, flying through the gate on the left and through the gate on the right to the stuffed animal, and it is good at those: lining up on a gate, crossing it smoothly and stopping over the animal. It knows nothing else. At every decision it proposes its next five seconds of motion (printed in room coordinates); APPROVE runs that proposal, or OVERRIDE it with primitives from the list below, which are converted into commands the same policy executes. --sigma 0 flies a primitive exactly; --sigma 0.5 lets the policy bend it around what its camera sees (use that near gates and furniture).";;
+    waypoints) BACKEND="No learned policy is driving. Nothing is proposed and there is nothing to approve: every decision is an OVERRIDE with primitives from the list below, flown exactly as written along a smooth path, with no correction from the camera. --sigma is accepted and has no effect.";;
+  esac
+fi
 mkdir -p $OUTD $RUN
 for i in $(seq $T0 $((T0 + N - 1))); do
   MT=$([ "$MODEL" = sonnet ] && echo "" || echo "_${MODEL//[.\/]/}"); [ "$BRIEF" = min ] && MT=${MT}_min; TAG=${TASK}_${ARM}${MT}_t$i; AD=$RUN/agent_sim_$TAG
