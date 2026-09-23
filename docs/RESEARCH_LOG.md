@@ -8152,3 +8152,12 @@ real-only.) Offline scan of every clog on the box: the latch fires on <4% of rep
 checkpoint (10/160, 26/320) and its agent flights (1-6 per ~25-replan flight, 8-20%). Conclusion: the latch is a
 no-op for the mixed checkpoints and inside protocol noise for real-only; the only untested place it could matter
 is the agent-in-the-loop flights. Page: `viz/latch_ablation.html`.
+
+## direct-API Gemini reviewer: first full flight (2026-09-22 ~21:00 PDT)
+`agent_api_driver.py` (one model call per decision, JSON answer, no tools) with gemini-3.5-flash, mannequin task, ours
+arm, trial 102: 14 decisions, median 9.3 s per decision (harness Sonnet 14-17 s), two slow decisions at 50-62 s, one
+503 retried, no 429 (gemini-3.6-flash's free tier is 20 requests/day and blocked trial 101). Behaviour: 4-turn sweep,
+found the left gate, lined up in two turns, crossed clean at sigma 0.5 (R6 as written), then closed on what it
+called the mannequin and held; judge: FAIL on distance (hold 3.6 m from the mannequin, heading off 66 deg, clean,
+min clearance 0.19 m). Same over-read of distance as Sonnet ("about 1 m" at 3.6 m). Last decision was an approve
+that handed the hold to the policy. Video ctxrun/agent_mannequin_ours_gemini-35-flash_t102.mp4 sent to Denis.
