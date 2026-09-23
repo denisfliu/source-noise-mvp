@@ -11,7 +11,7 @@ TASK=${1:?task}; ARM=${2:?arm}; N=${3:?ntrials}; T0=${4:-1}
 ROOT=/home/dfliu/code/source-noise-mvp; RD=$ROOT/experiments/rung3; RUN=/home/dfliu/ctxrun; OUTD=$RD/agent_eval
 # AGENT=claude (default): headless Claude Code reviewer (`claude -p`, briefs/common.md, the CLI). AGENT=gemini: the direct-API
 # reviewer (agent_api_driver.py, briefs/common_api.md, one model call per decision, no tools); key from ~/.config/gemini.env.
-AGENT=${AGENT:-claude}; [ -f ~/.config/gemini.env ] && . ~/.config/gemini.env
+AGENT=${AGENT:-claude}; [ -f ~/.config/gemini.env ] && { set -a; . ~/.config/gemini.env; set +a; }
 [ "$AGENT" = gemini ] && MODEL=${MODEL:-${GEMINI_MODEL:-gemini-3.6-flash}}
 MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}; export PORT=${PORT:-9160}   # one port per concurrent chain
 TV=/home/dfliu/code/tv/bin/python

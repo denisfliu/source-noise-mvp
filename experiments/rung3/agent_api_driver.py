@@ -115,6 +115,8 @@ def main():
     a.add_argument("--timeout", type=float, default=900.0, help="seconds to wait for a decision before giving up")
     a.add_argument("--temperature", type=float, default=0.2)
     g = a.parse_args(); d = g.dir; ask = PROVIDERS["dry" if g.dry else g.provider]
+    if not g.dry and g.provider == "gemini" and not os.environ.get("GEMINI_API_KEY"):
+        sys.exit("[api-driver] GEMINI_API_KEY is not set (put it in ~/.config/gemini.env; run_agent_matrix.sh exports it)")
     system = open(g.brief).read()
     armf = os.path.join(d, "arm"); arm = open(armf).read().strip() if os.path.exists(armf) else "ours"
     logf = open(os.path.join(d, "api_log.jsonl"), "a")
