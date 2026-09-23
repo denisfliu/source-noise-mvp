@@ -97,3 +97,6 @@ sheet + decision image attached, JSON answer), no tools, no running conversation
 (`GEMINI_API_KEY=...`, chmod 600; never in the repo); model via `MODEL=` or `GEMINI_MODEL=`. Records carry
 `agent` and `model`; decisions log to `<dir>/api_log.jsonl` (readout, raw reply, latency). `--dry` exercises the
 mailbox without a key. A Sonnet/Opus direct arm needs an Anthropic API key and one more provider function.
+Free-tier quota (2026-09-22 evening): gemini-3.6-flash allows 20 generate requests per day per project; a flight needs
+14-24 plus retries, so the direct-API reviewer needs billing enabled on the AI Studio project (or a model with a
+larger free quota, which breaks same-model consistency). 503s are model load and are handled by retry/backoff.
