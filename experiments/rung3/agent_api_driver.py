@@ -11,7 +11,8 @@ Provider is behind one function (ask_gemini); add another provider by adding a f
 Log: DIR/api_log.jsonl, one line per decision (readout, raw reply, parsed command, latency)."""
 import argparse, glob, json, math, os, sys, time
 
-CALIB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "agent_calibration.jpg")
+# the calibration sheet at 960 px wide: fewer image tiles per call than the 1250 px original, captions still legible
+CALIB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "agent_calibration_api.jpg")
 LIM = {"dx": 2.0, "dy": 2.0, "dz": 1.0, "yaw": 45.0}
 SCHEMA = {"type": "OBJECT", "required": ["verdict", "why"],
           "properties": {"verdict": {"type": "STRING", "enum": ["approve", "override", "stop"]}, "why": {"type": "STRING"},
@@ -114,6 +115,11 @@ def main():
     a.add_argument("--provider", default="gemini", choices=list(PROVIDERS)); a.add_argument("--dry", action="store_true")
     a.add_argument("--timeout", type=float, default=900.0, help="seconds to wait for a decision before giving up")
     a.add_argument("--temperature", type=float, default=0.2)
+    a.add_argument("--fallback-model", default=os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.5-flash"),
+                   help="used from the fourth attempt on when the primary model keeps returning 503")
+    a.add_argument("--attempts", type=int, default=8)
+    a.add_argument("--min-gap", type=float, default=float(os.environ.get("GEMINI_MIN_GAP_S", "6")),
+                   help="minimum seconds between calls (free-tier requests-per-minute)")
     g = a.parse_args(); d = g.dir; ask = PROVIDERS["dry" if g.dry else g.provider]
     if not g.dry and g.provider == "gemini" and not os.environ.get("GEMINI_API_KEY"):
         sys.exit("[api-driver] GEMINI_API_KEY is not set (put it in ~/.config/gemini.env; run_agent_matrix.sh exports it)")
@@ -121,7 +127,7 @@ def main():
     armf = os.path.join(d, "arm"); arm = open(armf).read().strip() if os.path.exists(armf) else "ours"
     logf = open(os.path.join(d, "api_log.jsonl"), "a")
     print(f"[api-driver] dir {d} model {g.model} arm {arm} provider {'dry' if g.dry else g.provider}", flush=True)
-    t_wait = time.time(); n = 0
+    t_wait = time.time(); n = 0; t_last_call = 0.0
     while True:
         if os.path.exists(os.path.join(d, "done")):
             print(f"[api-driver] flight ended after {n} decisions", flush=True); return
@@ -135,10 +141,13 @@ def main():
         text = readout(o, d); view = os.path.join(d, o["view"]) if not os.path.isabs(o["view"]) else o["view"]
         images = [CALIB, view]
         note = ""; raw = ""; cmd = None
-        for attempt in range(4):
-            t0 = time.time()
+        for attempt in range(g.attempts):
+            gap = g.min_gap - (time.time() - t_last_call)
+            if gap > 0 and not g.dry:
+                time.sleep(gap)
+            t0 = time.time(); t_last_call = t0; model = g.model if attempt < 3 or g.dry else g.fallback_model
             try:
-                raw = ask(g.model, system, text + ("\n\nNOTE: " + note if note else ""), images, g.temperature)
+                raw = ask(model, system, text + ("\n\nNOTE: " + note if note else ""), images, g.temperature)
                 ans = json.loads(raw)
                 cmd, warn = to_cmd(o, ans, arm)
                 dt = time.time() - t0
@@ -146,11 +155,13 @@ def main():
                     note = warn; print(f"[api-driver] k={o['k']} retry: {warn}", flush=True); continue
                 if warn:
                     print(f"[api-driver] k={o['k']} {warn}", flush=True)
+                if model != g.model:
+                    print(f"[api-driver] k={o['k']} answered by fallback model {model}", flush=True)
                 break
             except Exception as e:   # API or parse error: say so, back off, retry
                 dt = time.time() - t0; note = f"your previous reply was not valid JSON of the required form ({type(e).__name__})"
-                print(f"[api-driver] k={o['k']} attempt {attempt}: {type(e).__name__}: {str(e)[:200]}", flush=True)
-                time.sleep(2 + 3 * attempt)
+                print(f"[api-driver] k={o['k']} attempt {attempt} ({model}): {type(e).__name__}: {str(e)[:160]}", flush=True)
+                time.sleep(min(3 * 2 ** attempt, 40))
         if cmd is None:
             cmd = {"k": o["k"], "verdict": "override", "why": "seen: no valid reply from the model | rule: R8 | action: hold",
                    "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}
