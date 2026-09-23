@@ -11,6 +11,9 @@ TASK=${1:?task}; ARM=${2:?arm}; N=${3:?ntrials}; T0=${4:-1}
 ROOT=/home/dfliu/code/source-noise-mvp; RD=$ROOT/experiments/rung3; RUN=/home/dfliu/ctxrun; OUTD=$RD/agent_eval
 # AGENT=claude (default): headless Claude Code reviewer (`claude -p`, briefs/common.md, the CLI). AGENT=gemini: the direct-API
 # reviewer (agent_api_driver.py, briefs/common_api.md, one model call per decision, no tools); key from ~/.config/gemini.env.
+# BRIEF=full (default): briefs/common.md + task_<task>.md. BRIEF=min: briefs/common_min.md + task_<task>_min.md (falls back to
+# task_<task>.md); the tag gets a _min suffix so min-brief cells are separate rows.
+BRIEF=${BRIEF:-full}
 AGENT=${AGENT:-claude}; [ -f ~/.config/gemini.env ] && { set -a; . ~/.config/gemini.env; set +a; }
 [ "$AGENT" = gemini ] && MODEL=${MODEL:-${GEMINI_MODEL:-gemini-3.6-flash}}
 MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}; export PORT=${PORT:-9160}   # one port per concurrent chain
@@ -34,13 +37,14 @@ case $ARM in
 esac
 mkdir -p $OUTD $RUN
 for i in $(seq $T0 $((T0 + N - 1))); do
-  MT=$([ "$MODEL" = sonnet ] && echo "" || echo "_${MODEL//[.\/]/}"); TAG=${TASK}_${ARM}${MT}_t$i; AD=$RUN/agent_sim_$TAG
+  MT=$([ "$MODEL" = sonnet ] && echo "" || echo "_${MODEL//[.\/]/}"); [ "$BRIEF" = min ] && MT=${MT}_min; TAG=${TASK}_${ARM}${MT}_t$i; AD=$RUN/agent_sim_$TAG
   echo "=== $TAG $(date +%H:%M)"
   ARM=$ARM START="0,0,1.5" STARTYAW=$SY bash $ROOT/scripts/run_agent_flight.sh $TAG left_and_center left "$PROMPT" $NCH 50 > $RUN/launch_$TAG.log 2>&1
   for k in $(seq 1 120); do [ -f $AD/obs/000_view.jpg ] && break; sleep 5; done
   [ -f $AD/obs/000_view.jpg ] || { echo "$TAG: flight never reached decision 0"; continue; }
-  COMMON=$([ "$AGENT" = gemini ] && echo common_api.md || echo common.md)
-  python3 - "$RD/briefs/$COMMON" "$RD/briefs/task_$TASK.md" "$BACKEND" "$AD" "$NCH" "$AGENT" > $RUN/brief_$TAG.md <<'PYEOF'
+  COMMON=$([ "$AGENT" = gemini ] && echo common_api.md || echo common.md); [ "$BRIEF" = min ] && COMMON=common_min.md
+  TASKB=$RD/briefs/task_$TASK.md; [ "$BRIEF" = min ] && [ -f $RD/briefs/task_${TASK}_min.md ] && TASKB=$RD/briefs/task_${TASK}_min.md
+  python3 - "$RD/briefs/$COMMON" "$TASKB" "$BACKEND" "$AD" "$NCH" "$AGENT" > $RUN/brief_$TAG.md <<'PYEOF'
 import re, sys
 common, task, backend, d, budget, agent = sys.argv[1:7]
 t = (open(common).read() + "\n" + open(task).read()).replace("{BACKEND}", backend).replace("{DIR}", d).replace("{BUDGET}", budget)
