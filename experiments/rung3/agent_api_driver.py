@@ -115,8 +115,8 @@ def main():
     a.add_argument("--provider", default="gemini", choices=list(PROVIDERS)); a.add_argument("--dry", action="store_true")
     a.add_argument("--timeout", type=float, default=900.0, help="seconds to wait for a decision before giving up")
     a.add_argument("--temperature", type=float, default=0.2)
-    a.add_argument("--fallback-model", default=os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.5-flash"),
-                   help="used from the fourth attempt on when the primary model keeps returning 503")
+    a.add_argument("--fallback-model", default=os.environ.get("GEMINI_FALLBACK_MODEL", ""),
+                   help="optional second model from the fourth attempt on; default none, so every decision of a flight is answered by --model")
     a.add_argument("--attempts", type=int, default=8)
     a.add_argument("--min-gap", type=float, default=float(os.environ.get("GEMINI_MIN_GAP_S", "6")),
                    help="minimum seconds between calls (free-tier requests-per-minute)")
@@ -145,7 +145,7 @@ def main():
             gap = g.min_gap - (time.time() - t_last_call)
             if gap > 0 and not g.dry:
                 time.sleep(gap)
-            t0 = time.time(); t_last_call = t0; model = g.model if attempt < 3 or g.dry else g.fallback_model
+            t0 = time.time(); t_last_call = t0; model = g.fallback_model if (attempt >= 3 and g.fallback_model and not g.dry) else g.model
             try:
                 raw = ask(model, system, text + ("\n\nNOTE: " + note if note else ""), images, g.temperature)
                 ans = json.loads(raw)
