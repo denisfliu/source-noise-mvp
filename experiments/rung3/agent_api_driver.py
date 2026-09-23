@@ -4,7 +4,7 @@ model call with the brief as system prompt, the calibration sheet and the decisi
 answer. No tool calls, no running conversation: every decision sees the same fixed context (brief + readout +
 its own previous decisions + pose track), so a 24-decision flight cannot drift.
 
-  GEMINI_API_KEY=... python agent_api_driver.py --dir ~/ctxrun/agent_sim_<tag> --brief brief.md [--model gemini-2.5-flash]
+  GEMINI_API_KEY=... python agent_api_driver.py --dir ~/ctxrun/agent_sim_<tag> --brief brief.md [--model gemini-3.6-flash]
   python agent_api_driver.py --dir DIR --brief brief.md --dry     # no API: approve/override alternately, prints the readout
 
 Provider is behind one function (ask_gemini); add another provider by adding a function with the same signature.
@@ -110,7 +110,7 @@ def write(d, cmd):
 def main():
     a = argparse.ArgumentParser()
     a.add_argument("--dir", required=True); a.add_argument("--brief", required=True)
-    a.add_argument("--model", default=os.environ.get("GEMINI_MODEL", "gemini-2.5-flash"))
+    a.add_argument("--model", default=os.environ.get("GEMINI_MODEL", "gemini-3.6-flash"))
     a.add_argument("--provider", default="gemini", choices=list(PROVIDERS)); a.add_argument("--dry", action="store_true")
     a.add_argument("--timeout", type=float, default=900.0, help="seconds to wait for a decision before giving up")
     a.add_argument("--temperature", type=float, default=0.2)

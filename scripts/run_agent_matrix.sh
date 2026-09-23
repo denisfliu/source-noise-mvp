@@ -12,7 +12,7 @@ ROOT=/home/dfliu/code/source-noise-mvp; RD=$ROOT/experiments/rung3; RUN=/home/df
 # AGENT=claude (default): headless Claude Code reviewer (`claude -p`, briefs/common.md, the CLI). AGENT=gemini: the direct-API
 # reviewer (agent_api_driver.py, briefs/common_api.md, one model call per decision, no tools); key from ~/.config/gemini.env.
 AGENT=${AGENT:-claude}; [ -f ~/.config/gemini.env ] && . ~/.config/gemini.env
-[ "$AGENT" = gemini ] && MODEL=${MODEL:-${GEMINI_MODEL:-gemini-2.5-flash}}
+[ "$AGENT" = gemini ] && MODEL=${MODEL:-${GEMINI_MODEL:-gemini-3.6-flash}}
 MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}; export PORT=${PORT:-9160}   # one port per concurrent chain
 TV=/home/dfliu/code/tv/bin/python
 # overrides run to completion (2026-09-22 check flights: the 25-step cap left every approach half-flown and the agent
