@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: post very close filling much of left frame near L mark, colorful post/crossbar close below in downward panel - too close, closer than half a metre | action: override back_05 turn_right_30 to regain clearance and reorient", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

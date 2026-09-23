@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: just crossed the left gate -- single post near center, crossbar overhead in downward panel, open furnished room ahead | action: continue forward 1m straight to clear the gate before turning toward the center gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

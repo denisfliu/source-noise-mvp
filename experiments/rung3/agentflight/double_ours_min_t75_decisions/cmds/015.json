@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: cleared the post, now open room with table/bench/shelf ahead, no gate yet | action: forward 1m with sigma 0.5 to advance further into the room and reveal the center gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: near/large post left-of-centre, smaller far post to its right, gap between them right of tick | action: sidestep right 0.5m sigma 0.5 to centre the gap", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: near post now a thin sliver at left edge with clearance regained, downward panel clear of it, open room with door/table ahead | action: forward_1 sigma 0.5 to continue down the room and look for the gate's second post/opening", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

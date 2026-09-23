@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: post close on left with crossbar below, open office room with furniture beyond where the penguin was previously spotted | action: override forward_1 sigma 0.5 to push past the post into the target room, only 2 decisions remain after this", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

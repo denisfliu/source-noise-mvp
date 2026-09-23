@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: office bay wall/desks straight ahead, no yellow gate posts visible in either panel - overturned past the gate | action: override turn_left_45 sigma 0.5 to reacquire the gate post", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

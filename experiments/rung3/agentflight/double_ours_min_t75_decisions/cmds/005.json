@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: both posts back in view, similar size, gap sits left of the centre tick | action: turn left 15deg and step forward 0.5m with sigma 0.5 to bring the gap onto the tick", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

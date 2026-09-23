@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: single post close and centered, matches the edge-on far-post-of-left-gate case -- I over-turned left toward it | action: turn right 30deg back toward +x heading and step forward 0.5m, keeping this post to my right instead of flying at it", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: left post close at the frame edge, right post centred, gap holding near the tick, but forward progress has stalled near the gate | action: push forward two metres to complete the crossing, letting vision bend the path", "move": {"forward": 2.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

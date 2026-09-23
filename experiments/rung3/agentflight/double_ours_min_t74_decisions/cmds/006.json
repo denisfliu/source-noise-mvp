@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: near post has grown very large right at the center tick, thin second post further right | action: sidestep right 1m with sigma to get clear of the near post and open the gap", "move": {"forward": 0.0, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

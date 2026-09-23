@@ -12,9 +12,9 @@ from build_traj_page import marks, axes   # noqa: E402
 RD = os.path.dirname(SP); AF = os.path.join(RD, "agentflight"); EV = os.path.join(RD, "agent_eval")
 TASKS = [("mannequin", "Find the mannequin (14 decisions, start facing -x)"), ("double", "Left gate, then centre gate, hover over the penguin (14)"),
          ("orbit", "One full circle around the centre gate (20)"), ("left_mannequin", "Left gate, then find the mannequin (24)")]
-ARMS = [("ours", [80, 220, 120]), ("waypoints", [90, 170, 240]), ("ours_opus", [200, 150, 255])]
+ARMS = [("ours", [80, 220, 120]), ("waypoints", [90, 170, 240]), ("ours_opus", [200, 150, 255]), ("ours_min", [240, 200, 80])]   # ours_min: primitive brief (2026-09-23)
 MIN_TRIAL = 11   # suite trials; 1-5 were the brief-development check flights
-MIN_TRIAL_TASK = {"double": 41}   # the double-gate row is the final-brief cell (trials 41-45)
+MIN_TRIAL_TASK = {"double": 41}   # the double-gate row is the final-brief cell (trials 41-45); ours_min rows are trials 71+
 OK, BAD = None, [240, 80, 80]
 MANN = np.array([7.4, -0.2, 0.0], np.float32)
 
@@ -54,7 +54,7 @@ def main():
                 (ok if j.get("success") else bad).append(P)
                 rows.append((arm, tag, j.get("success"), j.get("min_clearance"), j.get("decisions"), j.get("overrides"), j.get("median_wait_s")))
             if ok: groups.append({"label": f"{arm}: success ({len(ok)})", "color": col, "trajs": ok})
-            if bad: groups.append({"label": f"{arm}: failure ({len(bad)})", "color": BAD if arm == "ours" else [255, 140, 40], "trajs": bad})
+            if bad: groups.append({"label": f"{arm}: failure ({len(bad)})", "color": BAD if arm == "ours" else [255, 140, 40] if arm == "waypoints" else [200, 120, 60], "trajs": bad})
         if not rows:
             continue
         tab = "<table class='tt'><tr><th>arm</th><th>trial</th><th>success</th><th>min clearance</th><th>decisions</th><th>overrides</th><th>median wait s</th></tr>" + \

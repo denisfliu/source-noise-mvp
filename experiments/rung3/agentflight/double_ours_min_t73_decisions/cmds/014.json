@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: post repeatedly at left frame edge across several headings, office room beyond - likely too close laterally to the gate line | action: override right_1 sigma 0.5 to sidestep away and try to reveal the second post", "move": {"forward": 0.0, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 0, "verdict": "override", "why": "seen: forward panel shows one yellow post close, left-of-centre, teal crossbar above; downward panel cluttered/near objects | action: back off half a metre before turning to find the gate gap", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: dangerously close to the same post again, sigma 0.5 keeps bending me back toward it | action: back_05 sigma 0 exact, to regain clearance without policy bending toward the post", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

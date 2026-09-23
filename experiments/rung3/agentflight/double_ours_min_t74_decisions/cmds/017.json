@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: single post at moderate distance left-of-center, no second post or crossbar plane visible | action: turn right 30 and advance 1m with sigma to swing past the post and open the gate gap with remaining decisions limited", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: only a single thin distant post ahead, no crossbar, no second post - gate not in view after right drift | action: turn left 45 deg with sigma to look back toward the gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

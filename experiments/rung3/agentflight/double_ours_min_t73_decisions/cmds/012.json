@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: single post ahead-left with teal crossbar overhead, office furniture beyond - beside the gate, not facing its opening | action: override turn_right_30 forward_1 sigma 0.5 to swing away and bring both posts into frame", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

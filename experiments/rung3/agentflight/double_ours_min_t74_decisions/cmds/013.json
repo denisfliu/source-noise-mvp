@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: single post left-of-center with crossbar exiting frame top-left, likely off-center to the right (y=-0.47) of the gate line | action: turn left 30 deg with sigma to bring both posts back into view before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

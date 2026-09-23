@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: both posts close and tall, gap narrow but centered near the tick, no crossbar visible (too close/high) | action: forward 1m with sigma 0.5 to push through the gap, letting the camera fine-tune", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: no gate post visible now, just shelving/furniture, only turned to -38deg not full -90 -- continuing the turn toward -y to face the centre gate square-on", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

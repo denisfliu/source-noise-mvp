@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: yellow posts and crossbar clustered edge-on at the left edge of frame, matching an edge-on gate view from its far side | action: continue forward 1m along +x with sigma, keeping the posts clear to my left, to get past and look for the center gate ahead", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

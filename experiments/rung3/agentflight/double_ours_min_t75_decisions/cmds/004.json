@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: only one post visible, roughly centered/slightly left, no crossbar/opening in view -- beside the gate | action: turn right 30deg and advance 0.5m to swing wide and bring both posts back into frame", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

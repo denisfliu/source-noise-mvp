@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: one gate post dominant near centre with crossbar sweeping off-frame left, other post out of view left | action: turn left 15 with sigma 0.5 to bring both posts back into frame before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

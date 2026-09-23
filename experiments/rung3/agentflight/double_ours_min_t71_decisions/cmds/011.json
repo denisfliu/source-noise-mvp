@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: post now fills most of the frame, downward panel shows the crossbar almost directly underneath -- dangerously close | action: back_05 sigma 0 to reverse away from the post before turning", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

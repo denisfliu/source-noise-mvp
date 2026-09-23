@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: a yellow post with teal crossbar just visible at the far left edge of the forward panel, rest of frame is open room | action: turn left further to bring the gate posts toward the centre of the frame", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

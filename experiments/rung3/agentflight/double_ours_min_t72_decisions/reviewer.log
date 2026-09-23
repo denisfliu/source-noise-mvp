@@ -1,0 +1,5 @@
+Flight ended after 20 decisions. Report:
+
+- **Left gate**: crossed on the move approved at k=3 (pose jumped x −0.23→1.06 by k=4), filmstrip at k=4 showed the clean "post splits to frame edges, room beyond appears" signature — through the middle, gap centered on the tick, trust 0.98.
+- **Center gate**: crossed on the forward_2 override at k=18 and the approve at k=19; downward panel showed the crossbar passing directly underneath at k=19, confirming the transit — but alignment leading into it was imperfect (left post repeatedly crowded the frame edge), so this crossing was off-center, biased toward the left post rather than clean through the middle.
+- **Final pose** (last proposed end-state, k=19; no readout printed after "flight ended"): approximately x 3.32, y −0.30, z 1.36, heading ≈ +17°.

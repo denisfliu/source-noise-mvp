@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: strip confirms same single post throughout last move, no crossing signature yet, only two decisions remain | action: turn right 30 and advance 1m with sigma for a last decisive attempt to find and cross a gate gap", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

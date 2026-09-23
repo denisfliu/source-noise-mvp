@@ -1,0 +1,1 @@
+{"k": 1, "verdict": "override", "why": "seen: forward panel shows both posts of a gate with teal crossbar, gap sitting left of the centre tick, low table/cage obstacle in the near foreground | action: small left turn to centre the gap before approaching", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

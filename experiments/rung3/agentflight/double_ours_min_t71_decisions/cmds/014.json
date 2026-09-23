@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: same post again close on my left, I have now travelled well past the left gate along +x -- likely abeam the centre gate per calibration | action: turn_right_45 turn_right_45 sigma 0 for an exact 90-degree turn to face -y across the gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -90.0, "sigma": 0.0}}

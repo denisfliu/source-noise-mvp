@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: post has swung to the left frame edge (opposite of calibration's right-edge case, so mirrored), suggesting I am now abeam the centre gate on its far side | action: turn_left_45 sigma 0.5 to start rotating to face the gate opening", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

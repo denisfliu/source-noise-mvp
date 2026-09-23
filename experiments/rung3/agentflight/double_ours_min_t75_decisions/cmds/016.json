@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: wall close ahead with mannequin, table, shelf -- no gate, and continuing forward risks the wall | action: turn right 45deg to check the -y side for the center gate before going further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

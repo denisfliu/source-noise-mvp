@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single post at left frame edge, office bay furniture beyond - partway turned toward center gate opening | action: override turn_right_45 again to fully face -y per calibration's two-turn sequence", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

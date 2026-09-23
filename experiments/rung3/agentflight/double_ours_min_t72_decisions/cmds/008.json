@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: forward panel now shows open room/furniture, no gate posts; downward panel shows teal/yellow gate colours off to the left edge | action: turn left back toward the gate to bring both posts into frame", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

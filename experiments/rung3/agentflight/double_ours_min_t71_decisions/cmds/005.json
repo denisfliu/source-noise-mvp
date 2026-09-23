@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: only one post at frame's right edge, open room with door/table beyond, filmstrip shows posts splitting to edges then gone -> left gate just crossed | action: forward_1 sigma 0.5 to continue straight about a metre before turning toward centre gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

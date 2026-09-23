@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: single post very close, filling much of the forward frame near center tick - beside the gate not facing opening | action: override turn_right_45 in place to reorient away from the post before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

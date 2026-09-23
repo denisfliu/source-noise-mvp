@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: single yellow post with crossbar end ahead, roughly centre -- matches 'centre gate from left gate's far side' calibration, post faces sideways | action: forward_1 sigma 0.5, keep post to my right, continue along +x", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

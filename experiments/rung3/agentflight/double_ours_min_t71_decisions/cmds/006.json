@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: open room beyond left gate, door/table/figure, no gate posts visible yet | action: turn_right_30 sigma 0.5 to scan right for the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

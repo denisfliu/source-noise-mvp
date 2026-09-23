@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single post now large/close and near centre, downward panel shows it almost directly below -- too close, not yet abeam (hasn't left right edge) | action: right_05 forward_05 sigma 0.5 to keep clearance while continuing toward abeam position", "move": {"forward": 0.5, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

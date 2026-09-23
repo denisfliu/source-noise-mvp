@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: both posts visible again, left post nearer and larger than the smaller right post - off center toward left post | action: small 0.5m right sidestep with sigma to recenter without overshooting", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

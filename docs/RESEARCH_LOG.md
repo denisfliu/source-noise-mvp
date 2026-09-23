@@ -8161,3 +8161,18 @@ found the left gate, lined up in two turns, crossed clean at sigma 0.5 (R6 as wr
 called the mannequin and held; judge: FAIL on distance (hold 3.6 m from the mannequin, heading off 66 deg, clean,
 min clearance 0.19 m). Same over-read of distance as Sonnet ("about 1 m" at 3.6 m). Last decision was an approve
 that handed the hold to the policy. Video ctxrun/agent_mannequin_ours_gemini-35-flash_t102.mp4 sent to Denis.
+
+## primitive brief, first cell: double gate, Sonnet, ours (2026-09-23 ~08:25 PDT)
+Denis: the brief should be only (1) how the agent controls, per arm (ours: the policy and what it is good at, plus
+primitives converted to commands; waypoints: primitives flown exactly), (2) a fixed primitive vocabulary in all
+directions at several lengths, (3) universal tips. Built: `agent_sim_cli.py --prim` (forward/back/left/right/up/down/
+turn at 0.5-2 m and 15-45 deg, hold, up to two per decision), `briefs/common_min.md` (625 words incl. task brief vs
+~2000), `task_double_min.md` (task + order + "straight a metre then turn toward the centre gate"), BRIEF=min in
+run_agent_matrix.sh (tag suffix _min). Cell t71-75 (double, ours, Sonnet): both gates 2/5 (t71, t73, both also in
+the goal box), one gate 1/5, none 2/5; clean 0/5. Same both-gate rate as the full brief's t41-45 (2/5), and the
+first goal-box arrivals on this task. Where the touches are: four of five minima at (2.25,-0.35), i.e. the centre
+gate's near post (posts at x 2.36 and 3.16, y -0.33): approaching from the left gate's exit the centre gate is seen
+edge-on, Sonnet flies at the single visible post ("single yellow post ahead... matches centre gate", t71 k7-9) and
+clips it. t73's minimum (0.006 m) is the left gate's -y post at step 199, the known post-crossing right turn.
+The full brief's scripted abeam/turn-90 approach was written for exactly this and did not fix it either (t41-45
+both gates 2/5, clean 0/5). Page: agent_eval.html, arm ours_min.

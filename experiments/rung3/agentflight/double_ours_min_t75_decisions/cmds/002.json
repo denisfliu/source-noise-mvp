@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: left post much nearer/larger than right post, gap shifted right of tick | action: sidestep right 1m to recenter before the big forward push", "move": {"forward": 0.0, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

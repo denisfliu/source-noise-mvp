@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: yellow post filling almost the entire left half of frame, dangerously close (<0.5m) | action: reverse 0.5m exactly to regain clearance before turning away from it", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

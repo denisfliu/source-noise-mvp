@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: one post edge-on near left of frame with crossbar, open room with table/chair beyond - far side of left gate | action: override forward_1 sigma 0.5 to continue past the post toward center gate per task", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

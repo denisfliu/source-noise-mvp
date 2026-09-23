@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: still no gate at +82deg, just wall/vents/furniture -- the +y sweep was a dead end | action: turn right 45deg back toward where a single post was briefly seen near +34deg heading, to relocate it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

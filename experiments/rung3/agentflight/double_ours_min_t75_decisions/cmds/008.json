@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: left gate's post now at the far left edge of frame, open furnished room ahead, no gate visible | action: turn left 45deg to scan for the center gate, since the post fell to my left (mirrored from the usual right-turn approach)", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

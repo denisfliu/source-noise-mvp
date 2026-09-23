@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single yellow post very close at the left edge (L mark), no gap or second post visible | action: turn right 45 deg and advance 0.5m with sigma to clear the post and find the gate opening", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: still no gate at -41deg, more shelving/furniture | action: turn right another 45deg to reach roughly -y facing (-86deg), matching the calibration's 90deg-turn case, and search there", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

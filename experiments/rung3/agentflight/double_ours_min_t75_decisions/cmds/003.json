@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: left post now very close/large filling left side, right post small and far, uncertain centering after big sidestep | action: small forward with sigma 0.5 to let camera refine approach and reveal true gap position", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

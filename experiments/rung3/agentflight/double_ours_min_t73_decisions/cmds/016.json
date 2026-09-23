@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: penguin toy in lower-left of downward panel (behind-left), basket upper-right, empty office room ahead | action: override left_05 back_05 to position over the penguin", "move": {"forward": -0.5, "left": 0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

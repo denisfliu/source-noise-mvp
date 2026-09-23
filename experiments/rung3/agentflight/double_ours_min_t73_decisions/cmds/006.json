@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single post edge-on right of center tick, table and statue beyond - still short of abeam position for center gate | action: override forward_1 sigma 0.5 to reach abeam the center gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}
