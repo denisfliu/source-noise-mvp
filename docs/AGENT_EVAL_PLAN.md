@@ -89,3 +89,11 @@ downward frame.
 - Task knowledge in the briefs must be identical across arms; the mannequin brief's "not visible from the
   start" is kept for both.
 - The real-only pin has flown no agent flight yet; task 1 in ours is the first check, before the matrix.
+
+## Direct-API reviewer (2026-09-22)
+`AGENT=gemini bash scripts/run_agent_matrix.sh <task> <arm> <n> [first]` runs `experiments/rung3/agent_api_driver.py`
+instead of `claude -p`: one model call per decision (system prompt = `briefs/common_api.md` + task brief, calibration
+sheet + decision image attached, JSON answer), no tools, no running conversation. Key in `~/.config/gemini.env`
+(`GEMINI_API_KEY=...`, chmod 600; never in the repo); model via `MODEL=` or `GEMINI_MODEL=`. Records carry
+`agent` and `model`; decisions log to `<dir>/api_log.jsonl` (readout, raw reply, latency). `--dry` exercises the
+mailbox without a key. A Sonnet/Opus direct arm needs an Anthropic API key and one more provider function.

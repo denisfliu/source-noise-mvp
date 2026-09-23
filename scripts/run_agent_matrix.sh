@@ -9,7 +9,12 @@
 set -u
 TASK=${1:?task}; ARM=${2:?arm}; N=${3:?ntrials}; T0=${4:-1}
 ROOT=/home/dfliu/code/source-noise-mvp; RD=$ROOT/experiments/rung3; RUN=/home/dfliu/ctxrun; OUTD=$RD/agent_eval
+# AGENT=claude (default): headless Claude Code reviewer (`claude -p`, briefs/common.md, the CLI). AGENT=gemini: the direct-API
+# reviewer (agent_api_driver.py, briefs/common_api.md, one model call per decision, no tools); key from ~/.config/gemini.env.
+AGENT=${AGENT:-claude}; [ -f ~/.config/gemini.env ] && . ~/.config/gemini.env
+[ "$AGENT" = gemini ] && MODEL=${MODEL:-${GEMINI_MODEL:-gemini-2.5-flash}}
 MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}; export PORT=${PORT:-9160}   # one port per concurrent chain
+TV=/home/dfliu/code/tv/bin/python
 # overrides run to completion (2026-09-22 check flights: the 25-step cap left every approach half-flown and the agent
 # spent its last decisions closing a gap it believed closed); the reviewer is told so in the brief.
 export AGENT_MAXEXEC=${AGENT_MAXEXEC:-50}
@@ -29,33 +34,41 @@ case $ARM in
 esac
 mkdir -p $OUTD $RUN
 for i in $(seq $T0 $((T0 + N - 1))); do
-  MT=$([ "$MODEL" = sonnet ] && echo "" || echo "_$MODEL"); TAG=${TASK}_${ARM}${MT}_t$i; AD=$RUN/agent_sim_$TAG
+  MT=$([ "$MODEL" = sonnet ] && echo "" || echo "_${MODEL//[.\/]/}"); TAG=${TASK}_${ARM}${MT}_t$i; AD=$RUN/agent_sim_$TAG
   echo "=== $TAG $(date +%H:%M)"
   ARM=$ARM START="0,0,1.5" STARTYAW=$SY bash $ROOT/scripts/run_agent_flight.sh $TAG left_and_center left "$PROMPT" $NCH 50 > $RUN/launch_$TAG.log 2>&1
   for k in $(seq 1 120); do [ -f $AD/obs/000_view.jpg ] && break; sleep 5; done
   [ -f $AD/obs/000_view.jpg ] || { echo "$TAG: flight never reached decision 0"; continue; }
-  python3 - "$RD/briefs/common.md" "$RD/briefs/task_$TASK.md" "$BACKEND" "$AD" "$NCH" > $RUN/brief_$TAG.md <<'PYEOF'
-import sys
-common, task, backend, d, budget = sys.argv[1:6]
-print((open(common).read() + "\n" + open(task).read()).replace("{BACKEND}", backend).replace("{DIR}", d).replace("{BUDGET}", budget))
+  COMMON=$([ "$AGENT" = gemini ] && echo common_api.md || echo common.md)
+  python3 - "$RD/briefs/$COMMON" "$RD/briefs/task_$TASK.md" "$BACKEND" "$AD" "$NCH" "$AGENT" > $RUN/brief_$TAG.md <<'PYEOF'
+import re, sys
+common, task, backend, d, budget, agent = sys.argv[1:7]
+t = (open(common).read() + "\n" + open(task).read()).replace("{BACKEND}", backend).replace("{DIR}", d).replace("{BUDGET}", budget)
+if agent == "gemini":   # the task briefs and backend text name the CLI flags; the API reviewer answers with JSON fields of the same names
+    t = re.sub(r"--(dx|dy|dz|yaw|sigma)\b", r"\1", t)
+print(t)
 PYEOF
   T_START=$(date +%s)
-  claude -p "$(cat $RUN/brief_$TAG.md)" --model $MODEL --max-turns $MAXTURNS --dangerously-skip-permissions --output-format text \
-    < /dev/null > $RUN/reviewer_$TAG.log 2>&1
+  if [ "$AGENT" = gemini ]; then
+    $TV $RD/agent_api_driver.py --dir $AD --brief $RUN/brief_$TAG.md --model $MODEL > $RUN/reviewer_$TAG.log 2>&1
+  else
+    claude -p "$(cat $RUN/brief_$TAG.md)" --model $MODEL --max-turns $MAXTURNS --dangerously-skip-permissions --output-format text \
+      < /dev/null > $RUN/reviewer_$TAG.log 2>&1
+  fi
   for k in $(seq 1 120); do [ -f $AD/done ] && break; sleep 5; done
   T_END=$(date +%s)
   for p in $(ss -ltnp | grep ":$PORT " | grep -o "pid=[0-9]*" | cut -d= -f2); do kill "$p" 2>/dev/null; done
   J=$($RD/../../scripts/agent_judge_wrap.sh $TASK $RUN/traj_$TAG.npy $AD 2>/dev/null)
   NDEC=$(ls $AD/cmds 2>/dev/null | wc -l); NOVR=$(grep -l '"override"' $AD/cmds/*.json 2>/dev/null | wc -l)
   WAITS=$(grep -o "([0-9.]*s)" $RUN/roll_$TAG.log | tr -d '()s' | sort -n | awk '{a[NR]=$1} END{print (NR?a[int((NR+1)/2)]:"")}')
-  python3 - "$J" "$TAG" "$TASK" "$ARM" "$i" "$NDEC" "$NOVR" "$WAITS" "$((T_END - T_START))" "$MODEL" >> $OUTD/${TASK}_${ARM}${MT}.jsonl <<'PYEOF'
+  python3 - "$J" "$TAG" "$TASK" "$ARM" "$i" "$NDEC" "$NOVR" "$WAITS" "$((T_END - T_START))" "$MODEL" "$AGENT" >> $OUTD/${TASK}_${ARM}${MT}.jsonl <<'PYEOF'
 import json, sys
 j = json.loads(sys.argv[1]) if sys.argv[1].strip().startswith("{") else {"judge_error": sys.argv[1][:200]}
-j.update({"tag": sys.argv[2], "task": sys.argv[3], "arm": sys.argv[4], "trial": int(sys.argv[5]), "decisions": int(sys.argv[6]), "model": sys.argv[10] if len(sys.argv) > 10 else "sonnet",
+j.update({"tag": sys.argv[2], "task": sys.argv[3], "arm": sys.argv[4], "trial": int(sys.argv[5]), "decisions": int(sys.argv[6]), "model": sys.argv[10] if len(sys.argv) > 10 else "sonnet", "agent": sys.argv[11] if len(sys.argv) > 11 else "claude",
           "overrides": int(sys.argv[7]), "median_wait_s": float(sys.argv[8]) if sys.argv[8] else None, "flight_s": int(sys.argv[9])})
 print(json.dumps(j))
 PYEOF
-  mkdir -p $RD/agentflight/${TAG}_decisions && cp -r $AD/cmds $AD/obs $AD/*.json $RD/agentflight/${TAG}_decisions/ 2>/dev/null
+  mkdir -p $RD/agentflight/${TAG}_decisions && cp -r $AD/cmds $AD/obs $AD/*.json $AD/*.jsonl $RD/agentflight/${TAG}_decisions/ 2>/dev/null
   cp $RUN/traj_$TAG.npy $RD/agentflight/ 2>/dev/null; cp $RUN/reviewer_$TAG.log $RD/agentflight/${TAG}_decisions/reviewer.log 2>/dev/null
   tail -1 $OUTD/${TASK}_${ARM}${MT}.jsonl | cut -c1-240
 done
