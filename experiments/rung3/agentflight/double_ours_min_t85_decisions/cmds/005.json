@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: both posts close together and nearly centred on the tick, gap visible between them | action: advance forward to cross the gate, letting the camera bend it slightly", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

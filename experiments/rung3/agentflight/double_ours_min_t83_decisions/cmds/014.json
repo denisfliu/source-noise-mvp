@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: the penguin's crate is now almost directly below, just slightly right and behind our centre | action: override with a small rightward nudge to centre over it for the bonus hover", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: only a small distant post at the far left edge, no crossbar or second post, room open ahead with a bench | action: turn left toward the post and move forward to re-approach the center gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

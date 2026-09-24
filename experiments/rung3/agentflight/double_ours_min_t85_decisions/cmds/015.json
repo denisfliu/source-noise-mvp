@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: turn only reached -133 not -90 as intended | action: finish turning left toward -y and push forward 2m in one decision to reach the centre gate area, running low on decisions", "move": {"forward": 2.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

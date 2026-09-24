@@ -8176,3 +8176,14 @@ edge-on, Sonnet flies at the single visible post ("single yellow post ahead... m
 clips it. t73's minimum (0.006 m) is the left gate's -y post at step 199, the known post-crossing right turn.
 The full brief's scripted abeam/turn-90 approach was written for exactly this and did not fix it either (t41-45
 both gates 2/5, clean 0/5). Page: agent_eval.html, arm ours_min.
+
+## primitive brief + diagonals + edge-on tip: worse (2026-09-23 ~21:30 PDT)
+t81-85 (double, ours, Sonnet, common_min.md with diag_left/right primitives and "one post with the crossbar running
+away from you = looking along the gate: sidestep/diagonal until both posts separate"): both gates 0/5, one gate 1/5,
+clean 0/5 (t71-75 without them: 2/5, 1/5, 0/5). Left-gate plane crossings at +0.37, +0.59, +0.31 m from centre (posts
+at ±0.40): the agent now overrides during the policy's own approach ("left post larger than right post" -> sidestep)
+and breaks the lineup that the full brief's approve-by-default preserved (left gate 4/5 there). Centre gate: every
+minimum at its posts again; the tip did not change the behaviour (t81 approved toward the single edge-on post, then
+six overrides beside it incl. two 1 m reverses). back_05/back_1 were used in 3/5 flights once no rule forbade them.
+Next: drop back_* from the vocabulary; state that on a trained gate the policy's proposal IS the crossing (approve
+until the crossbar has passed); keep the diagonals.

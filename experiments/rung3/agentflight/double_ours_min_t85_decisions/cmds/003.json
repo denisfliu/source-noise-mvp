@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: both posts visible and roughly symmetric around the centre tick, crossbar level, gap in the middle | action: advance straight forward toward the gate, letting the camera bend it slightly", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

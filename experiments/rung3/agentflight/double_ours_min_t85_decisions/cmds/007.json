@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: one post edge-on near the right edge with crossbar trailing away, room continues ahead | action: continue straight along +x keeping the post to my right, not flying at it", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

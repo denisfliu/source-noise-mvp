@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: one yellow post large and near left-of-centre, a second post partly hidden behind/right of it, not a clean centered gap | action: sidestep right to move off the near post and open the gap, sigma 0.5 to bend around it", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

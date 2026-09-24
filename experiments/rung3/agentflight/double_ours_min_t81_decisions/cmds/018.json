@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: single post close and centered with crossbar running to the right, likely mid-crossing of the center gate, downward panel shows post nearly underneath | action: push forward 1m with sigma 0.5 to complete the crossing rather than reverse", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

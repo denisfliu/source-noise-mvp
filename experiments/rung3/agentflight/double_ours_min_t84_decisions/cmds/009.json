@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: near post now at left frame edge, open room and table ahead (abeam the center gate's near post) | action: override turn_right_45 sigma 0.5 to continue rotating toward facing -y for the center gate, since policy wanted to turn back left toward the post", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

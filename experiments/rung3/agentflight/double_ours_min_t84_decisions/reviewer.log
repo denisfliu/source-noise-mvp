@@ -1,0 +1,5 @@
+Flight ended. Report:
+
+- **Left gate**: crossed at decision k=2→k=3 (posts split to frame edges, crossbar passed underneath in the downward panel) — through the middle, clean crossing.
+- **Center gate**: never crossed. After the left gate, no yellow posts or teal crossbar were ever sighted again — only a persistent white pillar/office-shelving area (an out-of-distribution zone, since the policy was trained only on direct left-gate and right-gate flights, not this left-then-center compound task). Extensive turning toward facing -y per the calibration's center-gate procedure found no gate.
+- **Final pose**: x=2.61, y=-0.90, z=1.36, heading -26° (-0.46 rad), stationary inside the office-bay area, task incomplete.

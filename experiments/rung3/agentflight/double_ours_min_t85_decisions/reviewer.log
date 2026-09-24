@@ -1,0 +1,5 @@
+Flight report:
+
+- Left gate: crossed at decision k=5 (the forward_1 sigma-0.5 override), through the middle — both posts were symmetric on the centre tick immediately before, and the forward panel opened into clear room beyond with no crossbar remaining.
+- Center gate: never crossed. After turning 90° right past the left gate's far post (k=8–14), the drone entered an office/desk area (glass partition, monitors, a pillar) with no yellow posts or crossbar ever found in front, right, or -x directions; the remaining decisions were spent retreating from a close glass wall rather than locating the gate.
+- Final pose: x=2.55, y=-1.81, z=1.51, heading ≈ -56° (-62° before the last move), inside the office area — task incomplete, second gate not crossed, no collisions.

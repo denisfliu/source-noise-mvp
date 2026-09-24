@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: single yellow post filling center of frame, close, no second post or crossbar edge visible, several moves haven't revealed the gate | action: back up 1m to get a wide view of the center gate area", "move": {"forward": -1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

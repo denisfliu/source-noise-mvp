@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: the penguin/crate is now almost centred in the downward panel, slightly ahead | action: override with a tiny forward nudge to settle directly over it", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

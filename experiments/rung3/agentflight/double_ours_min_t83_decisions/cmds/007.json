@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: single yellow post fairly close and left-of-centre, no second post or clean crossbar visible (beside-gate signature) | action: override to advance half a metre per the ONE-POST-ONLY fix, then re-turn to bring both posts into frame", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: gate post has left the frame, only room and furniture visible ahead, crossbar now trailing off top-right of downward view \u2014 abeam the centre gate | action: turn right 90 degrees in place to face -y toward the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -90.0, "sigma": 0.0}}

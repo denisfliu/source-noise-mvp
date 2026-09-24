@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: still only one yellow post, close, crossbar diagonal in view, downward panel shows the post crossing under us | action: back away 0.5m to get perspective on the gate before lining up", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: office corridor and door ahead, mats and a blue cage-like shape below (looks like the original start area, not the animal) | action: override with a short forward step toward -x to scan for the stuffed animal per the calibration hint", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

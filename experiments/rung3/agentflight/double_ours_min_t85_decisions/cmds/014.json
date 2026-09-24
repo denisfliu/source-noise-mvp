@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: a yellow post close ahead with colourful mats below \u2014 likely the left gate seen from behind, not the centre gate | action: turn back to face -y, abandoning the -x search, to try a longer push toward the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 90.0, "sigma": 0.0}}

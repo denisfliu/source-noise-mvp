@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: near left post now large and close, filling much of the left frame, smaller post visible further right | action: turn right slightly away from the post and advance a shorter step, sigma 0.5", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

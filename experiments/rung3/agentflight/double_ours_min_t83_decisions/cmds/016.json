@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: the penguin/crate has slipped to the bottom (behind) of the downward panel, meaning we overshot past it | action: override with a small backward step to reacquire position over it", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

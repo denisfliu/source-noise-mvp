@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: post filling most of frame close ahead, downward panel shows the crossbar directly underneath running forward, consistent with being in the gate opening | action: final forward push 1m with sigma 0.5 to complete the crossing and clear the post", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

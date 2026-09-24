@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: one post close at right edge, open room beyond, teal bar passing underneath in downward panel (mid-crossing) | action: override to go straight forward and complete the crossing instead of the proposed rightward strafe that clips toward the near post", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

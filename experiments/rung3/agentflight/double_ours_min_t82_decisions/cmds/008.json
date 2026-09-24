@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: only a small post sliver at right frame edge, open room (door, bench) visible beyond, possible transit in progress | action: push straight forward rather than the policy's mostly-lateral plan, sigma 0.5", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

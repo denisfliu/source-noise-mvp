@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: open room ahead, only a sliver of yellow post at the right edge (left gate now behind us) | action: override the proposed backward drift and continue straight forward per plan (don't fly back into the gate just crossed)", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

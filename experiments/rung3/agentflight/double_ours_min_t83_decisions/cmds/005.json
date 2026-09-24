@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: open room ahead, no gate visible, table and statue in view | action: override to turn right 45 degrees to start searching for the center gate, which the calibration says lies toward -y", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: office equipment and a pillar, matching the calibration's post-centre-gate office bay | action: turn right 90 degrees to scan toward -x for the stuffed animal/table, per the calibration's post-crossing guidance", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -90.0, "sigma": 0.0}}

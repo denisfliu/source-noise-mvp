@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: only one post visible, large and right-of-centre, we have only turned 32 of the needed 90 degrees | action: continue turning right to finish facing -y toward the centre gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -60.0, "sigma": 0.0}}

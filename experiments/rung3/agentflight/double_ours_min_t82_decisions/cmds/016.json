@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: no gate posts visible at all, only room clutter (shelf, benches), turned too far right | action: turn left to relocate the gate, no forward, sigma 0.3", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.3}}

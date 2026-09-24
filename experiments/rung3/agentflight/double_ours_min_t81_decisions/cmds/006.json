@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single yellow post large and centered, close, crossbar running off to the right, no second post in view | action: turn right 30 deg to find the gate's other post and the opening", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

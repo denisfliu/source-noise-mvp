@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: only one post visible again, centered and close, filling most of the frame, sidestep left overshot toward it | action: back up 1m to regain a wide view of both posts", "move": {"forward": -1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

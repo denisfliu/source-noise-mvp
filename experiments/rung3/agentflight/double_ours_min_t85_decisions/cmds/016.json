@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: still office desks and a chair, no gate posts or animal, downward panel shows an unrelated teal object on mats | action: nudge heading toward -y and push forward another metre to keep searching, decisions running low", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

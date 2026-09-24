@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: position has barely moved for the last three decisions near this pillar/shelf, still no gate posts visible; running low on decisions | action: override forward_2 sigma 0.5 for a decisive push past the obstacle to find the center gate or target beyond", "move": {"forward": 2.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: post very close at left frame edge, teal crossbar diagonal above, stuffed animal visible in downward panel near a rack | action: sidestep right to clear the post then push forward through the gate, sigma 0.5, only two decisions remain", "move": {"forward": 1.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

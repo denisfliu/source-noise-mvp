@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: left post larger/nearer than right post again, gap skewed right in frame | action: sidestep right to recenter on the gate, sigma 0.5", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

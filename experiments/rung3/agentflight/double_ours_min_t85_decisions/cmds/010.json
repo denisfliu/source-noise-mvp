@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: a pale vertical object dead ahead, not clearly a yellow gate post, heading only -74 of the intended -90 | action: finish the right turn to face -y squarely before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

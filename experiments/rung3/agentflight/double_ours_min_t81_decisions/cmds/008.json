@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single yellow post left-of-center with crossbar exiting top-right, no second post, heading drifted -22 deg off +x | action: turn left back toward +x and advance, letting the policy bend around the post", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

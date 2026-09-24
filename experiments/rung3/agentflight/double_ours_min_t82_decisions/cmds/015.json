@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: only one post visible, left-of-frame, no second post visible, likely beside the gate | action: turn right away from post and advance half a metre, to then turn back and find both posts, sigma 0.5", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

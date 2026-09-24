@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single yellow post very close, left of centre tick, filling much of the frame (beside the gate, opening not in view) | action: override turn_right_30 sigma 0.5 to turn away from the post instead of the policy's further-left turn", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}
