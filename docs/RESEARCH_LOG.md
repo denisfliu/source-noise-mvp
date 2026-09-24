@@ -8214,3 +8214,5 @@ whole chain took ~25 min). Success = transit + route-clean + clearance-clean, n=
 | ours | 0/20 | 11/20 | 10/20 | 18/20 |
 Second tens reproduce the first tens within 1-2 flights everywhere. The sketch cells (orbit, fig8 t6-10) OOM'd on the
 first attempt (apps script at 0.45 of the card) and were relaunched at 0.30. PAPER_TABLES Table 1 updated.
+Sketch cells extended (2026-09-24 ~07:55): orbit n=10 tracking median 0.070 m (0.065-0.077), 10/10 loops, clean
+0/10 (post-handback drift only); fig8 n=10 tracking median ~0.05 m, 10/10 clean. Table 2 updated.

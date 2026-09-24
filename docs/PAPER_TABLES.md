@@ -22,14 +22,14 @@ servers and scorers; the 50-step extensions are the `_apc50` tags). First-ten / 
 ## Table 2. Movement tests, real-only pin only
 
 Authored routes flown through the real-only pin (100 real demonstrations of straight gate passes; no orbit, no
-figure-eight, no compound in its data). Sim: 5 trials per cell; tracking = median distance of the flown path to
+figure-eight, no compound in its data). Sim: 10 trials per cell for the orbit and figure-eight (5 + 5, 2026-09-24), 5 for the compound; tracking = median distance of the flown path to
 the drawn route; clean = clearance >= 0.18 m. Real: the collaborator's flights, command logs only, replan poses
 against the route; clearance unmeasured.
 
 | Route | Where | Tracking (m) | Completed | Clearance-clean | Note |
 |---|---|---|---|---|---|
-| orbit around the right gate, 0.9 m radius | sim | 0.05 | 5/5 full loops | 0/5 | clearance lost only in the post-handback hover drift (~69 s), not on the loop |
-| figure-eight through left + centre gates | sim | 0.05-0.07 | 5/5 | 5/5 | |
+| orbit around the right gate, 0.9 m radius | sim (n=10) | 0.07 (0.065-0.077) | 10/10 full loops | 0/10 | clearance lost only in the post-handback hover drift (~69 s), not on the loop |
+| figure-eight through left + centre gates | sim (n=10) | 0.05 (0.04-0.07) | 10/10 | 10/10 | |
 | hand-drawn compound, left then centre gate | sim | 0.12 | 3/5 reached the goal | 1/5 | cuts the centre-gate corner: no centre-gate demos in its data |
 | figure-eight, fig8_denis3 (10.5 m) | real, 2 attempts | 0.10 (max 0.29 / 0.69) | 2/2 reached the handback | unmeasured | flight 2 dipped to z 0.83 |
 | orbit around the right gate, 1.3 m, 1.5 loops | real, ~5 attempts | 0.06-0.15 on the 2 that flew | 2 reached the handback | unmeasured | the others aborted or restarted; video needed |
