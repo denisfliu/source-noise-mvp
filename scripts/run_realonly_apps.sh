@@ -12,7 +12,7 @@ for SK in orbit fig8; do
   setsid env -u VIRTUAL_ENV PYTHONPATH=/home/dfliu/code/openpi-snmvp/src SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U \
     SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 \
     SNMVP_SIGMA_MAP=$RD/sigma_map_realonly.json SNMVP_PIN_PROMPT=$RD/sketch_$SK.json \
-    XLA_PYTHON_CLIENT_PREALLOCATE=true XLA_PYTHON_CLIENT_MEM_FRACTION=0.45 CUDA_VISIBLE_DEVICES=0 \
+    XLA_PYTHON_CLIENT_PREALLOCATE=true XLA_PYTHON_CLIENT_MEM_FRACTION=0.30 CUDA_VISIBLE_DEVICES=0 \
     $VENVPY $RD/serve_gate_pin_joint.py --ckpt $CK --config pi0_gate --norm $HFB/assets/gate_nav --pin-u $U --port $PORT >> $RUN/sv_app_realonly_$SK.log 2>&1 </dev/null & disown
   for k in $(seq 1 150); do ss -ltn | grep -q ":$PORT " && break; sleep 3; done
   ss -ltn | grep -q ":$PORT " || { echo "SERVER_TIMEOUT $SK" >> $OUT; continue; }
