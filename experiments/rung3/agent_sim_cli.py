@@ -23,6 +23,8 @@ for _n, _m in ((0.5, "05"), (1.0, "1"), (2.0, "2")):
     PRIMS[f"forward_{_m}"] = {"forward": _n}; PRIMS[f"left_{_m}"] = {"left": _n}; PRIMS[f"right_{_m}"] = {"left": -_n}
 for _n, _m in ((0.5, "05"), (1.0, "1")):
     PRIMS[f"back_{_m}"] = {"forward": -_n}
+for _n, _m in ((0.5, "05"), (1.0, "1"), (2.0, "2")):   # 45-degree diagonals, heading unchanged (Denis, 2026-09-23)
+    PRIMS[f"diag_left_{_m}"] = {"forward": _n * 0.7071, "left": _n * 0.7071}; PRIMS[f"diag_right_{_m}"] = {"forward": _n * 0.7071, "left": -_n * 0.7071}
 PRIMS["up_05"] = {"up": 0.5}; PRIMS["down_05"] = {"up": -0.5}
 for _d in (15, 30, 45):
     PRIMS[f"turn_left_{_d}"] = {"yaw_deg": float(_d)}; PRIMS[f"turn_right_{_d}"] = {"yaw_deg": -float(_d)}
@@ -35,6 +37,7 @@ def prims_text():
         "  back_05  back_1                      move against your heading 0.5 / 1 m",
         "  left_05  left_1  left_2              sidestep to your left 0.5 / 1 / 2 m (heading unchanged)",
         "  right_05  right_1  right_2           sidestep to your right 0.5 / 1 / 2 m",
+        "  diag_left_05/1/2  diag_right_05/1/2  move 0.5 / 1 / 2 m at 45 degrees forward-left / forward-right (heading unchanged)",
         "  up_05  down_05                       climb / descend 0.5 m",
         "  turn_left_15/30/45  turn_right_15/30/45   turn in place by that many degrees",
         "  hold                                 stay where you are",
