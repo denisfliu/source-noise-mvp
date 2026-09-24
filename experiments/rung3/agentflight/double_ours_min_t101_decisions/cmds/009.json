@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: teal crossbar streak passing underneath in downward camera confirms center gate just crossed, white cabinet close ahead in forward camera | action: turn_left_45 to steer away from the cabinet into open space, both gates now done", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

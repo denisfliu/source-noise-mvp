@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: still no yellow gate posts, just office furniture and a stool | action: keep turning left to search for the center gate, which should be ahead-left of our overshot position", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

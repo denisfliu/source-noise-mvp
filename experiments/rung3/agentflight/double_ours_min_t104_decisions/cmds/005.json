@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: the just-crossed left gate's posts and crossbar close ahead, edge-on, table nearby | action: continue straight along +x past the gate structure to get clear before turning toward the center gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

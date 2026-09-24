@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: left gate posts behind-left, open room ahead, low policy trust here | action: forward_05 to continue straight before turning toward center gate", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

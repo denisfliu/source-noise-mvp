@@ -1,0 +1,5 @@
+Flight report:
+
+- **Left gate**: crossed at decision k=3 (approved), through the middle — two posts framed the gap with the crossbar visible, confirmed passed under at k=4.
+- **Center gate**: not crossed. The approach oscillated (k=7–k=19) trying to relocate the gate after losing visual lock repeatedly; the drone ended up past the gate's x-coordinate but drifted ~0.5–0.6 m to the right of its y-center each time, never getting both posts and a clear gap aligned on approach.
+- **Final pose**: x=2.93, y=-0.82, z=1.37, heading +10°(0.18 rad) — past the center gate's target x (2.75) but well right of its y-center (-0.25), facing a wall/furniture area with the flight held in place.

@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: mannequin standing near the cart on the left, about 20 degrees left of the center tick | rule: R1 | action: turn left 20 degrees and move 0.5 m toward it", "move": {"forward": 0.47291248669074337, "left": 0.16897863750183775, "up": 0.0, "yaw_deg": 20.0, "sigma": 0.5}}

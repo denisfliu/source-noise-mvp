@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: single yellow post filling/blurring the whole frame, very close, no gap visible | action: left_1 sidestep away from the post toward gate y-center, avoid collision", "move": {"forward": 0.0, "left": 1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

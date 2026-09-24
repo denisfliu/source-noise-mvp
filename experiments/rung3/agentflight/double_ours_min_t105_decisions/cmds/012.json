@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: one post close/prominent on left with crossbar, ribbed shutter and window wall behind (matches beside-gate calibration pattern), heading is ~14 deg left of gate bearing | action: turn right slightly and advance to center the gap and close distance", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

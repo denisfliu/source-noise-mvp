@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: a large white room-pillar filling the frame, no yellow gate posts, pose shows we overshot the center gate's y and missed it to the -x side | action: turn left to bring the gate, which is now behind-left, back into view", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

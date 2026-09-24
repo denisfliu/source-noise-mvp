@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: open room, small yellow post to the right, table/stool ahead-left | action: turn_right_45 + forward_1 to re-aim at the center gate (x2.75,y-0.25) and close distance", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

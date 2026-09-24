@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: wall, table and shelving ahead, no gate posts visible, we are past gate x but far right of its y-center | action: hold to avoid flying into furniture/wall on the final decision", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

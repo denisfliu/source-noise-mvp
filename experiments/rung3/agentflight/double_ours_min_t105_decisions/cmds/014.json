@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: no posts visible, just wall/window/shutter -- the sidestep overshot past the gate laterally (distance to gate grew to 0.79m) | action: turn left and advance to bring the gate back into view and close distance", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

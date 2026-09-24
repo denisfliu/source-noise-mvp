@@ -1,0 +1,5 @@
+Flight ended. Final report:
+
+- **Left gate**: crossed during the move at decision k=3 (approved the trained approach), confirmed by k=4's view showing the posts split to the frame edges with open room beyond — through the middle, clean.
+- **Center gate**: crossed during the move at decision k=18 (override forward_1, sigma 0.5), confirmed by k=19's view (posts splitting to edges/vanishing, crossbar passing beneath in the downward panel) — through the middle, after an earlier overshoot at k=9-10 that required manual re-alignment via turns and a sidestep.
+- **Final pose**: x=2.51, y=-0.31, z=1.48, heading +87° (facing roughly +y), in the room beyond the center gate.

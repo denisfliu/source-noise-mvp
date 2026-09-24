@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: single post far left, bench/table furniture ahead mid-frame, sidestep overshot south past the gate's y | action: turn left 45 deg to re-aim at the center gate before advancing past the furniture", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

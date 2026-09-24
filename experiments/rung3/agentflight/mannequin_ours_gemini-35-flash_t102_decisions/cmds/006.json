@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: both posts in view and the gap is centered on the tick | rule: R6 | action: move straight along heading to cross the gate with sigma 0.5 and no yaw", "move": {"forward": 1.4960792975851427, "left": 0.015707811341682476, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

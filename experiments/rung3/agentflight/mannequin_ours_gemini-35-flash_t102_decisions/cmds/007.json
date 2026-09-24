@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: right post of the gate is still visible on the right of the forward camera and gate structure is visible in the downward camera | rule: R6 | action: move 1.0 m forward along heading to clear the gate", "move": {"forward": 1.001679040279487, "left": 0.006253020451420954, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

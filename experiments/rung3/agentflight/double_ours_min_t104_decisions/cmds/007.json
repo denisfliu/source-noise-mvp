@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: center-gate post near the right edge of frame, crossbar visible - abeam the gate on its +y side | action: turn right 90 degrees to face -y toward the gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -90.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: single yellow post centered with crossbar running away diagonally, second post not separated - looking along the center gate's axis, not through it | action: sidestep right 1m to separate the posts before lining up", "move": {"forward": 0.0, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: single yellow post large and close, filling center of frame, crossbar/pole passing close beneath in downward view | action: turn right 45 deg to face toward south and separate from the near post before crossing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

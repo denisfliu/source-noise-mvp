@@ -8187,3 +8187,13 @@ minimum at its posts again; the tip did not change the behaviour (t81 approved t
 six overrides beside it incl. two 1 m reverses). back_05/back_1 were used in 3/5 flights once no rule forbade them.
 Next: drop back_* from the vocabulary; state that on a trained gate the policy's proposal IS the crossing (approve
 until the crossbar has passed); keep the diagonals.
+
+## room layout in the brief: both gates 3/5 (2026-09-23 ~22:05 PDT)
+t101-105 (double, ours, Sonnet, primitive brief + THE ROOM section: gate openings and crossing headings relative to
+the start, stuffed animal position): both gates 3/5 (101, 103, 104; path 4.9-9.2 m), one gate 2/5, clean 0/5.
+Best both-gate rate of any cell (full brief 2/5, primitive 2/5, diagonals 0/5). Touches: t102/103/104 minima at
+(2.27,-0.27) = the centre gate's near post (x 2.36): the agent turns to -y at x ~2.3 instead of 2.76 and the
+crossing rides the post. t101/t105 minima at (1.3,0.35) = the left gate's -y post during the policy's own crossing,
+the real-only pin's known 50-step left-gate clip (0/10 clean at 50-step, 5/10 at 25-step in the atomic cells).
+Next: post coordinates + "get x to 2.76 before turning to -y" in THE ROOM (t111-115); the left-gate clip is the
+executor's, and would need the 25-step replan for the agent flights (a setting change for Denis to decide).

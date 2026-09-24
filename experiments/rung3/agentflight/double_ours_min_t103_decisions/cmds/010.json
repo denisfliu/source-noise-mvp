@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: single yellow post left-of-center, structure above possibly crossbar | action: turn_left_30 + forward_1 to line up on the center gate opening, letting vision bend the path", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

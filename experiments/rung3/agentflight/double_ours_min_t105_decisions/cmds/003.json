@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: single yellow post close on left edge of frame, crossbar running diagonally in downward panel, no gap visible | action: turn away from the post and advance to bring both posts back into frame", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: open room ahead, desk/furniture at left, need to cover ground toward center gate which is 1.5m further ahead | action: forward_1 with sigma 0.5 to speed toward center gate while bending around furniture", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

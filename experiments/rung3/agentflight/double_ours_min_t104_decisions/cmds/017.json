@@ -1,0 +1,1 @@
+{"k": 17, "verdict": "override", "why": "seen: single large yellow post centered, filling much of the frame, far post out of view | action: turn left to swing the post out of center and reveal the gap toward the gate", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single yellow gate post filling frame near-center, no crossbar visible spanning it | action: turn_right_45 only, no forward, to stop looking along the gate line and rotate toward facing through it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

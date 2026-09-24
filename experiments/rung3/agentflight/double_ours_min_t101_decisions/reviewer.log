@@ -1,0 +1,5 @@
+Flight report:
+
+1. Left gate crossed during the decision approved at k=2 (executed move landed at k=3, pose x=1.12, y=0.52) — through the middle, crossbar confirmed passing underneath in the downward-camera strip.
+2. Center gate crossed during the decision approved at k=8 (executed move landed at k=9, pose x=2.53, y=-0.49, heading -81°) — through the middle, teal crossbar streak confirmed passing underneath in the downward camera; pose matched the gate's target coordinates (x2.75, y-0.25) closely.
+3. Final pose: x=2.32, y=-0.60, z=1.53, heading -37° (held stable there for the remaining decisions after both gates were cleared).

@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: post close and left-of-center, downward view shows a large close blur directly beneath us - very near a post/crossbar | action: turn right 45 deg in place (sigma 0) to avoid drifting into it while facing further toward south", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: far room corner, door and windows, no gate visible, only 1 decision remains and gate is 2.2m away at wrong heading -- neither gate is reachable now | action: hold in place safely rather than risk collision on a move that cannot reach a gate anyway", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

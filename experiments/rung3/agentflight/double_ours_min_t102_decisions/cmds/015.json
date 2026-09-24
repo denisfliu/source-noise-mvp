@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: no gate posts visible in forward view now (over-turned right), downward still shows a close yellow blob near us | action: turn left 30 deg and advance 1m with sigma 0.5 to reacquire the center gate posts while closing distance", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

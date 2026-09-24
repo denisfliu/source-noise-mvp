@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: single post at left edge of frame with crossbar, window wall behind, more room now visible | action: turn left toward the post to find the gate's gap and advance", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

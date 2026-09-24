@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: wall, window and mic stand, no gate visible yet | action: continue turning left toward the left gate direction (pose-computed ~131 deg heading, currently 80 deg)", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 90.0, "sigma": 0.0}}

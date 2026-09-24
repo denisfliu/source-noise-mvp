@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: both center-gate posts symmetric, crossbar level, gap centered on the tick - lined up | action: fly forward through the gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

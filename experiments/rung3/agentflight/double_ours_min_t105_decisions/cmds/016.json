@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: dark corner room, doorway, no gate visible, pose is now far off-route (1.15m from left gate, wrong heading) | action: turn left toward gate bearing (~-50 deg / 310 deg) and advance further to close distance with remaining decisions", "move": {"forward": 2.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

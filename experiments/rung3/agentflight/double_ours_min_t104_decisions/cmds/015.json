@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: single large yellow post now dead-center, filling much of the frame, second post out of view | action: turn left back to bring both posts into view and find the gap", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

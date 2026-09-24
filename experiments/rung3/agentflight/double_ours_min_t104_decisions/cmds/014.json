@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: both center-gate posts visible, near post at the far left edge (large), far post more central - gap sits left of the center tick | action: turn right slightly to center the gap on the tick", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

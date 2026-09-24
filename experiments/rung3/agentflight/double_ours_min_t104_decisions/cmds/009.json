@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: facing -y down a corridor/office bay, no gate posts visible yet in frame | action: move forward toward the center gate, letting vision bend the path as posts come into view", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

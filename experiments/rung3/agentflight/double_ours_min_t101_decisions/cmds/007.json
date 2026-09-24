@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: single yellow post at left edge, cabinet/shelf ahead, no crossbar centered yet, heading still -57deg short of the -90deg crossing heading | action: turn_right_30 to align toward facing through the center gate before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

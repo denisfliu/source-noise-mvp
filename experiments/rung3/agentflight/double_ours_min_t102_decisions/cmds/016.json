@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: no gate visible, facing a back wall/counter with furniture - we overshot south past the center gate | action: turn left 45 deg in place to reorient back toward the gate before advancing, with only a few decisions left", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

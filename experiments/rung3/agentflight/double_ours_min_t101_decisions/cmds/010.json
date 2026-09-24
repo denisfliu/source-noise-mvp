@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: open room, bench and desk to the left, no obstacles close | action: hold in place, both gates already crossed in order, nothing further required", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

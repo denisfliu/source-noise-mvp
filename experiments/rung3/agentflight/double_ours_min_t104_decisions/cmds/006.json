@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single center-gate post ahead-left with crossbar, seen edge-on since we still face +x | action: continue forward to come abeam the center gate before turning", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: no gate posts visible, only wall/shelf/stool ahead, pose suggests we drifted past the gate's y-line without reaching its x | action: turn_left_45 to rescan for the center gate before advancing further", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

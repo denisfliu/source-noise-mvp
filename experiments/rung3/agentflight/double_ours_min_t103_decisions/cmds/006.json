@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: open room, table to the right, no gate visible yet | action: turn_right_15 + forward_1 to aim toward the center gate ahead-right", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: both center-gate posts again, near post at far-left edge large, far post central-right, per calibration this off-centre-toward-near-post case needs a sidestep not a turn | action: sidestep right to equalize distance to both posts", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

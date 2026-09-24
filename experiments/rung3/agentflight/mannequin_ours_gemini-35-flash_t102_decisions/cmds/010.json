@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: safety pilot behind the table, mannequin on the left near the wall | rule: R1 | action: turn left 30 degrees and move left 0.5 m to face the mannequin and clear the table", "move": {"forward": 0.05140898770755376, "left": 0.4973500939809749, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

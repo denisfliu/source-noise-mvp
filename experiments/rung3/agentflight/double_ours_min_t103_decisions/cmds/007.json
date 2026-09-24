@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: single yellow post filling left-center, no crossbar spread visible | action: turn_right_45 to face the center gate opening (crossed facing -y) instead of looking along it", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

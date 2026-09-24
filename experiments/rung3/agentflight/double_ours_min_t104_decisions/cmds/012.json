@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: table and stool, room walls, no gate posts, facing back toward roughly +x | action: continue turning left toward where the center gate should be, ahead and to the right of the left gate's far side", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.0}}

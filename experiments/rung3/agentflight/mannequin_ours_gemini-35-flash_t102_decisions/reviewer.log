@@ -1,0 +1,18 @@
+[api-driver] dir /home/dfliu/ctxrun/agent_sim_mannequin_ours_gemini-35-flash_t102 model gemini-3.5-flash arm ours provider gemini
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+[api-driver] k=0 override (5.8s) yaw_deg +45.00 | seen: blank wall with windows and door, no gates visible | rule: R1 | action: turn left 45 degrees to sweep for gates
+[api-driver] k=1 override (4.5s) yaw_deg +45.00 | seen: blank wall and windows, no gates visible | rule: R1 | action: turn left 45 degrees to continue sweep
+[api-driver] k=2 override (8.4s) yaw_deg +45.00 | seen: office bay with desks and no gates | rule: R1 | action: turn left 45 degrees to continue sweep
+[api-driver] k=3 override (5.2s) yaw_deg +45.00 | seen: office bay with desks and no gates | rule: R1 | action: turn left 45 degrees to continue sweep
+[api-driver] k=4 override (13.6s) yaw_deg +18.00 | seen: a gate with the left post at the left edge and the right post near the center tick | rule: R6 | action: turn left 18 degrees to center the gap o
+[api-driver] k=5 override (8.7s) yaw_deg +15.00 | seen: gate with left post at left edge and right post near center tick, gap is to the left | rule: R6 | action: turn left 15 degrees to center the gap
+[api-driver] k=6 override (6.8s) forward +1.50 left +0.02 sigma +0.50 | seen: both posts in view and the gap is centered on the tick | rule: R6 | action: move straight along heading to cross the gate with sigma 0.5 and no 
+[api-driver] k=7 attempt 0 (gemini-3.5-flash): ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again 
+[api-driver] k=7 override (8.5s) forward +1.00 left +0.01 sigma +0.50 | seen: right post of the gate is still visible on the right of the forward camera and gate structure is visible in the downward camera | rule: R6 | act
+[api-driver] k=8 override (14.1s) forward +1.76 left -0.13 yaw_deg -10.00 sigma +0.50 | seen: mannequin standing near a table, slightly right of the center tick | rule: R1 | action: turn right 10 degrees and move 1.8 meters toward it
+[api-driver] k=9 override (11.9s) forward +1.00 left -0.09 yaw_deg -5.00 sigma +0.50 | seen: mannequin standing behind a table, slightly right of the center tick | rule: R1 | action: turn right 5 degrees and move 1.0 m forward to approac
+[api-driver] k=10 override (62.1s) forward +0.05 left +0.50 yaw_deg +30.00 sigma +0.50 | seen: safety pilot behind the table, mannequin on the left near the wall | rule: R1 | action: turn left 30 degrees and move left 0.5 m to face the man
+[api-driver] k=11 override (50.3s) forward +0.47 left +0.17 yaw_deg +20.00 sigma +0.50 | seen: mannequin standing near the cart on the left, about 20 degrees left of the center tick | rule: R1 | action: turn left 20 degrees and move 0.5 m 
+[api-driver] k=12 override (15.1s)  | seen: mannequin standing in the doorway, centered on the tick and about 1 m away | rule: R1 | action: hold position with zero movement
+[api-driver] k=13 approve (10.0s)  | seen: mannequin in doorway, centered on tick | rule: R2 | action: hold position. Report: Openings seen at heading +16 deg. Committed to left gate. Fir
+[api-driver] flight ended after 14 decisions

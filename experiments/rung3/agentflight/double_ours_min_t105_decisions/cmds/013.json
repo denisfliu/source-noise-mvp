@@ -1,0 +1,1 @@
+{"k": 13, "verdict": "override", "why": "seen: single post very close and left-of-center, crossbar overhead in downward panel, pose is only ~0.3m from the gate's opening center | action: sidestep right to center the gap before advancing through", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

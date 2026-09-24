@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: near left-gate post large and centered-left in forward view, proposal turns right and drives forward past it | action: turn left 30 deg to line the gap on the centre tick before advancing", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

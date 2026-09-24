@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: gate with left post at left edge and right post near center tick, gap is to the left | rule: R6 | action: turn left 15 degrees to center the gap", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: gate gap centered but progress has stalled to a few cm per step with 8 decisions left | action: forward 1m with sigma 0.5 to close distance on the center gate faster", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

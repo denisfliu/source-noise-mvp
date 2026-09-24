@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: plain room wall/furniture ahead, no gate visible, downward panel still shows the animal's table nearby | action: continue turning left in place toward the left gate's direction (pose-computed ~134 deg heading)", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 90.0, "sigma": 0.0}}

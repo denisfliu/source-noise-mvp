@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: single yellow post left-of-center at moderate range, only one post in frame, low policy trust 0.40 | action: turn away from post and advance to bring both posts back into view before re-lining up", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.5}}

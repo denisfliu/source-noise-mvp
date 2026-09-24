@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: mannequin standing near a table, slightly right of the center tick | rule: R1 | action: turn right 10 degrees and move 1.8 meters toward it", "move": {"forward": 1.7630455469372046, "left": -0.12911390097465342, "up": 0.0, "yaw_deg": -10.0, "sigma": 0.5}}

@@ -21,9 +21,9 @@ HOW TO ANSWER. Run from /home/dfliu/code/source-noise-mvp with python3, always w
 Each approve/override submits your decision and prints the next one; read the printed image with the Read tool before every decision. When a call prints "flight ended", write a three-line report. Every --why is one line: "seen: <what is in the two panels> | action: <what the move does>".
 
 THE ROOM, from your start pose (x 0, y 0, z 1.5; room axes are fixed, x ahead of the start heading, y to its left). Headings are in radians, 0 facing +x, +1.57 facing +y, -1.57 facing -y.
-- LEFT gate: opening centred 0.9 m ahead and 0.7 m to the left of the start (x 0.86, y 0.69). You cross it heading about +0.7 rad (40 degrees left of +x).
+- LEFT gate: posts at (x 0.65, y 1.05) and (x 1.18, y 0.45); the opening is centred between them at (0.9, 0.75), 0.9 m ahead and 0.75 m to the left of the start. You cross it heading about +0.7 rad (40 degrees left of +x).
 - RIGHT gate: opening centred 0.5 m ahead and 1.15 m to the right of the start (x 0.54, y -1.15). You cross it heading about -1.2 rad (mostly toward -y).
-- CENTER gate: opening centred 2.75 m ahead and 0.25 m to the right of the start (x 2.75, y -0.25). You cross it heading -1.57 rad (straight toward -y), so you approach it from its +y side; from the far side of the left gate it is ahead and to your right.
+- CENTER gate: posts at (x 2.36, y -0.33) and (x 3.16, y -0.33); the opening is centred between them at (2.76, -0.33). You cross it heading -1.57 rad (straight toward -y), so you approach it from its +y side; from the far side of the left gate it is ahead and to your right. Get your x to about 2.76 BEFORE turning to face -y: turning early puts you on the near post at x 2.36.
 - The stuffed animal is on a table at x 1.5, y -0.6, below 1.5 m altitude. Your pose track is in these same coordinates, so a move to a place is that place minus your pose.
 
 TIPS

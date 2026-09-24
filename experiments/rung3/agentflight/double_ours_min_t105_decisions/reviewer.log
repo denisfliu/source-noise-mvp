@@ -1,0 +1,5 @@
+Flight ended. Report:
+
+- Neither gate was crossed. The approach to the left gate got very close at decision k=13 (pose x=1.17, y=0.79 — about 0.33 m from the gate's opening center) but a sidestep meant to center the gap instead carried the drone laterally past the gate; repeated turn-and-advance recovery attempts over k=14–17 drifted further away into the room's far corner and never regained the gate.
+- No crossing occurred for either gate, so "through the middle" does not apply.
+- Final pose: x=−1.37, y=0.56, z=1.44, heading=+199° — a far corner of the room, roughly 2.2 m from the left gate and well outside the intended route.

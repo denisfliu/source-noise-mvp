@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: single post close on left, dark furniture cage close below in downward panel | action: turn left 90 deg in place (no translation) to reorient back toward the left gate, which pose shows is now behind-left of us uncrossed", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 90.0, "sigma": 0.0}}
