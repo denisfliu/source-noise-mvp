@@ -8223,3 +8223,7 @@ the sim start pose is fixed, so a restarted server replays the cell. The pi0 cel
 no such seed; t11-20 differ from t1-10 by 0.5-1.5 m). Deleted the copies and the 50-step extension; the cell scripts
 now take SEED (-> SNMVP_NOISE_SEED); the 25-step pin cell and the sketch cells are being re-extended with SEED=1.
 Table 1/2 reverted for the ours rows until those land.
+Seeded extension landed (2026-09-24 ~08:25, SEED=1, t1 vs t11 now differ by 1.5 m): ours 25-step left 12/20 (5+7),
+right 19/20 (9+10); orbit n=10 tracking 0.065 m (0.037-0.081), 10/10 loops, clean 3/10 (drift after handback);
+fig8 n=10 tracking 0.061 m (0.040-0.072), 10/10 clean. Tables 1-2 updated; pi0 50-step row n=20 kept (genuine),
+pin 50-step stays n=10.

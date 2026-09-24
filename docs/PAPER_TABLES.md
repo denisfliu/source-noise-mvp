@@ -12,12 +12,12 @@ contact (clearance is unmeasured on hardware: the trajectory records before dron
 | pi0 (plain fine-tune) | 100 real demos | 5/20 | 9/20 | 4/5 | 4/5 |
 | ours (pin + head) | 100 real demos | 0/10 | 5/10 | 5/5 | 3/5 |
 | pi0, 25-step replan | 100 real demos | 10/20 | 6/20 | - | - |
-| ours, 25-step replan | 100 real demos | 5/10 (n=20 pending) | 9/10 (n=20 pending) | - | - |
+| ours, 25-step replan | 100 real demos | 12/20 | 19/20 | - | - |
 
 Sim rows at a 50-step replan unless marked; the 25-step rows are the same checkpoints re-observing every 2.5 s
-(RESEARCH_LOG 2026-09-22). pi0 rows n=20 (trials 1-10 of 2026-09-21/22 plus 11-20 of 2026-09-24). ours 50-step n=10 (no further 50-step runs,
-Denis 2026-09-24); ours 25-step n=20 once the seeded extension lands (the first extension replayed trials 1-10 bit
-for bit because the pin server's residual-noise stream is seeded at start; extensions now pass SEED). Real rows: 2026-09-15/18 sessions, apc 50, judged by eyewitness + measured poses.
+(RESEARCH_LOG 2026-09-22). 25-step rows and the pi0 50-step row n=20: trials 1-10 (2026-09-21/22, server noise seed 0) plus 11-20 (2026-09-24,
+seed 1). ours 50-step stays n=10 (no further 50-step runs, Denis 2026-09-24). First-ten / second-ten splits at
+25-step: pi0 6+4 / 3+3, ours 5+7 / 9+10. Real rows: 2026-09-15/18 sessions, apc 50, judged by eyewitness + measured poses.
 
 ## Table 2. Movement tests, real-only pin only
 
@@ -28,8 +28,8 @@ against the route; clearance unmeasured.
 
 | Route | Where | Tracking (m) | Completed | Clearance-clean | Note |
 |---|---|---|---|---|---|
-| orbit around the right gate, 0.9 m radius | sim (n=5, n=10 pending) | 0.07 (0.065-0.077) | 5/5 full loops | 0/5 | clearance lost only in the post-handback hover drift (~69 s), not on the loop |
-| figure-eight through left + centre gates | sim (n=5, n=10 pending) | 0.05 (0.04-0.07) | 5/5 | 5/5 | |
+| orbit around the right gate, 0.9 m radius | sim (n=10) | 0.065 (0.037-0.081) | 10/10 full loops | 3/10 | clearance lost only in the post-handback hover drift (~69 s), not on the loop |
+| figure-eight through left + centre gates | sim (n=10) | 0.061 (0.040-0.072) | 10/10 | 10/10 | |
 | hand-drawn compound, left then centre gate | sim | 0.12 | 3/5 reached the goal | 1/5 | cuts the centre-gate corner: no centre-gate demos in its data |
 | figure-eight, fig8_denis3 (10.5 m) | real, 2 attempts | 0.10 (max 0.29 / 0.69) | 2/2 reached the handback | unmeasured | flight 2 dipped to z 0.83 |
 | orbit around the right gate, 1.3 m, 1.5 loops | real, ~5 attempts | 0.06-0.15 on the 2 that flew | 2 reached the handback | unmeasured | the others aborted or restarted; video needed |
