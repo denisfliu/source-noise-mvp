@@ -12,7 +12,7 @@ PORT=${PORT:-9021}
 kill_port () { for p in $(ss -ltnp | grep ":$1 " | grep -o "pid=[0-9]*" | cut -d= -f2); do kill -9 "$p" 2>/dev/null; done; }
 cd $RD
 kill_port $PORT; sleep 3
-setsid $EV XLA_PYTHON_CLIENT_PREALLOCATE=true XLA_PYTHON_CLIENT_MEM_FRACTION=0.30 CUDA_VISIBLE_DEVICES=0 \
+setsid $EV SNMVP_NOISE_SEED=${SEED:-0} XLA_PYTHON_CLIENT_PREALLOCATE=true XLA_PYTHON_CLIENT_MEM_FRACTION=0.30 CUDA_VISIBLE_DEVICES=0 \
   $VENVPY $RD/serve_gate_plain.py --ckpt $CK --config pi0_gate --norm $HFB/assets/gate_nav --port $PORT \
   >> $RUN/sv_$TAG.log 2>&1 </dev/null & disown
 for k in $(seq 1 200); do ss -ltn | grep -q ":$PORT " && break; sleep 3; done

@@ -2,7 +2,8 @@
 For scratch-arm evaluation — serving a pin-free flow through the pin server feeds
 it noise whose 5 pinned coordinates are ~4-6 sigma off its training distribution
 (Denis, 2026-08-07)."""
-import argparse, os, socket, sys
+import argparse
+import os, os, socket, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gate_ctx_common as gc
 import openpi.training.config as _cfg
@@ -24,6 +25,10 @@ def main():
     cfg = _cfg.get_config(a.config)
     ns = gc.pad_norm_stats(_nz.load(a.norm), cfg.model.action_dim)
     policy = _pc.create_trained_policy(cfg, a.ckpt, norm_stats=ns)
+    # the flow's source noise comes from the policy's own JAX key, key(0) by default, so two server processes with
+    # the same trial order replay each other (2026-09-24, n=100 chain). SNMVP_NOISE_SEED picks the stream.
+    import jax as _jax
+    policy._rng = _jax.random.key(int(os.environ.get("SNMVP_NOISE_SEED", "0")))
     print(f"[serve_gate_plain] ready on ws://{a.host}:{a.port}", flush=True)
     WebsocketPolicyServer(policy, host=a.host, port=a.port).serve_forever()
 
