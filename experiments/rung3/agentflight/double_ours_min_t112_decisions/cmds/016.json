@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: downward panel shows the animal's cage now to the right of center, we overshot slightly | action: right_05 with sigma 0.5 to center over the animal", "move": {"forward": 0.0, "left": -0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

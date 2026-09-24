@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: open room past the center gate, pillar and desks ahead, no more gates | action: sidestep right (world -x) toward the stuffed animal at x1.5 y-0.6", "move": {"forward": 0.0, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: both center-gate posts and crossbar visible with gap between them, heading -88 deg nearly facing -y | action: forward 1m with sigma 0.5 to close distance toward the gate rather than the policy's proposed backward drift", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

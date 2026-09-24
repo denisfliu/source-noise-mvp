@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: only the right post of left gate visible, close, gap not in frame; downward panel shows crossbar running away diagonally | action: turn left 45 and advance 0.5m to bring both posts back into frame", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

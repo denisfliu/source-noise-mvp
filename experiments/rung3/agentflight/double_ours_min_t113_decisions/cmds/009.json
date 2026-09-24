@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: a gate post with teal crossbar visible to the left of frame, heading now -92deg facing -y with x2.76 at the gate's midpoint | action: advance forward (now = -y direction) 2m to close the gap toward the opening at y-0.33", "move": {"forward": 2.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

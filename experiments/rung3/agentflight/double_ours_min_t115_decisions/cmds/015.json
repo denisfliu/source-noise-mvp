@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: office bay glass wall and pillar ahead, no animal in view, heading now faces -y | action: sidestep right, which at this heading moves mostly in -x toward the table at x1.5", "move": {"forward": 0.0, "left": -1.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

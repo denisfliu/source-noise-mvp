@@ -1,0 +1,1 @@
+{"k": 18, "verdict": "override", "why": "seen: stuffed animal visible in the downward panel, slightly off-centre toward x1.12 vs table x1.5 | action: precise small sidestep, sigma 0 to avoid the vision-bend overshoot seen on the last two corrections", "move": {"forward": 0.0, "left": 0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

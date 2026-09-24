@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: the near center-gate post fills much of the forward frame at close range, we are only at x2.02 vs its x2.36 | action: turn left and advance to gain clearance and push x toward the 2.76 centre-line before crossing y", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.2}}

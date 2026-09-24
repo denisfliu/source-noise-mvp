@@ -1,0 +1,5 @@
+Flight ended. Report:
+
+- Left gate crossed at decision k=3 (override turn_left_45+forward_05), confirmed by decision k=4's view (posts gone, room beyond visible) — crossing was tight to the right post (~0.05 m y-clearance), not through the middle.
+- Center gate crossed at decision k=11 (override forward_1), confirmed by decision k=12's view (office bay ahead, crossbar passed underneath in the filmstrip) — crossing looked centered between the posts, through the middle.
+- Final pose: x 1.33, y -0.29, z 1.42, heading -183° (≈ facing -x), hovering over the stuffed animal (bonus achieved).

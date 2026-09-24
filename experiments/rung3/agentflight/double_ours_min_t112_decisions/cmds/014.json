@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: the near center-gate post ahead, close, roughly centered | action: forward 1m with sigma 0.5 to let camera bend around the post while advancing toward the animal's table", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

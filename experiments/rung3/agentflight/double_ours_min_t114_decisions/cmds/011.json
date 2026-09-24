@@ -1,0 +1,1 @@
+{"k": 11, "verdict": "override", "why": "seen: cleared the near post, open room ahead with a doorway on the left wall, downward panel shows post trailing behind | action: forward_05 sigma 0.5 to close the remaining ~0.6m to the stuffed animal's table", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

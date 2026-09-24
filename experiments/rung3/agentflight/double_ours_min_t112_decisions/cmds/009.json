@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: no center-gate posts visible yet, room furniture (table, statue) ahead-left, heading only -34 deg vs -90 needed | action: turn right 45 more to face -y before advancing further in x", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

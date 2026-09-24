@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: near post large and close in forward panel, crossbar visible ahead in downward panel, x2.67 near the 2.76 centre-line | action: turn right toward -y instead of continuing the diagonal drift that would graze the far post", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

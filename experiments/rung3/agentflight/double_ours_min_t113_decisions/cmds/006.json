@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: clear room ahead, no posts visible, we are at x2.15 y1.20 well left of the center-gate line (x2.76,y-0.33) | action: turn right and advance to close the distance toward the center gate before facing -y", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.5}}

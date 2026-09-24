@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: pose stable near x1.59 y-0.45, drifting slowly toward the animal target | action: continue holding, both gates already crossed", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}

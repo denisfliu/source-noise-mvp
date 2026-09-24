@@ -1,0 +1,5 @@
+Flight report:
+
+- Left gate crossed at decision k=2 (override turn_left_30 + forward_1, sigma 0.5) — confirmed by the k=3 view strip showing the posts split to the frame edges and the room beyond open up; crossing was clean, roughly through the middle (no post grazes visible).
+- Center gate crossed at decision k=7 (override forward_1, sigma 0.5) — confirmed by the k=8 view matching the "through the centre gate" reference exactly (same office-bay pillar); crossing was through the middle, lined up beforehand with both posts and crossbar centered.
+- Final pose: x=1.54, y=-0.54, z=1.55, heading ≈ -169° — hovering directly over the stuffed animal's table for the remaining decisions (bonus achieved).

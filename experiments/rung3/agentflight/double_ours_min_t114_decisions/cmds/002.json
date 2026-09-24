@@ -1,0 +1,1 @@
+{"k": 2, "verdict": "override", "why": "seen: both left-gate posts in frame but proposal's endpoint math puts me within 5cm of the right post | action: turn_left_30 plus forward_1 with sigma 0.5 to swing onto the gate centerline before crossing", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

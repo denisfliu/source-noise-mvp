@@ -1,0 +1,1 @@
+{"k": 3, "verdict": "override", "why": "seen: forward panel shows both gate posts with teal crossbar overhead, gap sitting just right of the centre tick | action: turn left a bit more and advance to centre the gap before crossing", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 15.0, "sigma": 0.5}}

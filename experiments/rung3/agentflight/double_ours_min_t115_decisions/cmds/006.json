@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: downward panel shows we are hovering over the stuffed animal already, forward panel shows a single yellow post edge-on ahead (center gate's near post) | action: continue forward along +x instead of hovering, per the edge-on-post guidance", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

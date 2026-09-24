@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: downward panel shows the caged stuffed animal just behind/left of centre, pose x1.64 y-0.73 close to target x1.5 y-0.6 | action: small back nudge with camera bending to settle over the animal", "move": {"forward": -0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

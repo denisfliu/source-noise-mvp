@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: one yellow post ahead near center, crossbar visible, heading -77 deg still short of -90 needed to face the center gate straight-on | action: turn right 15 more to complete facing -y", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.0}}

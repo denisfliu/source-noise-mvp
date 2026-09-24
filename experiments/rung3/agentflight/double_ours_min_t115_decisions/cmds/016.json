@@ -1,0 +1,1 @@
+{"k": 16, "verdict": "override", "why": "seen: stuffed animal visible in the downward panel, slightly left of centre; we are at x1.19 vs table x1.5 | action: small sidestep to correct back toward the table's x and centre the hover", "move": {"forward": 0.0, "left": 0.5, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.3}}

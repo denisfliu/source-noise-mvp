@@ -1,0 +1,1 @@
+{"k": 12, "verdict": "override", "why": "seen: task-marker box visible at the bottom of the downward view (behind us), proposal drifts further +x away from the animal at x1.5 | action: turn left and advance to start swinging back toward the animal for the bonus hover", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 45.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: left gate posts gone from frame, clear room ahead, we are just past the left gate opening | action: continue straight ~1m before turning toward the center gate, per plan", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

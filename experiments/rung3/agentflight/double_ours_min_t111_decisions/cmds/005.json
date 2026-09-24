@@ -1,0 +1,1 @@
+{"k": 5, "verdict": "override", "why": "seen: downward view highlights the stuffed animal below-right, but proposal barely advances x (low trust 0.38) and center gate is still far ahead | action: push forward to build x toward the center gate before any turn", "move": {"forward": 2.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

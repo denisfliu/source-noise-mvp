@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: yellow post filling center of both panels, our pose (2.39,-0.34) sits almost exactly on the near post (2.36,-0.33) | action: move forward (+x) to build clearance from the post toward the gate's true centre x2.76", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

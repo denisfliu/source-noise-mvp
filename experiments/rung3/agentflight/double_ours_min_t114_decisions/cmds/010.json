@@ -1,0 +1,1 @@
+{"k": 10, "verdict": "override", "why": "seen: center gate's near post filling much of the frame dead ahead, roughly 0.3m away | action: forward_05 sigma 0.5 to nudge past it toward the table while letting vision bend around the post", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 9, "verdict": "override", "why": "seen: continuing rotation toward the stuffed animal's table, not yet facing it | action: turn_right_45 to finish aligning toward -x where the table sits", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

@@ -1,0 +1,1 @@
+{"k": 4, "verdict": "override", "why": "seen: open room ahead with a bench and doorway, no gate posts yet, x=2.23 still short of the 2.76 needed before turning | action: forward_05 sigma 0.5 to reach x~2.7 before turning toward the center gate", "move": {"forward": 0.5, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

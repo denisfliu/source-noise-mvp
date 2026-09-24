@@ -1,0 +1,1 @@
+{"k": 15, "verdict": "override", "why": "seen: downward panel shows the stuffed animal almost directly below, slightly left and short | action: diag_left_05 with sigma 0.5 to nudge over the animal for the hover", "move": {"forward": 0.35355, "left": 0.35355, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.5}}

@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: clear room ahead, statue/table visible ahead-left, no gate posts yet | action: turn right 15 to straighten toward +x and advance 1m to reach x~2.76 before turning toward center gate", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

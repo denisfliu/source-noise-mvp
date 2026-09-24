@@ -1,0 +1,1 @@
+{"k": 8, "verdict": "override", "why": "seen: a yellow post and teal crossbar visible near centre of forward panel, likely the center gate | action: finish turning right to face -y (heading ~-90) in place before advancing, to keep x at 2.76", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -30.0, "sigma": 0.0}}

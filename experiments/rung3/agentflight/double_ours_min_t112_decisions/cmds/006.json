@@ -1,0 +1,1 @@
+{"k": 6, "verdict": "override", "why": "seen: clear room ahead, a table/figure visible ahead-right (not our target yet) | action: turn right 15 to straighten toward +x and advance 1m to build x toward the center-gate x=2.76 before turning", "move": {"forward": 1.0, "left": 0.0, "up": 0.0, "yaw_deg": -15.0, "sigma": 0.5}}

@@ -1,0 +1,5 @@
+Flight report:
+
+1. **Left gate** — crossed during decision k=3 (pose moved (0.31, 0.61) → (1.19, 0.91)), through the middle: after an override nudging left/left-turn at k=2 to avoid the near-right post, the crossing landed near the opening's centre, confirmed by the crossbar passing beneath in the downward view.
+2. **Center gate** — crossed during the move approved at k=10 (pose (2.79, −0.32), dead-centre of the opening at (2.76, −0.33)); an earlier pass at k=8 grazed close to the near post (x2.39 vs post x2.36) and was corrected with forward pushes and an in-place turn before the clean centred transit.
+3. **Final pose** — x 2.39, y −0.73, z 1.43, heading +57° (~1.0 rad). Both gates were crossed in the correct order; the bonus hover over the stuffed animal (x1.5, y−0.6) was not achieved — the policy's own proposals kept drifting away from it near an obstacle, so the last several decisions held position safely instead.

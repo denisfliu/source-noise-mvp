@@ -1,0 +1,1 @@
+{"k": 14, "verdict": "override", "why": "seen: a post/pole fills the left-center of the forward view very close by | action: turn left in place away from the obstacle, no translation, before continuing to reorient toward the animal", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 30.0, "sigma": 0.5}}

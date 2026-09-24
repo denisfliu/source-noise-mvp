@@ -1,0 +1,5 @@
+Flight ended. Report:
+
+- Left gate: crossed at decision k=4, through the middle (posts at x0.65/y1.05 and x1.18/y0.45; crossing pose x0.77–1.32, y0.54–0.80 — centered between them).
+- Center gate: crossed at decision k=10, through the middle (posts at x2.36 and x3.16, both y-0.33; crossing pose x2.51–2.67, y-0.11 to -0.59, x held near the 2.76 midpoint).
+- Final pose: x 1.61, y -0.56, z 1.43, heading -87°, hovering essentially on top of the stuffed animal (target x1.5, y-0.6).

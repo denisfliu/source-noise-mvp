@@ -1,0 +1,1 @@
+{"k": 7, "verdict": "override", "why": "seen: clear room, no posts in frame; pose x2.76 matches the center gate's x already but y1.49 is far from the opening (-0.33) and heading isn't facing -y | action: turn right in place toward -y heading, hold x, before descending in y", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": -45.0, "sigma": 0.0}}

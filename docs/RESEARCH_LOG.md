@@ -8197,3 +8197,9 @@ crossing rides the post. t101/t105 minima at (1.3,0.35) = the left gate's -y pos
 the real-only pin's known 50-step left-gate clip (0/10 clean at 50-step, 5/10 at 25-step in the atomic cells).
 Next: post coordinates + "get x to 2.76 before turning to -y" in THE ROOM (t111-115); the left-gate clip is the
 executor's, and would need the 25-step replan for the agent flights (a setting change for Denis to decide).
+
+## post coordinates in the brief: both gates 5/5, first clean double success (2026-09-23 ~22:35 PDT)
+t111-115 (double, ours, Sonnet, primitive brief + THE ROOM with post coordinates and "get x to 2.76 before turning
+to -y"): both gates in order 5/5, goal box 3/5, transit judge success 3/5 (112, 113, 115), clearance-clean 1/5
+(t113: 0.23 m, the first fully clean double-gate flight through our policy under every judge). Cell history on
+this task: full brief 2/5 both gates -> primitive 2/5 -> +diagonals 0/5 -> +room layout 3/5 -> +post coords 5/5.

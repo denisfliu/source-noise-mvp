@@ -1,0 +1,1 @@
+{"k": 19, "verdict": "override", "why": "seen: pose x1.61 y-0.56 essentially at the animal target x1.5 y-0.6 | action: hold to end the flight over the animal", "move": {"forward": 0.0, "left": 0.0, "up": 0.0, "yaw_deg": 0.0, "sigma": 0.0}}
