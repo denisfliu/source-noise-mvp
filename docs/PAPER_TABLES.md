@@ -11,13 +11,16 @@ contact (clearance is unmeasured on hardware: the trajectory records before dron
 |---|---|---|---|---|---|
 | pi0 (plain fine-tune) | 100 real demos | 5/20 | 9/20 | 4/5 | 4/5 |
 | ours (pin + head) | 100 real demos | 0/10 | 5/10 | 5/5 | 3/5 |
-| pi0, 25-step replan | 100 real demos | 10/20 | 6/20 | - | - |
-| ours, 25-step replan | 100 real demos | 12/20 | 19/20 | - | - |
+| pi0, 25-step replan | 100 real demos | 44/100 | 45/100 | - | - |
+| ours, 25-step replan | 100 real demos | 60/100 | 81/100 | - | - |
 
 Sim rows at a 50-step replan unless marked; the 25-step rows are the same checkpoints re-observing every 2.5 s
-(RESEARCH_LOG 2026-09-22). 25-step rows and the pi0 50-step row n=20: trials 1-10 (2026-09-21/22, server noise seed 0) plus 11-20 (2026-09-24,
-seed 1). ours 50-step stays n=10 (no further 50-step runs, Denis 2026-09-24). First-ten / second-ten splits at
-25-step: pi0 6+4 / 3+3, ours 5+7 / 9+10. Real rows: 2026-09-15/18 sessions, apc 50, judged by eyewitness + measured poses.
+(RESEARCH_LOG 2026-09-22). 25-step rows n=100: ten batches of ten, one server process and one source-noise seed per batch (both servers take
+SNMVP_NOISE_SEED; a restarted server at the same seed replays its trials). Per-batch successes: pi0 left
+6,4,2,6,3,4,7,3,5,4; pi0 right 3,3,5,7,4,4,6,6,4,3; ours left 5,7,5,8,7,8,7,5,5,3; ours right 9,10,9,7,8,7,7,7,8,9.
+Standard errors ±5 (binomial). Failure modes at 25-step: ours left = 19 route-dirty + 34 grazes, ours right = 19
+missed transits and zero grazes; pi0 left = 39 missed transits, pi0 right = 31 missed + 28 grazes. 50-step rows
+n=20 (pi0) / n=10 (ours); no further 50-step runs (Denis, 2026-09-24). Real rows: 2026-09-15/18 sessions, apc 50, judged by eyewitness + measured poses.
 
 ## Table 2. Movement tests, real-only pin only
 

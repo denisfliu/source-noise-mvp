@@ -8227,3 +8227,12 @@ Seeded extension landed (2026-09-24 ~08:25, SEED=1, t1 vs t11 now differ by 1.5 
 right 19/20 (9+10); orbit n=10 tracking 0.065 m (0.037-0.081), 10/10 loops, clean 3/10 (drift after handback);
 fig8 n=10 tracking 0.061 m (0.040-0.072), 10/10 clean. Tables 1-2 updated; pi0 50-step row n=20 kept (genuine),
 pin 50-step stays n=10.
+
+## Table 1 25-step cells at n=100 (2026-09-24 ~10:10 PDT)
+Denis: "let's run hundred times for each task". Ten batches of ten per arm and side, one server process per batch,
+SNMVP_NOISE_SEED = batch index (the plain server needed the knob too: its policy key(0) replayed batches 2 and 3
+bit for bit before it was added; those thirty flights were deleted and rerun).
+| arm | left | right | notes |
+| pi0 | 44/100 ±5 | 45/100 ±5 | left: 39 missed transits, 1 dirty, 17 grazes; right: 31 missed, 28 grazes |
+| ours | 60/100 ±5 | 81/100 ±4 | left: 19 route-dirty, 34 grazes; right: 19 missed transits, 0 grazes, 100/100 clean |
+Mean min-clearance over successes 0.27 (pi0) vs 0.29-0.30 (ours). Batch spread 2-7 (pi0) and 3-10 (ours).
