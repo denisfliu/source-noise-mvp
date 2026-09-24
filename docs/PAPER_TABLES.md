@@ -7,15 +7,17 @@ contact (clearance is unmeasured on hardware: the trajectory records before dron
 
 ## Table 1. Real-only arms on the single-gate tasks
 
-| Arm | Data | Left, sim (n=10) | Right, sim (n=10) | Left, real (n=5) | Right, real (n=5) |
+| Arm | Data | Left, sim (n=20) | Right, sim (n=20) | Left, real (n=5) | Right, real (n=5) |
 |---|---|---|---|---|---|
-| pi0 (plain fine-tune) | 100 real demos | 3/10 | 4/10 | 4/5 | 4/5 |
-| ours (pin + head) | 100 real demos | 0/10 | 5/10 | 5/5 | 3/5 |
-| pi0, 25-step replan | 100 real demos | 6/10 | 3/10 | - | - |
-| ours, 25-step replan | 100 real demos | 5/10 | 9/10 | - | - |
+| pi0 (plain fine-tune) | 100 real demos | 5/20 | 9/20 | 4/5 | 4/5 |
+| ours (pin + head) | 100 real demos | 0/20 | 11/20 | 5/5 | 3/5 |
+| pi0, 25-step replan | 100 real demos | 10/20 | 6/20 | - | - |
+| ours, 25-step replan | 100 real demos | 10/20 | 18/20 | - | - |
 
 Sim rows at a 50-step replan unless marked; the 25-step rows are the same checkpoints re-observing every 2.5 s
-(RESEARCH_LOG 2026-09-22). Real rows: 2026-09-15/18 sessions, apc 50, judged by eyewitness + measured poses.
+(RESEARCH_LOG 2026-09-22). n=20 per sim cell: trials 1-10 (2026-09-21/22) plus trials 11-20 (2026-09-24, same
+servers and scorers; the 50-step extensions are the `_apc50` tags). First-ten / second-ten splits: pi0 50-step
+3+2 / 4+5, ours 50-step 0+0 / 5+6, pi0 25-step 6+4 / 3+3, ours 25-step 5+5 / 9+9. Real rows: 2026-09-15/18 sessions, apc 50, judged by eyewitness + measured poses.
 
 ## Table 2. Movement tests, real-only pin only
 

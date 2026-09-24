@@ -8203,3 +8203,14 @@ t111-115 (double, ours, Sonnet, primitive brief + THE ROOM with post coordinates
 to -y"): both gates in order 5/5, goal box 3/5, transit judge success 3/5 (112, 113, 115), clearance-clean 1/5
 (t113: 0.23 m, the first fully clean double-gate flight through our policy under every judge). Cell history on
 this task: full brief 2/5 both gates -> primitive 2/5 -> +diagonals 0/5 -> +room layout 3/5 -> +post coords 5/5.
+
+## Table 1 sim cells extended to n=20 (2026-09-24 ~06:40 PDT)
+Denis: "for the ones that are cheap and easy to run, can we just run more of them?" Added TRIAL0 to
+gate_rollout_batch.py and the real-only cell scripts; ran trials 11-20 for pin and pi0 at 25- and 50-step replans
+(the 50-step extensions carry the `_apc50` tag; same server env, 0.30 card slice beside the hardware server; the
+whole chain took ~25 min). Success = transit + route-clean + clearance-clean, n=20:
+| arm | left 50 | right 50 | left 25 | right 25 |
+| pi0 | 5/20 | 9/20 | 10/20 | 6/20 |
+| ours | 0/20 | 11/20 | 10/20 | 18/20 |
+Second tens reproduce the first tens within 1-2 flights everywhere. The sketch cells (orbit, fig8 t6-10) OOM'd on the
+first attempt (apps script at 0.45 of the card) and were relaunched at 0.30. PAPER_TABLES Table 1 updated.
