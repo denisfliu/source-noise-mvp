@@ -24,7 +24,7 @@ setsid $EV $PINENV CLOG=$RUN/clog_$TAG.npy XLA_PYTHON_CLIENT_PREALLOCATE=true XL
 for k in $(seq 1 200); do ss -ltn | grep -q ":$PORT " && break; sleep 3; done
 ss -ltn | grep -q ":$PORT " || { echo SERVER_TIMEOUT; exit 1; }
 for side in left right; do
-  env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=$side SCENE=$side NCH=$NCH APC=$APC TRIALS=10 VIDEO=0 \
+  env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=$side SCENE=$side NCH=$NCH APC=$APC TRIALS=${TRIALS:-10} TRIAL0=${TRIAL0:-1} VIDEO=0 \
     TRAJ=$RUN/traj_arm${TAG}_${side}_{t}.npy $TV $RD/gate_rollout_batch.py > $RUN/roll_arm${TAG}_${side}.log 2>&1 &
   sleep 120
 done

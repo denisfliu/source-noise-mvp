@@ -16,7 +16,7 @@ for SK in orbit fig8; do
     $VENVPY $RD/serve_gate_pin_joint.py --ckpt $CK --config pi0_gate --norm $HFB/assets/gate_nav --pin-u $U --port $PORT >> $RUN/sv_app_realonly_$SK.log 2>&1 </dev/null & disown
   for k in $(seq 1 150); do ss -ltn | grep -q ":$PORT " && break; sleep 3; done
   ss -ltn | grep -q ":$PORT " || { echo "SERVER_TIMEOUT $SK" >> $OUT; continue; }
-  env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=right SCENE=right NCH=14 APC=50 TRIALS=5 VIDEO=0 \
+  env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=right SCENE=right NCH=14 APC=50 TRIALS=${TRIALS:-5} TRIAL0=${TRIAL0:-1} VIDEO=0 \
     TRAJ=$RUN/traj_app_realonly_${SK}_{t}.npy $TV $RD/gate_rollout_batch.py > $RUN/roll_app_realonly_$SK.log 2>&1
   for p in $(pgrep -f "serve_gate_pin_joint.p[y] .*port $PORT"); do kill -9 "$p" 2>/dev/null; done
   { echo "== real-only pin app $SK"

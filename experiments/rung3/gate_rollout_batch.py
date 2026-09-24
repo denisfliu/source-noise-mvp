@@ -25,7 +25,7 @@ import imageio.v2 as iio
 from PIL import Image, ImageDraw
 NCH=int(os.environ.get("NCH","40")); PORT=int(os.environ["PORT"]); OUT=os.environ.get("OUT","")
 SIDE=os.environ.get("SIDE","left"); SCENE=os.environ.get("SCENE","left"); TRAJ=os.environ.get("TRAJ",""); DEV="cuda"
-TRIALS=int(os.environ.get("TRIALS","1"))
+TRIALS=int(os.environ.get("TRIALS","1")); TRIAL0=int(os.environ.get("TRIAL0","1"))   # TRIAL0: first trial index, so a cell can be extended (t11-20) without renumbering
 VIDEO=os.environ.get("VIDEO","1")=="1"
 VSTRIDE=int(os.environ.get("VIDFRAME_STRIDE","4")); FPS=int(os.environ.get("FPS","9"))
 if VIDEO and OUT and "{t}" not in OUT and TRIALS>1: raise SystemExit("OUT needs a {t} placeholder when TRIALS>1")
@@ -428,7 +428,7 @@ def run_trial(t):
     if TRAJ: np.save(TRAJ.replace("{t}",str(t)),P4)   # 4 columns; every scorer slices [:, :3]
     print("trial %d: %d frames end x=%.2f y=%.2f z=%.2f | in_aabb=%d THROUGH=%s at %s"%(t,len(fr),pos[0],pos[1],pos[2],inb,thru,cf),flush=True)
 
-for t in range(1,TRIALS+1):
+for t in range(TRIAL0,TRIAL0+TRIALS):
     run_trial(t)
 print("BATCH_DONE",flush=True)
 if AGENT_DIR:   # tells a reviewer blocked in --then-wait after the last decision that no next decision is coming
