@@ -8216,3 +8216,10 @@ Second tens reproduce the first tens within 1-2 flights everywhere. The sketch c
 first attempt (apps script at 0.45 of the card) and were relaunched at 0.30. PAPER_TABLES Table 1 updated.
 Sketch cells extended (2026-09-24 ~07:55): orbit n=10 tracking median 0.070 m (0.065-0.077), 10/10 loops, clean
 0/10 (post-handback drift only); fig8 n=10 tracking median ~0.05 m, 10/10 clean. Table 2 updated.
+**CORRECTION (2026-09-24 ~08:10, Denis: "why do we have the exact same results but twice"):** the pin cells' trials
+11-20 were bit-identical to 1-10 (max |diff| 0.0000 on every compared trajectory) and the sketch cells' 6-10 to 1-5:
+`serve_gate_pin_joint.py` seeds its residual-noise generator from SNMVP_NOISE_SEED (default 0) at server start and
+the sim start pose is fixed, so a restarted server replays the cell. The pi0 cells are genuine (the plain server has
+no such seed; t11-20 differ from t1-10 by 0.5-1.5 m). Deleted the copies and the 50-step extension; the cell scripts
+now take SEED (-> SNMVP_NOISE_SEED); the 25-step pin cell and the sketch cells are being re-extended with SEED=1.
+Table 1/2 reverted for the ours rows until those land.
