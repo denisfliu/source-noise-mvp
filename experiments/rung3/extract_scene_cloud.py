@@ -158,13 +158,19 @@ GATE_RADIUS = 1.0   # m: keep only what lies within this horizontal distance of 
 
 
 def near_gates(pts, gate_pts, r=GATE_RADIUS, keep=None):
-    """Mask of points within horizontal distance r of any gate point (or already in `keep`)."""
-    g = torch.from_numpy(np.asarray(gate_pts, np.float32)[:, :2])
+    """Mask of what to show around the gates: anything within horizontal distance r of a gate point, and the floor
+    (z < AIR_Z) anywhere inside the gates' bounding box widened by r, so the floor between gates stays whole
+    (Denis, 2026-09-25: the tiles must be fully there); points already in `keep` are kept."""
+    gp = np.asarray(gate_pts, np.float32)[:, :2]
+    g = torch.from_numpy(gp)
     g = g[torch.randperm(len(g), generator=torch.Generator().manual_seed(0))[:400]]
     out = np.zeros(len(pts), bool)
     for i in range(0, len(pts), 200000):
         q = torch.from_numpy(np.asarray(pts[i:i + 200000], np.float32)[:, :2])
         out[i:i + 200000] = (torch.cdist(q, g).min(1).values <= r).numpy()
+    lo, hi = gp.min(0) - r, gp.max(0) + r
+    floor = (np.asarray(pts)[:, 2] < AIR_Z) & np.all((np.asarray(pts)[:, :2] >= lo) & (np.asarray(pts)[:, :2] <= hi), axis=1)
+    out |= floor
     return out | keep if keep is not None else out
 
 
