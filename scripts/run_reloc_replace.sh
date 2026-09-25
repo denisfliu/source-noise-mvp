@@ -15,8 +15,8 @@ kill_port () { for p in $(ss -ltnp | grep ":$1 " | grep -o "pid=[0-9]*" | cut -d
 cd $RD
 for PS in "$@"; do
   set -- $PS; TF=$1; S=$2; PT=$(echo $TF | tr ',.-' '__m')_$S; IFS=, read DY DX DYY <<< "$TF"
-  $VENVPY $RD/moved_gate_cell.py --make --dyaw=$DY --dx=$DX --dy=$DYY --tag rr25mg$PT
-  SK=$RD/sketch_mg_rr25mg$PT.json
+  SK=$RD/sketch_mg_rr25mg$PT.json   # an existing sketch (possibly hand-edited) is reused
+  [ -f $SK ] || $VENVPY $RD/moved_gate_cell.py --make --dyaw=$DY --dx=$DX --dy=$DYY --tag rr25mg$PT
   for ARM in rr25mg sde25mg vproj25mg; do
     TAG=$ARM$PT; kill_port $PORT
     case $ARM in

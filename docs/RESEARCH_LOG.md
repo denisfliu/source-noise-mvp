@@ -8379,3 +8379,10 @@ route end): ours 55/65, SDEdit 58/65, v-proj 65/65; min-snap ours 1.3, SDEdit 1.
 pose -86/(2.1,0.87) (0.11-0.15 m, gate centre near the usual centre-gate spot), 5 grazes at 0.16-0.18 m.
 Scene clouds: floaters dropped, cropped to within 1 m of the gates (+ table), no ceiling/walls; `--full` variant for
 pages that move the gate. Pages: viz/gate_poses.html, viz/reloc_gates.html.
+
+**Pose -86/(2.1,0.87) with a wider detour (Denis, 2026-09-25).** The auto sketch's first leg came around post A with
+~0.3 m of room and all five of our flights cut it (0.11-0.15 m). New sketch: detour point 0.8 m beyond post A along the
+gate line, then 0.8 m out on the approach side (sketch min to gate 0.29 -> 0.41 m); original kept as *_narrow.json,
+its flights in ~/ctxrun/reloc_pose60_narrow/. All three methods reflown: ours 5/5 at 0.37-0.38 m, SDEdit 5/5,
+v-proj 5/5. Relocated totals: ours 60/65, SDEdit 58/65, v-proj 65/65; our 5 remaining failures graze at 0.16-0.18 m.
+run_reloc_replace.sh now reuses an existing sketch instead of regenerating it.

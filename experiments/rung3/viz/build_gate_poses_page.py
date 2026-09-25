@@ -16,7 +16,7 @@ from gsplat_scene_edit import _mask_mocap, load_duplicate_edit  # noqa: E402
 from extract_scene_cloud import near_gates, table_mask  # noqa: E402
 
 PER_GATE = 2500
-BAD = ("-86,2.1,0.87", 60)   # the pose where every one of our flights touches the gate (2026-09-25)
+BAD = ("-86,2.1,0.87", 60)   # our flights touched post A on the automatic sketch; now flown on a wider detour (2026-09-25)
 ARMS = [("ours", "rr25mg", [96, 235, 160]), ("SDEdit on pi0", "sde25mg", [90, 170, 240]),
         ("velocity projection on pi0", "vproj25mg", [180, 140, 255])]
 
@@ -106,8 +106,9 @@ main{{max-width:1100px;margin:0 auto}} h1{{font-size:23px;margin:0 0 4px}} .sub{
 <p class="sub">The right gate at each of the 13 poses in the relocated-gate test, all in one room; three sit behind the starting point. The original right gate is
 removed; every pose is drawn where the renderer puts it.</p>
 <div class="vc">{v}</div>
-<h2>The pose ours fails: gate turned -86°, moved (2.1, 0.87) m</h2>
-<p class="sub">All five of our flights touch the gate before the route ends; SDEdit and velocity projection fly the same sketch clean.</p>
+<h2>Gate turned -86°, moved (2.1, 0.87) m, with a wider path around the first post</h2>
+<p class="sub">On the automatic sketch every one of our flights cut the corner at post A and touched it (0.11-0.15 m). The sketch
+now swings 0.8 m past that post and 0.8 m out before turning in behind the gate; all three methods fly it clean.</p>
 <div class="vc">{bad_pose_viewer()}</div></main>"""
     open(f"{SP}/gate_poses.html", "w").write(page); print("wrote gate_poses.html")
 

@@ -4,19 +4,13 @@
    0.0,
    0.0,
    1.5,
-   0.334
+   0.219
   ],
   [
-   1.94,
-   0.673,
+   2.075,
+   0.462,
    1.45,
-   0.568
-  ],
-  [
-   2.615,
-   1.103,
-   1.45,
-   -1.003
+   -0.312
   ],
   [
    3.269,
@@ -28,13 +22,13 @@
    2.173,
    -0.623,
    1.45,
-   3.129
+   3.13
   ],
   [
    1.525,
    -0.615,
    1.2,
-   3.129
+   3.13
   ]
  ],
  "prompt_after": "go through the gate on the right and hover over the stuffed animal",
@@ -42,6 +36,5 @@
  "step_m": 0.025,
  "sigma_serve": 0.0,
  "end_margin_m": 0.1,
- "carrot": 20,
- "note": "wider detour around post A (Denis 2026-09-25); original in *_narrow.json"
+ "carrot": 20
 }
