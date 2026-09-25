@@ -8363,3 +8363,9 @@ out through the opening at step 340 with dy +0.002 -> old judge passed it). Tabl
 earlier "0.19 m" footnote was wrong); every one of our 10 flights cuts the turn at the centre gate, passing at
 x ~ 2.41 vs the sketch's 2.55, 0.09-0.15 m from the post; SDEdit 1/10 clean, v-proj 10/10 at 0.25 m. Page
 `viz/fig8_denis3_three.html`.
+
+**Figure-eight with the centre-gate crossing moved +0.15 m in x (`sketch_fig8_denis3_cx15.json`, 2026-09-25).** Points
+18-21 +0.15 m, 17 and 22 +0.075 m (crossing 2.56 -> 2.71, gate middle 2.73). 10 flights each, seed 11, APC 25:
+ours 10/10 completed (left then centre, both +y, no wrong way, 0.24-0.28 m from any gate), SDEdit 9/10 (one at 0.16 m),
+v-proj 10/10 (0.32 m). Min-snap ours 1.3, SDEdit 1.4, v-proj 1.8 cm. Table 2 sim row and Table 3 now use this sketch;
+hardware row stays on the original. Page `viz/build_fig8_page.py`.

@@ -59,49 +59,10 @@ def main():
     a = ap.parse_args()
     ga, gb, mid, tv, n = moved_geometry(a.dyaw, a.dx, a.dy)
     if a.make:
-        appr = mid - RUN_IN * n
-        thru = mid + RUN_OUT * n
-        L = np.linalg.norm(gb - ga)
-
-        def crosses(p, q):
-            """does segment p->q cross the aperture line within span+-0.25?"""
-            dp_, dq_ = (p - ga) @ n, (q - ga) @ n
-            if dp_ * dq_ >= 0:
-                return False
-            f = dp_ / (dp_ - dq_)
-            sxx = ((p + f * (q - p)) - ga) @ tv
-            return -0.25 < sxx < L + 0.25
-
-        def detour(p, q):
-            """route around the nearer post: exterior points beyond each post, pick shorter."""
-            cands = [ga - 0.55 * tv, gb + 0.55 * tv]
-            best = min(cands, key=lambda c: np.linalg.norm(p - c) + np.linalg.norm(c - q))
-            return best
-
-        wp = [START[:2], appr, thru, GOAL[:2]]
-        # leg routing (2026-08-29): insert around-post detours where straight legs would
-        # cross the moved plane — covers gates behind the start and across the return
-        out = [wp[0]]
-        for i, (p, q) in enumerate(zip(wp[:-1], wp[1:])):
-            if i != 1 and crosses(p, q):     # never reroute the approach->thru crossing leg
-                out.append(detour(p, q))
-            out.append(q)
-        zs = {0: 1.5, len(out) - 1: 1.2}
-        pts = []
-        for i, p in enumerate(out):
-            nxt = out[min(i + 1, len(out) - 1)]
-            prv = out[max(i - 1, 0)]
-            seg = (nxt - p) if i < len(out) - 1 else (p - prv)
-            yawv = math.atan2(seg[1], seg[0])
-            pts.append([round(float(p[0]), 3), round(float(p[1]), 3),
-                        zs.get(i, ZC), round(yawv, 3)])
-        sk = {"points": pts,
-              "prompt_after": "go through the gate on the right and hover over the stuffed animal",
-              "enter_radius": 0.5, "step_m": 0.025, "sigma_serve": 0.0,
-              "end_margin_m": 0.1, "carrot": 20}
+        sk = make_sketch(a.dyaw, a.dx, a.dy)
         out_p = f"{RD}/sketch_mg_{a.tag}.json"
         json.dump(sk, open(out_p, "w"), indent=1)
-        print(f"wrote {out_p} ({len(pts)} pts); aperture {np.round(ga,2)}..{np.round(gb,2)}")
+        print(f"wrote {out_p} ({len(sk['points'])} pts); aperture {np.round(ga, 2)}..{np.round(gb, 2)}")
         return
     nsucc = 0
     for f in a.traj:
@@ -110,6 +71,53 @@ def main():
         print(f"  {os.path.basename(f):26s} cross={r['cross']} wrong={r['wrong']} goal={r['goal']} "
               f"min-post-dist={r['dpost']:.2f}  {'OK' if r['ok'] else 'fail'}")
     print(f"== {a.tag} (dyaw {a.dyaw}, dxy {a.dx},{a.dy}): {nsucc}/{len(a.traj)} route-clean")
+
+
+def make_sketch(dyaw, dx, dy):
+    """The auto sketch through the moved gate: straight run-in and run-out through the aperture midpoint, with
+    around-post detours wherever another leg would cross the moved gate plane."""
+    ga, gb, mid, tv, n = moved_geometry(dyaw, dx, dy)
+    appr = mid - RUN_IN * n
+    thru = mid + RUN_OUT * n
+    L = np.linalg.norm(gb - ga)
+
+    def crosses(p, q):
+        """does segment p->q cross the aperture line within span+-0.25?"""
+        dp_, dq_ = (p - ga) @ n, (q - ga) @ n
+        if dp_ * dq_ >= 0:
+            return False
+        f = dp_ / (dp_ - dq_)
+        sxx = ((p + f * (q - p)) - ga) @ tv
+        return -0.25 < sxx < L + 0.25
+
+    def detour(p, q):
+        """route around the nearer post: exterior points beyond each post, pick shorter."""
+        cands = [ga - 0.55 * tv, gb + 0.55 * tv]
+        best = min(cands, key=lambda c: np.linalg.norm(p - c) + np.linalg.norm(c - q))
+        return best
+
+    wp = [START[:2], appr, thru, GOAL[:2]]
+    # leg routing (2026-08-29): insert around-post detours where straight legs would
+    # cross the moved plane — covers gates behind the start and across the return
+    out = [wp[0]]
+    for i, (p, q) in enumerate(zip(wp[:-1], wp[1:])):
+        if i != 1 and crosses(p, q):     # never reroute the approach->thru crossing leg
+            out.append(detour(p, q))
+        out.append(q)
+    zs = {0: 1.5, len(out) - 1: 1.2}
+    pts = []
+    for i, p in enumerate(out):
+        nxt = out[min(i + 1, len(out) - 1)]
+        prv = out[max(i - 1, 0)]
+        seg = (nxt - p) if i < len(out) - 1 else (p - prv)
+        yawv = math.atan2(seg[1], seg[0])
+        pts.append([round(float(p[0]), 3), round(float(p[1]), 3),
+                    zs.get(i, ZC), round(yawv, 3)])
+    sk = {"points": pts,
+          "prompt_after": "go through the gate on the right and hover over the stuffed animal",
+          "enter_radius": 0.5, "step_m": 0.025, "sigma_serve": 0.0,
+          "end_margin_m": 0.1, "carrot": 20}
+    return sk
 
 
 def score_traj(P, dyaw, dx, dy):
