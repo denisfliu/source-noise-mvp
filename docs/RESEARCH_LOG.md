@@ -8404,3 +8404,14 @@ Table 1).**
     fixed 1.5        42/100 (58 missed, 0 touched)   9/100 (91 missed, 0 touched)   51/200
 Full trust (sigma 0) clips the left gate's posts; near-zero trust (the cap) stops going through the gates. The learned,
 per-replan sigma beats both fixed values on both gates.
+
+**pi0 + injected sketch command, Arbitrary Gates (2026-09-25; plain gate_scratch_real, sketch written into the source,
+no projection; same sketches/seeds/APC 25): 24/65 completed, 37/65 pass the route check.** Orbit (8 of 10 flown) and
+figure-eight not finished: the run was stopped by pid because the hardware server was flying (GPU at 23.9/24.5 GB).
+Rerun `scripts/run_pi0_inject_ood.sh` orbit/fig8 part when the hardware is idle. Scorer: `score_ood_cells.py`
+(reproduces ours 60/65, 10/10, 10/10).
+
+**Speed vs curvature (viz/speed_turns.html):** pilot demos 0.44 m/s straight, 0.20 in turns (ratio 0.46); ours 0.22/0.18
+(0.83), v-proj 0.25/0.19 (0.76), SDEdit 0.22/0.18 (0.82), pi0+injected 0.56/0.23 (0.41, because it mostly ignores the
+sketch). Every sketch-following method inherits the sketch's single nominal speed; v-proj is not flatter than ours.
+The "v-proj is unrealistic" hypothesis is not supported by speed profiles. Min-snap distance dropped as a metric.
