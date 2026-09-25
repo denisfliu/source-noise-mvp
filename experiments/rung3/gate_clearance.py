@@ -103,6 +103,22 @@ def gate_cloud(scene):
     return np.concatenate([G1, G2], 0)
 
 
+def moved_gate_cloud(dyaw_deg, dxy):
+    """The right gate moved exactly as the renderer moves it (gsplat_scene_edit.apply_arbitrary_gate with
+    scene 'right_and_center' on the right splat, SE(2) about the selected gaussians' centroid): the same
+    selection box, the same centroid, the same rotation and translation. 2026-09-24."""
+    import math
+    from gsplat_scene_edit import load_duplicate_edit, _mask_mocap
+    ck, tw2g = _find_right()
+    X = gauss_means_mocap(ck, tw2g).astype(np.float64)
+    m = _mask_mocap(X, load_duplicate_edit("right_and_center"))
+    cen = X[m].mean(0)
+    c, s = math.cos(math.radians(dyaw_deg)), math.sin(math.radians(dyaw_deg))
+    R = np.array([[c, -s, 0.0], [s, c, 0.0], [0.0, 0.0, 1.0]])
+    t = cen - R @ cen + np.array([dxy[0], dxy[1], 0.0])
+    return (R @ X[m].T).T + t
+
+
 def _anchor_transform(tr):
     sa = np.asarray(tr["source_anchor"], float); ta = np.asarray(tr["target_anchor"], float)
     sn = np.asarray(tr["source_normal"], float); tn = np.asarray(tr["target_normal"], float)
@@ -118,8 +134,15 @@ def main():
     ap.add_argument("--scene", required=True,
                     choices=["left", "right", "center", "left_and_center", "right_and_center"])
     ap.add_argument("--traj", nargs="+", required=True)
+    ap.add_argument("--gate-tf", default="", help="dyaw_deg,dx,dy: score against the right gate moved as GATE_TF moves it (scene right)")
     a = ap.parse_args()
-    G = gate_cloud(a.scene)
+    if a.gate_tf:
+        if a.scene != "right":
+            raise SystemExit("--gate-tf applies to the right scene (the renderer moves the right gate)")
+        dy, dx, dyy = [float(v) for v in a.gate_tf.split(",")]
+        G = moved_gate_cloud(dy, (dx, dyy))
+    else:
+        G = gate_cloud(a.scene)
     G = G[::max(1, len(G) // 25000)]
     gt = torch.tensor(G, dtype=torch.float32)
     print(f"scene={a.scene} gate cloud {len(G)} pts; body-contact threshold ~{BODY_R} m")

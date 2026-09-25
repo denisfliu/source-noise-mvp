@@ -8274,3 +8274,10 @@ demos. pilot-vs-pilot 0.56 | hardware ours 0.72, pi0 0.76 (n=5 each, not separat
 At 10 Hz the sim gap was 0.91 vs 0.79: most of the pin's "unrealism" is the 10 Hz velocity staircase of the
 kinematic sim, which the real vehicle's dynamics smooth away. Flown, the two policies are equally pilot-like; both
 fly at ~60% of the pilot's peak speed (v95 0.38 vs 0.65 m/s) and take ~2x as long.
+Moved-gate contact now scored (`gate_clearance.py --gate-tf=dyaw,dx,dy`: the right gate's cloud moved exactly as
+apply_arbitrary_gate moves it). Real-only pin, 12 poses: contact-free 18/60 (0/5 at -45, -25, 90, 30/(-0.4,0.4),
+180, 90/(0.74,1.95), 90/(-0.26,0.85); 5/5 behind-start and -35/(1.34,0.75)); minima mostly at the crossing
+(off-centre passes, the Aug auto-sketch run-in issue); pose 90/(-0.26,0.85) puts the gate 0.12 m from takeoff.
+Min-snap distance (`minsnap_realism.py`: RMS between a flight and the degree-7 natural spline, i.e. the
+minimum-snap trajectory, through its own positions every 1 s): pilot 1.9 cm; sim ours 1.1-1.4, pi0 1.6-1.8;
+OOD 1.2-1.6; hardware 2 Hz ours 1.6, pi0 2.1 (n=5). Slower flights deviate less, and ours is slightly slower.
