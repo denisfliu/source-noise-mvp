@@ -8320,3 +8320,25 @@ orbit 1.3 m contact-free 10/10 for all three; figure-eight A pin 0/10, SDEdit 2/
 0.19 m from the post; exact tracking stays outside 0.18). Earlier bad-sketch runs (Sept 20): v-proj reproduces a
 flawed sketch exactly. So v-proj is the stronger executor of good sketches; what the pin adds is the demonstrated-task
 gain (Table 1) and deviation from sketches under sigma.
+
+## 2026-09-25 — Gate apertures re-measured; every table rescored
+
+Apertures (Denis approved from the face-on cloud views): posts' inner edges and the top bar's underside, on the gate's
+measured plane (7 cm off the old plane for centre and left). Centre 0.80 -> 0.87 m wide, top 1.875 -> 1.821; left
+0.80 -> 0.87, top 1.95 -> 1.896; right 0.83 -> 0.84, top 1.95 -> 1.877; bottoms unchanged. Written to the five
+falsify-pi safety YAMLs; `moved_gate_cell.py` now reads the right gate from right_gate.yaml (no 5 cm span inset).
+`rescore_tables.py` snapshots per-flight verdicts (old: ~/ctxrun/rescore_old_apertures.json, reproduces the tables).
+
+    cell                    old      new aperture   new + normal-direction label
+    T1 pi0 left             44/100   45/100         44/100
+    T1 pi0 right            45/100   45/100         45/100
+    T1 ours left            60/100   65/100         66/100
+    T1 ours right           81/100   80/100         80/100
+    reloc ours / SDEdit / v-proj   58, 56, 59 /60 -> 58, 53, 59
+    agent table: orbit, waypoints 3/5 -> 4/5 (t15: min radius to the corrected centre 0.28 -> 0.33 m); rest unchanged
+
+**Judge bug found:** falsify posthoc labels a crossing's direction by the sign of that single step's y-velocity. At
+the 48-degree left gate the drone crosses moving +x with dy ~ 0 (+-0.001-0.016 m per step), so "correct" vs "wrong"
+is noise; the 7 cm plane shift re-rolled it for 22 left-gate flights. Proposed fix (not applied to falsify): label by
+motion along the aperture normal, oriented so its y component has the expected sign (`rescore_tables.py --direction
+normal`). Awaiting Denis.

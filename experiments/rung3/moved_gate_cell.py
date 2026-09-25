@@ -12,9 +12,13 @@ import math
 import os
 
 import numpy as np
+import yaml
 
 RD = os.path.dirname(os.path.abspath(__file__))
-GA = np.array([0.195, -1.348]); GB = np.array([0.924, -0.952])   # right gate posts (mocap)
+# Right-gate aperture, read from the judge's own safety YAML so the moved-gate scorer and gate_success agree
+# (corners re-measured 2026-09-25: posts' inner edges, top bar's underside).
+_C = np.asarray(yaml.safe_load(open(os.path.expanduser("~/code/falsify-pi/configs/safety/right_gate.yaml")))["miss_gate"]["corners"])
+GA, GB = _C[0, :2], _C[1, :2]   # post A, post B (mocap xy)
 CEN = (GA + GB) / 2
 GOAL = np.array([1.525, -0.615, 1.0]); HALF = np.array([0.3, 0.3, 0.5])
 START = np.array([0.0, 0.0, 1.5])
@@ -24,6 +28,7 @@ START = np.array([0.0, 0.0, 1.5])
 PIVOT = np.array([0.4842, -1.1597])
 RUN_IN, RUN_OUT = 0.8, 0.5   # straight approach before and exit after the aperture (was 0.45 / 0.30)
 ZC = 1.45
+INSET, ZLO, ZHI = 0.0, float(_C[:, 2].min()), float(_C[:, 2].max())   # scorer: span inset, aperture bottom and top
 
 
 def se2(dyaw_deg, dx, dy):
@@ -98,31 +103,33 @@ def main():
         json.dump(sk, open(out_p, "w"), indent=1)
         print(f"wrote {out_p} ({len(pts)} pts); aperture {np.round(ga,2)}..{np.round(gb,2)}")
         return
-    # score: crossing along +n within post span, wrong-dir count, goal dwell, post distance
-    L = np.linalg.norm(gb - ga)
     nsucc = 0
     for f in a.traj:
-        P = np.load(f)[:, :3]
-        rel = P[:, :2] - ga
-        s = rel @ tv
-        d = rel @ n
-        inspan = (s > 0.05) & (s < L - 0.05)
-        cross = wrong = None
-        wrongs = 0
-        for i in range(len(P) - 1):
-            if d[i] < 0 <= d[i + 1] and inspan[i + 1] and 0.2 < P[i, 2] < 1.95:
-                cross = i if cross is None else cross
-            if d[i] >= 0 > d[i + 1] and inspan[i + 1] and 0.2 < P[i, 2] < 1.95:
-                wrongs += 1
-        ing = np.all(np.abs(P - GOAL) <= HALF, axis=1)
-        goal_after = cross is not None and bool(ing[cross:].any())
-        dpost = min(np.linalg.norm(P[:, :2] - ga, axis=1).min(),
-                    np.linalg.norm(P[:, :2] - gb, axis=1).min())
-        ok = cross is not None and wrongs == 0 and goal_after
-        nsucc += ok
-        print(f"  {os.path.basename(f):26s} cross={cross} wrong={wrongs} goal={goal_after} "
-              f"min-post-dist={dpost:.2f}  {'OK' if ok else 'fail'}")
+        r = score_traj(np.load(f)[:, :3], a.dyaw, a.dx, a.dy)
+        nsucc += r["ok"]
+        print(f"  {os.path.basename(f):26s} cross={r['cross']} wrong={r['wrong']} goal={r['goal']} "
+              f"min-post-dist={r['dpost']:.2f}  {'OK' if r['ok'] else 'fail'}")
     print(f"== {a.tag} (dyaw {a.dyaw}, dxy {a.dx},{a.dy}): {nsucc}/{len(a.traj)} route-clean")
+
+
+def score_traj(P, dyaw, dx, dy):
+    """Route-clean on the moved gate: first crossing of the moved aperture along +n (inside the posts and between
+    its bottom and top), no crossing the other way, and the goal box entered after the crossing."""
+    ga, gb, mid, tv, n = moved_geometry(dyaw, dx, dy)
+    L = np.linalg.norm(gb - ga)
+    rel = P[:, :2] - ga
+    s, d = rel @ tv, rel @ n
+    inspan = (s > INSET) & (s < L - INSET)
+    inz = (P[:, 2] > ZLO) & (P[:, 2] < ZHI)
+    cross, wrongs = None, 0
+    for i in range(len(P) - 1):
+        if d[i] < 0 <= d[i + 1] and inspan[i + 1] and inz[i]:
+            cross = i if cross is None else cross
+        if d[i] >= 0 > d[i + 1] and inspan[i + 1] and inz[i]:
+            wrongs += 1
+    goal = cross is not None and bool(np.all(np.abs(P - GOAL) <= HALF, axis=1)[cross:].any())
+    dpost = min(np.linalg.norm(P[:, :2] - ga, axis=1).min(), np.linalg.norm(P[:, :2] - gb, axis=1).min())
+    return dict(cross=cross, wrong=wrongs, goal=goal, dpost=float(dpost), ok=cross is not None and wrongs == 0 and goal)
 
 
 if __name__ == "__main__":
