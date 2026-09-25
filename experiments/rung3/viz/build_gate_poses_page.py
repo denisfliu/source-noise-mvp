@@ -14,9 +14,6 @@ from build_traj_page import axes  # noqa: E402
 from build_reloc_page import POSES, pose_tag  # noqa: E402
 from moved_gate_cell import GA, GB, GOAL, PIVOT, ZHI, ZLO  # noqa: E402
 
-# the first pose set (2026-08-28/29), clustered at the original right gate; replaced 2026-09-25
-REPLACED = ["-45,0,0", "-25,0,0", "25,0,0", "45,0,0", "90,0,0", "0,0.5,-0.3", "30,-0.4,0.4",
-            "100,-1.26,1.50", "180,0,0", "-35,1.34,0.75", "90,0.74,1.95", "90,-0.26,0.85"]
 PER_GATE = 2500
 
 
@@ -34,29 +31,24 @@ def main():
     k = np.random.default_rng(0).permutation(len(gp))[:PER_GATE]; gp, gc = gp[k], gc[k]
     P, Cc = [pts[~gm]], [rgb[~gm]]
     groups = []
-    specs = [(s, seed, False) for s, seed in POSES] + [(s, None, True) for s in REPLACED]
-    for j, (spec, seed, dropped) in enumerate(specs):
+    for j, (spec, seed) in enumerate(POSES):
         R, t = se2(spec)
         q = gp.copy(); q[:, :2] = (R @ gp[:, :2].T).T + t
-        col = (np.array([150, 150, 150]) if dropped else
-               np.array(colorsys.hsv_to_rgb(j / len(POSES), 0.75, 1.0)) * 255).astype(np.uint8)
-        P.append(q); Cc.append(np.tile(col, (len(q), 1)) if dropped else (0.35 * gc + 0.65 * col).astype(np.uint8))
+        col = (np.array(colorsys.hsv_to_rgb(j / len(POSES), 0.75, 1.0)) * 255).astype(np.uint8)
+        P.append(q); Cc.append((0.35 * gc + 0.65 * col).astype(np.uint8))
         a, b = R @ GA + t, R @ GB + t
         ap = np.array([[a[0], a[1], ZLO], [b[0], b[1], ZLO], [b[0], b[1], ZHI], [a[0], a[1], ZHI], [a[0], a[1], ZLO]], np.float32)
         name = f"gate turned {float(spec.split(',')[0]):+g}°, moved ({spec.split(',')[1]}, {spec.split(',')[2]}) m"
-        if dropped:
-            groups.append({"label": f"first set: {name}", "color": [150, 150, 150], "trajs": [ap]})
-        else:
-            sk = np.asarray(json.load(open(f"{RD}/sketch_mg_rr25mg{pose_tag(spec, seed)}.json"))["points"], np.float32)[:, :3]
-            groups.append({"label": name, "color": col.tolist(), "trajs": [ap, sk]})
+        sk = np.asarray(json.load(open(f"{RD}/sketch_mg_rr25mg{pose_tag(spec, seed)}.json"))["points"], np.float32)[:, :3]
+        groups.append({"label": name, "color": col.tolist(), "trajs": [ap, sk]})
     np.savez(f"{SP}/scene_cloud_posestmp.npz", pts=np.concatenate(P), rgb=np.concatenate(Cc))
     tk = np.array([0, 0, 1.5], np.float32)
-    groups += [{"label": "takeoff", "fixed": True, "color": [255, 255, 255], "trajs": [np.stack([tk - [0, 0, 0.3], tk + [0, 0, 0.3]])]},
+    groups += [{"label": "takeoff", "fixed": True, "color": [230, 60, 200], "trajs": [np.stack([tk - [0, 0, 0.3], tk + [0, 0, 0.3]])]},
                {"label": "goal", "fixed": True, "color": [248, 210, 90],
                 "trajs": [np.stack([GOAL - [0, 0, 0.3], GOAL + [0, 0, 0.3]]).astype(np.float32)]}] + axes()
     v = cloudviewer.viewer_html("posestmp", groups, elem_id="v0", max_pts=None,
                                 note="Each gate is drawn at its pose in its own colour; tick a pose to show its opening and sketch. "
-                                     "Grey gates are the first pose set, clustered at the original gate and replaced on 2026-09-25. White marks takeoff, yellow the goal.")
+                                     "Grey gates are the first pose set, clustered at the original gate and replaced on 2026-09-25. Magenta marks takeoff, yellow the goal.")
     os.remove(f"{SP}/scene_cloud_posestmp.npz")
     page = f"""<title>Relocated Gate Poses</title>
 <style>
@@ -67,7 +59,7 @@ main{{max-width:1100px;margin:0 auto}} h1{{font-size:23px;margin:0 0 4px}} .sub{
 .v3dwrap canvas{{width:100%;border-radius:6px;display:block}}
 .v3dui{{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px;font:12px ui-monospace,Menlo,monospace}}
 .lg{{display:inline-flex;align-items:center;gap:5px;cursor:pointer}} .sw{{width:11px;height:11px;border-radius:3px;display:inline-block}}
-.ct{{color:var(--mut)}} .hint{{color:var(--mut);margin-left:auto}} .v3dnote{{color:var(--mut);font-size:13px;margin:8px 2px 0;max-width:95ch}}
+.ct{{color:var(--mut)}} .bgbtn{{font:12px ui-monospace,Menlo,monospace;padding:3px 9px;border-radius:5px;border:1px solid var(--line);background:transparent;color:inherit;cursor:pointer}} .hint{{color:var(--mut);margin-left:auto}} .v3dnote{{color:var(--mut);font-size:13px;margin:8px 2px 0;max-width:95ch}}
 </style>
 <main><h1>Relocated Gate Poses</h1>
 <p class="sub">The right gate at each of the 13 poses in the relocated-gate test, all in one room; three sit behind the starting point. The original right gate is

@@ -49,6 +49,7 @@ def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None,
 <div class="v3dwrap">
  <canvas id="{elem_id}" height="{height}"></canvas>
  <div class="v3dui">{legend}
+  <button type="button" class="bgbtn">White background</button>
   <span class="hint">drag to orbit · wheel to zoom · shift-drag to pan</span></div>
  {f'<p class="v3dnote">{note}</p>' if note else ''}
 </div>
@@ -78,7 +79,7 @@ const groups = D.groups.map(g=>({{label:g.label,color:g.color.map(v=>v/255),
  trajs:g.trajs.map(t=>{{const a=new Float32Array(dec(t).buffer);
    const col=new Float32Array(a.length); for(let i=0;i<a.length;i+=3){{col[i]=g.color[0]/255;col[i+1]=g.color[1]/255;col[i+2]=g.color[2]/255;}}
    return {{n:a.length/3, bp:buf(a), bc:buf(col)}};}}), on:(g.fixed||D.default_on)}}));
-let yaw=-0.6, pitch=0.45, dist=9, panx=0, pany=0, cloudOn=true;
+let yaw=-0.6, pitch=0.45, dist=9, panx=0, pany=0, cloudOn=true, bg=[0.07,0.08,0.10];
 function mat(){{
   const cy=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
   const ex=dist*cp*sy, ey=-dist*cp*cy, ez=dist*sp;
@@ -99,7 +100,7 @@ function draw(){{
   const dpr=Math.min(window.devicePixelRatio||1,2);
   cv.width=cv.clientWidth*dpr; cv.height={height}*dpr;
   gl.viewport(0,0,cv.width,cv.height);
-  gl.clearColor(0.07,0.08,0.10,1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.clearColor(bg[0],bg[1],bg[2],1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
   const M=mat(); gl.uniformMatrix4fv(uM,false,M);
   if(cloudOn){{
@@ -130,6 +131,9 @@ window.addEventListener("mousemove",e=>{{ if(!drag) return;
 cv.addEventListener("wheel",e=>{{e.preventDefault(); dist*=Math.exp(e.deltaY*0.0012); dist=Math.max(1.5,Math.min(60,dist)); draw();}},{{passive:false}});
 document.querySelectorAll('.v3dui input[data-g]').forEach(cb=>cb.addEventListener("change",()=>{{
   groups[+cb.dataset.g].on=cb.checked; draw();}}));
+const bgb=cv.parentElement.querySelector(".bgbtn");
+bgb.addEventListener("click",()=>{{ const white=bg[0]<0.5; bg=white?[1,1,1]:[0.07,0.08,0.10];
+  bgb.textContent=white?"Black background":"White background"; draw(); }});
 window.addEventListener("resize",draw); draw();
 }})();
 </script>"""
@@ -138,6 +142,8 @@ window.addEventListener("resize",draw); draw();
 STYLE = """
 .v3dwrap{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:14px 0}
 .v3dwrap canvas{width:100%;display:block;border-radius:7px;background:#12141a;cursor:grab}
+.bgbtn{font:12px ui-monospace,Menlo,monospace;padding:3px 9px;border-radius:5px;border:1px solid var(--line,#28303c);background:transparent;color:inherit;cursor:pointer}
+.bgbtn:focus-visible{outline:2px solid var(--acc,#7cd0f0);outline-offset:2px}
 .v3dui{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:9px;
  font:600 .78rem ui-monospace,Menlo,monospace;color:var(--mut)}
 .v3dui .lg{display:flex;gap:6px;align-items:center;cursor:pointer}
