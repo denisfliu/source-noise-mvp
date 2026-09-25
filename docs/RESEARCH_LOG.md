@@ -8304,3 +8304,19 @@ Page: `viz/build_reloc_page.py` -> `viz/reloc_gates.html`.
 **SDEdit / v-projection, Sept 20 APC-50 runs, min-snap (cm, orbit/fig8/compound):** ours 1.7/1.6/2.1, SDEdit
 1.6/1.4/1.5, v-proj 1.9/2.0/2.3, inject 8.1/7.6/5.5. Matched APC-25 reruns on the relocated sketches:
 `scripts/run_sketch_baselines.sh` (tags sde25*, vproj25*).
+
+**Matched baselines on the relocated sketches (same seeds, APC 25; SDEdit t0 0.5 and velocity projection both on
+the plain real-only pi0 `gate_scratch_real`; `scripts/run_sketch_baselines.sh`):**
+
+    arm       route-clean  contact-free to route end  whole flight  tracking  min-snap
+    pin          58/60          47/60                   39/60        0.038     1.2 cm
+    SDEdit       56/60          41/60                   24/60        0.051     1.7 cm
+    v-proj       59/60          49/60                   48/60        0.008     1.9 cm
+
+Velocity projection wins on these auto-sketches, which are feasible by construction: it tracks 5x tighter and
+barely drifts after the route (49 -> 48), where the pin loses 8 flights to post-route drift onto the gate. It shares the
+pin's two sketch-caused failures (pose 51 sketch grazes, pose 52 takeoff inside the envelope). Hardware sketches:
+orbit 1.3 m contact-free 10/10 for all three; figure-eight A pin 0/10, SDEdit 2/10, v-proj 10/10 (the sketch passes
+0.19 m from the post; exact tracking stays outside 0.18). Earlier bad-sketch runs (Sept 20): v-proj reproduces a
+flawed sketch exactly. So v-proj is the stronger executor of good sketches; what the pin adds is the demonstrated-task
+gain (Table 1) and deviation from sketches under sigma.
