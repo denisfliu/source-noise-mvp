@@ -8395,3 +8395,12 @@ sigma at every replan (run_realonly_apc25.sh SIGFIX=<s>):
     sigma 0.5     left 8/10 (2 touched)   right 6/10 (4 missed)
     sigma 1.5     left 5/10 (5 missed)    right 1/10 (9 missed)
 A screen only; nothing here is a claim.
+
+**Sigma ablation at n=100 per gate (2026-09-25; batches seed 0-9 matching the learned-map cells; same judge as
+Table 1).**
+    sigma            left                          right                         total
+    learned map      66/100 (0 missed, 34 touched)  80/100 (19 missed, 0 touched)  146/200
+    fixed 0          30/100 (1 missed, 69 touched)  57/100 (43 missed, 4 touched)   87/200
+    fixed 1.5        42/100 (58 missed, 0 touched)   9/100 (91 missed, 0 touched)   51/200
+Full trust (sigma 0) clips the left gate's posts; near-zero trust (the cap) stops going through the gates. The learned,
+per-replan sigma beats both fixed values on both gates.

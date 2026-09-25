@@ -4,7 +4,7 @@ import gate_success as GS
 import re
 tag = sys.argv[1]
 clr = {}
-for l in open(f"/home/dfliu/ctxrun/arm_{tag}_scores.txt"):
+for l in open(sys.argv[2] if len(sys.argv) > 2 else f"/home/dfliu/ctxrun/arm_{tag}_scores.txt"):
     m = re.match(r"(traj_\S+)\.npy\s+min-clearance ([\d.]+)", l)
     if m: clr[m.group(1)] = float(m.group(2))
 for side in ["left", "right"]:
