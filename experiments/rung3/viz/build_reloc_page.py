@@ -19,10 +19,10 @@ from moved_gate_cell import GA, GB, PIVOT, ZHI, ZLO, score_traj  # noqa: E402
 
 RUN = "/home/dfliu/ctxrun"
 BODY, END_R = 0.18, 0.25
-# spelled exactly as the run scripts pass GATE_TF (the tag is this string with "-" -> "m" and "," "." -> "_")
-POSES = ["-45,0,0", "-25,0,0", "25,0,0", "45,0,0", "90,0,0", "0,0.5,-0.3", "30,-0.4,0.4",
-         "100,-1.26,1.50", "180,0,0", "-35,1.34,0.75", "90,0.74,1.95", "90,-0.26,0.85"]
-SEED0 = 41   # run scripts number the poses 41..52 in this order
+# (GATE_TF spec, seed): random far-away poses, 2026-09-25 (>= 1.2 m from takeoff, >= 1.0 m from the goal, >= 0.8 m between
+# gate centres, sketch >= 0.25 m from the gate); the tag is the spec with "-" -> "m" and "," "." -> "_", then _seed
+POSES = [("-163,0.04,-1.09", 51), ("174,2.81,1.37", 52), ("2,1.06,2.68", 53), ("153,2.46,-0.3", 54), ("-58,1.55,1.76", 55),
+         ("132,1.69,-0.83", 56), ("-49,-0.06,2.97", 57), ("44,2.03,2.6", 58), ("130,0.42,-0.36", 59), ("-86,2.1,0.87", 60)]
 COLS = [[96, 235, 160], [90, 170, 240], [180, 140, 255]]
 CONTACT, FAIL = [255, 140, 40], [240, 80, 80]
 
@@ -52,8 +52,8 @@ def main():
     ap.add_argument("--out", default="reloc_gates.html"); a = ap.parse_args()
     arms = [s.rsplit("=", 1) for s in a.arm]
     secs, tot = [], {lab: [0, 0, 0, 0] for lab, _ in arms}   # flights, route-clean, contact-free to route end, whole flight
-    for i, spec in enumerate(POSES):
-        dyaw, dx, dy = map(float, spec.split(",")); pt = pose_tag(spec, SEED0 + i)
+    for spec, seed in POSES:
+        dyaw, dx, dy = map(float, spec.split(",")); pt = pose_tag(spec, seed)
         th = math.radians(dyaw); R = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
         t = PIVOT - R @ PIVOT + np.array([dx, dy])
         moved_scene(R, t)

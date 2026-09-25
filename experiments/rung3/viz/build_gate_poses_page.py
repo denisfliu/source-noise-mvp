@@ -1,0 +1,80 @@
+"""All relocated-gate poses in one room cloud (2026-09-25). The right gate's own points are removed from the scene and
+redrawn at every pose (moved exactly as the renderer moves them), each with its aperture outline and sketch.
+
+  /home/dfliu/code/tv/bin/python build_gate_poses_page.py
+"""
+import colorsys, json, math, os, sys
+
+import numpy as np
+
+SP = os.path.dirname(os.path.abspath(__file__)); RD = os.path.dirname(SP)
+sys.path.insert(0, SP); sys.path.insert(0, RD)
+import cloudviewer  # noqa: E402
+from build_traj_page import axes  # noqa: E402
+from build_reloc_page import POSES, pose_tag  # noqa: E402
+from moved_gate_cell import GA, GB, GOAL, PIVOT, ZHI, ZLO  # noqa: E402
+
+# the first pose set (2026-08-28/29), clustered at the original right gate; replaced 2026-09-25
+REPLACED = ["-45,0,0", "-25,0,0", "25,0,0", "45,0,0", "90,0,0", "0,0.5,-0.3", "30,-0.4,0.4",
+            "100,-1.26,1.50", "180,0,0", "-35,1.34,0.75", "90,0.74,1.95", "90,-0.26,0.85"]
+PER_GATE = 2500
+
+
+def se2(spec):
+    dyaw, dx, dy = map(float, spec.split(","))
+    th = math.radians(dyaw); R = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
+    return R, PIVOT - R @ PIVOT + np.array([dx, dy])
+
+
+def main():
+    Z = np.load(f"{SP}/scene_cloud_right.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"]
+    tv = (GB - GA) / np.linalg.norm(GB - GA); nv = np.array([tv[1], -tv[0]]); rel = pts[:, :2] - GA
+    gm = (np.abs(rel @ nv) < 0.25) & ((rel @ tv) > -0.35) & ((rel @ tv) < 1.15) & (pts[:, 2] > 0.1)
+    gp, gc = pts[gm], rgb[gm]
+    k = np.random.default_rng(0).permutation(len(gp))[:PER_GATE]; gp, gc = gp[k], gc[k]
+    P, Cc = [pts[~gm]], [rgb[~gm]]
+    groups = []
+    specs = [(s, seed, False) for s, seed in POSES] + [(s, None, True) for s in REPLACED]
+    for j, (spec, seed, dropped) in enumerate(specs):
+        R, t = se2(spec)
+        q = gp.copy(); q[:, :2] = (R @ gp[:, :2].T).T + t
+        col = (np.array([150, 150, 150]) if dropped else
+               np.array(colorsys.hsv_to_rgb(j / len(POSES), 0.75, 1.0)) * 255).astype(np.uint8)
+        P.append(q); Cc.append(np.tile(col, (len(q), 1)) if dropped else (0.35 * gc + 0.65 * col).astype(np.uint8))
+        a, b = R @ GA + t, R @ GB + t
+        ap = np.array([[a[0], a[1], ZLO], [b[0], b[1], ZLO], [b[0], b[1], ZHI], [a[0], a[1], ZHI], [a[0], a[1], ZLO]], np.float32)
+        name = f"gate turned {float(spec.split(',')[0]):+g}°, moved ({spec.split(',')[1]}, {spec.split(',')[2]}) m"
+        if dropped:
+            groups.append({"label": f"first set: {name}", "color": [150, 150, 150], "trajs": [ap]})
+        else:
+            sk = np.asarray(json.load(open(f"{RD}/sketch_mg_rr25mg{pose_tag(spec, seed)}.json"))["points"], np.float32)[:, :3]
+            groups.append({"label": name, "color": col.tolist(), "trajs": [ap, sk]})
+    np.savez(f"{SP}/scene_cloud_posestmp.npz", pts=np.concatenate(P), rgb=np.concatenate(Cc))
+    tk = np.array([0, 0, 1.5], np.float32)
+    groups += [{"label": "takeoff", "fixed": True, "color": [255, 255, 255], "trajs": [np.stack([tk - [0, 0, 0.3], tk + [0, 0, 0.3]])]},
+               {"label": "goal", "fixed": True, "color": [248, 210, 90],
+                "trajs": [np.stack([GOAL - [0, 0, 0.3], GOAL + [0, 0, 0.3]]).astype(np.float32)]}] + axes()
+    v = cloudviewer.viewer_html("posestmp", groups, elem_id="v0", max_pts=None,
+                                note="Each gate is drawn at its pose in its own colour; tick a pose to show its opening and sketch. "
+                                     "Grey gates are the first pose set, clustered at the original gate and replaced on 2026-09-25. White marks takeoff, yellow the goal.")
+    os.remove(f"{SP}/scene_cloud_posestmp.npz")
+    page = f"""<title>Relocated Gate Poses</title>
+<style>
+:root{{--bg:#0f1216;--card:#151a21;--line:#28303c;--ink:#e4e9f1;--mut:#8b94a5}}
+body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,sans-serif;padding:28px 18px 70px}}
+main{{max-width:1100px;margin:0 auto}} h1{{font-size:23px;margin:0 0 4px}} .sub{{color:var(--mut);margin:0 0 14px;max-width:92ch}}
+.vc{{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px}}
+.v3dwrap canvas{{width:100%;border-radius:6px;display:block}}
+.v3dui{{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px;font:12px ui-monospace,Menlo,monospace}}
+.lg{{display:inline-flex;align-items:center;gap:5px;cursor:pointer}} .sw{{width:11px;height:11px;border-radius:3px;display:inline-block}}
+.ct{{color:var(--mut)}} .hint{{color:var(--mut);margin-left:auto}} .v3dnote{{color:var(--mut);font-size:13px;margin:8px 2px 0;max-width:95ch}}
+</style>
+<main><h1>Relocated Gate Poses</h1>
+<p class="sub">The right gate at each of the 10 poses in the relocated-gate test, all in one room. The original right gate is
+removed; every pose is drawn where the renderer puts it.</p>
+<div class="vc">{v}</div></main>"""
+    open(f"{SP}/gate_poses.html", "w").write(page); print("wrote gate_poses.html")
+
+
+if __name__ == "__main__":
+    main()

@@ -22,8 +22,10 @@ from catalogue import AUTO  # noqa: E402
 RUN = "/home/dfliu/ctxrun"
 T1 = {"pi0 left": ("armscrreal_apc25_left", "left"), "pi0 right": ("armscrreal_apc25_right", "right"),
       "ours left": ("armrealonly_apc25_left", "left"), "ours right": ("armrealonly_apc25_right", "right")}
-POSES = ["-45,0,0", "-25,0,0", "25,0,0", "45,0,0", "90,0,0", "0,0.5,-0.3", "30,-0.4,0.4",
-         "100,-1.26,1.50", "180,0,0", "-35,1.34,0.75", "90,0.74,1.95", "90,-0.26,0.85"]
+# (GATE_TF spec, seed): random far-away poses, 2026-09-25 (>= 1.2 m from takeoff, >= 1.0 m from the goal, >= 0.8 m between
+# gate centres, sketch >= 0.25 m from the gate); the tag is the spec with "-" -> "m" and "," "." -> "_", then _seed
+POSES = [("-163,0.04,-1.09", 51), ("174,2.81,1.37", 52), ("2,1.06,2.68", 53), ("153,2.46,-0.3", 54), ("-58,1.55,1.76", 55),
+         ("132,1.69,-0.83", 56), ("-49,-0.06,2.97", 57), ("44,2.03,2.6", 58), ("130,0.42,-0.36", 59), ("-86,2.1,0.87", 60)]
 RELOC = {"ours": "rr25mg", "SDEdit": "sde25mg", "v-proj": "vproj25mg"}
 
 
@@ -47,9 +49,9 @@ def main():
         out[f"T1 {cell}"] = rows
     for arm, pre in RELOC.items():
         rows = {}
-        for i, spec in enumerate(POSES):
+        for spec, seed in POSES:
             dyaw, dx, dy = map(float, spec.split(","))
-            tag = pre + spec.translate(str.maketrans({"-": "m", ",": "_", ".": "_"})) + f"_{41 + i}"
+            tag = pre + spec.translate(str.maketrans({"-": "m", ",": "_", ".": "_"})) + f"_{seed}"
             for f in trajs(tag):
                 r = MG.score_traj(np.load(f)[:, :3], dyaw, dx, dy)
                 rows[os.path.basename(f)[:-4]] = dict(cross=r["cross"], wrong=r["wrong"], goal=r["goal"], ok=bool(r["ok"]))
