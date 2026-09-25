@@ -1,0 +1,40 @@
+{
+ "points": [
+  [
+   0.0,
+   0.0,
+   1.5,
+   -3.023
+  ],
+  [
+   -1.521,
+   -0.182,
+   1.45,
+   -1.467
+  ],
+  [
+   -1.391,
+   -1.43,
+   1.45,
+   0.795
+  ],
+  [
+   -0.48,
+   -0.503,
+   1.45,
+   -0.056
+  ],
+  [
+   1.525,
+   -0.615,
+   1.2,
+   -0.056
+  ]
+ ],
+ "prompt_after": "go through the gate on the right and hover over the stuffed animal",
+ "enter_radius": 0.5,
+ "step_m": 0.025,
+ "sigma_serve": 0.0,
+ "end_margin_m": 0.1,
+ "carrot": 20
+}

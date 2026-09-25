@@ -70,7 +70,7 @@ main{{max-width:1100px;margin:0 auto}} h1{{font-size:23px;margin:0 0 4px}} .sub{
 .ct{{color:var(--mut)}} .hint{{color:var(--mut);margin-left:auto}} .v3dnote{{color:var(--mut);font-size:13px;margin:8px 2px 0;max-width:95ch}}
 </style>
 <main><h1>Relocated Gate Poses</h1>
-<p class="sub">The right gate at each of the 10 poses in the relocated-gate test, all in one room. The original right gate is
+<p class="sub">The right gate at each of the 13 poses in the relocated-gate test, all in one room; three sit behind the starting point. The original right gate is
 removed; every pose is drawn where the renderer puts it.</p>
 <div class="vc">{v}</div></main>"""
     open(f"{SP}/gate_poses.html", "w").write(page); print("wrote gate_poses.html")
