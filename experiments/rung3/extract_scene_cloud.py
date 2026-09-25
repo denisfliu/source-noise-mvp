@@ -85,7 +85,7 @@ def scene_cloud(scene):
 # x -3 (the behind-start gate poses), in front to x 4.2 and |y| <= 3 (the walls stand at |y| ~ 3.4 and x ~ 4.8), up to
 # just above the gates' top bar.
 CROP = (np.array([-3.0, -3.0, -0.1]), np.array([4.2, 3.0, 2.1]))
-FLOOR_AREA = (np.array([-1.0, -3.0]), np.array([4.0, 3.0]))   # floor kept only under the flight area
+FLOOR_AREA = (np.array([-3.0, -3.0]), np.array([4.0, 3.0]))   # floor kept only under the flight area (behind the start too)
 BG_TOP, LOW_Z = 1.9, 0.5   # nothing but the gates above BG_TOP (the frame's top bar is at ~2.0 m); below LOW_Z only under FLOOR_AREA
 # The goal table (the low wire table carrying the penguin, goal box centre (1.525, -0.615, 1.0)) and the
 # tub beside it: kept at full density like the gates (Denis, 2026-09-22: "put the point cloud of the
@@ -154,17 +154,41 @@ def decimate(pts, rgb, keep, gate_mask, gate_budget=9000, table_budget=6000, see
     return np.concatenate([fp, ap_, gp], 0), np.concatenate([fc, ac, gc], 0), len(gp)
 
 
+GATE_RADIUS = 1.0   # m: keep only what lies within this horizontal distance of a gate (Denis, 2026-09-25)
+
+
+def near_gates(pts, gate_pts, r=GATE_RADIUS, keep=None):
+    """Mask of points within horizontal distance r of any gate point (or already in `keep`)."""
+    g = torch.from_numpy(np.asarray(gate_pts, np.float32)[:, :2])
+    g = g[torch.randperm(len(g), generator=torch.Generator().manual_seed(0))[:400]]
+    out = np.zeros(len(pts), bool)
+    for i in range(0, len(pts), 200000):
+        q = torch.from_numpy(np.asarray(pts[i:i + 200000], np.float32)[:, :2])
+        out[i:i + 200000] = (torch.cdist(q, g).min(1).values <= r).numpy()
+    return out | keep if keep is not None else out
+
+
+def table_mask(pts):
+    return np.all((pts >= TABLE_REGION[0]) & (pts <= TABLE_REGION[1]), axis=1)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scene", required=True)
     ap.add_argument("--out", default=".")
     ap.add_argument("--max-pts", type=int, default=60000)
+    ap.add_argument("--full", action="store_true",
+                    help="skip the gate-radius crop and write scene_cloud_<scene>_full.npz, for pages that move the gate "
+                         "and crop around its new positions themselves")
     a = ap.parse_args()
     pts, rgb, gm, op = scene_cloud(a.scene)
     pts, rgb, gm = drop_floaters(pts, rgb, gm, op)
+    if not a.full:
+        m = near_gates(pts, pts[gm], keep=gm | table_mask(pts))
+        pts, rgb, gm = pts[m], rgb[m], gm[m]
     pts, rgb, ngate = decimate(pts, rgb, a.max_pts, gm)
     print(f"gate points kept: {ngate}")
-    f = f"{a.out}/scene_cloud_{a.scene}.npz"
+    f = f"{a.out}/scene_cloud_{a.scene}{'_full' if a.full else ''}.npz"
     np.savez_compressed(f, pts=pts.astype(np.float32), rgb=(rgb * 255).astype(np.uint8))
     print(f"{f}: {len(pts)} pts, extent {np.round(pts.min(0), 2)} .. {np.round(pts.max(0), 2)}")
 

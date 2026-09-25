@@ -3,7 +3,7 @@ the renderer moves them (about gate_clearance.PIVOT), the sketch, and every arm'
 
   /home/dfliu/code/tv/bin/python build_reloc_page.py --arm "pin=rr25mg" --arm "SDEdit=sde25mg" --arm "v-proj=vproj25mg"
 Verdicts: route-clean from moved_gate_cell.score_traj (aperture read from the judge's right_gate.yaml); contact = closer than
-0.18 m to the moved gate cloud, counted up to the route end (first time within 0.25 m of the sketch's last point)
+0.18 m to the moved gate cloud, counted up to the route end (route_contact.route_end: progress along the sketch)
 and, separately, over the whole flight (which includes loitering after the route).
 """
 import argparse, glob, html, json, math, os, re, sys
@@ -16,9 +16,12 @@ sys.path.insert(0, SP); sys.path.insert(0, RD)
 import cloudviewer  # noqa: E402
 import gate_clearance as G  # noqa: E402
 from moved_gate_cell import GA, GB, PIVOT, ZHI, ZLO, score_traj  # noqa: E402
+from extract_scene_cloud import near_gates, table_mask  # noqa: E402
+from route_contact import route_end  # noqa: E402
+from gsplat_scene_edit import _mask_mocap, load_duplicate_edit  # noqa: E402
 
 RUN = "/home/dfliu/ctxrun"
-BODY, END_R = 0.18, 0.25
+BODY = 0.18
 # (GATE_TF spec, seed): random far-away poses, 2026-09-25 (>= 1.2 m from takeoff, >= 1.0 m from the goal, >= 0.8 m between
 # gate centres, sketch >= 0.25 m from the gate); the tag is the spec with "-" -> "m" and "," "." -> "_", then _seed
 POSES = [("-163,0.04,-1.09", 51), ("174,2.81,1.37", 52), ("2,1.06,2.68", 53), ("153,2.46,-0.3", 54), ("-58,1.55,1.76", 55),
@@ -41,11 +44,12 @@ def axes(length=0.5):
 
 
 def moved_scene(R, t):
-    Z = np.load(f"{SP}/scene_cloud_right.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"]
-    tv = (GB - GA) / np.linalg.norm(GB - GA); nv = np.array([tv[1], -tv[0]]); rel = pts[:, :2] - GA
-    m = (np.abs(rel @ nv) < 0.25) & ((rel @ tv) > -0.35) & ((rel @ tv) < 1.15) & (pts[:, 2] > 0.1)
+    Z = np.load(f"{SP}/scene_cloud_right_full.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"]
+    m = _mask_mocap(pts.astype(np.float64), load_duplicate_edit("right_and_center"))   # the renderer's gate selection
+    m &= pts[:, 2] > 0.1   # leave the floor patch under the original gate in place
     pts[m, :2] = (R @ pts[m, :2].T).T + t
-    np.savez(f"{SP}/scene_cloud_reloctmp.npz", pts=pts, rgb=rgb)
+    k = near_gates(pts, pts[m], keep=m | table_mask(pts))
+    np.savez(f"{SP}/scene_cloud_reloctmp.npz", pts=pts[k], rgb=rgb[k])
 
 
 def main():
@@ -53,7 +57,7 @@ def main():
     ap.add_argument("--out", default="reloc_gates.html"); a = ap.parse_args()
     arms = [s.rsplit("=", 1) for s in a.arm]
     secs, tot = [], {lab: [0, 0, 0, 0] for lab, _ in arms}   # flights, route-clean, contact-free to route end, whole flight
-    for spec, seed in POSES:
+    for i, (spec, seed) in enumerate(POSES):
         dyaw, dx, dy = map(float, spec.split(",")); pt = pose_tag(spec, seed)
         th = math.radians(dyaw); R = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
         t = PIVOT - R @ PIVOT + np.array([dx, dy])
@@ -68,7 +72,7 @@ def main():
             for f in sorted(glob.glob(f"{RUN}/traj_{pre}{pt}_[0-9]*.npy")):
                 P = np.load(f)[:, :3].astype(np.float32); name = os.path.basename(f)[:-4]
                 d = torch.cdist(torch.from_numpy(P), C).min(1).values.numpy()
-                k = np.where(np.linalg.norm(P - sk[-1], axis=1) < END_R)[0]; e = k[0] if len(k) else len(P)
+                e = route_end(P.astype(np.float64), sk.astype(np.float64))   # progress along the sketch, as in route_contact
                 route, dr, dw = bool(score_traj(P, dyaw, dx, dy)["ok"]), float(d[:e + 1].min()), float(d.min())
                 rows.append((lab, name.rsplit("_", 1)[1], route, dr, dw))
                 s = tot[lab]; s[0] += 1; s[1] += route; s[2] += route and dr >= BODY; s[3] += route and dw >= BODY

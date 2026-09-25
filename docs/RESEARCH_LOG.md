@@ -8369,3 +8369,13 @@ x ~ 2.41 vs the sketch's 2.55, 0.09-0.15 m from the post; SDEdit 1/10 clean, v-p
 ours 10/10 completed (left then centre, both +y, no wrong way, 0.24-0.28 m from any gate), SDEdit 9/10 (one at 0.16 m),
 v-proj 10/10 (0.32 m). Min-snap ours 1.3, SDEdit 1.4, v-proj 1.8 cm. Table 2 sim row and Table 3 now use this sketch;
 hardware row stays on the original. Page `viz/build_fig8_page.py`.
+
+**Relocated gates redone on 13 far-away random poses (2026-09-25).** The first set clustered at the original right
+gate (six in-place rotations) and two poses had the takeoff point / sketch within the drone's radius. New set: 10 random
+poses (>= 1.2 m from takeoff, >= 1.0 m from the goal, >= 0.8 m between centres, gate and sketch inside the flight area,
+sketch >= 0.25 m from the gate; seeds 51-60) + 3 behind the start (centre x < -0.4, >= 1.0 m from takeoff; seeds
+61-63). 5 flights per method per pose. Route-clean 65/65 for all three; completed (route-clean and no contact to the
+route end): ours 55/65, SDEdit 58/65, v-proj 65/65; min-snap ours 1.3, SDEdit 1.6, v-proj 1.8 cm. Ours: 5 failures at
+pose -86/(2.1,0.87) (0.11-0.15 m, gate centre near the usual centre-gate spot), 5 grazes at 0.16-0.18 m.
+Scene clouds: floaters dropped, cropped to within 1 m of the gates (+ table), no ceiling/walls; `--full` variant for
+pages that move the gate. Pages: viz/gate_poses.html, viz/reloc_gates.html.

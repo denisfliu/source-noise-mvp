@@ -10,10 +10,10 @@ import numpy as np
 SP = os.path.dirname(os.path.abspath(__file__)); RD = os.path.dirname(SP)
 sys.path.insert(0, SP); sys.path.insert(0, RD)
 import cloudviewer  # noqa: E402
-from build_traj_page import axes  # noqa: E402
 from build_reloc_page import POSES, pose_tag  # noqa: E402
-from moved_gate_cell import GA, GB, GOAL, PIVOT, ZHI, ZLO  # noqa: E402
+from moved_gate_cell import GA, GB, PIVOT, ZHI, ZLO  # noqa: E402
 from gsplat_scene_edit import _mask_mocap, load_duplicate_edit  # noqa: E402
+from extract_scene_cloud import near_gates, table_mask  # noqa: E402
 
 PER_GATE = 2500
 
@@ -25,9 +25,10 @@ def se2(spec):
 
 
 def main():
-    Z = np.load(f"{SP}/scene_cloud_right.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"]
+    Z = np.load(f"{SP}/scene_cloud_right_full.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"]
     # the renderer's own gate selection (a hand box here used to catch the goal table and move it with each gate)
     gm = _mask_mocap(pts.astype(np.float64), load_duplicate_edit("right_and_center"))
+    gm &= pts[:, 2] > 0.1   # leave the floor patch under the original gate in place
     gp, gc = pts[gm], rgb[gm]
     k = np.random.default_rng(0).permutation(len(gp))[:PER_GATE]; gp, gc = gp[k], gc[k]
     P, Cc = [pts[~gm]], [rgb[~gm]]
@@ -42,14 +43,13 @@ def main():
         name = f"gate turned {float(spec.split(',')[0]):+g}°, moved ({spec.split(',')[1]}, {spec.split(',')[2]}) m"
         sk = np.asarray(json.load(open(f"{RD}/sketch_mg_rr25mg{pose_tag(spec, seed)}.json"))["points"], np.float32)[:, :3]
         groups.append({"label": name, "color": col.tolist(), "trajs": [ap, sk]})
-    np.savez(f"{SP}/scene_cloud_posestmp.npz", pts=np.concatenate(P), rgb=np.concatenate(Cc))
-    tk = np.array([0, 0, 1.5], np.float32)
-    groups += [{"label": "takeoff", "fixed": True, "color": [230, 60, 200], "trajs": [np.stack([tk - [0, 0, 0.3], tk + [0, 0, 0.3]])]},
-               {"label": "goal", "fixed": True, "color": [248, 210, 90],
-                "trajs": [np.stack([GOAL - [0, 0, 0.3], GOAL + [0, 0, 0.3]]).astype(np.float32)]}] + axes()
+    P, Cc = np.concatenate(P), np.concatenate(Cc)
+    moved = P[-len(POSES) * len(gp):]                  # the moved gates are appended last
+    m = near_gates(P, moved, keep=np.r_[np.zeros(len(P) - len(moved), bool), np.ones(len(moved), bool)] | table_mask(P))
+    np.savez(f"{SP}/scene_cloud_posestmp.npz", pts=P[m], rgb=Cc[m])
     v = cloudviewer.viewer_html("posestmp", groups, elem_id="v0", max_pts=None,
                                 note="Each gate is drawn at its pose in its own colour; tick a pose to show its opening and sketch. "
-                                     "Grey gates are the first pose set, clustered at the original gate and replaced on 2026-09-25. Magenta marks takeoff, yellow the goal.")
+                                     "Grey gates are the first pose set, clustered at the original gate and replaced on 2026-09-25.")
     os.remove(f"{SP}/scene_cloud_posestmp.npz")
     page = f"""<title>Relocated Gate Poses</title>
 <style>
