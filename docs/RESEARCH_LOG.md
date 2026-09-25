@@ -8252,3 +8252,18 @@ Command-space error |U^T a - c|/|c| 0.15-0.37. sigma 0.5 lowers carry as designe
 yaw 0.29-0.59; in-distribution commands unchanged at 0.85-1.07). Reading: in-distribution commands are carried
 nearly fully; out-of-distribution ones are carried partially, least for motions absent from the demos
 (reverse, pure sidestep, yaw). Consistent with the 65-72% hardware shortfall. Paper: "carried" not "exact".
+
+## Real-only pin: relocated gates, hardware sketches in sim, realism table (2026-09-24 ~23:30 PDT)
+`scripts/run_realonly_reloc_hwsk.sh` (real-only pin, 25-step, sigma 0, 0.30 card slice).
+- 12 distinct relocated right-gate poses x 5 (the Aug "14 poses" counted two reruns): every flight crossed the moved
+  gate and reached the goal (60/60); route-clean 55/60 (pose 30deg/(-0.4,0.4) 1/5 and 45deg 4/5: re-crossings on the
+  exit leg); sketch tracking median 0.039 m (poses 0.026-0.078); min post distance median 0.19 m (min 0.09).
+  Clearance to the splat cloud cannot be scored for moved gates (the cloud does not move with the gate).
+- fig8_denis3 (hardware sketch, left+centre gates) x 10: 10/10 complete, tracking 0.054 m, clearance-clean 0/10
+  (0.10-0.15 m at the centre gate's near post; the sketch itself passes ~0.19 m from that post's centre).
+  sketch_track.py mis-windows loop sketches that start and end at the takeoff point (reported 0.083 over steps 0-1).
+- orbit_wide (hardware sketch, 1.3 m around the right gate) x 10: tracking 0.030 m, clearance-clean 10/10 (min 0.48 m).
+- Realism (realism.py --segment speed; ROC-AUC of window kinematics vs the 100 real demos; pilot vs pilot 0.56):
+  trained tasks, n=100: ours 0.914 L / 0.925 R, pi0 0.790 / 0.769 -> pi0 is MORE pilot-like. Ours: zero-accel
+  fraction 0.64-0.71 (pilot 0.40, pi0 0.54-0.63) = velocity staircase; v95 0.27-0.30 m/s (pilot 0.70, pi0 0.32-0.41).
+  OOD cells: 0.81-0.94. The metric is sound as a measure of pilot-likeness and it disfavours the pin.
