@@ -8267,3 +8267,10 @@ nearly fully; out-of-distribution ones are carried partially, least for motions 
   trained tasks, n=100: ours 0.914 L / 0.925 R, pi0 0.790 / 0.769 -> pi0 is MORE pilot-like. Ours: zero-accel
   fraction 0.64-0.71 (pilot 0.40, pi0 0.54-0.63) = velocity staircase; v95 0.27-0.30 m/s (pilot 0.70, pi0 0.32-0.41).
   OOD cells: 0.81-0.94. The metric is sound as a measure of pilot-likeness and it disfavours the pin.
+Realism on FLOWN trajectories (`experiments/rung3/realism_hw.py`, same night): the 2026-09-24 hardware left-gate flights
+(ours t06-010, pi0 t06-010) log measured mocap poses that update every 5th executed step (2 Hz), so everything --
+pilot demos and sim included -- is subsampled to 2 Hz; 3 s window features, grouped-CV logistic AUC vs the 100 pilot
+demos. pilot-vs-pilot 0.56 | hardware ours 0.72, pi0 0.76 (n=5 each, not separated) | sim ours 0.86, pi0 0.82.
+At 10 Hz the sim gap was 0.91 vs 0.79: most of the pin's "unrealism" is the 10 Hz velocity staircase of the
+kinematic sim, which the real vehicle's dynamics smooth away. Flown, the two policies are equally pilot-like; both
+fly at ~60% of the pilot's peak speed (v95 0.38 vs 0.65 m/s) and take ~2x as long.
