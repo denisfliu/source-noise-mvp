@@ -18,13 +18,18 @@ GA = np.array([0.195, -1.348]); GB = np.array([0.924, -0.952])   # right gate po
 CEN = (GA + GB) / 2
 GOAL = np.array([1.525, -0.615, 1.0]); HALF = np.array([0.3, 0.3, 0.5])
 START = np.array([0.0, 0.0, 1.5])
+# The renderer (gsplat_scene_edit.apply_arbitrary_gate) rotates the gate about the centroid of its selected
+# gaussians, not about the aperture midpoint CEN. Sketch and scorer must use the same pivot or every rotated pose
+# is aimed off-centre by |(R - I)(PIVOT - CEN)|, up to 0.15 m at 180 deg (found 2026-09-24).
+PIVOT = np.array([0.4842, -1.1597])
+RUN_IN, RUN_OUT = 0.8, 0.5   # straight approach before and exit after the aperture (was 0.45 / 0.30)
 ZC = 1.45
 
 
 def se2(dyaw_deg, dx, dy):
     th = math.radians(dyaw_deg)
     R = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
-    t = CEN - R @ CEN + np.array([dx, dy])
+    t = PIVOT - R @ PIVOT + np.array([dx, dy])
     return R, t
 
 
@@ -49,8 +54,8 @@ def main():
     a = ap.parse_args()
     ga, gb, mid, tv, n = moved_geometry(a.dyaw, a.dx, a.dy)
     if a.make:
-        appr = mid - 0.45 * n
-        thru = mid + 0.30 * n
+        appr = mid - RUN_IN * n
+        thru = mid + RUN_OUT * n
         L = np.linalg.norm(gb - ga)
 
         def crosses(p, q):

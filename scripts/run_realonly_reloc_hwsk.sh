@@ -21,7 +21,7 @@ serve () {   # $1 sketch json, $2 seed
 }
 cd $RD
 # (2) hardware sketches first
-for SPEC in "fig8_denis3 left_and_center left 32" "orbit_wide right right 28"; do
+for SPEC in; do
   set -- $SPEC; SK=$1; SCENE=$2; SIDE=$3; NCH=$4; TAG=ro25_$SK
   serve $RD/sketch_$SK.json 11 || { echo "SERVER_TIMEOUT $TAG" >> $OUT; continue; }
   env CUDA_VISIBLE_DEVICES=0 PORT=$PORT SIDE=$SIDE SCENE=$SCENE NCH=$NCH APC=25 TRIALS=10 VIDEO=0 \
@@ -31,10 +31,10 @@ for SPEC in "fig8_denis3 left_and_center left 32" "orbit_wide right right 28"; d
   echo "CELL_DONE $TAG"
 done
 # (1) 12 relocated-gate poses (the 2026-08-29 list reran -45 and (0.5,-0.3) with the router; distinct poses = 12)
-S=20
+S=40
 for TF in -45,0,0 -25,0,0 25,0,0 45,0,0 90,0,0 0,0.5,-0.3 30,-0.4,0.4 100,-1.26,1.50 180,0,0 -35,1.34,0.75 90,0.74,1.95 90,-0.26,0.85; do
   S=$((S + 1))
-  TAG=ro25mg$(echo $TF | tr ',.-' '__m')_$S
+  TAG=rr25mg$(echo $TF | tr ',.-' '__m')_$S
   IFS=, read DY DX DYY <<< "$TF"
   $VENVPY $RD/moved_gate_cell.py --make --dyaw $DY --dx $DX --dy $DYY --tag $TAG >> $OUT 2>&1
   serve $RD/sketch_mg_$TAG.json $S || { echo "SERVER_TIMEOUT $TAG" >> $OUT; continue; }
