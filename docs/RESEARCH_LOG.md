@@ -8342,3 +8342,11 @@ the 48-degree left gate the drone crosses moving +x with dy ~ 0 (+-0.001-0.016 m
 is noise; the 7 cm plane shift re-rolled it for 22 left-gate flights. Proposed fix (not applied to falsify): label by
 motion along the aperture normal, oriented so its y component has the expected sign (`rescore_tables.py --direction
 normal`). Awaiting Denis.
+
+**Contact counted to the route end only (2026-09-25, Denis: post-route contact is an artefact of how the sketch
+hands control back).** `route_contact.py`: route end = sketch progress (tracked monotonically, so loops ending at
+takeoff work) within 0.25 m of the sketch end. Relocated gates contact-free: ours 49/60 (was 39 whole-flight), SDEdit
+42 (24), v-proj 50 (48); the 11 remaining contacts for ours are 10 from poses 51/52 (sketch grazes / takeoff inside the
+envelope) + 1 at 180 deg. Orbit 1.3 m 10/10, figure-eight left+centre 0/10 (contacts are on the route, at the centre
+gate's near post), figure-eight loops 10/10: unchanged. Tables updated with the approved apertures (Table 1 on the
+published dy-direction judge: pi0 45/45, ours 65/80; the normal-direction fix would give 44/45, 66/80, pending).

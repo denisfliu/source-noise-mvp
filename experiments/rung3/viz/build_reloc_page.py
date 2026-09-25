@@ -2,7 +2,7 @@
 the renderer moves them (about gate_clearance.PIVOT), the sketch, and every arm's flights coloured by verdict.
 
   /home/dfliu/code/tv/bin/python build_reloc_page.py --arm "pin=rr25mg" --arm "SDEdit=sde25mg" --arm "v-proj=vproj25mg"
-Verdicts: route-clean from moved_gate_cell --score (the "OK"/"fail" lines in the score files); contact = closer than
+Verdicts: route-clean from moved_gate_cell.score_traj (aperture read from the judge's right_gate.yaml); contact = closer than
 0.18 m to the moved gate cloud, counted up to the route end (first time within 0.25 m of the sketch's last point)
 and, separately, over the whole flight (which includes loitering after the route).
 """
@@ -15,7 +15,7 @@ SP = os.path.dirname(os.path.abspath(__file__)); RD = os.path.dirname(SP)
 sys.path.insert(0, SP); sys.path.insert(0, RD)
 import cloudviewer  # noqa: E402
 import gate_clearance as G  # noqa: E402
-from moved_gate_cell import PIVOT  # noqa: E402
+from moved_gate_cell import GA, GB, PIVOT, ZHI, ZLO, score_traj  # noqa: E402
 
 RUN = "/home/dfliu/ctxrun"
 BODY, END_R = 0.18, 0.25
@@ -25,19 +25,10 @@ POSES = ["-45,0,0", "-25,0,0", "25,0,0", "45,0,0", "90,0,0", "0,0.5,-0.3", "30,-
 SEED0 = 41   # run scripts number the poses 41..52 in this order
 COLS = [[96, 235, 160], [90, 170, 240], [180, 140, 255]]
 CONTACT, FAIL = [255, 140, 40], [240, 80, 80]
-GA, GB = np.array([0.195, -1.348]), np.array([0.924, -0.952])   # original aperture posts (scene right)
 
 
 def pose_tag(spec, seed):
     return spec.translate(str.maketrans({"-": "m", ",": "_", ".": "_"})) + f"_{seed}"
-
-
-def route_verdicts():
-    v = {}
-    for f in glob.glob(f"{RUN}/*scores*.txt"):
-        for m in re.finditer(r"(traj_\S+?)\.npy cross=.*?(OK|fail)\s*$", open(f).read(), re.M):
-            v[m.group(1)] = m.group(2) == "OK"
-    return v
 
 
 def axes(length=0.5):
@@ -59,7 +50,7 @@ def moved_scene(R, t):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--arm", action="append", required=True, help="label=tag-prefix")
     ap.add_argument("--out", default="reloc_gates.html"); a = ap.parse_args()
-    arms = [s.rsplit("=", 1) for s in a.arm]; RV = route_verdicts()
+    arms = [s.rsplit("=", 1) for s in a.arm]
     secs, tot = [], {lab: [0, 0, 0, 0] for lab, _ in arms}   # flights, route-clean, contact-free to route end, whole flight
     for i, spec in enumerate(POSES):
         dyaw, dx, dy = map(float, spec.split(",")); pt = pose_tag(spec, SEED0 + i)
@@ -69,7 +60,7 @@ def main():
         C = torch.tensor(np.asarray(G.moved_gate_cloud(dyaw, (dx, dy)), np.float32))
         sk = np.asarray(json.load(open(f"{RD}/sketch_mg_{arms[0][1]}{pt}.json"))["points"], np.float32)[:, :3]
         a2, b2 = R @ GA + t, R @ GB + t
-        apt = np.array([[a2[0], a2[1], 0.2], [b2[0], b2[1], 0.2], [b2[0], b2[1], 1.95], [a2[0], a2[1], 1.95], [a2[0], a2[1], 0.2]], np.float32)
+        apt = np.array([[a2[0], a2[1], ZLO], [b2[0], b2[1], ZLO], [b2[0], b2[1], ZHI], [a2[0], a2[1], ZHI], [a2[0], a2[1], ZLO]], np.float32)
         groups, rows = [], []
         for gi, (lab, pre) in enumerate(arms):
             ok, ct, bad = [], [], []
@@ -77,7 +68,7 @@ def main():
                 P = np.load(f)[:, :3].astype(np.float32); name = os.path.basename(f)[:-4]
                 d = torch.cdist(torch.from_numpy(P), C).min(1).values.numpy()
                 k = np.where(np.linalg.norm(P - sk[-1], axis=1) < END_R)[0]; e = k[0] if len(k) else len(P)
-                route, dr, dw = RV.get(name, False), float(d[:e + 1].min()), float(d.min())
+                route, dr, dw = bool(score_traj(P, dyaw, dx, dy)["ok"]), float(d[:e + 1].min()), float(d.min())
                 rows.append((lab, name.rsplit("_", 1)[1], route, dr, dw))
                 s = tot[lab]; s[0] += 1; s[1] += route; s[2] += route and dr >= BODY; s[3] += route and dw >= BODY
                 (ok if route and dr >= BODY else ct if route else bad).append(P)
