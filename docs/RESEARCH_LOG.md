@@ -8236,3 +8236,19 @@ bit for bit before it was added; those thirty flights were deleted and rerun).
 | pi0 | 44/100 ±5 | 45/100 ±5 | left: 39 missed transits, 1 dirty, 17 grazes; right: 31 missed, 28 grazes |
 | ours | 60/100 ±5 | 81/100 ±4 | left: 19 route-dirty, 34 grazes; right: 19 missed transits, 0 grazes, 100/100 clean |
 Mean min-clearance over successes 0.27 (pi0) vs 0.29-0.30 (ours). Batch spread 2-7 (pi0) and 3-10 (ours).
+
+## Command carry measured (2026-09-24 ~20:30 PDT, `experiments/rung3/carry_probe.py`)
+Real-only pin, 60 sim (synth3) + 60 real demo frames, one denoise per (frame, command); carry = realized net
+displacement projected on the commanded one / |commanded|^2 (whole 50-step chunk). Medians (p25-p75), sigma 0:
+| command | sim | real |
+| demo's own | 0.90 (0.84-0.95) | 1.00 (0.96-1.05) |
+| head's own | 1.04 | 1.05 |
+| forward 1 m / 2 m | 0.92 / 0.91 | 0.91 / 0.91 |
+| left / right 1 m | 0.75 / 0.77 | 0.70 / 0.76 |
+| back 0.5 m | 0.53 | 0.53 |
+| up 0.5 m | 0.96 | 0.97 |
+| yaw: turn right 45 / turn left 30 (+fwd) | 0.80 / 0.54 | 0.82 / 0.50 |
+Command-space error |U^T a - c|/|c| 0.15-0.37. sigma 0.5 lowers carry as designed (sideways 0.44-0.51, back 0.18,
+yaw 0.29-0.59; in-distribution commands unchanged at 0.85-1.07). Reading: in-distribution commands are carried
+nearly fully; out-of-distribution ones are carried partially, least for motions absent from the demos
+(reverse, pure sidestep, yaw). Consistent with the 65-72% hardware shortfall. Paper: "carried" not "exact".
