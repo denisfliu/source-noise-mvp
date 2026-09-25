@@ -8419,3 +8419,7 @@ The "v-proj is unrealistic" hypothesis is not supported by speed profiles. Min-s
 **Tracking error on the current OOD cells (2026-09-25; mean distance to the sketch up to route_contact's route end,
 median over flights):** Arbitrary Gates SDEdit 5.4, v-proj 0.9, pi0+injected 26.8, ours 4.9 cm; orbit 4.9 / 0.9 / -- /
 4.4; figure-eight (cx15 sketch) 6.1 / 1.3 / -- / 6.1.
+
+**pi0 + injected sketch, all three OOD cells done (2026-09-25):** Arbitrary Gates 24/65 (tracking 26.8 cm), Orbit Gate
+2/10 (76.2 cm), Figure-Eight 1/10 (43.7 cm). Every flight reaches the route end but far from the sketch; the command
+channel has to be trained (or projected) to be followed. Fills the pi0 OOD simulation cells of Table 1.
