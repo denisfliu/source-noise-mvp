@@ -63,7 +63,7 @@ def main():
         t = PIVOT - R @ PIVOT + np.array([dx, dy])
         moved_scene(R, t)
         C = torch.tensor(np.asarray(G.moved_gate_cloud(dyaw, (dx, dy)), np.float32))
-        sk = np.asarray(json.load(open(f"{RD}/sketch_mg_{arms[0][1]}{pt}.json"))["points"], np.float32)[:, :3]
+        sk = np.asarray(json.load(open(f"{RD}/sketch_mg_rr25mg{pt}.json"))["points"], np.float32)[:, :3]
         a2, b2 = R @ GA + t, R @ GB + t
         apt = np.array([[a2[0], a2[1], ZLO], [b2[0], b2[1], ZLO], [b2[0], b2[1], ZHI], [a2[0], a2[1], ZHI], [a2[0], a2[1], ZLO]], np.float32)
         groups, rows = [], []
