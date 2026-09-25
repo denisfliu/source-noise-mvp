@@ -155,6 +155,11 @@ class JointPinPolicy:
         # always delivered at full amplitude; sigma_serve only tells the flow how much to trust
         # it. Requires a SNMVP_PIN_NOISE_COND-trained checkpoint — on any other flow the value is
         # silently ignored at embed time, so the map is only set for conditioned arms.
+        # SNMVP_SIGMA_FIXED=<s> (2026-09-25, sigma ablation): serve this sigma at every replan instead of the map's.
+        sf = os.environ.get("SNMVP_SIGMA_FIXED", "")
+        self._sig_fixed = float(sf) if sf else None
+        if self._sig_fixed is not None:
+            print(f"[joint] fixed sigma_serve={self._sig_fixed}", flush=True)
         self._sigmap = None
         mp = os.environ.get("SNMVP_SIGMA_MAP", "")
         if mp:
@@ -255,6 +260,8 @@ class JointPinPolicy:
             if self._sigmap is not None:
                 xs, ys, cap = self._sigmap
                 sig_serve = float(np.clip(np.interp(sstar, xs, ys), 0.0, cap))
+            if self._sig_fixed is not None:      # SNMVP_SIGMA_FIXED: one sigma for every replan (sigma ablation)
+                sig_serve = self._sig_fixed
             extra = np.concatenate([w, [sstar, alpha,
                                         sig_serve if sig_serve is not None else -1.0,
                                         sk_phase]]).astype(np.float32)

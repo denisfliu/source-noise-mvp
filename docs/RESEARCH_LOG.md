@@ -8386,3 +8386,12 @@ gate line, then 0.8 m out on the approach side (sketch min to gate 0.29 -> 0.41 
 its flights in ~/ctxrun/reloc_pose60_narrow/. All three methods reflown: ours 5/5 at 0.37-0.38 m, SDEdit 5/5,
 v-proj 5/5. Relocated totals: ours 60/65, SDEdit 58/65, v-proj 65/65; our 5 remaining failures graze at 0.16-0.18 m.
 run_reloc_replace.sh now reuses an existing sketch instead of regenerating it.
+
+**Sigma screen on the demonstrated tasks (2026-09-25, 10 flights per gate, seed 0 = the first batch of the n=100
+cells, 25-step replan, real-only pin; success = transit + no wrong way + no contact).** `SNMVP_SIGMA_FIXED` serves one
+sigma at every replan (run_realonly_apc25.sh SIGFIX=<s>):
+    learned map   left 5/10 (5 touched)   right 9/10 (1 missed)
+    sigma 0       left 2/10 (8 touched)   right 9/10 (1 missed)
+    sigma 0.5     left 8/10 (2 touched)   right 6/10 (4 missed)
+    sigma 1.5     left 5/10 (5 missed)    right 1/10 (9 missed)
+A screen only; nothing here is a claim.

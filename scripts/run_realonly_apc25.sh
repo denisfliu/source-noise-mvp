@@ -6,6 +6,7 @@
 # HYST=<margin> (default 0.2, the server default) sets the served component's pi-hysteresis margin; HYST=0 is the
 # plain argmax serve. A non-default margin is appended to the tag (…_hyst0) so the ablation lands beside the cell.
 set -u
+# SIGFIX=<s> serves one fixed sigma at every replan instead of the learned map (tag gets _sig<s>; 2026-09-25).
 # SEED=<n> sets SNMVP_NOISE_SEED for the server: the residual-noise stream is seeded at server start, so an
 # extension (TRIAL0>1) MUST use a new seed or it replays the first cell bit for bit (2026-09-24).
 NAME=${1:-realonly}; APC=${2:-25}; NCH=$((400 / APC)); HYST=${HYST:-0.2}
@@ -13,9 +14,9 @@ RUN=/home/dfliu/ctxrun; RD=/home/dfliu/code/source-noise-mvp/experiments/rung3
 VENVPY=/home/dfliu/code/openpi/.venv/bin/python; TV=/home/dfliu/code/tv/bin/python; HFB=/home/dfliu/hf_bundle/gate-drone-pi0
 EV="env -u VIRTUAL_ENV PYTHONPATH=/home/dfliu/code/openpi-snmvp/src"
 U=$RD/pin_U_mh16.npy
-PINENV="SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 SNMVP_SIGMA_MAP=$RD/sigma_map_$NAME.json SNMVP_GMM_HYST=$HYST SNMVP_NOISE_SEED=${SEED:-0}"
+PINENV="SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 SNMVP_SIGMA_MAP=$RD/sigma_map_$NAME.json ${SIGFIX:+SNMVP_SIGMA_FIXED=$SIGFIX} SNMVP_GMM_HYST=$HYST SNMVP_NOISE_SEED=${SEED:-0}"
 CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_$NAME/4999
-PORT=${PORT:-9020}; TAG=${NAME}_apc$APC; [ "$HYST" = "0.2" ] || TAG=${TAG}_hyst$HYST
+PORT=${PORT:-9020}; TAG=${NAME}_apc$APC; [ "$HYST" = "0.2" ] || TAG=${TAG}_hyst$HYST; [ -n "${SIGFIX:-}" ] && TAG=${TAG}_sig$SIGFIX
 kill_port () { for p in $(ss -ltnp | grep ":$1 " | grep -o "pid=[0-9]*" | cut -d= -f2); do kill -9 "$p" 2>/dev/null; done; }
 cd $RD
 kill_port $PORT; sleep 3
