@@ -8357,3 +8357,9 @@ dy. Regression test `falsify-pi/tests/test_directional_transit_normal.py` (fails
 `viz/direction_bug.html`: ours left 48 (clean correct pass, dy -0.002 m -> old judge failed it) and pi0 left 9 (backs
 out through the opening at step 340 with dy +0.002 -> old judge passed it). Table 1 final: pi0 44/45 (89/200), ours
 66/80 (146/200); agent re-judge: no verdict changes; relocated-gate scorer already used the normal.
+
+**Completed now requires contact-free (Denis, 2026-09-25).** Tables 2-3 merge the columns: relocated ours 47/60, SDEdit
+39/60, v-proj 49/60; figure-eight through left+centre 0/10. Correction: that sketch clears the gates by 0.25 m (the
+earlier "0.19 m" footnote was wrong); every one of our 10 flights cuts the turn at the centre gate, passing at
+x ~ 2.41 vs the sketch's 2.55, 0.09-0.15 m from the post; SDEdit 1/10 clean, v-proj 10/10 at 0.25 m. Page
+`viz/fig8_denis3_three.html`.
