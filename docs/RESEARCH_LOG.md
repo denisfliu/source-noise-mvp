@@ -8415,3 +8415,7 @@ Rerun `scripts/run_pi0_inject_ood.sh` orbit/fig8 part when the hardware is idle.
 (0.83), v-proj 0.25/0.19 (0.76), SDEdit 0.22/0.18 (0.82), pi0+injected 0.56/0.23 (0.41, because it mostly ignores the
 sketch). Every sketch-following method inherits the sketch's single nominal speed; v-proj is not flatter than ours.
 The "v-proj is unrealistic" hypothesis is not supported by speed profiles. Min-snap distance dropped as a metric.
+
+**Tracking error on the current OOD cells (2026-09-25; mean distance to the sketch up to route_contact's route end,
+median over flights):** Arbitrary Gates SDEdit 5.4, v-proj 0.9, pi0+injected 26.8, ours 4.9 cm; orbit 4.9 / 0.9 / -- /
+4.4; figure-eight (cx15 sketch) 6.1 / 1.3 / -- / 6.1.
