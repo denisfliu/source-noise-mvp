@@ -8281,3 +8281,26 @@ apply_arbitrary_gate moves it). Real-only pin, 12 poses: contact-free 18/60 (0/5
 Min-snap distance (`minsnap_realism.py`: RMS between a flight and the degree-7 natural spline, i.e. the
 minimum-snap trajectory, through its own positions every 1 s): pilot 1.9 cm; sim ours 1.1-1.4, pi0 1.6-1.8;
 OOD 1.2-1.6; hardware 2 Hz ours 1.6, pi0 2.1 (n=5). Slower flights deviate less, and ours is slightly slower.
+
+## 2026-09-24 — Relocated gates rerun with the renderer's pivot; hardware min-snap on every measured flight
+
+**Bug:** `moved_gate_cell.py` built each sketch by rotating the gate about the aperture midpoint CEN, but the
+renderer (`gsplat_scene_edit.apply_arbitrary_gate`) rotates about the centroid of the selected gaussians,
+PIVOT (0.4842, -1.1597). At 180 deg the sketch aimed up to 0.15 m off the real opening. Run-in/run-out were also
+short (0.45/0.30 m). Fixed: sketch uses PIVOT, run-in 0.8 m, run-out 0.5 m. Rerun `rr25mg*` (seeds 41-52, same
+12 poses, 5 flights each, APC 25, real-only pin): **58/60 route-clean** (was 55/60), tracking median 0.038 m,
+min-snap 1.2 cm. Contact against the moved gate cloud (`gate_clearance --gate-tf=`): 47/60 route-clean and
+>= 0.18 m to the route end (sketch endpoint reached), 39/60 over the whole flight (was 18/60). Remaining:
+- post-route loitering drifts back onto the gate (25, 45, -25, 30 deg poses; steps 440-700, 30-50 s after the crossing);
+- pose 90/(0.74,1.95): the sketch's own exit leg passes 0.137 m from the gate; flights follow it (0.13-0.15 m);
+- pose 90/(-0.26,0.85): takeoff is 0.12 m from the gate, contact at step 0 (an invalid pose, kept for honesty);
+- 180 deg: 0.18-0.25 m to route end, i.e. marginal.
+Page: `viz/build_reloc_page.py` -> `viz/reloc_gates.html`.
+
+**Hardware min-snap, all measured flights (2 Hz; the 09-15 realonly logs are setpoints, excluded):** pilot 1.9 cm
+(n=100), pi0 left 1.4 (n=10), pi0 left+right 1.7 (n=15), ours left 1.6 (n=5). The earlier "pi0 2.1" used flights
+06-010 only. Hardware smoothness is parity; ours needs more measured flights. `~/ctxrun/minsnap_hw_all.json`.
+
+**SDEdit / v-projection, Sept 20 APC-50 runs, min-snap (cm, orbit/fig8/compound):** ours 1.7/1.6/2.1, SDEdit
+1.6/1.4/1.5, v-proj 1.9/2.0/2.3, inject 8.1/7.6/5.5. Matched APC-25 reruns on the relocated sketches:
+`scripts/run_sketch_baselines.sh` (tags sde25*, vproj25*).
