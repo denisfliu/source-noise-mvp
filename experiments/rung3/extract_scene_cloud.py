@@ -81,18 +81,23 @@ def scene_cloud(scene):
     return np.concatenate([X, dup], 0), np.concatenate([rgb, rgb[m]], 0), gm, np.concatenate([op, op[m]])
 
 
-CROP = (np.array([-6.0, -6.0, -0.4]), np.array([6.0, 6.0, 4.0]))  # flight volume; drops far field
+# The main scene only (Denis, 2026-09-25: no ceiling, nothing above the gates, no walls): behind the start down to
+# x -3 (the behind-start gate poses), in front to x 4.2 and |y| <= 3 (the walls stand at |y| ~ 3.4 and x ~ 4.8), up to
+# just above the gates' top bar.
+CROP = (np.array([-3.0, -3.0, -0.1]), np.array([4.2, 3.0, 2.1]))
+FLOOR_AREA = (np.array([-1.0, -3.0]), np.array([4.0, 3.0]))   # floor kept only under the flight area
+BG_TOP, LOW_Z = 1.9, 0.5   # nothing but the gates above BG_TOP (the frame's top bar is at ~2.0 m); below LOW_Z only under FLOOR_AREA
 # The goal table (the low wire table carrying the penguin, goal box centre (1.525, -0.615, 1.0)) and the
 # tub beside it: kept at full density like the gates (Denis, 2026-09-22: "put the point cloud of the
 # table in all of these artifacts"); a uniform thin left it ~120 points and invisible.
-TABLE_REGION = (np.array([0.95, -1.35, 0.03]), np.array([2.2, 0.05, 1.05]))
+TABLE_REGION = (np.array([0.95, -1.35, 0.2]), np.array([2.2, 0.05, 1.05]))   # above the floor, so floor points don't eat its budget
 
 
 # Floaters (Denis, 2026-09-25: "remove the random things in the air but have more of the ground/table"): drop
 # near-transparent Gaussians, and above the floor drop Gaussians in sparsely populated 10 cm voxels -- real
 # structure (gates, table, walls, the frame around the flight area) is dense, floaters are isolated.
 MIN_OPACITY, AIR_Z, VOXEL, MIN_VOXEL_COUNT = 0.5, 0.2, 0.10, 40
-FLOOR_SHARE = 0.5   # share of the background budget given to the floor (z < AIR_Z)
+FLOOR_SHARE = 0.3   # share of the background budget given to the floor (z < AIR_Z)
 
 
 def drop_floaters(pts, rgb, gate_mask, op):
@@ -120,22 +125,28 @@ def _voxel_thin(p, c, k, rng):
     return p[idx], c[idx]
 
 
-def decimate(pts, rgb, keep, gate_mask, gate_budget=9000, seed=0):
+def decimate(pts, rgb, keep, gate_mask, gate_budget=9000, table_budget=6000, seed=0):
     """Crop to the flight volume, voxel-thin the BACKGROUND to ~keep points (FLOOR_SHARE of them on the floor),
     and keep gate Gaussians and the goal table at full density (subsampled only above gate_budget)."""
     lo, hi = CROP
     inside = np.all((pts >= lo) & (pts <= hi), axis=1)
     pts, rgb, gate_mask = pts[inside], rgb[inside], gate_mask[inside]
+    under = np.all((pts[:, :2] >= FLOOR_AREA[0]) & (pts[:, :2] <= FLOOR_AREA[1]), axis=1)
+    ok = gate_mask | ((pts[:, 2] <= BG_TOP) & ((pts[:, 2] >= LOW_Z) | under))
+    pts, rgb, gate_mask = pts[ok], rgb[ok], gate_mask[ok]
     tlo, thi = TABLE_REGION
-    table = np.all((pts >= tlo) & (pts <= thi), axis=1)
-    print(f"table-region points at full density: {int(table.sum())}")
-    gate_mask = gate_mask | table
+    table = np.all((pts >= tlo) & (pts <= thi), axis=1) & ~gate_mask
     rng = np.random.default_rng(seed)
-    gp, gc = pts[gate_mask], rgb[gate_mask]
-    if len(gp) > gate_budget:
-        k = rng.permutation(len(gp))[:gate_budget]
-        gp, gc = gp[k], gc[k]
-    bp, bc = pts[~gate_mask], rgb[~gate_mask]
+
+    def cap(m, n):
+        k = np.where(m)[0]
+        k = rng.permutation(k)[:n] if len(k) > n else k
+        return pts[k], rgb[k]
+    gp, gc = cap(gate_mask, gate_budget)
+    tp, tc = cap(table, table_budget)
+    print(f"gate points {len(gp)}, table points {len(tp)}")
+    gp, gc = np.concatenate([gp, tp]), np.concatenate([gc, tc])
+    bp, bc = pts[~gate_mask & ~table], rgb[~gate_mask & ~table]
     kb = max(keep - len(gp), 1)
     fl = bp[:, 2] < AIR_Z
     fp, fc = _voxel_thin(bp[fl], bc[fl], int(kb * FLOOR_SHARE), rng)

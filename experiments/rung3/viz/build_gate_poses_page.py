@@ -13,6 +13,7 @@ import cloudviewer  # noqa: E402
 from build_traj_page import axes  # noqa: E402
 from build_reloc_page import POSES, pose_tag  # noqa: E402
 from moved_gate_cell import GA, GB, GOAL, PIVOT, ZHI, ZLO  # noqa: E402
+from gsplat_scene_edit import _mask_mocap, load_duplicate_edit  # noqa: E402
 
 PER_GATE = 2500
 
@@ -25,8 +26,8 @@ def se2(spec):
 
 def main():
     Z = np.load(f"{SP}/scene_cloud_right.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"]
-    tv = (GB - GA) / np.linalg.norm(GB - GA); nv = np.array([tv[1], -tv[0]]); rel = pts[:, :2] - GA
-    gm = (np.abs(rel @ nv) < 0.25) & ((rel @ tv) > -0.35) & ((rel @ tv) < 1.15) & (pts[:, 2] > 0.1)
+    # the renderer's own gate selection (a hand box here used to catch the goal table and move it with each gate)
+    gm = _mask_mocap(pts.astype(np.float64), load_duplicate_edit("right_and_center"))
     gp, gc = pts[gm], rgb[gm]
     k = np.random.default_rng(0).permutation(len(gp))[:PER_GATE]; gp, gc = gp[k], gc[k]
     P, Cc = [pts[~gm]], [rgb[~gm]]
