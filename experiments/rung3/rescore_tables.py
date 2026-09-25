@@ -16,7 +16,6 @@ import numpy as np
 
 RD = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, RD); sys.path.insert(0, f"{RD}/viz")
 import gate_success as GS  # noqa: E402
-from falsify.safety import posthoc  # noqa: E402
 import moved_gate_cell as MG  # noqa: E402
 from catalogue import AUTO  # noqa: E402
 
@@ -33,38 +32,15 @@ def trajs(prefix):
     return sorted(fs, key=lambda f: int(f.rsplit("_", 1)[1][:-4]))
 
 
-def normal_direction_judge(P, side):
-    """gate_success.judge with the crossing direction taken from the motion along the aperture's normal instead of
-    the per-step y-velocity (which is noise at the 48-degree left gate). The normal is oriented so that its y
-    component has the task's expected sign, which keeps the +-y "from left/right" meaning."""
-    scene, safety = GS.load_cfg(side)
-    c, u, v, n, hu, hv = posthoc._aperture_basis(np.asarray(safety["miss_gate"]["corners"], np.float64))
-    n = n * np.sign(n[1]) * GS.EXPECTED_DY_SIGN[side]
-    s = (P - c) @ n
-    first, wrong = None, 0
-    for i in np.where(s[:-1] * s[1:] < 0)[0]:
-        q = P[i] + s[i] / (s[i] - s[i + 1]) * (P[i + 1] - P[i]) - c
-        if abs(q @ u) > hu or abs(q @ v) > hv:
-            continue
-        if s[i + 1] > s[i]:
-            first = i if first is None else first
-        else:
-            wrong += 1
-    return {"transit": first is not None, "wrong_dir_crossings": wrong}
-
-
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--out", required=True)
-    ap.add_argument("--direction", choices=["dy", "normal"], default="dy",
-                    help="dy = falsify's per-step y-velocity label (the judge as published); normal = proposed fix")
-    a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--out", required=True); a = ap.parse_args()
     out = {}
     for cell, (pre, side) in T1.items():
         rows = {}
         for f in trajs(pre):
             stem = os.path.basename(f)[:-4]
             P = np.load(f)[:, :3].astype(np.float64)
-            j = GS.judge(P, side) if a.direction == "dy" else normal_direction_judge(P, side)
+            j = GS.judge(P, side)
             clean = AUTO[stem]["minclr"] >= 0.18
             rows[stem] = dict(transit=j["transit"], wrong=j["wrong_dir_crossings"], clean=clean,
                               ok=bool(j["transit"] and j["wrong_dir_crossings"] == 0 and clean))

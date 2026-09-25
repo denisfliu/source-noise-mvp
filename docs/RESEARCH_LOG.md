@@ -8350,3 +8350,10 @@ takeoff work) within 0.25 m of the sketch end. Relocated gates contact-free: our
 envelope) + 1 at 180 deg. Orbit 1.3 m 10/10, figure-eight left+centre 0/10 (contacts are on the route, at the centre
 gate's near post), figure-eight loops 10/10: unchanged. Tables updated with the approved apertures (Table 1 on the
 published dy-direction judge: pi0 45/45, ours 65/80; the normal-direction fix would give 44/45, 66/80, pending).
+
+**Direction-label fix applied to falsify posthoc (2026-09-25).** `_directional_transit_plane` now labels a crossing by
+motion along the aperture normal (oriented so its y component has expected_dy_sign) instead of the crossing step's
+dy. Regression test `falsify-pi/tests/test_directional_transit_normal.py` (fails on the old label). Example page
+`viz/direction_bug.html`: ours left 48 (clean correct pass, dy -0.002 m -> old judge failed it) and pi0 left 9 (backs
+out through the opening at step 340 with dy +0.002 -> old judge passed it). Table 1 final: pi0 44/45 (89/200), ours
+66/80 (146/200); agent re-judge: no verdict changes; relocated-gate scorer already used the normal.
