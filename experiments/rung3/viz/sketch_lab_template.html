@@ -1,0 +1,260 @@
+<title>Sketch Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f4f3ef;--panel:#ffffff;--ink:#1b1f24;--mut:#5d6570;--line:#dddbd4;--acc:#127a6c;--acc-ink:#ffffff;--warn:#a35a00;--good:#1f7a3a;--bad:#b3261e;
+  --canvas:#14171c;--sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#101316;--panel:#171b20;--ink:#e6e9ed;--mut:#9aa3ad;--line:#2a3038;--acc:#3fb8a5;--acc-ink:#07211d;--warn:#e0a24a;--good:#5cc97b;--bad:#ef7a72;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101316;--panel:#171b20;--ink:#e6e9ed;--mut:#9aa3ad;--line:#2a3038;--acc:#3fb8a5;--acc-ink:#07211d;--warn:#e0a24a;--good:#5cc97b;--bad:#ef7a72;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans)}
+main{max-width:1240px;margin:0 auto;padding:22px 16px 60px}
+h1{font-size:22px;font-weight:600;margin:0 0 2px;text-wrap:balance}
+.sub{color:var(--mut);margin:0 0 18px;max-width:78ch}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+#wrap{position:relative}
+canvas{display:block;width:100%;border-radius:8px;background:var(--canvas);touch-action:none;cursor:crosshair}
+.readout{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font:13px var(--mono);color:var(--mut);font-variant-numeric:tabular-nums}
+.readout b{color:var(--ink);font-weight:500}
+.readout .warn b{color:var(--warn)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+label.f{display:grid;gap:4px;font-size:13px;color:var(--mut);flex:1 1 140px}
+input[type=text],input[type=number],select{font:14px var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%}
+.checks{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:14px}
+.checks label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+button{font:500 14px var(--sans);border-radius:6px;padding:7px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button.primary{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.status{font-size:13px;color:var(--mut);min-height:1.5em}
+h2{font-size:15px;font-weight:600;margin:22px 0 8px}
+.list{display:grid;gap:10px}
+.item{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg)}
+.item .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.item .name{font-weight:600}
+.item .meta{font:12px var(--mono);color:var(--mut)}
+.pill{font:600 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;border-radius:99px;padding:2px 8px;border:1px solid currentColor}
+.pill.queued{color:var(--warn)}.pill.flying{color:var(--acc)}.pill.done{color:var(--good)}.pill.error{color:var(--bad)}
+.item table{border-collapse:collapse;margin-top:6px;font:12px var(--mono);font-variant-numeric:tabular-nums}
+.item td,.item th{padding:3px 12px 3px 0;text-align:left;border-bottom:1px solid var(--line)}
+.item th{color:var(--mut);font-weight:500}
+.item .note{font-size:13px;color:var(--mut);margin-top:6px}
+.item .acts{margin-top:8px}
+details{margin-top:12px} summary{cursor:pointer;color:var(--mut);font-size:13px}
+textarea{width:100%;min-height:140px;font:12px var(--mono);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px}
+.hint{font-size:13px;color:var(--mut);margin:8px 0 0}
+</style>
+<main>
+<h1>Sketch Lab</h1>
+<p class="sub">Draw a route over the room, choose how much the policy should trust it and which methods to compare, and save it.
+Saved sketches are flown in simulation and their results appear in the list below.</p>
+<div class="grid">
+  <section class="card">
+    <div id="wrap"><canvas id="cv" aria-label="Top-down view of the flight room; click to add sketch waypoints"></canvas></div>
+    <div class="readout">
+      <span>waypoints <b id="rn">1</b></span>
+      <span>length <b id="rl">0.00 m</b></span>
+      <span id="rpw">closest to a gate post <b id="rp">–</b></span>
+    </div>
+    <p class="hint">Click to add a waypoint after the last one. Drag a waypoint to move it; double-click one to delete it. The route starts at takeoff (white ring) and should end near the goal (yellow box).</p>
+  </section>
+  <section class="card">
+    <div class="row">
+      <label class="f">Scene<select id="scene"></select></label>
+      <label class="f">Start from<select id="preset"><option value="">Empty (takeoff only)</option></select></label>
+    </div>
+    <div class="row">
+      <label class="f">Name<input type="text" id="name" placeholder="e.g. right gate, hugging the post" maxlength="80"></label>
+    </div>
+    <div class="row">
+      <label class="f">Trust σ (0 = follow exactly, 1.5 = cap)<input type="number" id="sigma" min="0" max="1.5" step="0.1" value="0"></label>
+      <label class="f">Flights per method<select id="trials"><option>5</option><option selected>10</option></select></label>
+    </div>
+    <div class="row" style="display:block">
+      <div style="font-size:13px;color:var(--mut);margin-bottom:6px">Methods to fly</div>
+      <div class="checks">
+        <label><input type="checkbox" value="ours" checked> Ours (at the σ above)</label>
+        <label><input type="checkbox" value="vproj" checked> Velocity projection on π0</label>
+        <label><input type="checkbox" value="sdedit"> SDEdit on π0</label>
+        <label><input type="checkbox" value="inject"> π0 + injected sketch</label>
+      </div>
+    </div>
+    <div class="row">
+      <button id="undo" type="button">Undo</button>
+      <button id="clear" type="button">Clear</button>
+      <button id="save" class="primary" type="button" disabled>Save sketch</button>
+    </div>
+    <div class="status" id="status" role="status"></div>
+    <details><summary>Sketch as JSON</summary><textarea id="json" readonly></textarea></details>
+  </section>
+</div>
+<h2>Saved sketches</h2>
+<div class="list" id="list"><p class="hint" id="empty">Nothing saved yet.</p></div>
+</main>
+<script>
+const D = /*__DATA__*/null;
+const ARM_NAMES = {ours: "Ours", vproj: "Velocity projection on π0", sdedit: "SDEdit on π0", inject: "π0 + injected sketch"};
+const $ = (id) => document.getElementById(id);
+const cv = $("cv"), ctx = cv.getContext("2d");
+const X0 = -1.8, X1 = 4.4, Y0 = -3.1, Y1 = 3.1;            // world extent: x vertical (up), y horizontal (right)
+let scene = "right", pts = [[0, 0]], drag = -1, W = 0, H = 0, S = 1, dpr = 1;
+let db = null;                                          // set once the db capability resolves
+
+// ---------- geometry ----------
+function toS(x, y) { return [(y - Y0) * S, (X1 - x) * S]; }
+function toW(sx, sy) { return [X1 - sy / S, Y0 + sx / S]; }
+function posts() { return D.sceneGates[scene].flatMap((g) => D.gates[g]); }
+function segDist(p, a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy;
+  let t = L ? ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L : 0; t = Math.max(0, Math.min(1, t));
+  return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
+}
+function closestPost() {
+  if (pts.length < 2) return null;
+  let m = Infinity;
+  for (const q of posts()) for (let i = 0; i + 1 < pts.length; i++) m = Math.min(m, segDist(q, pts[i], pts[i + 1]));
+  return m;
+}
+function length() { let s = 0; for (let i = 0; i + 1 < pts.length; i++) s += Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]); return s; }
+
+// ---------- drawing ----------
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = cv.clientWidth; S = W / (Y1 - Y0); H = (X1 - X0) * S;
+  cv.style.height = H + "px"; cv.width = W * dpr; cv.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw();
+}
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  const c = D.scenes[scene], r = Math.max(1.2, S * 0.018);
+  ctx.globalAlpha = 0.85;
+  for (let i = 0; i < c.length; i += 5) {
+    const [sx, sy] = toS(c[i], c[i + 1]);
+    ctx.fillStyle = `rgb(${c[i + 2]},${c[i + 3]},${c[i + 4]})`; ctx.fillRect(sx - r / 2, sy - r / 2, r, r);
+  }
+  ctx.globalAlpha = 1;
+  // grid every metre, labelled
+  ctx.strokeStyle = "rgba(255,255,255,.08)"; ctx.lineWidth = 1; ctx.fillStyle = "rgba(255,255,255,.55)"; ctx.font = "11px 'IBM Plex Mono', monospace";
+  for (let x = Math.ceil(X0); x <= X1; x++) { const [, sy] = toS(x, 0); ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(W, sy); ctx.stroke(); ctx.fillText(`x ${x}`, 4, sy - 3); }
+  for (let y = Math.ceil(Y0); y <= Y1; y++) { const [sx] = toS(0, y); ctx.beginPath(); ctx.moveTo(sx, 0); ctx.lineTo(sx, H); ctx.stroke(); ctx.fillText(`y ${y}`, sx + 3, H - 5); }
+  // axes arrows at the origin
+  const [ox, oy] = toS(0, 0);
+  ctx.strokeStyle = "#ff6b6b"; ctx.lineWidth = 2; arrow(ox, oy, ox, oy - 0.6 * S); ctx.fillStyle = "#ff6b6b"; ctx.fillText("+x", ox + 4, oy - 0.6 * S);
+  ctx.strokeStyle = "#5fd38a"; arrow(ox, oy, ox + 0.6 * S, oy); ctx.fillStyle = "#5fd38a"; ctx.fillText("+y", ox + 0.6 * S + 3, oy + 12);
+  // goal box and takeoff
+  const [gx, gy] = toS(D.goal[0] + 0.3, D.goal[1] - 0.3);
+  ctx.strokeStyle = "#f5c84b"; ctx.lineWidth = 2; ctx.strokeRect(gx, gy, 0.6 * S, 0.6 * S);
+  ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.arc(ox, oy, 7, 0, 7); ctx.stroke();
+  // gate openings
+  for (const g of D.sceneGates[scene]) {
+    const [a, b] = D.gates[g], [ax, ay] = toS(...a), [bx, by] = toS(...b);
+    ctx.strokeStyle = "#63d3f5"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+    ctx.fillStyle = "#63d3f5"; for (const [px, py] of [[ax, ay], [bx, by]]) { ctx.beginPath(); ctx.arc(px, py, 4, 0, 7); ctx.fill(); }
+  }
+  // sketch
+  ctx.strokeStyle = "#ff9f43"; ctx.lineWidth = 3; ctx.lineJoin = "round"; ctx.beginPath();
+  pts.forEach((p, i) => { const [sx, sy] = toS(...p); i ? ctx.lineTo(sx, sy) : ctx.moveTo(sx, sy); }); ctx.stroke();
+  pts.forEach((p, i) => {
+    const [sx, sy] = toS(...p);
+    ctx.fillStyle = i === drag ? "#ffffff" : "#ff9f43"; ctx.beginPath(); ctx.arc(sx, sy, 6, 0, 7); ctx.fill();
+    ctx.fillStyle = "#14171c"; ctx.font = "600 10px 'IBM Plex Mono', monospace"; ctx.textAlign = "center"; ctx.fillText(String(i + 1), sx, sy + 3.5); ctx.textAlign = "left";
+  });
+  readout();
+}
+function arrow(x0, y0, x1, y1) {
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+  const a = Math.atan2(y1 - y0, x1 - x0); ctx.beginPath(); ctx.moveTo(x1, y1);
+  ctx.lineTo(x1 - 8 * Math.cos(a - 0.4), y1 - 8 * Math.sin(a - 0.4)); ctx.moveTo(x1, y1); ctx.lineTo(x1 - 8 * Math.cos(a + 0.4), y1 - 8 * Math.sin(a + 0.4)); ctx.stroke();
+}
+function readout() {
+  $("rn").textContent = pts.length; $("rl").textContent = length().toFixed(2) + " m";
+  const m = closestPost(); $("rp").textContent = m == null ? "–" : m.toFixed(2) + " m";
+  $("rpw").className = m != null && m < 0.18 ? "warn" : "";
+  $("json").value = JSON.stringify(sketchJson(), null, 1);
+  $("save").disabled = pts.length < 2 || !$("name").value.trim() || !db;
+}
+
+// ---------- the sketch file Claude flies (same format as sketch_*.json) ----------
+function sketchJson() {
+  const n = pts.length, out = pts.map((p, i) => {
+    const q = pts[Math.min(i + 1, n - 1)], o = i < n - 1 ? [q[0] - p[0], q[1] - p[1]] : [p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]];
+    return [round(p[0]), round(p[1]), i === 0 ? 1.5 : i === n - 1 ? 1.2 : 1.45, round(Math.atan2(o[1], o[0]))];
+  });
+  return {points: out, sigma_serve: Number($("sigma").value) || 0, enter_radius: 0.5, step_m: 0.025, end_margin_m: 0.1, carrot: 20};
+}
+function round(v) { return Math.round(v * 1000) / 1000; }
+
+// ---------- interaction ----------
+function hit(sx, sy) { let best = -1, bd = 12; pts.forEach((p, i) => { const [px, py] = toS(...p), d = Math.hypot(px - sx, py - sy); if (d < bd) { bd = d; best = i; } }); return best; }
+function local(e) { const b = cv.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; }
+cv.addEventListener("pointerdown", (e) => {
+  const [sx, sy] = local(e), i = hit(sx, sy);
+  if (i >= 0) { drag = i; cv.setPointerCapture(e.pointerId); }
+  else { pts.push(toW(sx, sy).map(round)); }
+  draw();
+});
+cv.addEventListener("pointermove", (e) => { if (drag < 0) return; pts[drag] = toW(...local(e)).map(round); draw(); });
+cv.addEventListener("pointerup", () => { drag = -1; draw(); });
+cv.addEventListener("dblclick", (e) => { const i = hit(...local(e)); if (i >= 0 && pts.length > 1) { pts.splice(i, 1); draw(); } });
+$("undo").onclick = () => { if (pts.length > 1) pts.pop(); draw(); };
+$("clear").onclick = () => { pts = [[0, 0]]; draw(); };
+$("name").oninput = readout; $("sigma").oninput = readout;
+for (const s of Object.keys(D.scenes)) $("scene").add(new Option(s.replace(/_/g, " "), s, false, s === scene));
+function fillPresets() {
+  const sel = $("preset"); sel.length = 1;
+  (D.presets[scene] || []).forEach((p, i) => sel.add(new Option(p.label, String(i))));
+}
+$("scene").onchange = (e) => { scene = e.target.value; fillPresets(); draw(); };
+$("preset").onchange = (e) => {
+  if (e.target.value === "") { pts = [[0, 0]]; } else { const p = D.presets[scene][+e.target.value]; pts = p.points.map((q) => q.slice()); $("sigma").value = p.sigma; }
+  draw();
+};
+fillPresets();
+window.addEventListener("resize", resize); resize();
+
+// ---------- saving and the live list ----------
+function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+function renderList(snap) {
+  const list = $("list"); list.replaceChildren();
+  if (snap.empty) { const p = document.createElement("p"); p.className = "hint"; p.textContent = "Nothing saved yet."; list.append(p); return; }
+  for (const d of snap.docs) {
+    const v = d.data(), st = v.status || "queued", el = document.createElement("div"); el.className = "item";
+    let rows = "";
+    for (const [arm, r] of Object.entries(v.results || {})) {
+      rows += `<tr><td>${esc(ARM_NAMES[arm] || arm)}</td><td>${r.completed}/${r.n}</td><td>${r.closest_m != null ? r.closest_m.toFixed(2) + " m" : "–"}</td><td>${r.tracking_cm != null ? r.tracking_cm.toFixed(1) + " cm" : "–"}</td></tr>`;
+    }
+    el.innerHTML = `<div class="top"><span class="name">${esc(v.name || d.id)}</span><span class="pill ${esc(st)}">${esc(st)}</span>
+      <span class="meta">${esc(String(v.scene || "").replace(/_/g, " "))} · σ ${Number(v.sigma || 0).toFixed(1)} · ${(v.arms || []).map((a) => esc(ARM_NAMES[a] || a)).join(", ")} · ${v.trials || "?"} flights each</span></div>
+      ${rows ? `<table><tr><th>Method</th><th>Completed</th><th>Closest to a gate</th><th>Tracking</th></tr>${rows}</table>` : ""}
+      ${v.note ? `<div class="note">${esc(v.note)}</div>` : ""}
+      <div class="acts"><button type="button">Open in editor</button></div>`;
+    el.querySelector("button").onclick = () => {
+      scene = v.scene; $("scene").value = scene; fillPresets(); pts = (v.points || [[0, 0]]).map((q) => q.slice());
+      $("sigma").value = v.sigma || 0; $("name").value = (v.name || "") + " (copy)"; draw(); window.scrollTo({top: 0, behavior: "smooth"});
+    };
+    list.append(el);
+  }
+}
+$("save").onclick = async () => {
+  const arms = [...document.querySelectorAll(".checks input:checked")].map((c) => c.value);
+  if (!arms.length) { $("status").textContent = "Pick at least one method to fly."; return; }
+  const name = $("name").value.trim(), id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) + "-" + Date.now().toString(36);
+  $("save").disabled = true; $("status").textContent = "Saving…";
+  try {
+    await db.collection("sketches").doc(id).set({name, scene, points: pts, sigma: Number($("sigma").value) || 0, arms,
+      trials: Number($("trials").value), status: "queued", createdAt: Date.now(), sketch: sketchJson()});
+    $("status").textContent = `Saved “${name}”. It is queued to fly.`;
+  } catch (e) {
+    $("status").textContent = e && e.code === "invalid_argument" ? "You can view sketches but not save them here." : "Could not save; try again in a moment.";
+  } finally { readout(); }
+};
+(async () => {
+  db = window.claude && typeof window.claude.use === "function" ? await window.claude.use("db") : null;
+  if (!db) { $("status").textContent = "Saving is unavailable in this view. Copy the JSON under the form instead."; readout(); return; }
+  readout();
+  db.collection("sketches").orderBy("createdAt", "desc").limit(50).onSnapshot(renderList,
+    () => { $("status").textContent = "The saved list stopped updating; reload to see new results."; });
+})();
+</script>
