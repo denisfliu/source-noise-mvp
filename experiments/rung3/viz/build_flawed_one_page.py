@@ -158,10 +158,11 @@ def panels():
     gate_marks = [dict(g, fixed=True, color=GATE_COL) for g in marks(SCENE) if "aperture" in g["label"]]
 
     def cell(k, title, groups):
-        view = cloudviewer.viewer_html("flawedfig", groups, elem_id=f"p{k}", max_pts=None, default_on=True, white=True, height=420, sync="flawed")
+        view = cloudviewer.viewer_html("flawedfig", groups, elem_id=f"p{k}", max_pts=None, default_on=True, white=True, sync="flawed", square=True)
         i = view.index(f'<canvas id="p{k}"'); j = view.index("</canvas>", i) + len("</canvas>")
         ttl = f'<div class="ttl" contenteditable="true" spellcheck="false">{html.escape(title)}</div>'
-        return f'<div class="cell"><div class="figwrap">{view[i:j]}{ttl}</div>{view[j:]}</div>'
+        # keep the viewer's own wrapper (view[:i]) so its closing tags in view[j:] close it, not the grid
+        return f'<div class="cell">{view[:i]}<div class="figwrap">{view[i:j]}{ttl}</div>{view[j:]}</div>'
 
     sk_group = {"label": "the flawed sketch", "fixed": True, "color": SKETCH_COL, "trajs": [S.astype(np.float32)]}
     cells = [cell(0, "The flawed sketch", [sk_group] + gate_marks)]
@@ -188,7 +189,7 @@ body{{margin:0;background:#ffffff;color:#1b1f24;font:15px/1.5 system-ui,sans-ser
 main{{max-width:1500px;margin:0 auto}} .sub{{color:#5d6570;margin:0 0 10px}}
 .grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}}
 @media (max-width:900px){{.grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-.cell .v3dwrap,.cell{{background:#fff}} .figwrap{{position:relative}} canvas{{width:100%;display:block;border-radius:6px;border:1px solid #e3e3e3;cursor:grab}}
+.cell{{background:#fff;min-width:0}} .cell .v3dwrap{{background:#fff;border:0;padding:0;margin:0}} .figwrap{{position:relative}} canvas{{width:100%;display:block;border-radius:6px;border:1px solid #e3e3e3;cursor:grab}}
 .ttl{{position:absolute;top:8px;left:10px;background:rgba(255,255,255,.9);border-radius:5px;padding:3px 8px;font:600 14px system-ui,sans-serif;outline:none}}
 .ttl:focus,.key:focus{{box-shadow:0 0 0 2px #1a73e8}}
 .key{{display:flex;gap:6px 16px;flex-wrap:wrap;align-items:center;font:600 14px system-ui,sans-serif;margin:0 0 10px;outline:none}}

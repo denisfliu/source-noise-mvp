@@ -18,7 +18,7 @@ def _b64(a):
     return base64.b64encode(np.ascontiguousarray(a).tobytes()).decode()
 
 
-def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None, default_on=False, white=False, sync=None):
+def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None, default_on=False, white=False, sync=None, square=False):
     """groups: [{label, color, trajs, fixed?}]. A group with "fixed": True is always drawn and gets no
     checkbox (scene marks, the sketch, the axes); the scene cloud is always drawn. Every other group starts
     unchecked unless default_on (Denis, 2026-09-20: pick what to see on opening)."""
@@ -40,6 +40,7 @@ def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None,
         "default_on": bool(default_on),
         "white": bool(white),
         "sync": sync,
+        "square": bool(square),
     }
     j = json.dumps(payload)
     legend = "".join(
@@ -105,7 +106,8 @@ function mat(){{
 }}
 function draw(){{
   const dpr=Math.min(window.devicePixelRatio||1,2);
-  cv.width=cv.clientWidth*dpr; cv.height={height}*dpr;
+  const hh=D.square?cv.clientWidth:{height}; cv.style.height=hh+"px";
+  cv.width=cv.clientWidth*dpr; cv.height=hh*dpr;
   gl.viewport(0,0,cv.width,cv.height);
   gl.clearColor(bg[0],bg[1],bg[2],1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
