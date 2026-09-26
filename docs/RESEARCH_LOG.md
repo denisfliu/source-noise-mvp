@@ -8475,3 +8475,8 @@ s UU^T v, 10 flights each, APC 25, seed 11).** s 0.1: 0/10, both gates 10/10, cl
 in 10/10). So no s both keeps the route and clears the post; ours (gmsig3) at sigma 0.5 does, 8/10 at 21 cm. The
 2026-09-20 s=0.1 "clears at the threshold" (5/5 at 0.182-0.190 m, APC 50) does not hold at the 25-step replan.
 Page viz/flawed_center_sketch.html (one representative flight per method).
+
+**Ours (gmsig3) at sigma 0.3 on the flawed center sketch (2026-09-25; 10 flights):** 2/10 completed, closest 8.2 cm
+(median), tracking 6.2 cm. Against sigma 0.5 8/10 (21 cm) and v-proj s 0.3 0/10 (6 cm): at matched 0.3 both mostly
+touch, ours still completes 2; the correction grows with sigma (0 -> 0/10, 0.3 -> 2/10, 0.5 -> 8/10).
+Figure page: viz/flawed_center_panels.html (shared camera, editable labels).
