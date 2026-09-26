@@ -8458,3 +8458,13 @@ score_badsketch.py PREFIX=bsm25; 4-click L->C sketch 0.07 m from the center post
 The trained slack corrects a flawed sketch where the residual knows the route (the center gate is in gmsig3's simulated
 demonstrations): 8/10 at sigma 0.5, clearing the post by 21 cm, against 0/10 for exact projection at the sketch's own
 6 cm. Reproduces 2026-09-20 (4/5) at n=10 and the 25-step replan.
+
+**Mixed-data rows rescored with today's judge (2026-09-25; new apertures, normal-direction label, contact counted;
+flights unchanged, 50-step replan era).** Demonstrated gates, 10 per cell x 2 training seeds:
+    plain pi0 (scratch3, s42+s7)  left 17/20  right 19/20  CFL 16/20  CFR 7/20   total 59/80 (route only 75/80)
+    ours (gmsig3, s42+s7)         left 20/20  right 20/20  CFL 20/20  CFR 16/20  total 76/80 (route only 80/80)
+Sketches (completed = route + sketch end + no contact to the end; 5 flights):
+    hand-drawn L->C   scratch3 + injected 0/5 (152 cm from the sketch)  | gmsig3 5/5 (8.1 cm)
+    orbit             scratch3 + injected 0/5 (116 cm)                   | xswap 5/5 (5.9 cm)
+    figure-eight      scratch3 + injected 0/5 (138 cm)                   | xswap 5/5 (5.1 cm)
+(the orbit and figure-eight "ours" flights are the xswap checkpoint, a sibling mixed-data pin.)
