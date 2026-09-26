@@ -69,7 +69,7 @@ simulated demonstrations (25-step replan, same seed). One representative flight 
     open(f"{SP}/flawed_center_sketch.html", "w").write(page); print("wrote flawed_center_sketch.html")
 
 
-if __name__ == "__main__" and "--figure" not in sys.argv:
+if __name__ == "__main__" and not {"--figure", "--panels"} & set(sys.argv):
     main()
 
 
@@ -133,3 +133,58 @@ left-then-center sketch; red blobs mark where a flight touches a post.</p>{view}
 
 if __name__ == "__main__" and "--figure" in sys.argv:
     figure()
+
+
+# ---- small multiples (2026-09-25): one panel per method, same scene, one shared camera; every label is editable in
+# place (click it and type) so the figure's wording can be set before the screenshot.
+PANELS = [("Ours, σ = 0.5", "bsm25_pin05_L"), ("Ours, σ = 0.3", "bsm25_pin03_L"), ("Velocity projection", "bsm25_vproj_L"),
+          ("Velocity projection, s = 0.3", "bsm25_vps03_L"), ("SDEdit", "bsm25_sde05_L")]
+TRAJ_COL = [26, 110, 200]
+
+
+def panels():
+    S = np.asarray(json.load(open(SK))["points"], np.float64)[:, :3]
+    cloud = torch.tensor(np.asarray(G.gate_cloud(SCENE), np.float32))
+    cells = []
+    for k, (name, tag) in enumerate(PANELS):
+        fs = sorted(glob.glob(f"{RUN}/traj_{tag}_[0-9]*.npy"))
+        if not fs:
+            print("skipping (not flown yet):", tag); continue
+        v = [(f,) + verdict(np.load(f)[:, :3].astype(np.float64), S, cloud) for f in fs]
+        pool = [x for x in v if x[1]] or v
+        pool.sort(key=lambda x: x[2]); f, ok, dmin, why = pool[len(pool) // 2]
+        P = np.load(f)[:, :3].astype(np.float64)
+        e = RC.route_end(P, S); d = torch.cdist(torch.from_numpy(P[:e + 1].astype(np.float32)), cloud).min(1).values.numpy()
+        groups = [{"label": "flight", "fixed": True, "color": TRAJ_COL, "trajs": [P.astype(np.float32)]},
+                  {"label": "the flawed sketch", "fixed": True, "color": [200, 150, 0], "trajs": [S.astype(np.float32)]}]
+        if d.min() < RC.BODY:
+            groups.append({"label": "contact", "fixed": True, "color": [214, 39, 40], "trajs": [blob(P[int(d.argmin())])]})
+        groups += [dict(g, fixed=True) for g in marks(SCENE)]
+        n_ok = sum(x[1] for x in v)
+        outcome = "completes" if ok else ("hits the post" if why.startswith("touches") else SHORT.get(why, why))
+        view = cloudviewer.viewer_html(SCENE, groups, elem_id=f"p{k}", max_pts=30000, default_on=True, white=True, height=420, sync="flawed")
+        i = view.index(f'<canvas id="p{k}"'); j = view.index("</canvas>", i) + len("</canvas>")
+        title = f'<div class="ttl" contenteditable="true" spellcheck="false">{html.escape(name)}: {html.escape(outcome)} ({n_ok}/{len(v)})</div>'
+        cells.append(f'<div class="cell"><div class="figwrap">{view[i:j]}{title}</div>{view[j:]}</div>')
+    key = ('<div class="key" contenteditable="true" spellcheck="false"><span style="background:rgb(200,150,0)"></span>flawed sketch'
+           '<span style="background:rgb(26,110,200)"></span>flight<span class="dot"></span>contact with a post</div>')
+    page = f"""<title>Flawed Sketch Panels</title>
+<style>
+body{{margin:0;background:#ffffff;color:#1b1f24;font:15px/1.5 system-ui,sans-serif;padding:20px 16px}}
+main{{max-width:1500px;margin:0 auto}} .sub{{color:#5d6570;margin:0 0 10px}}
+.grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:10px}}
+.cell .v3dwrap,.cell{{background:#fff}} .figwrap{{position:relative}} canvas{{width:100%;display:block;border-radius:6px;border:1px solid #e3e3e3;cursor:grab}}
+.ttl{{position:absolute;top:8px;left:10px;background:rgba(255,255,255,.9);border-radius:5px;padding:3px 8px;font:600 14px system-ui,sans-serif;outline:none}}
+.ttl:focus,.key:focus{{box-shadow:0 0 0 2px #1a73e8}}
+.key{{display:flex;gap:6px 16px;flex-wrap:wrap;align-items:center;font:600 14px system-ui,sans-serif;margin:0 0 10px;outline:none}}
+.key span{{display:inline-block;width:26px;height:5px;border-radius:3px;margin-right:6px;vertical-align:middle}}
+.key .dot{{width:12px;height:12px;border-radius:50%;background:rgb(214,39,40)}}
+.v3dui{{display:none}} .v3dnote{{display:none}}
+</style>
+<main><p class="sub">Drag any panel to rotate; every panel follows (wheel zooms, shift-drag pans). Click any label to edit its text,
+then screenshot. One representative flight per method on the flawed left-then-center sketch.</p>{key}<div class="grid">{"".join(cells)}</div></main>"""
+    open(f"{SP}/flawed_center_panels.html", "w").write(page); print("wrote flawed_center_panels.html")
+
+
+if __name__ == "__main__" and "--panels" in sys.argv:
+    panels()

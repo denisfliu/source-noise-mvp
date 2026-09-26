@@ -18,7 +18,7 @@ def _b64(a):
     return base64.b64encode(np.ascontiguousarray(a).tobytes()).decode()
 
 
-def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None, default_on=False, white=False):
+def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None, default_on=False, white=False, sync=None):
     """groups: [{label, color, trajs, fixed?}]. A group with "fixed": True is always drawn and gets no
     checkbox (scene marks, the sketch, the axes); the scene cloud is always drawn. Every other group starts
     unchecked unless default_on (Denis, 2026-09-20: pick what to see on opening)."""
@@ -39,6 +39,7 @@ def viewer_html(scene, groups, note="", height=560, elem_id="v3d", max_pts=None,
                    for g in groups],
         "default_on": bool(default_on),
         "white": bool(white),
+        "sync": sync,
     }
     j = json.dumps(payload)
     legend = "".join(
@@ -81,6 +82,11 @@ const groups = D.groups.map(g=>({{label:g.label,color:g.color.map(v=>v/255),
    const col=new Float32Array(a.length); for(let i=0;i<a.length;i+=3){{col[i]=g.color[0]/255;col[i+1]=g.color[1]/255;col[i+2]=g.color[2]/255;}}
    return {{n:a.length/3, bp:buf(a), bc:buf(col)}};}}), on:(g.fixed||D.default_on)}}));
 let yaw=-0.6, pitch=0.45, dist=9, panx=0, pany=0, cloudOn=true, bg=D.white?[1,1,1]:[0.07,0.08,0.10];
+// sync (2026-09-25): viewers built with the same sync key share one camera, so small multiples keep the same view
+const setCam=(st)=>{{ yaw=st.yaw; pitch=st.pitch; dist=st.dist; panx=st.panx; pany=st.pany; draw(); }};
+if(D.sync){{ window.__v3dSync=window.__v3dSync||{{}}; (window.__v3dSync[D.sync]=window.__v3dSync[D.sync]||[]).push(setCam); }}
+function broadcast(){{ if(!D.sync) return; const st={{yaw,pitch,dist,panx,pany}};
+  for(const f of window.__v3dSync[D.sync]) if(f!==setCam) f(st); }}
 function mat(){{
   const cy=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch);
   const ex=dist*cp*sy, ey=-dist*cp*cy, ez=dist*sp;
@@ -127,9 +133,9 @@ window.addEventListener("mousemove",e=>{{ if(!drag) return;
   const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.x=e.clientX; drag.y=e.clientY;
   if(drag.sh){{ panx+=dx*0.004; pany-=dy*0.004; }}
   else {{ yaw+=dx*0.006; pitch=Math.max(-1.4,Math.min(1.4,pitch+dy*0.006)); }}
-  draw();
+  draw(); broadcast();
 }});
-cv.addEventListener("wheel",e=>{{e.preventDefault(); dist*=Math.exp(e.deltaY*0.0012); dist=Math.max(1.5,Math.min(60,dist)); draw();}},{{passive:false}});
+cv.addEventListener("wheel",e=>{{e.preventDefault(); dist*=Math.exp(e.deltaY*0.0012); dist=Math.max(1.5,Math.min(60,dist)); draw(); broadcast();}},{{passive:false}});
 document.querySelectorAll('.v3dui input[data-g]').forEach(cb=>cb.addEventListener("change",()=>{{
   groups[+cb.dataset.g].on=cb.checked; draw();}}));
 const bgb=cv.parentElement.querySelector(".bgbtn");
