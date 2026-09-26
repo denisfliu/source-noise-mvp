@@ -8431,3 +8431,11 @@ gates 7/10 on L but touches 7, and on R never reaches the centre gate; ours at s
 (1 gate latched in 18/20). SDEdit mostly misses the centre gate. The centre gate never appears in the real-only
 demonstrations, so loosening trust lets the policy fall back to its single-gate habits: these compound sketches cannot
 test "deviates from a flawed sketch". A fair test needs flawed sketches through a demonstrated-looking single gate.
+
+**Flawed sketches through the demonstrated left/right gates (2026-09-25; run_badgate25.sh, score_badgate.py; crossing
+shifted to pass ~0.065 m from a post, other legs >= 0.33 m; 10 flights per cell, APC 25, seed 11).**
+    left (0.069 m)   ours s0 0/10 (closest 0.07, trk 3.7) | ours s0.5 0/10 (0.05, 5.4) | v-proj 0/10 (0.06, 1.0) | SDEdit 0/10 (0.10, 6.7)
+    right (0.065 m)  ours s0 0/10 (0.03, 3.5) | ours s0.5 0/10 (0.03, 5.3) | v-proj 0/10 (0.07, 1.0) | SDEdit 1/10 (0.10, 4.6)
+Nobody course-corrects: every arm touches the post. Ours at sigma 0.5 deviates more from the sketch (5 cm) but not
+toward the gate's centre. The "ours corrects a flawed sketch" argument is not supported on the real-only policy even at
+demonstrated gates (it held only on the mixed-data checkpoint, 2026-09-20).
