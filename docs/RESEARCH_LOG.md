@@ -8423,3 +8423,11 @@ median over flights):** Arbitrary Gates SDEdit 5.4, v-proj 0.9, pi0+injected 26.
 **pi0 + injected sketch, all three OOD cells done (2026-09-25):** Arbitrary Gates 24/65 (tracking 26.8 cm), Orbit Gate
 2/10 (76.2 cm), Figure-Eight 1/10 (43.7 cm). Every flight reaches the route end but far from the sketch; the command
 channel has to be trained (or projected) to be followed. Fills the pi0 OOD simulation cells of Table 1.
+
+**Flawed two-gate sketches at the current protocol (2026-09-25; run_badsketch25.sh, score_badsketch.py; 10 flights
+per cell, APC 25, seed 11).** sketch_cmpl_min4 comes 0.07 m and sketch_cmpr_min4 0.03 m from a gate. Every arm 0/10 on
+both. v-proj follows the flaw and touches the gate 10/10 on both (tracking 1.1-1.5 cm). Ours at sigma 0 passes both
+gates 7/10 on L but touches 7, and on R never reaches the centre gate; ours at sigma 0.5 never reaches the centre gate
+(1 gate latched in 18/20). SDEdit mostly misses the centre gate. The centre gate never appears in the real-only
+demonstrations, so loosening trust lets the policy fall back to its single-gate habits: these compound sketches cannot
+test "deviates from a flawed sketch". A fair test needs flawed sketches through a demonstrated-looking single gate.
