@@ -69,13 +69,13 @@ Saved sketches are flown in simulation and their results appear in the list belo
       <label class="f">Name<input type="text" id="name" placeholder="e.g. right gate, hugging the post" maxlength="80"></label>
     </div>
     <div class="row">
-      <label class="f">Trust σ (0 = follow exactly, 1.5 = cap)<input type="number" id="sigma" min="0" max="1.5" step="0.1" value="0"></label>
+      <label class="f">Trust σ for ours, one or more (0 = follow exactly, 1.5 = cap)<input type="text" id="sigma" value="0, 0.5, 1" inputmode="decimal"></label>
       <label class="f">Flights per method<select id="trials"><option>5</option><option selected>10</option></select></label>
     </div>
     <div class="row" style="display:block">
       <div style="font-size:13px;color:var(--mut);margin-bottom:6px">Methods to fly</div>
       <div class="checks">
-        <label><input type="checkbox" value="ours" checked> Ours (at the σ above)</label>
+        <label><input type="checkbox" value="ours" checked> Ours (once per σ above)</label>
         <label><input type="checkbox" value="vproj" checked> Velocity projection on π0</label>
         <label><input type="checkbox" value="sdedit"> SDEdit on π0</label>
         <label><input type="checkbox" value="inject"> π0 + injected sketch</label>
@@ -84,6 +84,7 @@ Saved sketches are flown in simulation and their results appear in the list belo
     <div class="row">
       <button id="undo" type="button">Undo</button>
       <button id="clear" type="button">Clear</button>
+      <button id="copy" type="button">Copy sketch</button>
       <button id="save" class="primary" type="button" disabled>Save sketch</button>
     </div>
     <div class="status" id="status" role="status"></div>
@@ -100,11 +101,12 @@ const $ = (id) => document.getElementById(id);
 const cv = $("cv"), ctx = cv.getContext("2d");
 const X0 = -1.8, X1 = 4.4, Y0 = -3.1, Y1 = 3.1;            // world extent: x vertical (up), y horizontal (right)
 let scene = "right", pts = [[0, 0]], drag = -1, W = 0, H = 0, S = 1, dpr = 1;
-let db = null;                                          // set once the db capability resolves
+let db = null, dbState = "pending", busy = false;       // db is set once the capability resolves
 
 // ---------- geometry ----------
-function toS(x, y) { return [(y - Y0) * S, (X1 - x) * S]; }
-function toW(sx, sy) { return [X1 - sy / S, Y0 + sx / S]; }
+// plan view: +x up, +y LEFT (the left gate sits on the left of the panel)
+function toS(x, y) { return [(Y1 - y) * S, (X1 - x) * S]; }
+function toW(sx, sy) { return [X1 - sy / S, Y1 - sx / S]; }
 function posts() { return D.sceneGates[scene].flatMap((g) => D.gates[g]); }
 function segDist(p, a, b) {
   const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy;
@@ -142,7 +144,7 @@ function draw() {
   // axes arrows at the origin
   const [ox, oy] = toS(0, 0);
   ctx.strokeStyle = "#ff6b6b"; ctx.lineWidth = 2; arrow(ox, oy, ox, oy - 0.6 * S); ctx.fillStyle = "#ff6b6b"; ctx.fillText("+x", ox + 4, oy - 0.6 * S);
-  ctx.strokeStyle = "#5fd38a"; arrow(ox, oy, ox + 0.6 * S, oy); ctx.fillStyle = "#5fd38a"; ctx.fillText("+y", ox + 0.6 * S + 3, oy + 12);
+  ctx.strokeStyle = "#5fd38a"; arrow(ox, oy, ox - 0.6 * S, oy); ctx.fillStyle = "#5fd38a"; ctx.fillText("+y", ox - 0.6 * S - 18, oy + 12);
   // goal box and takeoff
   const [gx, gy] = toS(D.goal[0] + 0.3, D.goal[1] - 0.3);
   ctx.strokeStyle = "#f5c84b"; ctx.lineWidth = 2; ctx.strokeRect(gx, gy, 0.6 * S, 0.6 * S);
@@ -173,7 +175,10 @@ function readout() {
   const m = closestPost(); $("rp").textContent = m == null ? "–" : m.toFixed(2) + " m";
   $("rpw").className = m != null && m < 0.18 ? "warn" : "";
   $("json").value = JSON.stringify(sketchJson(), null, 1);
-  $("save").disabled = pts.length < 2 || !$("name").value.trim() || !db;
+  const why = !db ? (dbState === "pending" ? "Connecting to storage…" : "Saving is unavailable in this view; use Copy sketch and paste it to Claude.")
+    : pts.length < 2 ? "Add at least one waypoint after takeoff to save." : !$("name").value.trim() ? "Name the sketch to save it."
+    : !sigmas().length ? "Enter at least one σ between 0 and 1.5." : "";
+  $("save").disabled = !!why; if (!busy) $("status").textContent = why;
 }
 
 // ---------- the sketch file Claude flies (same format as sketch_*.json) ----------
@@ -182,9 +187,10 @@ function sketchJson() {
     const q = pts[Math.min(i + 1, n - 1)], o = i < n - 1 ? [q[0] - p[0], q[1] - p[1]] : [p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]];
     return [round(p[0]), round(p[1]), i === 0 ? 1.5 : i === n - 1 ? 1.2 : 1.45, round(Math.atan2(o[1], o[0]))];
   });
-  return {points: out, sigma_serve: Number($("sigma").value) || 0, enter_radius: 0.5, step_m: 0.025, end_margin_m: 0.1, carrot: 20};
+  return {points: out, sigma_serve: 0, enter_radius: 0.5, step_m: 0.025, end_margin_m: 0.1, carrot: 20};
 }
 function round(v) { return Math.round(v * 1000) / 1000; }
+function sigmas() { return [...new Set($("sigma").value.split(/[ ,;]+/).map(Number).filter((v) => isFinite(v) && v >= 0 && v <= 1.5))].sort((a, b) => a - b); }
 
 // ---------- interaction ----------
 function hit(sx, sy) { let best = -1, bd = 12; pts.forEach((p, i) => { const [px, py] = toS(...p), d = Math.hypot(px - sx, py - sy); if (d < bd) { bd = d; best = i; } }); return best; }
@@ -198,6 +204,12 @@ cv.addEventListener("pointerdown", (e) => {
 cv.addEventListener("pointermove", (e) => { if (drag < 0) return; pts[drag] = toW(...local(e)).map(round); draw(); });
 cv.addEventListener("pointerup", () => { drag = -1; draw(); });
 cv.addEventListener("dblclick", (e) => { const i = hit(...local(e)); if (i >= 0 && pts.length > 1) { pts.splice(i, 1); draw(); } });
+$("copy").onclick = async () => {
+  const text = JSON.stringify({name: $("name").value.trim(), scene, sigmas: sigmas(), arms: arms(), trials: Number($("trials").value), points: pts});
+  try { await navigator.clipboard.writeText(text); busy = true; $("status").textContent = "Copied. Paste it to Claude to fly it."; setTimeout(() => { busy = false; readout(); }, 4000); }
+  catch { $("json").value = text; document.querySelector("details").open = true; $("json").select(); busy = true; $("status").textContent = "Copy the selected text under the form and paste it to Claude."; }
+};
+function arms() { return [...document.querySelectorAll(".checks input:checked")].map((c) => c.value); }
 $("undo").onclick = () => { if (pts.length > 1) pts.pop(); draw(); };
 $("clear").onclick = () => { pts = [[0, 0]]; draw(); };
 $("name").oninput = readout; $("sigma").oninput = readout;
@@ -208,7 +220,7 @@ function fillPresets() {
 }
 $("scene").onchange = (e) => { scene = e.target.value; fillPresets(); draw(); };
 $("preset").onchange = (e) => {
-  if (e.target.value === "") { pts = [[0, 0]]; } else { const p = D.presets[scene][+e.target.value]; pts = p.points.map((q) => q.slice()); $("sigma").value = p.sigma; }
+  if (e.target.value === "") { pts = [[0, 0]]; } else { const p = D.presets[scene][+e.target.value]; pts = p.points.map((q) => q.slice()); }
   draw();
 };
 fillPresets();
@@ -223,37 +235,37 @@ function renderList(snap) {
     const v = d.data(), st = v.status || "queued", el = document.createElement("div"); el.className = "item";
     let rows = "";
     for (const [arm, r] of Object.entries(v.results || {})) {
-      rows += `<tr><td>${esc(ARM_NAMES[arm] || arm)}</td><td>${r.completed}/${r.n}</td><td>${r.closest_m != null ? r.closest_m.toFixed(2) + " m" : "–"}</td><td>${r.tracking_cm != null ? r.tracking_cm.toFixed(1) + " cm" : "–"}</td></tr>`;
+      const [an, sg] = arm.split("@"); rows += `<tr><td>${esc((ARM_NAMES[an] || an) + (sg != null ? ", σ " + sg : ""))}</td><td>${r.completed}/${r.n}</td><td>${r.closest_m != null ? r.closest_m.toFixed(2) + " m" : "–"}</td><td>${r.tracking_cm != null ? r.tracking_cm.toFixed(1) + " cm" : "–"}</td></tr>`;
     }
     el.innerHTML = `<div class="top"><span class="name">${esc(v.name || d.id)}</span><span class="pill ${esc(st)}">${esc(st)}</span>
-      <span class="meta">${esc(String(v.scene || "").replace(/_/g, " "))} · σ ${Number(v.sigma || 0).toFixed(1)} · ${(v.arms || []).map((a) => esc(ARM_NAMES[a] || a)).join(", ")} · ${v.trials || "?"} flights each</span></div>
+      <span class="meta">${esc(String(v.scene || "").replace(/_/g, " "))} · σ ${(v.sigmas || [v.sigma || 0]).map((x) => Number(x).toFixed(1)).join(", ")} · ${(v.arms || []).map((a) => esc(ARM_NAMES[a] || a)).join(", ")} · ${v.trials || "?"} flights each</span></div>
       ${rows ? `<table><tr><th>Method</th><th>Completed</th><th>Closest to a gate</th><th>Tracking</th></tr>${rows}</table>` : ""}
       ${v.note ? `<div class="note">${esc(v.note)}</div>` : ""}
       <div class="acts"><button type="button">Open in editor</button></div>`;
     el.querySelector("button").onclick = () => {
       scene = v.scene; $("scene").value = scene; fillPresets(); pts = (v.points || [[0, 0]]).map((q) => q.slice());
-      $("sigma").value = v.sigma || 0; $("name").value = (v.name || "") + " (copy)"; draw(); window.scrollTo({top: 0, behavior: "smooth"});
+      $("sigma").value = (v.sigmas || [v.sigma || 0]).join(", "); $("name").value = (v.name || "") + " (copy)"; draw(); window.scrollTo({top: 0, behavior: "smooth"});
     };
     list.append(el);
   }
 }
 $("save").onclick = async () => {
-  const arms = [...document.querySelectorAll(".checks input:checked")].map((c) => c.value);
-  if (!arms.length) { $("status").textContent = "Pick at least one method to fly."; return; }
+  const arms_ = arms();
+  if (!arms_.length) { $("status").textContent = "Pick at least one method to fly."; return; }
   const name = $("name").value.trim(), id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) + "-" + Date.now().toString(36);
-  $("save").disabled = true; $("status").textContent = "Saving…";
+  $("save").disabled = true; busy = true; $("status").textContent = "Saving…";
   try {
-    await db.collection("sketches").doc(id).set({name, scene, points: pts, sigma: Number($("sigma").value) || 0, arms,
+    await db.collection("sketches").doc(id).set({name, scene, points: pts, sigmas: sigmas(), arms: arms_,
       trials: Number($("trials").value), status: "queued", createdAt: Date.now(), sketch: sketchJson()});
     $("status").textContent = `Saved “${name}”. It is queued to fly.`;
   } catch (e) {
     $("status").textContent = e && e.code === "invalid_argument" ? "You can view sketches but not save them here." : "Could not save; try again in a moment.";
-  } finally { readout(); }
+  } finally { setTimeout(() => { busy = false; readout(); }, 4000); }
 };
 (async () => {
   db = window.claude && typeof window.claude.use === "function" ? await window.claude.use("db") : null;
-  if (!db) { $("status").textContent = "Saving is unavailable in this view. Copy the JSON under the form instead."; readout(); return; }
-  readout();
+  dbState = db ? "ready" : "none"; readout();
+  if (!db) return;
   db.collection("sketches").orderBy("createdAt", "desc").limit(50).onSnapshot(renderList,
     () => { $("status").textContent = "The saved list stopped updating; reload to see new results."; });
 })();
