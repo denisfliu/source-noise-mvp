@@ -8439,3 +8439,12 @@ shifted to pass ~0.065 m from a post, other legs >= 0.33 m; 10 flights per cell,
 Nobody course-corrects: every arm touches the post. Ours at sigma 0.5 deviates more from the sketch (5 cm) but not
 toward the gate's centre. The "ours corrects a flawed sketch" argument is not supported on the real-only policy even at
 demonstrated gates (it held only on the mixed-data checkpoint, 2026-09-20).
+
+**Sketch Lab: Denis's two flawed left-gate sketches, real-only vs gmsig3 (2026-09-25; lab_fly.py, 5 flights per cell,
+APC 25, seed 11; closest approach to the gate / tracking error, medians).**
+    hugging the right post   real-only  s0 5.0/3.5  s0.3 11.5/6.6  s0.6 13.3/9.5   | gmsig3 s0 0.2/2.3  s0.3 0.2/3.7  s0.6 0.1/11.0
+    sketch 2 (return leg)    real-only  s0 1.9/2.2  s0.3 0.4/2.7   s0.6 0.9/3.6    | gmsig3 s0 0.4/3.5  s0.3 1.2/3.8  s0.6 7.5/6.3
+    (cm; every cell 0/5 completed; v-proj 0.1/0.7 and 0.3/1.1 cm; SDEdit 5.8/5.6 and 0.9/3.9; inject 11.2/27.1 and 3.3/15.5)
+gmsig3's slack does not correct these single-gate sketches either; the 2026-09-20 gmsig3 corrections were on the
+two-gate center sketches, where its simulated center-gate demos gave it a route to fall back on. No method recovers
+from a sketch that points at a post.

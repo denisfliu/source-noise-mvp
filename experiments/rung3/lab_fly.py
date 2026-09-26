@@ -19,7 +19,9 @@ CK = "/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3"
 EV = "env -u VIRTUAL_ENV PYTHONPATH=/home/dfliu/code/openpi-snmvp/src"
 GPU = "XLA_PYTHON_CLIENT_PREALLOCATE=true XLA_PYTHON_CLIENT_MEM_FRACTION=0.30 CUDA_VISIBLE_DEVICES=0"
 PIN = (f"SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U={U} SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 "
-       f"SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 SNMVP_SIGMA_MAP={RD}/sigma_map_realonly.json")
+       f"SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1")
+# spec["pin"] picks our checkpoint: "realonly" (the paper's policy, default) or "gmsig3" (mixed real + simulated demos)
+PINS = {"realonly": "gate_pin_joint_realonly", "gmsig3": "gate_pin_joint_gmsig3"}
 SIDE = {"left": "left", "right": "right", "left_and_center": "left", "right_and_center": "right"}
 PROMPT = {"left": "go through the gate on the left and hover over the stuffed animal",
           "right": "go through the gate on the right and hover over the stuffed animal",
@@ -59,7 +61,8 @@ def serve(cmd, log):
 def fly(arm, sk, tag, spec, seed=11):
     log = f"{RUN}/sv_lab.log"
     if arm == "ours":
-        cmd = f"{EV} {PIN} SNMVP_NOISE_SEED={seed} SNMVP_PIN_PROMPT={sk} {GPU} {VENVPY} {RD}/serve_gate_pin_joint.py --ckpt {CK}/gate_pin_joint_realonly/4999 --config pi0_gate --norm {HFB}/assets/gate_nav --pin-u {U} --port {PORT}"
+        pin = spec.get("pin", "realonly")
+        cmd = f"{EV} {PIN} SNMVP_SIGMA_MAP={RD}/sigma_map_{pin}.json SNMVP_NOISE_SEED={seed} SNMVP_PIN_PROMPT={sk} {GPU} {VENVPY} {RD}/serve_gate_pin_joint.py --ckpt {CK}/{PINS[pin]}/4999 --config pi0_gate --norm {HFB}/assets/gate_nav --pin-u {U} --port {PORT}"
     elif arm == "vproj":
         cmd = f"{EV} SNMVP_NOISE_SEED={seed} SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U={U} SNMVP_VPROJ=1 {GPU} {VENVPY} {RD}/serve_gate_plain_sketch.py --ckpt {CK}/gate_scratch_real/4999 --config pi0_gate --norm {HFB}/assets/gate_nav --pin-u {U} --sketch {sk} --port {PORT}"
     elif arm == "inject":
@@ -99,7 +102,7 @@ def score(spec, sk, tag):
 
 def main():
     spec = json.load(open(sys.argv[1]))
-    slug = re.sub(r"[^a-z0-9]+", "-", spec["name"].lower()).strip("-")[:40]
+    slug = re.sub(r"[^a-z0-9]+", "-", spec["name"].lower()).strip("-")[:40] + ("" if spec.get("pin", "realonly") == "realonly" else "-" + spec["pin"])
     base = sketch_file(spec, slug, 0.0)
     cells = [(f"ours@{s:g}", "ours", sketch_file(spec, slug, float(s))) for s in spec.get("sigmas", [0])] if "ours" in spec["arms"] else []
     cells += [(a, a, base) for a in ("vproj", "sdedit", "inject") if a in spec["arms"]]
