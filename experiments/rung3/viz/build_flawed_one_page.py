@@ -140,15 +140,48 @@ if __name__ == "__main__" and "--figure" in sys.argv:
 PANELS = [("Ours, σ = 0.5", "bsm25_pin05_L", [26, 150, 90]), ("Ours, σ = 0.3", "bsm25_pin03_L", [0, 140, 170]),
           ("Velocity projection", "bsm25_vproj_L", [120, 60, 190]), ("Velocity projection, s = 0.3", "bsm25_vps03_L", [190, 50, 150]),
           ("SDEdit", "bsm25_sde05_L", [225, 110, 0])]
-SKETCH_COL, GATE_COL, CONTACT_COL = [200, 150, 0], [0, 70, 230], [214, 39, 40]
+SKETCH_COL, GATE_COL, CONTACT_COL = [15, 15, 15], [0, 70, 230], [214, 39, 40]
+
+
+def gate_frames():
+    import yaml
+    out = []
+    for g in yaml.safe_load(open(os.path.expanduser(f"~/code/falsify-pi/configs/safety/{SCENE}.yaml")))["ordered_miss_gate"]["gates"]:
+        C = np.asarray(g["corners"], np.float64); out.append((C[0, :2], C[1, :2], C[:, 2].max()))
+    return out
+
+
+def near_frame(pts, reach):
+    """Per gate: (plan distance to the gate line < reach, along-gate coordinate in metres, gate length, top)."""
+    res = []
+    for a, b, top in gate_frames():
+        L = np.linalg.norm(b - a); u = (b - a) / L; rel = pts[:, :2] - a
+        along = rel @ u; off = np.abs(rel @ np.array([-u[1], u[0]]))
+        res.append((off < reach, along, L, top))
+    return res
 
 
 def figure_cloud():
-    """The scene cloud with the gates' own points recoloured in a saturated blue, for contrast on white."""
+    """The scene cloud with its own gate points replaced by the gate frames in a saturated blue, each cropped to the
+    opening: nothing past the posts sideways (the top bars overhang) and nothing above the top bar."""
     Z = np.load(f"{SP}/scene_cloud_{SCENE}.npz"); pts, rgb = Z["pts"].astype(np.float32), Z["rgb"].copy()
-    g = np.asarray(G.gate_cloud(SCENE), np.float32); g = g[np.random.default_rng(0).permutation(len(g))[:9000]]
+    drop = np.zeros(len(pts), bool)
+    for near, along, L, top in near_frame(pts, 0.15):
+        drop |= near & (pts[:, 2] > 0.15) & (along > -0.25) & (along < L + 0.25)     # the scene's own gate points
+        drop |= near & (pts[:, 2] > 1.5) & (along > -0.6) & (along < L + 0.6)        # the top bars' overhang past the posts
+    drop |= pts[:, 2] > 1.8          # nothing but the (blue) gates belongs this high; this also removes the bars' overhang
+    pts, rgb = pts[~drop], rgb[~drop]
+    g = np.asarray(G.gate_cloud(SCENE), np.float32)
+    keep = np.zeros(len(g), bool)
+    for near, along, L, top in near_frame(g, 0.15):
+        keep |= near & (along > -0.07) & (along < L + 0.07) & (g[:, 2] < top + 0.09)
+    g = g[keep]
+    _, inv, cnt = np.unique(np.floor(g / 0.04).astype(np.int64), axis=0, return_inverse=True, return_counts=True)
+    g = g[cnt[inv.ravel()] >= 15]
+    g = g[np.random.default_rng(0).permutation(len(g))[:12000]]
     np.savez(f"{SP}/scene_cloud_flawedfig.npz", pts=np.concatenate([pts, g]),
              rgb=np.concatenate([rgb, np.tile(np.array(GATE_COL, np.uint8), (len(g), 1))]))
+    return g
 
 
 def panels():
@@ -181,7 +214,7 @@ def panels():
         n_ok = sum(x[1] for x in v)
         outcome = "completes" if ok else ("hits the post" if why.startswith("touches") else SHORT.get(why, why))
         cells.append(cell(k, f"{name}: {outcome} ({n_ok}/{len(v)})", groups + gate_marks))
-    key = ('<div class="key" contenteditable="true" spellcheck="false"><span style="background:rgb(200,150,0)"></span>flawed sketch'
+    key = ('<div class="key" contenteditable="true" spellcheck="false"><span style="background:rgb(15,15,15)"></span>flawed sketch'
            '<span style="background:rgb(0,70,230)"></span>gate<span class="dot"></span>contact with a post</div>')
     page = f"""<title>Flawed Sketch Panels</title>
 <style>
