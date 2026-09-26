@@ -8448,3 +8448,13 @@ APC 25, seed 11; closest approach to the gate / tracking error, medians).**
 gmsig3's slack does not correct these single-gate sketches either; the 2026-09-20 gmsig3 corrections were on the
 two-gate center sketches, where its simulated center-gate demos gave it a route to fall back on. No method recovers
 from a sketch that points at a post.
+
+**Center-gate proof of concept on the mixed-data checkpoints, current protocol (2026-09-25; run_badsketch_mix25.sh,
+score_badsketch.py PREFIX=bsm25; 4-click L->C sketch 0.07 m from the center post; 10 flights, APC 25, seed 11).**
+    gmsig3 sigma 0     0/10 (route failed 8, touched 2)  closest 0.034 m  tracking 10.7 cm
+    gmsig3 sigma 0.5   8/10 (touched 2)                  closest 0.211 m  tracking  9.3 cm
+    v-proj (scratch3)  0/10 (touched 10)                 closest 0.063 m  tracking  1.5 cm
+    SDEdit (scratch3)  0/10 (route failed 4, touched 6)  closest 0.032 m  tracking  7.8 cm
+The trained slack corrects a flawed sketch where the residual knows the route (the center gate is in gmsig3's simulated
+demonstrations): 8/10 at sigma 0.5, clearing the post by 21 cm, against 0/10 for exact projection at the sketch's own
+6 cm. Reproduces 2026-09-20 (4/5) at n=10 and the 25-step replan.

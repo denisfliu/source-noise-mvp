@@ -17,6 +17,7 @@ import gate_success as GS  # noqa: E402
 import route_contact as RC  # noqa: E402
 
 RUN = "/home/dfliu/ctxrun"
+PREFIX = os.environ.get("PREFIX", "bs25")   # bs25: real-only run; bsm25: mixed-data (gmsig3) center-gate run
 CELLS = [("L", "left_and_center", "sketch_cmpl_min4.json"), ("R", "right_and_center", "sketch_cmpr_min4.json")]
 ARMS = [("Ours, $\\sigma=0$", "pin0"), ("Ours, $\\sigma=0.5$", "pin05"), ("Velocity projection on $\\pi_0$", "vproj"),
         ("SDEdit on $\\pi_0$", "sde05")]
@@ -31,7 +32,7 @@ def main():
         sd = torch.cdist(torch.from_numpy(Q.astype(np.float32)), cloud).min(1).values.min().item()
         print(f"== {sk}: the sketch itself comes {sd:.2f} m from a gate")
         for name, arm in ARMS:
-            fs = sorted(glob.glob(f"{RUN}/traj_bs25_{arm}_{side}_[0-9]*.npy"))
+            fs = sorted(glob.glob(f"{RUN}/traj_{PREFIX}_{arm}_{side}_[0-9]*.npy"))
             ok, trk, why = 0, [], {"route": 0, "contact": 0, "end": 0}
             for f in fs:
                 P = np.load(f)[:, :3].astype(np.float64)
@@ -45,7 +46,7 @@ def main():
             out[f"{arm}_{side}"] = dict(n=len(fs), completed=ok, tracking_cm=float(np.median(trk) * 100) if trk else None, **why)
             print(f"   {name:34s} {ok}/{len(fs)} completed, tracking {np.median(trk) * 100:.1f} cm   "
                   f"(route failed {why['route']}, touched a gate {why['contact']}, did not reach the end {why['end']})")
-    json.dump(out, open(f"{RUN}/badsketch25_summary.json", "w"), indent=1)
+    json.dump(out, open(f"{RUN}/{PREFIX}_summary.json", "w"), indent=1)
 
 
 if __name__ == "__main__":
