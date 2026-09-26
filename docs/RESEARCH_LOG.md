@@ -8468,3 +8468,10 @@ Sketches (completed = route + sketch end + no contact to the end; 5 flights):
     orbit             scratch3 + injected 0/5 (116 cm)                   | xswap 5/5 (5.9 cm)
     figure-eight      scratch3 + injected 0/5 (138 cm)                   | xswap 5/5 (5.1 cm)
 (the orbit and figure-eight "ours" flights are the xswap checkpoint, a sibling mixed-data pin.)
+
+**Partial velocity projection on the flawed center sketch, mixed data (2026-09-25; gate_scratch3, v <- (I-UU^T)v +
+s UU^T v, 10 flights each, APC 25, seed 11).** s 0.1: 0/10, both gates 10/10, closest 11.7 cm (touches), tracking
+4.5 cm. s 0.3: 0/10, both gates 10/10, closest 6.0 cm, tracking 6.8. s 0.5: 0/10, never reaches the center gate (1 gate
+in 10/10). So no s both keeps the route and clears the post; ours (gmsig3) at sigma 0.5 does, 8/10 at 21 cm. The
+2026-09-20 s=0.1 "clears at the threshold" (5/5 at 0.182-0.190 m, APC 50) does not hold at the 25-step replan.
+Page viz/flawed_center_sketch.html (one representative flight per method).
