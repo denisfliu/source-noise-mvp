@@ -1,0 +1,35 @@
+{
+ "points": [
+  [
+   0,
+   0,
+   1.5,
+   0.709
+  ],
+  [
+   1.304,
+   1.118,
+   1.45,
+   -1.67
+  ],
+  [
+   1.193,
+   0.006,
+   1.45,
+   -1.044
+  ],
+  [
+   1.488,
+   -0.501,
+   1.2,
+   -1.044
+  ]
+ ],
+ "prompt_after": "go through the gate on the left and hover over the stuffed animal",
+ "enter_radius": 0.5,
+ "step_m": 0.025,
+ "sigma_serve": 0.3,
+ "end_margin_m": 0.1,
+ "carrot": 20,
+ "note": "Sketch Lab: left gate sketch 2"
+}

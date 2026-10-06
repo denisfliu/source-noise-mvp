@@ -1,0 +1,197 @@
+diff --git a/configs/safety/center_gate.yaml b/configs/safety/center_gate.yaml
+index 0560869..d5c7659 100644
+--- a/configs/safety/center_gate.yaml
++++ b/configs/safety/center_gate.yaml
+@@ -35,11 +35,11 @@ collision:
+ # and corners[3]-corners[0] (the "v" edge) is the vertical span at post-A.
+ miss_gate:
+   corners_frame: mocap
+-  corners:
+-    - [3.156, -0.328, 0.125]   # post-A, bottom
+-    - [2.356, -0.327, 0.125]   # post-B, bottom
+-    - [2.356, -0.327, 1.875]   # post-B, top
+-    - [3.156, -0.328, 1.875]   # post-A, top
++  corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++    - [3.17, -0.26, 0.125]   # post-A, bottom
++    - [2.299, -0.259, 0.125]   # post-B, bottom
++    - [2.299, -0.259, 1.821]   # post-B, top
++    - [3.17, -0.26, 1.821]   # post-A, top
+   margin_m: 0.0
+   # See configs/safety/left_gate.yaml for the meaning of these fields.
+   goal_position: [1.525, -0.615, 1.0]
+diff --git a/configs/safety/left_and_center.yaml b/configs/safety/left_and_center.yaml
+index c94ee89..2db7a7b 100644
+--- a/configs/safety/left_and_center.yaml
++++ b/configs/safety/left_and_center.yaml
+@@ -29,17 +29,17 @@ ordered_miss_gate:
+   corners_frame: mocap
+   gates:
+     - name: gate_1   # original left gate (drone passes through this first)
+-      corners:
+-        - [0.65, 1.05, 0.20]
+-        - [1.18, 0.45, 0.20]
+-        - [1.18, 0.45, 1.95]
+-        - [0.65, 1.05, 1.95]
++      corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++        - [0.59, 1.01, 0.2]
++        - [1.165, 0.359, 0.2]
++        - [1.165, 0.359, 1.896]
++        - [0.59, 1.01, 1.896]
+     - name: gate_2   # center copy
+-      corners:
+-        - [3.156, -0.328, 0.125]
+-        - [2.356, -0.327, 0.125]
+-        - [2.356, -0.327, 1.875]
+-        - [3.156, -0.328, 1.875]
++      corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++        - [3.17, -0.26, 0.125]
++        - [2.299, -0.259, 0.125]
++        - [2.299, -0.259, 1.821]
++        - [3.17, -0.26, 1.821]
+   margin_m: 0.0
+   goal_position: [1.525, -0.615, 1.0]
+   # Box tolerance — unified with the single-gate scenes so GOAL_REACHED
+diff --git a/configs/safety/left_gate.yaml b/configs/safety/left_gate.yaml
+index c99456e..dae6896 100644
+--- a/configs/safety/left_gate.yaml
++++ b/configs/safety/left_gate.yaml
+@@ -21,11 +21,11 @@ collision:
+ # convention: post-A bottom → post-B bottom → post-B top → post-A top.
+ miss_gate:
+   corners_frame: mocap
+-  corners:
+-    - [0.65, 1.05, 0.20]
+-    - [1.18, 0.45, 0.20]
+-    - [1.18, 0.45, 1.95]
+-    - [0.65, 1.05, 1.95]
++  corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++    - [0.59, 1.01, 0.2]
++    - [1.165, 0.359, 0.2]
++    - [1.165, 0.359, 1.896]
++    - [0.59, 1.01, 1.896]
+   margin_m: 0.0
+   # The unified gate-navigation check (modes b/c/d from MissGateCriterion):
+   # `goal_position` enables "reached goal without transit" + "stuck" detection.
+diff --git a/configs/safety/right_and_center.yaml b/configs/safety/right_and_center.yaml
+index 6a6e2b7..2a58b02 100644
+--- a/configs/safety/right_and_center.yaml
++++ b/configs/safety/right_and_center.yaml
+@@ -19,18 +19,20 @@ collision:
+ ordered_miss_gate:
+   corners_frame: mocap
+   gates:
+-    - name: gate_1   # original right gate
+-      corners:
+-        - [0.47, -1.24, 0.20]
+-        - [0.11, -1.39, 0.20]
+-        - [0.11, -1.39, 1.95]
+-        - [0.47, -1.24, 1.95]
++    - name: gate_1   # original right gate — post centres from the gate Gaussians
++      # (matches right_gate.yaml; the previous corners were a half-width box shifted
++      # onto the west post — 2026-08-26 fix, Denis caught it in the cloud overlay)
++      corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++        - [0.182, -1.353, 0.2]
++        - [0.916, -0.954, 0.2]
++        - [0.916, -0.954, 1.877]
++        - [0.182, -1.353, 1.877]
+     - name: gate_2   # center copy
+-      corners:
+-        - [3.156, -0.328, 0.125]
+-        - [2.356, -0.327, 0.125]
+-        - [2.356, -0.327, 1.875]
+-        - [3.156, -0.328, 1.875]
++      corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++        - [3.17, -0.26, 0.125]
++        - [2.299, -0.259, 0.125]
++        - [2.299, -0.259, 1.821]
++        - [3.17, -0.26, 1.821]
+   margin_m: 0.0
+   goal_position: [1.525, -0.615, 1.0]
+   # Box tolerance — unified with the single-gate scenes so GOAL_REACHED
+diff --git a/configs/safety/right_gate.yaml b/configs/safety/right_gate.yaml
+index b039534..6c23d89 100644
+--- a/configs/safety/right_gate.yaml
++++ b/configs/safety/right_gate.yaml
+@@ -30,11 +30,11 @@ collision:
+ # drones that visually flew through the gate failed the aperture check.
+ miss_gate:
+   corners_frame: mocap
+-  corners:
+-    - [0.195, -1.348, 0.20]
+-    - [0.924, -0.952, 0.20]
+-    - [0.924, -0.952, 1.95]
+-    - [0.195, -1.348, 1.95]
++  corners:  # re-measured 2026-09-25 from the gate cloud: posts' inner edges, top bar's underside
++    - [0.182, -1.353, 0.2]
++    - [0.916, -0.954, 0.2]
++    - [0.916, -0.954, 1.877]
++    - [0.182, -1.353, 1.877]
+   margin_m: 0.0
+   # Shared "stuffed animal" hover across left/right/center single-gate scenes;
+   # matches courses/through_right_gate.yaml hover waypoint so the eval success
+diff --git a/src/falsify/safety/posthoc.py b/src/falsify/safety/posthoc.py
+index c81c347..e6df8e6 100644
+--- a/src/falsify/safety/posthoc.py
++++ b/src/falsify/safety/posthoc.py
+@@ -281,13 +281,11 @@ def check_directional_transit(
+                                                      - positions_mocap[i, 2]))
+         if not (x_lo <= x_cross <= x_hi and z_lo <= z_cross <= z_hi):
+             continue  # plane crossing outside the aperture — ignore
+-        dy = float(dy_signs[i])
+-        dy_sign = 1 if dy > 0 else (-1 if dy < 0 else 0)
+-        if dy_sign == expected_dy_sign:
++        if sn > sp:                      # moved along +n: the correct side
+             correct += 1
+             if first_correct is None:
+                 first_correct = int(i)
+-        elif dy_sign == -expected_dy_sign:
++        else:
+             wrong += 1
+             if first_wrong is None:
+                 first_wrong = int(i)
+@@ -312,16 +310,25 @@ def _directional_transit_plane(
+ 
+     Uses the aperture rectangle's own plane (centroid + normal) and
+     in-plane half-widths instead of the gate-region AABB. Crossing
+-    detection is along the plane normal (so a tilted/yawed gate is handled
+-    correctly); the *direction* label is still the y-velocity sign to
+-    preserve the ±y "from left/right" semantics.
++    detection and the direction label are both along the plane normal, so a
++    tilted/yawed gate is handled correctly. The normal is oriented so its y
++    component has ``expected_dy_sign``, which keeps the ±y "from left/right"
++    semantics. (Until 2026-09-25 the label was the sign of the crossing step's
++    y-velocity; at the 48-degree left gate the drone crosses moving along +x
++    with dy of a few mm, so that label was noise.)
+     """
+     c, u, v, n, hu, hv = _aperture_basis(aperture_corners)
+     pos = np.asarray(positions_mocap, dtype=np.float64)
+ 
++    # Orient the normal so a correct crossing moves along +n: its y component
++    # takes the expected dy sign. A gate whose normal has no y component has no
++    # ±y meaning, so fail loudly rather than guess.
++    if abs(n[1]) < 1e-6:
++        raise ValueError("aperture normal has no y component; direction is undefined")
++    n = n * np.sign(n[1]) * expected_dy_sign
++
+     # Signed distance of each state to the gate plane (along the normal).
+     s = (pos - c) @ n
+-    dy_signs = pos[1:, 1] - pos[:-1, 1]
+     crosses = (s[:-1] * s[1:]) < 0
+ 
+     correct = 0
+@@ -338,13 +345,11 @@ def _directional_transit_plane(
+         cv = float(rel @ v)
+         if abs(cu) > hu or abs(cv) > hv:
+             continue  # plane crossing outside the aperture rectangle
+-        dy = float(dy_signs[i])
+-        dy_sign = 1 if dy > 0 else (-1 if dy < 0 else 0)
+-        if dy_sign == expected_dy_sign:
++        if sn > sp:                      # moved along +n: the correct side
+             correct += 1
+             if first_correct is None:
+                 first_correct = int(i)
+-        elif dy_sign == -expected_dy_sign:
++        else:
+             wrong += 1
+             if first_wrong is None:
+                 first_wrong = int(i)
