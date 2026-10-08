@@ -8514,3 +8514,14 @@ READ: speeds match across arms, but waypoint flights are 3-4x the demos' p95 acc
 flow smooths the command. The simulator is KINEMATIC (pos += cumsum(actions)), so infeasible motion costs nothing in
 sim: the Opus + waypoints 12/15 is likely optimistic for real flight. Next: an acceleration-limited replay rescore, and
 a hardware waypoint flight on left gate -> mannequin (ours: 2/2 on hardware).
+Why the speeds match but the jerk does not (2026-10-07, Denis: "why the speed seems approximately the same but the jerk is
+so off"): jerk spikes (|j| > 20 m/s^3) located against decision starts (from the clog poses) and the command's window
+boundaries (steps 6/12/25 into a chunk):
+    Opus + waypoints    663 spikes, 13.4% of steps: 23% at decision starts, 64% at window boundaries, 13% elsewhere
+    Opus + ours         155 spikes,  2.7% of steps: 79% at decision starts, 14% at window boundaries,  6% elsewhere
+    Sonnet + waypoints  965 spikes, 16.2% of steps: 20% / 66% / 14%;  Sonnet + ours 168, 2.2%: 76% / 21% / 3%
+U spans prefix-sum displacements over the windows [0,6), [6,12), [12,25), [25,50), so the decoded chunk U c has a constant
+velocity inside each window and a jump at each boundary: a speed staircase (agent_eval/jerk_source.png). Averaged over a
+move it is the same 0.45 m/s pace either arm is given, which is why the speed statistics agree. The flow fills the
+orthogonal complement with demonstration-shaped velocity profiles, so ours is smooth inside a chunk; its few remaining
+spikes sit at decision starts, where a new chunk begins from the replanned state.

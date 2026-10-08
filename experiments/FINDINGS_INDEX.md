@@ -387,3 +387,4 @@ Pointer conventions: `MEM:<n>` = `docs/RESEARCH_LOG.md` line n (the chronologica
 - **Sigma ablation (n=100/gate): learned sigma map 146/200 vs fixed sigma 0 87/200 (69 left-gate contacts) vs fixed 1.5 51/200 (misses the gates).** MEM:sigma-ablation-2026-09-25
 - Opus + waypoints matches/beats Opus + ours on the agent tasks (12/15 vs 11/15; 3/5, 5/5, 4/5); the command-channel advantage on mannequin tasks is a Sonnet-only effect -> docs/RESEARCH_LOG.md 2026-10-07
 - Agent arms have identical action budgets, but waypoint flights are 3-4x the demos' p95 accel and 5-6x their jerk (ours ~1.6x/2x); sim is kinematic, so waypoints' 12/15 likely overstates real flight -> experiments/rung3/agent_eval/realism.md, docs/RESEARCH_LOG.md 2026-10-07
+- Waypoint jerk comes from U c itself: constant velocity per command window, jumps at steps 6/12/25 (64% of waypoint spikes); ours' spikes are mostly at replans (79%) -> agent_eval/jerk_source.png, docs/RESEARCH_LOG.md 2026-10-07
