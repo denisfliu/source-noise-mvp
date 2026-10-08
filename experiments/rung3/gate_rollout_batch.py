@@ -285,28 +285,35 @@ if AGENT_DIR:
             _time.sleep(0.15)
         return {"verdict":"approve","why":"(no answer; approved by timeout)"}
     def _banner(frame,k,text,verdict):
-        im=Image.fromarray(frame); W,_=im.size; pad=Image.new("RGB",(W,170),(14,16,20)); im2=Image.new("RGB",(W,im.size[1]+170))
+        # 2026-10-08: every line wraps (the task line used to run off the frame) and the note is no longer cut at six
+        # lines; the banner is tall enough for the longest notes seen (544 chars), and anything beyond still ends in an
+        # explicit pointer to the archived note rather than vanishing. Old videos: viz/rebanner_agent_videos.py.
+        BH=250
+        im=Image.fromarray(frame); W,_=im.size; pad=Image.new("RGB",(W,BH),(14,16,20)); im2=Image.new("RGB",(W,im.size[1]+BH))
         im2.paste(im,(0,0)); im2.paste(pad,(0,im.size[1])); d=ImageDraw.Draw(im2); y0=im.size[1]+7
         try:
             from PIL import ImageFont; f=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",15); fb=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",15)
         except Exception: f=fb=None
         # the task, the arm and the flight tag on every frame (Denis, 2026-09-22: "label the video with what the task is supposed to be")
         _tag=os.path.basename(OUT.replace("{t}","")).replace("agent_","").replace(".mp4","") if OUT else ""
-        d.text((10,y0),f"TASK: {BASE_PROMPT}   ·   arm {os.environ.get('ARM','?')}   ·   {_tag}",fill=(200,205,215),font=fb); y0+=20
-        col=(120,220,150) if verdict=="approve" else (250,180,90)
-        d.text((10,y0),f"decision {k}  ·  {verdict.upper()}",fill=col,font=fb)
         wmax=W-20
-        def _wid(t):
-            try: return d.textlength(t,font=f)
-            except Exception: return 7.5*len(t)
-        words=text.split(); line=""; ly=y0+22
-        for w in words:
-            cand=(line+" "+w).strip()
-            if _wid(cand)>wmax and line:
-                d.text((10,ly),line,fill=(225,230,238),font=f); ly+=19; line=w
-                if ly>y0+118: line=""; break
-            else: line=cand
-        if line: d.text((10,ly),line,fill=(225,230,238),font=f)
+        def _wrap(t,font):
+            def _wid(u):
+                try: return d.textlength(u,font=font)
+                except Exception: return 7.5*len(u)
+            out=[]; line=""
+            for w in t.split():
+                cand=(line+" "+w).strip()
+                if _wid(cand)>wmax and line: out.append(line); line=w
+                else: line=cand
+            return out+([line] if line else [])
+        for ln in _wrap(f"TASK: {BASE_PROMPT}   ·   arm {os.environ.get('ARM','?')}   ·   {_tag}",fb):
+            d.text((10,y0),ln,fill=(200,205,215),font=fb); y0+=18
+        col=(120,220,150) if verdict=="approve" else (250,180,90)
+        d.text((10,y0),f"decision {k}  ·  {verdict.upper()}",fill=col,font=fb); ly=y0+20
+        lines=_wrap(text,f); room=(im2.size[1]-6-ly)//18
+        if len(lines)>room: lines=lines[:max(room-1,0)]+[f"... (note continues: cmds/{k:03d}.json)"]
+        for ln in lines: d.text((10,ly),ln,fill=(225,230,238),font=f); ly+=18
         return np.asarray(im2,np.uint8)
 
 def run_trial(t):

@@ -8548,3 +8548,10 @@ acceleration and jerk while moving and the 100 demos'. Ours is the closest on al
 0.55 m/s vs the pilot's 0.20), decoded U c last (0.17 / 0.50-0.52 / 7.6-8.4). A hand-designed profile is not
 pilot-like in either direction; the flow's residual is what puts the motion near the demonstrations.
 Summary image of all key experiments with protocol notes: docs/results_sheet.png (docs/results_sheet.py).
+Agent videos rebuilt (2026-10-08, Denis: "make sure that text isn't cut off"): the in-flight banner never wrapped its task
+line and dropped the agent's note after six lines. viz/rebanner_agent_videos.py rebuilds the 90 Table 2 flight videos
+from their own frames (scene kept, banner redrawn from the archived cmds/<k>.json with every line wrapped; frame-to-
+decision mapping from the old banner's changes, checked against the decision count, 0 refused). Output
+~/ctxrun/agent_videos_fixed/<agent> - <interface>/<task>_t<trial>.mp4 (+ README), zips in ~/agent_videos_parts/.
+gate_rollout_batch._banner fixed for future flights: wrapped task line, 250 px banner, overflow ends in a pointer to the
+archived note instead of disappearing.
