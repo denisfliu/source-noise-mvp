@@ -35,7 +35,7 @@ H, AD = 50, 32
 from sketch_prompt import SketchPrompt  # noqa: E402  (extracted 2026-08-30)
 from advice_prompt import AdvicePrompt  # noqa: E402  (2026-09-03)
 from reason_prompt import ReasonPrompt  # noqa: E402  (2026-09-03)
-from agent_prompt import AgentMove  # noqa: E402  (2026-09-18: one agent move -> one pinned chunk)
+from agent_prompt import AgentMove, move_track  # noqa: E402  (2026-09-18: one agent move -> one pinned chunk)
 
 
 class JointPinPolicy:
@@ -86,6 +86,10 @@ class JointPinPolicy:
         # the minimum-norm chunk, no denoising — so the trajectory shows what the 16 words encode alone.
         # =1: execute the decoded minimum-norm chunk U c (deterministic). =2: execute the PINNED SOURCE SAMPLE
         # itself, z = g - U U^T g + U c (Gaussian in the orthogonal complement, exactly c along U), no denoising.
+        # =3 (2026-10-07, the proper waypoint baseline): an agent move is flown as its own smooth track
+        # (agent_prompt.move_track, cosine speed profile over the executed steps), NOT projected through U; a
+        # replan without a move falls back to mode 1. Mode 1 flew U c, a speed staircase (constant velocity per
+        # command window), which is our command space without the flow, not a waypoint follower.
         self.decode_only = int(os.environ.get("SNMVP_PIN_DECODE_ONLY", "0") or 0)
         # agent mode (2026-09-18): a request may carry obs["snmvp_agent"] = {"move": {...}} from the
         # closed-loop agent; that replan's command is the move's projection (head and sketch bypassed),
@@ -126,8 +130,9 @@ class JointPinPolicy:
         self._amean7 = None if act_norm is None else np.asarray(act_norm.mean[:7], np.float32)
         self._astd7 = None if act_norm is None else np.asarray(act_norm.std[:7], np.float32)
         if self.decode_only:
-            print(f"[joint] DECODE ONLY mode {self.decode_only}: " + ("executing U c (deterministic), no flow" if self.decode_only == 1
-                  else "executing the pinned source sample z itself, no flow"), flush=True)
+            print(f"[joint] DECODE ONLY mode {self.decode_only}: " + {1: "executing U c (deterministic), no flow",
+                  2: "executing the pinned source sample z itself, no flow",
+                  3: "agent moves flown as their smooth track (waypoint baseline), no flow"}[self.decode_only], flush=True)
         self.pin_off = os.environ.get("SNMVP_PIN_OFF", "") == "1"
         self.pin_off_sigma = float(os.environ.get("SNMVP_PIN_OFF_SIGMA", "1.5"))
         if self.pin_off:
@@ -338,6 +343,10 @@ class JointPinPolicy:
                     continue
                 break
         g = self._rng.standard_normal((H, AD)).astype(np.float32).reshape(-1)
+        if self.decode_only == 3 and ag_info is not None:
+            seg = move_track(ag_info["move"], pose4, ag.get("apc"))      # (H, 4) mocap-frame per-step [dx, dy, dz, dyaw]
+            act = np.zeros((H, 7), np.float32); act[:, :4] = seg
+            return {"actions": act, "state": np.asarray(obs["observation/state"], np.float32)}
         if self.decode_only:
             cc = np.asarray(c, np.float32)
             src = (self.U @ cc) if self.decode_only == 1 else (g - (g @ self.U) @ self.U.T + cc @ self.U.T)

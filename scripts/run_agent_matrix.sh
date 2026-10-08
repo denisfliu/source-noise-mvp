@@ -33,9 +33,9 @@ esac
 case $ARM in
   ours) BACKEND="THE BACKEND. A learned policy proposes a plan at every decision; you either APPROVE it or replace it with your own move (OVERRIDE). The policy was trained on exactly two tasks in this room: flying through the gate on the left, and through the gate on the right, to the stuffed animal. It knows nothing else, so approve only when its proposal is the motion you want. Your override is flown by the same policy as a commanded movement: at --sigma 0 it flies your move exactly; at --sigma 0.3 to 0.5 it may bend the move around what its camera sees (use that near gates and furniture)."
     ;;
-  waypoints) BACKEND="THE BACKEND. Your move is flown exactly as written, as a smooth path to the point you command, with no correction from the camera. The learned policy that was trained on the left-gate and right-gate tasks is NOT driving here: nothing is proposed and there is nothing to approve, so every decision is an OVERRIDE with a move. --sigma is accepted and has no effect."
-    ;;
-  *) echo "arm must be ours | waypoints"; exit 2;;
+  waypoints|smoothwp) BACKEND="THE BACKEND. Your move is flown exactly as written, as a smooth path to the point you command, with no correction from the camera. The learned policy that was trained on the left-gate and right-gate tasks is NOT driving here: nothing is proposed and there is nothing to approve, so every decision is an OVERRIDE with a move. --sigma is accepted and has no effect."
+    ;;   # smoothwp (2026-10-07) gets the identical brief; only it actually flies a smooth path (waypoints flew U c)
+  *) echo "arm must be ours | waypoints | smoothwp"; exit 2;;
 esac
 if [ "$BRIEF" = min ]; then   # the primitive brief: control is stated per arm, nothing else about the arm
   case $ARM in

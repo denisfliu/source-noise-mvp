@@ -16,8 +16,9 @@ ARM=${ARM:-gmsig3}
 case $ARM in
   gmsig3)    CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_gmsig3/4999;   SIG=$RD/sigma_map_gmsig3.json;   DEC=0;;
   ours)      CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_realonly/4999; SIG=$RD/sigma_map_realonly.json; DEC=0;;
-  waypoints) CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_realonly/4999; SIG=$RD/sigma_map_realonly.json; DEC=1;;
-  *) echo "ARM must be gmsig3 | ours | waypoints"; exit 2;;
+  waypoints) CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_realonly/4999; SIG=$RD/sigma_map_realonly.json; DEC=1;;   # flies U c: a speed staircase (kept for the old records)
+  smoothwp)  CK=/home/dfliu/code/openpi-snmvp/checkpoints/pi0_gate3/gate_pin_joint_realonly/4999; SIG=$RD/sigma_map_realonly.json; DEC=3;;   # proper waypoint baseline: the move's own smooth track (2026-10-07)
+  *) echo "ARM must be gmsig3 | ours | waypoints | smoothwp"; exit 2;;
 esac
 PINENV="SNMVP_HEAD=1 SNMVP_ZERO_PAD_ACTIONS=1 SNMVP_PIN_U=$U SNMVP_HEAD_DETACH=0 SNMVP_HEAD_LAM=0.3 SNMVP_HEAD_GMM=1 SNMVP_PIN_NOISE=1.5 SNMVP_PIN_NOISE_RAND=1 SNMVP_PIN_NOISE_COND=1 SNMVP_SIGMA_MAP=$SIG SNMVP_CLOG_FULL=1 SNMVP_PIN_DECODE_ONLY=$DEC"
 PORT=${PORT:-9160}; AD=$RUN/agent_sim_$TAG   # one mailbox per flight: two reviewers must never share one

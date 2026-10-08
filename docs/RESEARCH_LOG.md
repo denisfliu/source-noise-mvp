@@ -8525,3 +8525,19 @@ velocity inside each window and a jump at each boundary: a speed staircase (agen
 move it is the same 0.45 m/s pace either arm is given, which is why the speed statistics agree. The flow fills the
 orthogonal complement with demonstration-shaped velocity profiles, so ours is smooth inside a chunk; its few remaining
 spikes sit at decision starts, where a new chunk begins from the replanned state.
+
+## Proper waypoint baseline: smooth waypoints, both agents (2026-10-08)
+Denis: "that makes no sense we should build a proper waypoint baseline and re-fly both of the cells". The old waypoint arm
+ran SNMVP_PIN_DECODE_ONLY=1, i.e. flew the decoded command U c (a speed staircase), which is our command space without the
+flow, not a waypoint follower. New arm `smoothwp` (decode-only mode 3): the agent's move is flown as its own smooth track
+(agent_prompt.move_track, cosine speed profile over the executed steps), no projection, no flow; identical brief (it
+already promised "a smooth path"); approve blocked as before. 30 flights: Sonnet t11-15 (claude-sonnet-5), Opus t21-25
+(claude-opus-5), briefs 485ea86, same judge. done+clean per task (mannequin, orbit, left gate then mannequin):
+    Sonnet  smooth waypoints 2, 2, 1 = 5/15  | old U c 0, 4, 1 = 5/15  | ours 3, 2, 2 = 7/15
+    Opus    smooth waypoints 4, 3, 3 = 10/15 | old U c 3, 5, 4 = 12/15 | ours 4, 3, 4 = 11/15
+Realism (agent_realism.py, now with all six cells): smooth waypoints p95 accel 1.07-1.16 m/s^2, jerk 3.1-3.2 m/s^3 --
+smoother than ours (1.5-1.6, 14.5-16) and than the demos' jerk (8.3); median moving speed 0.55 m/s vs 0.28-0.34.
+READ: against a waypoint follower that actually flies smoothly, the realism argument is gone (the baseline is smoother
+than ours), and success is ours 7 vs 5 (Sonnet) and 11 vs 10 (Opus) -- ours ahead by 1-2 flights, inside n=5 noise.
+The old U c arm's 12/15 with Opus was not a smoothness advantage of waypoints. The agent results support "both
+interfaces work, ours at least as well"; a separating result needs tasks that use the policy's trained skills or hardware.

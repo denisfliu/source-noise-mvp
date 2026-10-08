@@ -14,8 +14,12 @@ import numpy as np
 
 RD = os.path.dirname(os.path.abspath(__file__)); RUN = "/home/dfliu/ctxrun"; DT = 0.1
 TASKS = ("mannequin", "orbit", "left_mannequin")
-CELLS = [("Sonnet + waypoints", "_waypoints", range(11, 16)), ("Sonnet + ours", "_ours", range(11, 16)),
-         ("Opus + waypoints", "_waypoints_claude-opus-5", range(21, 26)), ("Opus + ours", "_ours_opus", range(21, 26))]
+# "decoded U c" is the old waypoint arm (it flew the command's projection: a speed staircase); "smooth waypoints" is the
+# proper baseline (2026-10-07: the agent's move flown as its own smooth track).
+CELLS = [("Sonnet + decoded U c", "_waypoints", range(11, 16)), ("Sonnet + smooth waypoints", "_smoothwp_claude-sonnet-5", range(11, 16)),
+         ("Sonnet + ours", "_ours", range(11, 16)),
+         ("Opus + decoded U c", "_waypoints_claude-opus-5", range(21, 26)), ("Opus + smooth waypoints", "_smoothwp_claude-opus-5", range(21, 26)),
+         ("Opus + ours", "_ours_opus", range(21, 26))]
 COLS = [("spd_med", "speed median (m/s)", "{:.2f}"), ("spd_p95", "speed p95 (m/s)", "{:.2f}"),
         ("acc_p95", "accel p95 (m/s²)", "{:.2f}"), ("jerk_p95", "jerk p95 (m/s³)", "{:.1f}"),
         ("yaw_p95", "yaw rate p95 (°/s)", "{:.0f}")]
@@ -63,9 +67,9 @@ def render(table):
     plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Ubuntu", "DejaVu Sans"]})
     head = ["Flights"] + [c[1].replace(" (", "\n(") for c in COLS]
     cells = [[n] + [fmt.format(v[k]) for k, _, fmt in COLS] for n, v in table]
-    fig = plt.figure(figsize=(8.2, 3.1)); ax = fig.add_axes([0.0, 0.15, 1.0, 0.72]); ax.axis("off")
+    fig = plt.figure(figsize=(8.6, 3.9)); ax = fig.add_axes([0.0, 0.13, 1.0, 0.76]); ax.axis("off")
     tb = ax.table(cellText=cells, colLabels=head, cellLoc="center", colLoc="center", bbox=[0, 0, 1, 1],
-                  colWidths=[0.27] + [0.146] * len(COLS))
+                  colWidths=[0.31] + [0.138] * len(COLS))
     tb.auto_set_font_size(False); tb.set_fontsize(10)
     for (r, c), cell in tb.get_celld().items():
         cell.set_edgecolor("#d6d9dc"); cell.set_linewidth(0.6)
