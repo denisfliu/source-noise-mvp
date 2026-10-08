@@ -8494,3 +8494,23 @@ the new `BRIEFDIR` override in run_agent_matrix.sh. Same judge (task done = reac
 READ: with Opus the waypoint arm matches or beats the command channel on every task. Opus completes every task in all 15
 flights; its failures are only gate contacts. The Sonnet-era reading ("the command channel helps most on the mannequin
 tasks") does not survive a stronger agent. Records agent_eval/*_waypoints_claude-opus-5.jsonl; videos sent to Denis.
+
+## Agent flights: action budget and motion realism (2026-10-07)
+Denis: "Are waypoints permitted the same number of actions as ours? ... can we check velocity numbers etc for realism".
+Budget: identical. Same decision budget per task (14/20/24); every decision executes at most 50 steps (5 s) in both
+arms (override: paced at AGENT_SPEED 0.45 m/s, 10-50 steps, AGENT_MAXEXEC=50; approval: the policy's 50-step chunk,
+APC=50). The waypoint arm is the same server in decode-only mode (executes U c). Agent flights use APC=50, not the
+Table 1 cells' 25.
+Realism (experiments/rung3/agent_realism.py -> agent_eval/realism.md; per-flight 10 Hz stats, median over flights):
+    | flights | speed median (m/s) | speed p95 (m/s) | accel p95 (m/s²) | jerk p95 (m/s³) | yaw rate p95 (°/s) |
+    |---|---|---|---|---|---|
+    | Real demos (100) | 0.20 | 0.69 | 0.94 | 8.3 | 22 |
+    | Sonnet + waypoints (15) | 0.32 | 0.78 | 3.97 | 50.6 | 51 |
+    | Sonnet + ours (15) | 0.32 | 0.81 | 1.47 | 14.5 | 38 |
+    | Opus + waypoints (15) | 0.34 | 0.76 | 2.77 | 44.9 | 28 |
+    | Opus + ours (15) | 0.28 | 0.88 | 1.59 | 16.0 | 46 |
+READ: speeds match across arms, but waypoint flights are 3-4x the demos' p95 acceleration and 5-6x their p95 jerk
+(decoded U c is piecewise in time, so velocity jumps at every window boundary); ours stays at ~1.6x / ~2x because the
+flow smooths the command. The simulator is KINEMATIC (pos += cumsum(actions)), so infeasible motion costs nothing in
+sim: the Opus + waypoints 12/15 is likely optimistic for real flight. Next: an acceleration-limited replay rescore, and
+a hardware waypoint flight on left gate -> mannequin (ours: 2/2 on hardware).
