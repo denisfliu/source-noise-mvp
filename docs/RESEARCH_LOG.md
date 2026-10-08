@@ -8541,3 +8541,10 @@ READ: against a waypoint follower that actually flies smoothly, the realism argu
 than ours), and success is ours 7 vs 5 (Sonnet) and 11 vs 10 (Opus) -- ours ahead by 1-2 flights, inside n=5 noise.
 The old U c arm's 12/15 with Opus was not a smoothness advantage of waypoints. The agent results support "both
 interfaces work, ours at least as well"; a separating result needs tasks that use the policy's trained skills or hardware.
+Distance to the demos, not smoothness (2026-10-08, Denis: "it's way too smooth now right? ... nontrivial to just emulate
+real flight patterns"): agent_realism.py now adds W1 (Wasserstein) distances between each arm's pooled per-step speed,
+acceleration and jerk while moving and the 100 demos'. Ours is the closest on all three for both agents (Sonnet 0.085 /
+0.226 / 2.51, Opus 0.114 / 0.288 / 3.06), smooth waypoints next (0.24 / 0.32-0.35 / 4.0-4.1: too regular, cruising at
+0.55 m/s vs the pilot's 0.20), decoded U c last (0.17 / 0.50-0.52 / 7.6-8.4). A hand-designed profile is not
+pilot-like in either direction; the flow's residual is what puts the motion near the demonstrations.
+Summary image of all key experiments with protocol notes: docs/results_sheet.png (docs/results_sheet.py).

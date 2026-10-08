@@ -4,7 +4,9 @@ For every Table 2 evaluation flight (Sonnet t11-15, Opus t21-25; mannequin, orbi
 demonstrations, per-flight statistics at the 10 Hz control rate: median moving speed (steps above 0.05 m/s), 95th
 percentile of speed, acceleration, jerk and yaw rate. Each cell reports the median over flights. The simulator is
 kinematic (position += action), so motion the real drone could not track costs nothing in simulation; these numbers
-are how far each arm's flights are from what a pilot actually flew.
+are how far each arm's flights are from what a pilot actually flew. W1 columns: Wasserstein-1 distance between an arm's
+pooled per-step distribution (steps above 0.05 m/s) and the demos' -- percentiles alone reward "smoother", W1 rewards
+"like the pilot" (2026-10-08: smooth waypoints are smoother than the demos, ours is closest to them).
 
   python3 agent_realism.py          # prints the table, writes agent_eval/realism.md and agent_eval/realism.png
 """
@@ -22,7 +24,8 @@ CELLS = [("Sonnet + decoded U c", "_waypoints", range(11, 16)), ("Sonnet + smoot
          ("Opus + ours", "_ours_opus", range(21, 26))]
 COLS = [("spd_med", "speed median (m/s)", "{:.2f}"), ("spd_p95", "speed p95 (m/s)", "{:.2f}"),
         ("acc_p95", "accel p95 (m/s²)", "{:.2f}"), ("jerk_p95", "jerk p95 (m/s³)", "{:.1f}"),
-        ("yaw_p95", "yaw rate p95 (°/s)", "{:.0f}")]
+        ("yaw_p95", "yaw rate p95 (°/s)", "{:.0f}"), ("w_spd", "W1 to demos, speed", "{:.3f}"),
+        ("w_acc", "W1 to demos, accel", "{:.3f}"), ("w_jerk", "W1 to demos, jerk", "{:.2f}")]
 
 
 def stats(P, yaw):
@@ -34,20 +37,37 @@ def stats(P, yaw):
                 jerk_p95=float(np.percentile(np.linalg.norm(j, axis=1), 95)), yaw_p95=float(np.percentile(yr, 95)))
 
 
+def moving(P):
+    """Pooled per-step speed, acceleration and jerk magnitudes over the steps where the drone moves (> 0.05 m/s)."""
+    v = np.diff(P, axis=0) / DT; s = np.linalg.norm(v, axis=1); a = np.diff(v, axis=0) / DT; j = np.diff(a, axis=0) / DT
+    m = s > 0.05
+    return s[m], np.linalg.norm(a, axis=1)[m[1:]], np.linalg.norm(j, axis=1)[m[2:]]
+
+
+def pooled(paths, demo=False):
+    xs = [moving((np.load(f)["state"] if demo else np.load(f))[:, :3].astype(float)) for f in paths]
+    return [np.concatenate([x[i] for x in xs]) for i in range(3)]
+
+
 def median_of(rows):
     return {k: float(np.median([r[k] for r in rows])) for k in rows[0]}
 
 
 def main():
-    real = [stats((s := np.load(f)["state"].astype(float))[:, :3], s[:, 3]) for f in sorted(glob.glob(f"{RD}/data_gate_real/ep_*.npz"))]
-    table = [(f"Real demos ({len(real)})", median_of(real))]
+    from scipy.stats import wasserstein_distance
+    demo_files = sorted(glob.glob(f"{RD}/data_gate_real/ep_*.npz"))
+    real = [stats((s := np.load(f)["state"].astype(float))[:, :3], s[:, 3]) for f in demo_files]
+    D = pooled(demo_files, demo=True)
+    table = [(f"Real demos ({len(real)})", dict(median_of(real), w_spd=0.0, w_acc=0.0, w_jerk=0.0))]
     for name, suf, trials in CELLS:
-        rows = []
+        rows, files = [], []
         for t in TASKS:
             for r in map(json.loads, open(f"{RD}/agent_eval/{t}{suf}.jsonl")):
                 if r["trial"] in trials:
-                    T = np.load(f"{RUN}/{r['traj']}").astype(float); rows.append(stats(T[:, :3], T[:, 3]))
-        table.append((f"{name} ({len(rows)})", median_of(rows)))
+                    T = np.load(f"{RUN}/{r['traj']}").astype(float); rows.append(stats(T[:, :3], T[:, 3])); files.append(f"{RUN}/{r['traj']}")
+        X = pooled(files)
+        w = {k: float(wasserstein_distance(X[i], D[i])) for i, k in enumerate(("w_spd", "w_acc", "w_jerk"))}
+        table.append((f"{name} ({len(rows)})", dict(median_of(rows), **w)))
     md = ["| flights | " + " | ".join(c[1] for c in COLS) + " |", "|---" * (len(COLS) + 1) + "|"]
     md += [f"| {n} | " + " | ".join(fmt.format(v[k]) for k, _, fmt in COLS) + " |" for n, v in table]
     text = "\n".join(md)
@@ -60,16 +80,16 @@ def main():
 
 
 def render(table):
-    """The same table as an image for sharing: acceleration and jerk, the columns that separate the arms, shaded."""
+    """The same table as an image for sharing: the distance-to-demos columns shaded."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Ubuntu", "DejaVu Sans"]})
     head = ["Flights"] + [c[1].replace(" (", "\n(") for c in COLS]
     cells = [[n] + [fmt.format(v[k]) for k, _, fmt in COLS] for n, v in table]
-    fig = plt.figure(figsize=(8.6, 3.9)); ax = fig.add_axes([0.0, 0.13, 1.0, 0.76]); ax.axis("off")
+    fig = plt.figure(figsize=(12.4, 4.0)); ax = fig.add_axes([0.0, 0.13, 1.0, 0.76]); ax.axis("off")
     tb = ax.table(cellText=cells, colLabels=head, cellLoc="center", colLoc="center", bbox=[0, 0, 1, 1],
-                  colWidths=[0.31] + [0.138] * len(COLS))
+                  colWidths=[0.22] + [0.0867] * len(COLS))
     tb.auto_set_font_size(False); tb.set_fontsize(10)
     for (r, c), cell in tb.get_celld().items():
         cell.set_edgecolor("#d6d9dc"); cell.set_linewidth(0.6)
@@ -79,11 +99,12 @@ def render(table):
             cell.set_facecolor("#f7f8fa")
         if c == 0 and r > 0:
             cell.set_text_props(ha="left"); cell._loc = "left"
-        if r > 0 and c in (3, 4):        # the variable Ubuntu face has no bold here, so colour carries the emphasis
+        if r > 0 and c >= 6:             # the W1 columns: how demo-like (the variable Ubuntu face has no bold, so colour)
             cell.set_facecolor("#eaf1f8" if r != 1 else "#e3ebf3")
     fig.text(0.5, 0.94, "Motion realism of agent flights in simulation vs. real demonstrations", ha="center", va="center", fontsize=12)
-    fig.text(0.5, 0.01, "Per-flight statistics at 10 Hz, median over flights (Sonnet t11-15, Opus t21-25; three agent tasks). "
-             "The simulator is kinematic,\nso motion the real drone could not track costs nothing in simulation.",
+    fig.text(0.5, 0.01, "Per-flight statistics at 10 Hz, median over flights (Sonnet t11-15, Opus t21-25; three agent tasks). W1: Wasserstein "
+             "distance from the arm's pooled per-step distribution (while moving) to the demos'; lower is more pilot-like.\nThe simulator is "
+             "kinematic, so motion the real drone could not track costs nothing in simulation.",
              ha="center", va="bottom", fontsize=8, color="#5d6570")
     fig.savefig(f"{RD}/agent_eval/realism.png", dpi=250, bbox_inches="tight")
 

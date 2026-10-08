@@ -3,12 +3,12 @@
 Per-flight statistics at 10 Hz, median over flights. The simulator is kinematic, so motion the real
 drone could not track costs nothing in simulation.
 
-| flights | speed median (m/s) | speed p95 (m/s) | accel p95 (m/s²) | jerk p95 (m/s³) | yaw rate p95 (°/s) |
-|---|---|---|---|---|---|
-| Real demos (100) | 0.20 | 0.69 | 0.94 | 8.3 | 22 |
-| Sonnet + decoded U c (15) | 0.32 | 0.78 | 3.97 | 50.6 | 51 |
-| Sonnet + smooth waypoints (15) | 0.55 | 0.86 | 1.16 | 3.2 | 53 |
-| Sonnet + ours (15) | 0.32 | 0.81 | 1.47 | 14.5 | 38 |
-| Opus + decoded U c (15) | 0.34 | 0.76 | 2.77 | 44.9 | 28 |
-| Opus + smooth waypoints (15) | 0.55 | 0.86 | 1.07 | 3.1 | 41 |
-| Opus + ours (15) | 0.28 | 0.88 | 1.59 | 16.0 | 46 |
+| flights | speed median (m/s) | speed p95 (m/s) | accel p95 (m/s²) | jerk p95 (m/s³) | yaw rate p95 (°/s) | W1 to demos, speed | W1 to demos, accel | W1 to demos, jerk |
+|---|---|---|---|---|---|---|---|---|
+| Real demos (100) | 0.20 | 0.69 | 0.94 | 8.3 | 22 | 0.000 | 0.000 | 0.00 |
+| Sonnet + decoded U c (15) | 0.32 | 0.78 | 3.97 | 50.6 | 51 | 0.165 | 0.521 | 8.42 |
+| Sonnet + smooth waypoints (15) | 0.55 | 0.86 | 1.16 | 3.2 | 53 | 0.240 | 0.353 | 4.02 |
+| Sonnet + ours (15) | 0.32 | 0.81 | 1.47 | 14.5 | 38 | 0.085 | 0.226 | 2.51 |
+| Opus + decoded U c (15) | 0.34 | 0.76 | 2.77 | 44.9 | 28 | 0.173 | 0.495 | 7.63 |
+| Opus + smooth waypoints (15) | 0.55 | 0.86 | 1.07 | 3.1 | 41 | 0.246 | 0.320 | 4.14 |
+| Opus + ours (15) | 0.28 | 0.88 | 1.59 | 16.0 | 46 | 0.114 | 0.288 | 3.06 |
