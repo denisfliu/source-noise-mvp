@@ -6,7 +6,7 @@ percentile of speed, acceleration, jerk and yaw rate. Each cell reports the medi
 kinematic (position += action), so motion the real drone could not track costs nothing in simulation; these numbers
 are how far each arm's flights are from what a pilot actually flew.
 
-  python3 agent_realism.py          # prints the table and writes agent_eval/realism.md
+  python3 agent_realism.py          # prints the table, writes agent_eval/realism.md and agent_eval/realism.png
 """
 import glob, json, os
 
@@ -52,6 +52,36 @@ def main():
                  "Per-flight statistics at 10 Hz, median over flights. The simulator is kinematic, so motion the real\n"
                  "drone could not track costs nothing in simulation.\n\n" + text + "\n")
     print(text)
+    render(table)
+
+
+def render(table):
+    """The same table as an image for sharing: acceleration and jerk, the columns that separate the arms, shaded."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Ubuntu", "DejaVu Sans"]})
+    head = ["Flights"] + [c[1].replace(" (", "\n(") for c in COLS]
+    cells = [[n] + [fmt.format(v[k]) for k, _, fmt in COLS] for n, v in table]
+    fig = plt.figure(figsize=(8.2, 3.1)); ax = fig.add_axes([0.0, 0.15, 1.0, 0.72]); ax.axis("off")
+    tb = ax.table(cellText=cells, colLabels=head, cellLoc="center", colLoc="center", bbox=[0, 0, 1, 1],
+                  colWidths=[0.27] + [0.146] * len(COLS))
+    tb.auto_set_font_size(False); tb.set_fontsize(10)
+    for (r, c), cell in tb.get_celld().items():
+        cell.set_edgecolor("#d6d9dc"); cell.set_linewidth(0.6)
+        if r == 0:
+            cell.set_facecolor("#eef1f4")
+        elif r == 1:
+            cell.set_facecolor("#f7f8fa")
+        if c == 0 and r > 0:
+            cell.set_text_props(ha="left"); cell._loc = "left"
+        if r > 0 and c in (3, 4):        # the variable Ubuntu face has no bold here, so colour carries the emphasis
+            cell.set_facecolor("#eaf1f8" if r != 1 else "#e3ebf3")
+    fig.text(0.5, 0.94, "Motion realism of agent flights in simulation vs. real demonstrations", ha="center", va="center", fontsize=12)
+    fig.text(0.5, 0.01, "Per-flight statistics at 10 Hz, median over flights (Sonnet t11-15, Opus t21-25; three agent tasks). "
+             "The simulator is kinematic,\nso motion the real drone could not track costs nothing in simulation.",
+             ha="center", va="bottom", fontsize=8, color="#5d6570")
+    fig.savefig(f"{RD}/agent_eval/realism.png", dpi=250, bbox_inches="tight")
 
 
 if __name__ == "__main__":
