@@ -14,6 +14,8 @@ ROOT=/home/dfliu/code/source-noise-mvp; RD=$ROOT/experiments/rung3; RUN=/home/df
 # BRIEF=full (default): briefs/common.md + task_<task>.md. BRIEF=min: briefs/common_min.md + task_<task>_min.md (falls back to
 # task_<task>.md); the tag gets a _min suffix so min-brief cells are separate rows.
 BRIEF=${BRIEF:-full}
+# BRIEFDIR=<dir> (2026-10-07): read the briefs from <dir> instead of experiments/rung3/briefs, to re-fly a cell with the
+# brief version an earlier cell used (e.g. a `git show <commit>:experiments/rung3/briefs/...` export).
 AGENT=${AGENT:-claude}; [ -f ~/.config/gemini.env ] && { set -a; . ~/.config/gemini.env; set +a; }
 [ "$AGENT" = gemini ] && MODEL=${MODEL:-${GEMINI_MODEL:-gemini-3.6-flash}}
 MODEL=${MODEL:-sonnet}; MAXTURNS=${MAXTURNS:-120}; export PORT=${PORT:-9160}   # one port per concurrent chain
@@ -49,8 +51,9 @@ for i in $(seq $T0 $((T0 + N - 1))); do
   for k in $(seq 1 120); do [ -f $AD/obs/000_view.jpg ] && break; sleep 5; done
   [ -f $AD/obs/000_view.jpg ] || { echo "$TAG: flight never reached decision 0"; continue; }
   COMMON=$([ "$AGENT" = gemini ] && echo common_api.md || echo common.md); [ "$BRIEF" = min ] && COMMON=common_min.md
-  TASKB=$RD/briefs/task_$TASK.md; [ "$BRIEF" = min ] && [ -f $RD/briefs/task_${TASK}_min.md ] && TASKB=$RD/briefs/task_${TASK}_min.md
-  python3 - "$RD/briefs/$COMMON" "$TASKB" "$BACKEND" "$AD" "$NCH" "$AGENT" > $RUN/brief_$TAG.md <<'PYEOF'
+  BD=${BRIEFDIR:-$RD/briefs}
+  TASKB=$BD/task_$TASK.md; [ "$BRIEF" = min ] && [ -f $BD/task_${TASK}_min.md ] && TASKB=$BD/task_${TASK}_min.md
+  python3 - "$BD/$COMMON" "$TASKB" "$BACKEND" "$AD" "$NCH" "$AGENT" > $RUN/brief_$TAG.md <<'PYEOF'
 import re, sys
 common, task, backend, d, budget, agent = sys.argv[1:7]
 t = (open(common).read() + "\n" + open(task).read()).replace("{BACKEND}", backend).replace("{DIR}", d).replace("{BUDGET}", budget)

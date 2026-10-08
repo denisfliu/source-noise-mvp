@@ -385,3 +385,4 @@ Pointer conventions: `MEM:<n>` = `docs/RESEARCH_LOG.md` line n (the chronologica
 - **Hardware min-snap on all measured flights: pilot 1.9, pi0 1.7 (n=15), ours 1.6 cm (n=5): parity.** MEM:8284
 - **Relocated gates, matched baselines: velocity projection on plain pi0 59/60 route, 48/60 contact-free, tracking 0.008 m beats the pin (58, 39, 0.038) and SDEdit (56, 24, 0.051); the pin drifts onto the gate after the route ends, v-proj does not.** MEM:8310
 - **Sigma ablation (n=100/gate): learned sigma map 146/200 vs fixed sigma 0 87/200 (69 left-gate contacts) vs fixed 1.5 51/200 (misses the gates).** MEM:sigma-ablation-2026-09-25
+- Opus + waypoints matches/beats Opus + ours on the agent tasks (12/15 vs 11/15; 3/5, 5/5, 4/5); the command-channel advantage on mannequin tasks is a Sonnet-only effect -> docs/RESEARCH_LOG.md 2026-10-07

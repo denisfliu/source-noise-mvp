@@ -8480,3 +8480,17 @@ Page viz/flawed_center_sketch.html (one representative flight per method).
 (median), tracking 6.2 cm. Against sigma 0.5 8/10 (21 cm) and v-proj s 0.3 0/10 (6 cm): at matched 0.3 both mostly
 touch, ours still completes 2; the correction grows with sigma (0 -> 0/10, 0.3 -> 2/10, 0.5 -> 8/10).
 Figure page: viz/flawed_center_panels.html (shared camera, editable labels).
+
+## Opus + waypoints on the Table 2 agent tasks (2026-10-07)
+Denis: "can we run the waypoints for opus on the same tasks?" Trials 21-25 per task, `claude-opus-5` pinned (the model the
+Opus+ours cell used, per its session logs; the `opus` alias may now resolve elsewhere), briefs exported from 485ea86 (the
+version every existing Table 2 cell used; verified byte-identical to the Sonnet-waypoint briefs modulo the run dir) via
+the new `BRIEFDIR` override in run_agent_matrix.sh. Same judge (task done = reached + looking; clean = no gate contact).
+                         done · clean · both    (Table 2 counts "both")
+    find the mannequin   5/5 · 3/5 · 3/5       t23, t24 touch a gate (0.06, 0.10 m)
+    circle centre gate   5/5 · 5/5 · 5/5
+    left gate, mannequin 5/5 · 4/5 · 4/5       t21 touches a post (0.01 m)
+    total                12/15                  vs Opus + ours 11/15 (4, 3, 4); Sonnet: waypoints 5/15, ours 7/15
+READ: with Opus the waypoint arm matches or beats the command channel on every task. Opus completes every task in all 15
+flights; its failures are only gate contacts. The Sonnet-era reading ("the command channel helps most on the mannequin
+tasks") does not survive a stronger agent. Records agent_eval/*_waypoints_claude-opus-5.jsonl; videos sent to Denis.
